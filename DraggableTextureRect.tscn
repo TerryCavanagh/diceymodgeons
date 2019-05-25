@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/garfield.png" type="Texture" id=1]
+[ext_resource path="res://DraggableTextureRect.gd" type="Script" id=2]
+
+[node name="Enemy" type="TextureRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_default_cursor_shape = 13
+texture = ExtResource( 1 )
+script = ExtResource( 2 )

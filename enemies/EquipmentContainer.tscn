@@ -1,0 +1,110 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://enemies/EquipmentContainer.gd" type="Script" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ItemList
+
+signal value_changed(equipment, value)
+
+export (bool) var can_add = true
+export (bool) var can_remove = false
+
+func can_drop_data(position, data):
+	return data is Dictionary and data.has(\"equipment\") and not data.get(\"source\", null) == self
+
+func drop_data(position, data):
+	if can_add:
+		add_item(data.equipment)
+		set_item_metadata(get_item_count() - 1, data.equipment)
+		emit_signal(\"value_changed\", data.equipment, true)
+		
+	if data.source.can_remove:
+		data.source.remove_item(data.idx)
+		data.source.emit_signal(\"value_changed\", data.equipment, false)
+	
+func get_drag_data(position):
+	var idx = get_item_at_position(position)
+	if idx < 0: return null
+	return {\"equipment\": get_item_metadata(idx), \"source\": self, \"idx\": idx}
+	"
+
+[node name="EquipmentContainer" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 400 )
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AvailableContainer" type="VBoxContainer" parent="."]
+margin_right = 424.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="AvailableContainer"]
+margin_right = 424.0
+margin_bottom = 14.0
+text = "Available"
+align = 1
+valign = 1
+
+[node name="Available" type="ItemList" parent="AvailableContainer"]
+margin_top = 18.0
+margin_right = 424.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+allow_rmb_select = true
+script = SubResource( 1 )
+can_add = false
+
+[node name="EquippedContainer" type="VBoxContainer" parent="."]
+margin_left = 428.0
+margin_right = 852.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="EquippedContainer"]
+margin_right = 424.0
+margin_bottom = 14.0
+text = "Equipped"
+align = 1
+valign = 1
+
+[node name="Equipped" type="ItemList" parent="EquippedContainer"]
+margin_top = 18.0
+margin_right = 424.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+allow_rmb_select = true
+script = SubResource( 1 )
+can_remove = true
+
+[node name="DescriptionContainer" type="VBoxContainer" parent="."]
+margin_left = 856.0
+margin_right = 1280.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="DescriptionContainer"]
+margin_right = 424.0
+margin_bottom = 14.0
+text = "Description"
+align = 1
+valign = 1
+
+[node name="Description" type="RichTextLabel" parent="DescriptionContainer"]
+margin_top = 18.0
+margin_right = 424.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+[connection signal="item_selected" from="AvailableContainer/Available" to="." method="_on_Available_item_selected"]
+[connection signal="item_selected" from="EquippedContainer/Equipped" to="." method="_on_Equipped_item_selected"]

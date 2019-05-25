@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://enemies/EnemiesTab.gd" type="Script" id=1]
+[ext_resource path="res://enemies/EnemyData.tscn" type="PackedScene" id=2]
+[ext_resource path="res://enemies/EnemyGraphics.tscn" type="PackedScene" id=3]
+[ext_resource path="res://enemies/EnemyScripts.tscn" type="PackedScene" id=4]
+
+[node name="Enemies" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+mouse_filter = 2
+
+[node name="EnemyList" type="ItemList" parent="HBoxContainer"]
+margin_right = 300.0
+margin_bottom = 706.0
+rect_min_size = Vector2( 300, 0 )
+
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
+margin_left = 304.0
+margin_right = 1266.0
+margin_bottom = 706.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Data" parent="HBoxContainer/TabContainer" instance=ExtResource( 2 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Graphics" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Scripts" parent="HBoxContainer/TabContainer" instance=ExtResource( 4 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+[connection signal="item_selected" from="HBoxContainer/EnemyList" to="." method="_on_EnemyList_item_selected"]

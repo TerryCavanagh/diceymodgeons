@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://enemies/EnemyScriptContainer.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/Hack_16.tres" type="DynamicFont" id=2]
+
+[node name="BeforeCombatContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+rect_min_size = Vector2( 0, 150 )
+custom_fonts/font = ExtResource( 2 )
+syntax_highlighting = true
+show_line_numbers = true
+draw_tabs = true
+highlight_all_occurrences = true
+caret_blink = true
+[connection signal="request_completion" from="TextEdit" to="." method="_on_TextEdit_request_completion"]
+[connection signal="text_changed" from="TextEdit" to="." method="_on_TextEdit_text_changed"]

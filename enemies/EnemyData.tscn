@@ -1,0 +1,362 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://enemies/EnemyData.gd" type="Script" id=1]
+[ext_resource path="res://enemies/EquipmentContainer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://enemies/InnateContainer.tscn" type="PackedScene" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.164706, 0.164706, 0.164706, 1 )
+expand_margin_left = 8.0
+expand_margin_right = 8.0
+expand_margin_top = 8.0
+expand_margin_bottom = 8.0
+
+[node name="Data" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+custom_styles/bg = SubResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1246.0
+margin_bottom = 1314.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 16
+
+[node name="Row1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1238.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="LevelContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
+margin_right = 120.0
+margin_bottom = 24.0
+hint_tooltip = "Starting level. (Maximum 100)"
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/LevelContainer"]
+margin_top = 5.0
+margin_right = 42.0
+margin_bottom = 19.0
+text = "Level: "
+
+[node name="LevelBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/Row1/LevelContainer"]
+margin_left = 46.0
+margin_right = 120.0
+margin_bottom = 24.0
+align = 2
+
+[node name="HeathContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
+margin_left = 124.0
+margin_right = 252.0
+margin_bottom = 24.0
+hint_tooltip = "Starting health."
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/HeathContainer"]
+margin_top = 5.0
+margin_right = 50.0
+margin_bottom = 19.0
+text = "Health: "
+
+[node name="HealthBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/Row1/HeathContainer"]
+margin_left = 54.0
+margin_right = 128.0
+margin_bottom = 24.0
+allow_greater = true
+align = 2
+
+[node name="DiceContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
+margin_left = 256.0
+margin_right = 371.0
+margin_bottom = 24.0
+hint_tooltip = "Starting dice."
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/DiceContainer"]
+margin_top = 5.0
+margin_right = 37.0
+margin_bottom = 19.0
+text = "Dice: "
+
+[node name="DiceBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/Row1/DiceContainer"]
+margin_left = 41.0
+margin_right = 115.0
+margin_bottom = 24.0
+max_value = 10.0
+allow_greater = true
+align = 2
+
+[node name="Row2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 1238.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Row3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 56.0
+margin_right = 1238.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="VoiceContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row3"]
+margin_right = 247.0
+margin_bottom = 24.0
+hint_tooltip = "Voice sound effects. (See TODO)"
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row3/VoiceContainer"]
+margin_top = 5.0
+margin_right = 43.0
+margin_bottom = 19.0
+text = "Voice: "
+
+[node name="VoiceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Row3/VoiceContainer"]
+margin_left = 47.0
+margin_right = 247.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="ChatVoiceContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row3"]
+margin_left = 251.0
+margin_right = 525.0
+margin_bottom = 24.0
+hint_tooltip = "The chat voice (aka the sound that will play when the enemy chats)"
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row3/ChatVoiceContainer"]
+margin_top = 5.0
+margin_right = 70.0
+margin_bottom = 19.0
+text = "Chat voice:"
+
+[node name="ChatVoiceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Row3/ChatVoiceContainer"]
+margin_left = 74.0
+margin_right = 274.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="AIContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row3"]
+margin_left = 529.0
+margin_right = 751.0
+margin_bottom = 24.0
+hint_tooltip = "The AI"
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row3/AIContainer"]
+margin_top = 5.0
+margin_right = 18.0
+margin_bottom = 19.0
+text = "AI:"
+
+[node name="AIEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Row3/AIContainer"]
+margin_left = 22.0
+margin_right = 222.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="EquipmentPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 1238.0
+margin_bottom = 530.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1230.0
+margin_bottom = 426.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
+margin_right = 1222.0
+margin_bottom = 14.0
+text = "Equipment"
+align = 1
+
+[node name="EquipmentContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 18.0
+margin_right = 1222.0
+margin_bottom = 418.0
+
+[node name="Row4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 546.0
+margin_right = 1238.0
+margin_bottom = 570.0
+size_flags_horizontal = 3
+
+[node name="SuperCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/Row4"]
+margin_right = 176.0
+margin_bottom = 24.0
+text = "Can be a super enemy?"
+
+[node name="RareCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/Row4"]
+margin_left = 180.0
+margin_right = 255.0
+margin_bottom = 24.0
+text = "Is rare?"
+
+[node name="BossCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/Row4"]
+margin_left = 259.0
+margin_right = 339.0
+margin_bottom = 24.0
+text = "Is boss?"
+
+[node name="SuperRow" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 586.0
+margin_right = 1238.0
+margin_bottom = 1048.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1230.0
+margin_bottom = 454.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer"]
+margin_right = 1222.0
+margin_bottom = 14.0
+text = "Super data"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1222.0
+margin_bottom = 42.0
+
+[node name="SuperHealthContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer"]
+margin_right = 168.0
+margin_bottom = 24.0
+hint_tooltip = "Starting health."
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperHealthContainer"]
+margin_top = 5.0
+margin_right = 90.0
+margin_bottom = 19.0
+text = "Super Health: "
+
+[node name="SuperHealthBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperHealthContainer"]
+margin_left = 94.0
+margin_right = 168.0
+margin_bottom = 24.0
+allow_greater = true
+align = 2
+
+[node name="SuperDiceContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer"]
+margin_left = 172.0
+margin_right = 327.0
+margin_bottom = 24.0
+hint_tooltip = "Starting dice."
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperDiceContainer"]
+margin_top = 5.0
+margin_right = 77.0
+margin_bottom = 19.0
+text = "Super Dice: "
+
+[node name="SuperDiceBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperDiceContainer"]
+margin_left = 81.0
+margin_right = 155.0
+margin_bottom = 24.0
+max_value = 10.0
+allow_greater = true
+align = 2
+
+[node name="SuperEquipmentContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 46.0
+margin_right = 1222.0
+margin_bottom = 446.0
+
+[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_top = 1064.0
+margin_right = 1238.0
+margin_bottom = 1068.0
+
+[node name="InnateContainer" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 1084.0
+margin_right = 1238.0
+margin_bottom = 1102.0
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+margin_top = 1118.0
+margin_right = 1238.0
+margin_bottom = 1122.0
+
+[node name="Row5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 1138.0
+margin_right = 1238.0
+margin_bottom = 1306.0
+size_flags_horizontal = 3
+
+[node name="FirstWordsContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Row5"]
+margin_right = 617.0
+margin_bottom = 168.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row5/FirstWordsContainer"]
+margin_right = 617.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 90, 0 )
+text = "First words:"
+
+[node name="FirstWordsEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/Row5/FirstWordsContainer"]
+margin_top = 18.0
+margin_right = 617.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+size_flags_horizontal = 3
+show_line_numbers = true
+caret_blink = true
+
+[node name="LastWordsContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Row5"]
+margin_left = 621.0
+margin_right = 1238.0
+margin_bottom = 168.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row5/LastWordsContainer"]
+margin_right = 617.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 90, 0 )
+text = "Last words:"
+
+[node name="LastWordsEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/Row5/LastWordsContainer"]
+margin_top = 18.0
+margin_right = 617.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+size_flags_horizontal = 3
+show_line_numbers = true
+caret_blink = true
