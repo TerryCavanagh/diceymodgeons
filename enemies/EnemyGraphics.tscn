@@ -10,6 +10,9 @@ mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = 7.0
@@ -23,23 +26,24 @@ margin_bottom = 706.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GraphicsContainer" type="Control" parent="ScrollContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer"]
 margin_right = 1266.0
-margin_bottom = 600.0
-rect_min_size = Vector2( 0, 600 )
+margin_bottom = 14.0
+text = "Right-click over the sprites to change them or drag them to position them"
+align = 1
+
+[node name="GraphicsContainer" type="Control" parent="ScrollContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1266.0
+margin_bottom = 568.0
+rect_min_size = Vector2( 0, 550 )
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="CombatScreenControl" parent="ScrollContainer/VBoxContainer/GraphicsContainer" instance=ExtResource( 2 )]
-margin_left = -1919.66
-margin_top = -1085.56
-margin_right = 1920.34
-margin_bottom = 1074.44
+[node name="CombatScreen" parent="ScrollContainer/VBoxContainer/GraphicsContainer" instance=ExtResource( 2 )]
+margin_left = -1921.99
+margin_top = -1075.06
+margin_right = 1918.01
+margin_bottom = 1084.94
 rect_scale = Vector2( 0.24, 0.24 )
-
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer"]
-margin_top = 604.0
-margin_right = 1266.0
-margin_bottom = 618.0
-text = "Hello world"

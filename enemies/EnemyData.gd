@@ -23,7 +23,6 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 func _ready():
-	set_data({})
 	SuperCheck.connect("toggled", self, "_show_super_row")
 	
 func set_data(data):
@@ -70,7 +69,7 @@ func _setup(node, key, def):
 		node.set_data(data, key)
 		_connect(node, key, "value_changed", "_on_EquipmentContainer_value_changed")
 	else:
-		printerr("fuckme")
+		printerr("Node %s couldn't be setup" % node.name)
 		
 func _connect(node, key, _signal, _func):
 	var param = [_signal, self, _func]

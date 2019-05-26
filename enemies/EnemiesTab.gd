@@ -31,4 +31,5 @@ func _on_EnemyList_item_selected(index):
 	var data = Database.commit(Database.Table.FIGHTERS, Database.READ, meta)
 	print(data["Name"])
 	Data.set_data(data)
+	Graphics.set_data(data)
 	Scripts.set_data(data)

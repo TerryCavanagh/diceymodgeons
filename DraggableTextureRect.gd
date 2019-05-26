@@ -18,17 +18,20 @@ func _draw():
 func _gui_input(event):
 	if not event is InputEventMouse: return
 
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		dragging = event.is_pressed()
-		if dragging:
-			drag_mouse_position = event.global_position
-			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-			update()
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			Input.warp_mouse_position(drag_mouse_position)
-			update()
-			return
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT:
+			dragging = event.is_pressed()
+			if dragging:
+				drag_mouse_position = event.global_position
+				Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+				update()
+			else:
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+				Input.warp_mouse_position(drag_mouse_position)
+				update()
+				return
+		elif event.button_index == BUTTON_RIGHT and event.pressed:
+			print("open dialog")
 
 	if not dragging: return
 
@@ -36,4 +39,3 @@ func _gui_input(event):
 		rect_position += event.relative * get_global_transform().get_scale()
 		rect_position = rect_position.floor()
 		emit_signal("position_changed", rect_position)
-

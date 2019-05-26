@@ -2,6 +2,8 @@ extends Node
 
 signal data_changed(table, key, equals)
 
+var mod_path:String = ""
+
 var _fighters:CSVData = null
 var _equipment:CSVData = null
 
@@ -20,7 +22,6 @@ func _init():
 func load_data():
 	_fighters = CSVData.new("res://data/text/fighters.csv", "res://data/text/fighters_schema.json", "Name")
 	_equipment = CSVData.new("res://data/text/equipment.csv", "res://data/text/equipment_schema.json", "Name")
-	print(_equipment.headers)
 	
 func save_data():
 	pass
@@ -63,32 +64,6 @@ func commit(table:int, action:int, key = null, field = null, value = null):
 		
 	return result
 	
-func _read(data, key, field):
-	match [key == null, field == null]:
-		[true, true]:
-			# if both are null, return the whole data
-			return data.data
-		[false, true]:
-			# if only the field is null, return the whole object
-			return data.find(key)
-		[false, false]:
-			# if none are null, return the field
-			var obj = data.find(key)
-			if obj:
-				return obj.get(field, null)
-			else:
-				return null
-		[true, false]:
-			# if only the key is null, return the value of all the objects of the field
-			if field == data.KEY:
-				return data.data.keys()
-			else:
-				var result = []
-				for content in data.data:
-					result.push_back(content.get(field, null))
-				return result
-		
-	return null
 	
 func _create(data, key, field, value):
 	match [key == null, field == null]:
@@ -118,6 +93,33 @@ func _create(data, key, field, value):
 				return true
 				
 	return false
+	
+func _read(data, key, field):
+	match [key == null, field == null]:
+		[true, true]:
+			# if both are null, return the whole data
+			return data.data
+		[false, true]:
+			# if only the field is null, return the whole object
+			return data.find(key)
+		[false, false]:
+			# if none are null, return the field
+			var obj = data.find(key)
+			if obj:
+				return obj.get(field, null)
+			else:
+				return null
+		[true, false]:
+			# if only the key is null, return the value of all the objects of the field
+			if field == data.KEY:
+				return data.data.keys()
+			else:
+				var result = []
+				for content in data.data:
+					result.push_back(content.get(field, null))
+				return result
+		
+	return null
 	
 func _update(data, key, field, value):
 	match [key == null, field == null]:
