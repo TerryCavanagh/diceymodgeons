@@ -224,7 +224,7 @@ class CSVData:
 					
 				data[id][h] = _convert_from_csv(h, c[i])
 				
-			data[id]["__from"] = "content"
+			data[id]["__from"] = "default"
 			
 			hashes[id] = data[id].hash()
 			

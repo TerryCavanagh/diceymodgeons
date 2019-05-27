@@ -18,12 +18,9 @@ func _ready():
 func set_data(data):
 	self.data = data
 	
+	var innates = data.get("Innate", [])
 	for check in Innates.get_children():
-		check.pressed = false
-	
-	for innate in data.get("Innate", []):
-		for check in Innates.get_children():
-			check.pressed = check.get_meta("innate") == innate
+		check.pressed = innates.has(check.get_meta("innate"))
 		
 func _on_checkbox_pressed(innate, check):
 	emit_signal("value_changed", innate, check.pressed)

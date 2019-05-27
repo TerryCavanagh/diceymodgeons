@@ -1,35 +1,26 @@
 extends PanelContainer
 
+
+onready var TabContainer = find_node("TabContainer")
 onready var EnemyList = find_node("EnemyList")
 onready var Data = find_node("Data")
 onready var Graphics = find_node("Graphics")
 onready var Scripts = find_node("Scripts")
 
 func _ready():
-	var i = 0
-	var data = Database.commit(Database.Table.FIGHTERS, Database.READ)
-	for key in data:
-		EnemyList.add_item(key)
-		EnemyList.set_item_metadata(i, key)
-		i += 1
-		
-	EnemyList.sort_items_by_text()
+	TabContainer.visible = false
+	EnemyList.connect("enemy_selected", self, "_on_EnemyList_enemy_selected")
 	
-	Database.connect("data_changed", self, "_on_data_changed")
-	
-	
-func _on_data_changed(table, key, equals):
-	if not table == Database.Table.FIGHTERS: return
-	for i in EnemyList.get_item_count():
-		if EnemyList.get_item_metadata(i) == key:
-			var s = "%s (*)" % key if not equals else key
-			EnemyList.set_item_text(i, s)
-			break
+func _on_EnemyList_list_changed():
+	TabContainer.visible = false
 
-func _on_EnemyList_item_selected(index):
-	var meta = EnemyList.get_item_metadata(index)
-	var data = Database.commit(Database.Table.FIGHTERS, Database.READ, meta)
-	print(data["Name"])
+func _on_EnemyList_enemy_selected(key):
+	if key == null or key.empty(): 
+		TabContainer.visible = false
+		return
+	
+	var data = Database.commit(Database.Table.FIGHTERS, Database.READ, key)
+	TabContainer.visible = true
 	Data.set_data(data)
 	Graphics.set_data(data)
 	Scripts.set_data(data)

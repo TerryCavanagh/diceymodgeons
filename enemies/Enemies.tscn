@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://enemies/EnemiesTab.gd" type="Script" id=1]
-[ext_resource path="res://enemies/EnemyData.tscn" type="PackedScene" id=2]
-[ext_resource path="res://enemies/EnemyGraphics.tscn" type="PackedScene" id=3]
-[ext_resource path="res://enemies/EnemyScripts.tscn" type="PackedScene" id=4]
+[ext_resource path="res://enemies/EnemyGraphics.tscn" type="PackedScene" id=2]
+[ext_resource path="res://enemies/EnemyScripts.tscn" type="PackedScene" id=3]
+[ext_resource path="res://enemies/EnemyData.tscn" type="PackedScene" id=4]
+[ext_resource path="res://enemies/EnemyList.gd" type="Script" id=5]
 
 [node name="Enemies" type="PanelContainer"]
 anchor_right = 1.0
@@ -21,10 +22,31 @@ margin_right = 1273.0
 margin_bottom = 713.0
 mouse_filter = 2
 
-[node name="EnemyList" type="ItemList" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_right = 300.0
 margin_bottom = 706.0
 rect_min_size = Vector2( 300, 0 )
+
+[node name="Search" type="LineEdit" parent="HBoxContainer/VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 24.0
+context_menu_enabled = false
+clear_button_enabled = true
+placeholder_text = "Search enemy"
+caret_blink = true
+
+[node name="EnemyList" type="Tree" parent="HBoxContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 300.0
+margin_bottom = 706.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+allow_reselect = true
+hide_folding = true
+hide_root = true
+select_mode = 1
+script = ExtResource( 5 )
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0
@@ -34,23 +56,26 @@ mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Data" parent="HBoxContainer/TabContainer" instance=ExtResource( 2 )]
+[node name="Data" parent="HBoxContainer/TabContainer" instance=ExtResource( 4 )]
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Graphics" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
+[node name="Graphics" parent="HBoxContainer/TabContainer" instance=ExtResource( 2 )]
 visible = false
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Scripts" parent="HBoxContainer/TabContainer" instance=ExtResource( 4 )]
+[node name="Scripts" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
-[connection signal="item_selected" from="HBoxContainer/EnemyList" to="." method="_on_EnemyList_item_selected"]
+[connection signal="text_changed" from="HBoxContainer/VBoxContainer/Search" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_Search_text_changed"]
+[connection signal="button_pressed" from="HBoxContainer/VBoxContainer/EnemyList" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_EnemyList_button_pressed"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/EnemyList" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_EnemyList_item_selected"]
+[connection signal="nothing_selected" from="HBoxContainer/VBoxContainer/EnemyList" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_EnemyList_nothing_selected"]
