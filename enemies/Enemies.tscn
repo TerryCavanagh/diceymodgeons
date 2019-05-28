@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://enemies/EnemiesTab.gd" type="Script" id=1]
 [ext_resource path="res://enemies/EnemyGraphics.tscn" type="PackedScene" id=2]
 [ext_resource path="res://enemies/EnemyScripts.tscn" type="PackedScene" id=3]
 [ext_resource path="res://enemies/EnemyData.tscn" type="PackedScene" id=4]
 [ext_resource path="res://enemies/EnemyList.gd" type="Script" id=5]
+[ext_resource path="res://enemies/AddNewEnemyPopup.tscn" type="PackedScene" id=6]
 
 [node name="Enemies" type="PanelContainer"]
 anchor_right = 1.0
@@ -38,7 +39,7 @@ caret_blink = true
 [node name="EnemyList" type="Tree" parent="HBoxContainer/VBoxContainer"]
 margin_top = 28.0
 margin_right = 300.0
-margin_bottom = 706.0
+margin_bottom = 682.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 3
@@ -47,6 +48,12 @@ hide_folding = true
 hide_root = true
 select_mode = 1
 script = ExtResource( 5 )
+
+[node name="AddEnemy" type="Button" parent="HBoxContainer/VBoxContainer"]
+margin_top = 686.0
+margin_right = 300.0
+margin_bottom = 706.0
+text = "Add a new enemy"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0
@@ -75,7 +82,17 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+
+[node name="AddNewEnemyPopup" parent="." instance=ExtResource( 6 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/Search" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_Search_text_changed"]
 [connection signal="button_pressed" from="HBoxContainer/VBoxContainer/EnemyList" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_EnemyList_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/VBoxContainer/EnemyList" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_EnemyList_item_selected"]
 [connection signal="nothing_selected" from="HBoxContainer/VBoxContainer/EnemyList" to="HBoxContainer/VBoxContainer/EnemyList" method="_on_EnemyList_nothing_selected"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/AddEnemy" to="." method="_on_AddEnemy_pressed"]

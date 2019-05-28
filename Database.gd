@@ -1,6 +1,9 @@
 extends Node
 
-signal data_changed(table, key, equals)
+signal entry_created(table, key)
+signal entry_updated(table, key, equals)
+signal entry_deleted(table, key)
+
 
 var mod_path:String = ""
 
@@ -49,18 +52,27 @@ func commit(table:int, action:int, key = null, field = null, value = null):
 		CREATE:
 			print_debug("CREATE %s: %s (%s) = %s" % [table, key, field, value])
 			result = _create(data, key, field, value)
+			if result:
+				if key != null and field == null:
+					emit_signal("entry_created", table, key)
+				elif key != null and field != null:
+					emit_signal("entry_updated", table, key, data.compare(key))
 		READ:
 			print_debug("READ %s: %s (%s) = %s" % [table, key, field, value])
 			result = _read(data, key, field)
 		UPDATE:
 			print_debug("UPDATE %s: %s (%s) = %s" % [table, key, field, value])
 			result = _update(data, key, field, value)
+			if result:
+				emit_signal("entry_updated", table, key, data.compare(key))
 		DELETE:
 			print_debug("DELETE %s: %s (%s) = %s" % [table, key, field, value])
 			result = _delete(data, key, field, value)
-		
-	if not action == READ:
-		emit_signal("data_changed", table, key, data.compare(key))
+			if result:
+				if key != null and field == null:
+					emit_signal("entry_deleted", table, key)
+				elif key != null and field != null:
+					emit_signal("entry_updated", table, key, data.compare(key))
 		
 	return result
 	
@@ -78,7 +90,7 @@ func _create(data, key, field, value):
 		[false, true]:
 			# if we only have the key, create an empty dictionary
 			if not data.find(key):
-				data.data[key] = {}
+				data.create(key)
 				return true
 		[false, false]:
 			# if it's an array, append the value, if not create/override the value
@@ -164,9 +176,9 @@ func _delete(data, key, field, value):
 			if obj:
 				var f = obj.get(field, null)
 				if typeof(f) == TYPE_ARRAY:
-					var r = f.erase(value)
+					f.erase(value)
 					f.sort()
-					return r
+					return true
 				else:
 					return obj.erase(field)
 			
@@ -233,6 +245,20 @@ class CSVData:
 	
 	func save_data(path:String):
 		pass
+		
+	func create(key):
+		data[key] = {}
+		for i in headers.size():
+			var h = headers[i]
+			if h == KEY:
+				data[key][h] = key
+			else:
+				data[key][h] = _convert_from_csv(h, "")
+			
+		data[key]["__from"] = "added"
+		
+		hashes[key] = data[key].hash()
+		
 		
 	func compare(id):
 		return  data.get(id, {}).hash() == hashes.get(id, null)

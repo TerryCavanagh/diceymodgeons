@@ -1,11 +1,12 @@
 extends PanelContainer
 
-
 onready var TabContainer = find_node("TabContainer")
 onready var EnemyList = find_node("EnemyList")
 onready var Data = find_node("Data")
 onready var Graphics = find_node("Graphics")
 onready var Scripts = find_node("Scripts")
+
+onready var AddNewEnemyPopup = find_node("AddNewEnemyPopup")
 
 func _ready():
 	TabContainer.visible = false
@@ -24,3 +25,8 @@ func _on_EnemyList_enemy_selected(key):
 	Data.set_data(data)
 	Graphics.set_data(data)
 	Scripts.set_data(data)
+
+
+func _on_AddEnemy_pressed():
+	print("Open something to add a new enemy")
+	AddNewEnemyPopup.popup_centered(Vector2(400, 120))

@@ -5,9 +5,13 @@ signal enemy_selected(key)
 var delete_texture:Texture = null
 var root:TreeItem = null
 
+var filter = null
+
 func _ready():
 	
-	Database.connect("data_changed", self, "_on_data_changed")
+	Database.connect("entry_created", self, "_on_entry_created")
+	Database.connect("entry_updated", self, "_on_entry_updated")
+	Database.connect("entry_deleted", self, "_on_entry_deleted")
 	
 	var delete_img = preload("res://assets/trashcanOpen.png")
 	delete_img.resize(24, 24, Image.INTERPOLATE_LANCZOS)
@@ -22,6 +26,7 @@ func _ready():
 	load_data()
 	
 func load_data(filter = null):
+	self.filter = filter
 	var select_meta = {}
 	if get_selected():
 		select_meta = get_selected().get_metadata(0)
@@ -77,8 +82,16 @@ func _set_item_data(item, metadata):
 		item.erase_button(2, 0)
 	item.add_button(2, delete_texture, 0, origin == "default")
 	item.set_metadata(0, metadata)
+	
+func _on_entry_created(table, key):
+	if not table == Database.Table.FIGHTERS: return
+	load_data(filter)
+	
+func _on_entry_deleted(table, key):
+	if not table == Database.Table.FIGHTERS: return
+	load_data(filter)
 		
-func _on_data_changed(table, key, equals):
+func _on_entry_updated(table, key, equals):
 	if not table == Database.Table.FIGHTERS: return
 	var child = root.get_children()
 	while child:

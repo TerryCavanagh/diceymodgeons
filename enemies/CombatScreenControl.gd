@@ -12,6 +12,10 @@ func _ready():
 	set_sprite(null, Vector2(), false)
 	set_overworld_sprite(null, Vector2(), false)
 	
+func reset():
+	$EnemyPos/Enemy.rect_position = Vector2()
+	$Overworld/EnemyOverworld.rect_position = Vector2()
+	
 func set_sprite(texture:Texture, offset:Vector2, hd:bool = true):
 	if not texture:
 		texture = sprite_placeholder

@@ -18,6 +18,8 @@ func set_data(data):
 	var overworld_name = data.get("OverworldAnimation", null)
 	var overworld_offset = data.get("OverworldAnimationOffset", Vector2())
 	
+	CombatScreen.reset()
+	
 	if sprite_name:
 		print(sprite_name)
 		# TODO
