@@ -1,11 +1,13 @@
 extends Tree
 
-signal enemy_selected(key)
+signal element_selected(key)
 
 var delete_texture:Texture = null
 var root:TreeItem = null
 
 var filter = null
+
+var table = null
 
 func _ready():
 	
@@ -22,16 +24,18 @@ func _ready():
 	set_column_titles_visible(false)
 	set_column_expand(0, true)
 	set_column_expand(1, false)
-	
-	load_data()
+	set_column_min_width(1, 30)
 	
 func load_data(filter = null):
 	self.filter = filter
+	
+	if not table: return
+	
 	var select_meta = {}
 	if get_selected():
 		select_meta = get_selected().get_metadata(0)
 	
-	var data = Database.commit(Database.Table.FIGHTERS, Database.READ)
+	var data = Database.commit(table, Database.READ)
 	var keys = data.keys()
 	keys.sort()
 	
@@ -39,7 +43,7 @@ func load_data(filter = null):
 		filter = filter.to_lower()
 		var new_keys = []
 		for key in keys:
-			if key.to_lower().begins_with(filter):
+			if key.findn(filter) > -1:
 				new_keys.push_back(key)
 		
 		keys = new_keys
@@ -51,8 +55,7 @@ func load_data(filter = null):
 	for key in keys:
 		var enemy = data[key]
 		var origin = enemy.get("__from", "default")
-		# TODO Remove the private thingy here
-		var metadata = {"key":key, "origin":origin, "modified": not Database._fighters.compare(key)}
+		var metadata = {"key":key, "origin":origin, "modified": not Database.get_table(table).compare(key)}
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key:
@@ -60,7 +63,7 @@ func load_data(filter = null):
 			still_selected = true
 	
 	if not still_selected:
-		emit_signal("enemy_selected", null)
+		emit_signal("element_selected", null)
 	
 func _set_item_data(item, metadata):
 	var key = metadata.get("key", "")
@@ -74,25 +77,23 @@ func _set_item_data(item, metadata):
 		t = "%s %s" % [key, "(*)"]
 	
 	item.set_text(0, t)
-	item.set_text(1, origin)
 	item.set_tooltip(0, key)
-	item.set_tooltip(1, key)
-	item.set_tooltip(2, "Delete")
-	if item.get_button_count(2) > 0:
-		item.erase_button(2, 0)
-	item.add_button(2, delete_texture, 0, origin == "default")
+	item.set_tooltip(1, "Delete")
+	if item.get_button_count(1) > 0:
+		item.erase_button(1, 0)
+	item.add_button(1, delete_texture, 0, origin == "default")
 	item.set_metadata(0, metadata)
 	
 func _on_entry_created(table, key):
-	if not table == Database.Table.FIGHTERS: return
+	if not table == self.table: return
 	load_data(filter)
 	
 func _on_entry_deleted(table, key):
-	if not table == Database.Table.FIGHTERS: return
+	if not table == self.table: return
 	load_data(filter)
 		
 func _on_entry_updated(table, key, equals):
-	if not table == Database.Table.FIGHTERS: return
+	if not table == self.table: return
 	var child = root.get_children()
 	while child:
 		var metadata = child.get_metadata(0)
@@ -104,16 +105,15 @@ func _on_entry_updated(table, key, equals):
 			
 		child = child.get_next()
 
-func _on_EnemyList_item_selected():
+func _on_List_item_selected():
 	var item = get_selected()
-	emit_signal("enemy_selected", item.get_metadata(0).get("key", ""))
+	emit_signal("element_selected", item.get_metadata(0).get("key", ""))
 
-func _on_EnemyList_button_pressed(item, column, id):
+func _on_List_button_pressed(item, column, id):
 	print("Trying to remove %s" % [item.get_metadata(0).key])
-
 
 func _on_Search_text_changed(new_text):
 	load_data(new_text)
 
-func _on_EnemyList_nothing_selected():
-	emit_signal("enemy_selected", null)
+func _on_List_nothing_selected():
+	emit_signal("element_selected", null)

@@ -13,6 +13,7 @@ var _equipment:CSVData = null
 enum {CREATE,READ,UPDATE,DELETE}
 
 enum Table {
+	NONE,
 	FIGHTERS,
 	EQUIPMENT,
 }
@@ -29,6 +30,15 @@ func load_data():
 func save_data():
 	pass
 	
+func get_table(table):
+	match table:
+		Table.FIGHTERS:
+			return _fighters
+		Table.EQUIPMENT:
+			return _equipment
+		_:
+			return null
+	
 func commit(table:int, action:int, key = null, field = null, value = null):
 	"""
 	Makes a database commit.
@@ -37,12 +47,7 @@ func commit(table:int, action:int, key = null, field = null, value = null):
 	- field: The field
 	- Value: The value
 	"""
-	var data = null
-	match table:
-		Table.FIGHTERS:
-			data = _fighters
-		Table.EQUIPMENT:
-			data = _equipment
+	var data = get_table(table)
 			
 	if not data:
 		return null

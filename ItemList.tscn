@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ItemListTree.gd" type="Script" id=1]
+[ext_resource path="res://ItemList.gd" type="Script" id=2]
+
+[node name="ItemList" type="VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 706.0
+rect_min_size = Vector2( 300, 0 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Search" type="LineEdit" parent="."]
+margin_right = 300.0
+margin_bottom = 24.0
+context_menu_enabled = false
+clear_button_enabled = true
+caret_blink = true
+
+[node name="List" type="Tree" parent="."]
+margin_top = 28.0
+margin_right = 300.0
+margin_bottom = 682.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+allow_reselect = true
+hide_folding = true
+hide_root = true
+select_mode = 1
+script = ExtResource( 1 )
+
+[node name="AddButton" type="Button" parent="."]
+margin_top = 686.0
+margin_right = 300.0
+margin_bottom = 706.0
+text = "Add a new enemy"
+[connection signal="text_changed" from="Search" to="List" method="_on_Search_text_changed"]
+[connection signal="button_pressed" from="List" to="List" method="_on_List_button_pressed"]
+[connection signal="element_selected" from="List" to="." method="_on_List_element_selected"]
+[connection signal="item_selected" from="List" to="List" method="_on_List_item_selected"]
+[connection signal="nothing_selected" from="List" to="List" method="_on_List_nothing_selected"]
+[connection signal="pressed" from="AddButton" to="." method="_on_AddButton_pressed"]

@@ -1,7 +1,7 @@
 extends PanelContainer
 
 onready var TabContainer = find_node("TabContainer")
-onready var EnemyList = find_node("EnemyList")
+onready var TreeList = find_node("ItemList")
 onready var Data = find_node("Data")
 onready var Graphics = find_node("Graphics")
 onready var Scripts = find_node("Scripts")
@@ -10,12 +10,9 @@ onready var AddNewEnemyPopup = find_node("AddNewEnemyPopup")
 
 func _ready():
 	TabContainer.visible = false
-	EnemyList.connect("enemy_selected", self, "_on_EnemyList_enemy_selected")
-	
-func _on_EnemyList_list_changed():
-	TabContainer.visible = false
 
-func _on_EnemyList_enemy_selected(key):
+func _on_TreeList_item_selected(key):
+	if not TabContainer: return
 	if key == null or key.empty(): 
 		TabContainer.visible = false
 		return
@@ -26,7 +23,5 @@ func _on_EnemyList_enemy_selected(key):
 	Graphics.set_data(data)
 	Scripts.set_data(data)
 
-
-func _on_AddEnemy_pressed():
-	print("Open something to add a new enemy")
+func _on_TreeList_add_button_pressed():
 	AddNewEnemyPopup.popup_centered(Vector2(400, 120))

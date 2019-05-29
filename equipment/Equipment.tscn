@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ItemList.tscn" type="PackedScene" id=1]
+
+[node name="Equipment" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="ItemList" parent="HBoxContainer" instance=ExtResource( 1 )]
+table = 2
+search_placeholder = "Search equipment"
+button_label = "Add a new equipment"
+
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
+margin_left = 304.0
+margin_right = 1266.0
+margin_bottom = 706.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
