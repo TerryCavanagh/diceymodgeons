@@ -1,10 +1,11 @@
 extends Node
 
 signal entry_created(table, key)
+signal entry_key_changed(table, old_key, new_key)
 signal entry_updated(table, key, equals)
 signal entry_deleted(table, key)
 
-
+var root_path:String = ""
 var mod_path:String = ""
 
 var _fighters:CSVData = null
@@ -21,11 +22,37 @@ enum Table {
 var undo_redo = UndoRedo.new()
 
 func _init():
+	root_path = "res://test"
+	mod_path = "mods/garfield"
 	load_data()
 	
+func load_mod(mod_name:String):
+	mod_path = "mods/%s" % mod_name
+	
+func _get_paths(table:int):
+	var file = ""
+	var schema = ""
+	match table:
+		Table.FIGHTERS:
+			file = "fighters.csv"
+			schema = "fighters_schema.json"
+		Table.EQUIPMENT:
+			file = "equipment.csv"
+			schema = "equipment_schema.json"
+			
+	var result = {}
+	
+	result["original"] = "%s/data/text/%s" % [root_path, file]
+	result["schema"] = "%s/data/text/%s" % [root_path, schema]
+	result["append"] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
+	result["merge"] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
+	
+	return result
+	
 func load_data():
-	_fighters = CSVData.new("res://data/text/fighters.csv", "res://data/text/fighters_schema.json", "Name")
-	_equipment = CSVData.new("res://data/text/equipment.csv", "res://data/text/equipment_schema.json", "Name")
+	
+	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "Name")
+	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
 	
 func save_data():
 	pass
@@ -67,9 +94,14 @@ func commit(table:int, action:int, key = null, field = null, value = null):
 			result = _read(data, key, field)
 		UPDATE:
 			print_debug("UPDATE %s: %s (%s) = %s" % [table, key, field, value])
+			if field == data.KEY:
+				field = null
 			result = _update(data, key, field, value)
 			if result:
-				emit_signal("entry_updated", table, key, data.compare(key))
+				if key != null and field == null:
+					emit_signal("entry_key_changed", table, key, value)
+				else:
+					emit_signal("entry_updated", table, key, data.compare(key))
 		DELETE:
 			print_debug("DELETE %s: %s (%s) = %s" % [table, key, field, value])
 			result = _delete(data, key, field, value)
@@ -155,12 +187,8 @@ func _update(data, key, field, value):
 			# if we only have the key it means that we want to update the key itself
 			if value == null: 
 				return false
-			var obj = data.find(key)
-			if obj:
-				# remove it from data, and add it back with the new key
-				data.data.erase(key)
-				data.data[value] = obj
-				return true
+				
+			return data.change_key(key, value)
 				
 	return false
 
@@ -200,15 +228,15 @@ class CSVData:
 	var original_data:Dictionary = {}
 	var hashes:Dictionary = {}
 	
-	var path:String
+	var paths:Dictionary = {}
 	
 	var KEY:String = ""
 	var schema:Dictionary = {}
 	
-	func _init(path:String, schema:String, key:String):
-		self.path = path
-		load_schema(schema)
-		load_data(path, key)
+	func _init(paths:Dictionary, key:String):
+		self.paths = paths
+		load_schema(paths.get("schema", ""))
+		load_data(paths.get("original", ""), key)
 		
 	func load_schema(path:String):
 		var file = File.new()
@@ -230,6 +258,11 @@ class CSVData:
 		else:
 			printerr("File %s can't be opened" % path)
 			
+		_content_to_data(content, "default")
+			
+		original_data = data.duplicate(true)
+		
+	func _content_to_data(content, source):
 		for c in content:
 			if c.size() != headers.size(): continue
 			var id = ""
@@ -241,12 +274,9 @@ class CSVData:
 					
 				data[id][h] = _convert_from_csv(h, c[i])
 				
-			data[id]["__from"] = "default"
+			data[id]["__from"] = source
 			
 			hashes[id] = data[id].hash()
-			
-		original_data = data.duplicate(true)
-		
 	
 	func save_data(path:String):
 		pass
@@ -273,6 +303,20 @@ class CSVData:
 		
 	func remove(id:String):
 		return data.erase(id)
+		
+	func change_key(old_key:String, new_key:String):
+		var old = data.get(old_key, null)
+		if old:
+			var old_hash = hashes.get(old_key)
+			hashes.erase(old_key)
+			data.erase(old_key)
+			old[KEY] = new_key
+			data[new_key] = old
+			hashes[new_key] = old_hash
+			
+			return true
+		
+		return false
 	
 	func _convert_from_csv(header:String, value:String):
 		if not schema.has(header): return value

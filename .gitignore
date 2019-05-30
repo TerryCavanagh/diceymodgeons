@@ -8,7 +8,7 @@
 export.cfg
 soundstuff/
 dist/
-data/
+test/
 # Mono-specific ignores
 .mono/
 

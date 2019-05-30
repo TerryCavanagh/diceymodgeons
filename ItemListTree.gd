@@ -3,6 +3,7 @@ extends Tree
 signal element_selected(key)
 
 var delete_texture:Texture = null
+var return_texture:Texture = null
 var root:TreeItem = null
 
 var filter = null
@@ -12,6 +13,7 @@ var table = null
 func _ready():
 	
 	Database.connect("entry_created", self, "_on_entry_created")
+	Database.connect("entry_key_changed", self, "_on_entry_key_changed")
 	Database.connect("entry_updated", self, "_on_entry_updated")
 	Database.connect("entry_deleted", self, "_on_entry_deleted")
 	
@@ -20,6 +22,12 @@ func _ready():
 	
 	delete_texture = ImageTexture.new()
 	delete_texture.create_from_image(delete_img)
+	
+	var return_img = preload("res://assets/return.png")
+	return_img.resize(24, 24, Image.INTERPOLATE_LANCZOS)
+	
+	return_texture = ImageTexture.new()
+	return_texture.create_from_image(return_img)
 	
 	set_column_titles_visible(false)
 	set_column_expand(0, true)
@@ -78,13 +86,27 @@ func _set_item_data(item, metadata):
 	
 	item.set_text(0, t)
 	item.set_tooltip(0, key)
-	item.set_tooltip(1, "Delete")
-	if item.get_button_count(1) > 0:
-		item.erase_button(1, 0)
-	item.add_button(1, delete_texture, 0, origin == "default")
+	
 	item.set_metadata(0, metadata)
 	
+	if item.get_button_count(1) > 0:
+		item.erase_button(1, 0)
+	
+	match origin:
+		"default":
+			pass
+		"added":
+			item.add_button(1, delete_texture, 0, false)
+			item.set_tooltip(1, "Delete")
+		"merged":
+			item.add_button(1, return_texture, 0, false)
+			item.set_tooltip(1, "Return to original")
+	
 func _on_entry_created(table, key):
+	if not table == self.table: return
+	load_data(filter)
+	
+func _on_entry_key_changed(table, old_key, new_key):
 	if not table == self.table: return
 	load_data(filter)
 	
@@ -110,7 +132,12 @@ func _on_List_item_selected():
 	emit_signal("element_selected", item.get_metadata(0).get("key", ""))
 
 func _on_List_button_pressed(item, column, id):
-	print("Trying to remove %s" % [item.get_metadata(0).key])
+	var meta = item.get_metadata(0)
+	match meta.origin:
+		"added":
+			print("Trying to remove %s" % [meta.key])
+		"merged":
+			print("Trying to undo to original %s" % [meta.key])
 
 func _on_Search_text_changed(new_text):
 	load_data(new_text)
