@@ -8,6 +8,9 @@ anchor_bottom = 1.0
 hint_tooltip = "Voice sound effects. (See TODO)"
 size_flags_horizontal = 3
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="."]
 margin_right = 1280.0
