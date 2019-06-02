@@ -1,0 +1,155 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://equipment/EquipmentData.gd" type="Script" id=1]
+
+[node name="EquipmentData" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="Row1" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1266.0
+margin_bottom = 20.0
+
+[node name="SizeContainer" type="HBoxContainer" parent="VBoxContainer/Row1"]
+margin_right = 83.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="VBoxContainer/Row1/SizeContainer"]
+margin_top = 3.0
+margin_right = 30.0
+margin_bottom = 17.0
+text = "Size:"
+
+[node name="SizeOption" type="OptionButton" parent="VBoxContainer/Row1/SizeContainer"]
+margin_left = 34.0
+margin_right = 83.0
+margin_bottom = 20.0
+shortcut_in_tooltip = false
+text = "1"
+flat = true
+items = [ "1", null, false, 0, null, "2", null, false, 1, null ]
+selected = 0
+
+[node name="CategoryContainer" type="HBoxContainer" parent="VBoxContainer/Row1"]
+margin_left = 87.0
+margin_right = 330.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="VBoxContainer/Row1/CategoryContainer"]
+margin_top = 3.0
+margin_right = 59.0
+margin_bottom = 17.0
+text = "Category:"
+
+[node name="CategoryOption" type="OptionButton" parent="VBoxContainer/Row1/CategoryContainer"]
+margin_left = 63.0
+margin_right = 243.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 180, 0 )
+clip_text = true
+
+[node name="ColorContainer" type="HBoxContainer" parent="VBoxContainer/Row1"]
+margin_left = 334.0
+margin_right = 555.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="VBoxContainer/Row1/ColorContainer"]
+margin_top = 3.0
+margin_right = 37.0
+margin_bottom = 17.0
+text = "Color:"
+
+[node name="ColorOption" type="OptionButton" parent="VBoxContainer/Row1/ColorContainer"]
+margin_left = 41.0
+margin_right = 221.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 180, 0 )
+
+[node name="Row2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 1266.0
+margin_bottom = 48.0
+
+[node name="UsesContainer" type="HBoxContainer" parent="VBoxContainer/Row2"]
+margin_right = 114.0
+margin_bottom = 24.0
+hint_tooltip = "The total number of uses this equipment will have.
+
+-1: Make it reusable
+0: 1 use"
+
+[node name="Label" type="Label" parent="VBoxContainer/Row2/UsesContainer"]
+margin_top = 5.0
+margin_right = 36.0
+margin_bottom = 19.0
+text = "Uses:"
+
+[node name="UsesSpin" type="SpinBox" parent="VBoxContainer/Row2/UsesContainer"]
+margin_left = 40.0
+margin_right = 114.0
+margin_bottom = 24.0
+min_value = -1.0
+align = 2
+
+[node name="SpellContainer" type="HBoxContainer" parent="VBoxContainer/Row2"]
+margin_left = 118.0
+margin_right = 275.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="VBoxContainer/Row2/SpellContainer"]
+margin_top = 5.0
+margin_right = 79.0
+margin_bottom = 19.0
+text = "Which Spell:"
+
+[node name="SpellSpin" type="SpinBox" parent="VBoxContainer/Row2/SpellContainer"]
+margin_left = 83.0
+margin_right = 157.0
+margin_bottom = 24.0
+align = 2
+
+[node name="Row3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 52.0
+margin_right = 1266.0
+margin_bottom = 90.0
+
+[node name="UpgradeContainer" type="VBoxContainer" parent="VBoxContainer/Row3"]
+margin_right = 180.0
+margin_bottom = 38.0
+
+[node name="Label" type="Label" parent="VBoxContainer/Row3/UpgradeContainer"]
+margin_right = 180.0
+margin_bottom = 14.0
+text = "Upgrade modifier:"
+
+[node name="UpgradeOption" type="OptionButton" parent="VBoxContainer/Row3/UpgradeContainer"]
+margin_top = 18.0
+margin_right = 180.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 180, 0 )
+
+[node name="WeakenContainer" type="VBoxContainer" parent="VBoxContainer/Row3"]
+margin_left = 184.0
+margin_right = 364.0
+margin_bottom = 38.0
+
+[node name="Label" type="Label" parent="VBoxContainer/Row3/WeakenContainer"]
+margin_right = 180.0
+margin_bottom = 14.0
+text = "Weaken modifier:"
+
+[node name="WeakenOption" type="OptionButton" parent="VBoxContainer/Row3/WeakenContainer"]
+margin_top = 18.0
+margin_right = 180.0
+margin_bottom = 38.0
+rect_min_size = Vector2( 180, 0 )

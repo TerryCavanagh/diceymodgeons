@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://enemies/EnemyScriptContainer.gd" type="Script" id=1]
+[ext_resource path="res://ScriptContainer.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Hack_16.tres" type="DynamicFont" id=2]
+
 
 [node name="BeforeCombatContainer" type="PanelContainer"]
 anchor_right = 1.0

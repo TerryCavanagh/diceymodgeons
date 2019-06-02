@@ -2,6 +2,14 @@ extends Node
 
 var innates:Dictionary = {}
 var scripts:Dictionary = {"constants": [], "functions": []}
+var items:Dictionary = {
+	"categories": [],
+	"colors": [],
+	"cast_backwards": [],
+	"slots": [],
+	"upgrade_modifier": [],
+	"weaken_modified": [],
+	}
 
 func _init():
 	load_data()
@@ -12,6 +20,7 @@ func load_data():
 		var json = parse_json(file.get_as_text())
 		innates = json.innates
 		scripts = json.scripts
+		items = json.items
 		file.close()
 	else:
 		printerr("Gamedata couldn't be loaded")

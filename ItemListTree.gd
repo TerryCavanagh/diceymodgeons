@@ -2,6 +2,8 @@ extends Tree
 
 signal element_selected(key)
 
+var process_data_func:FuncRef = null
+
 var delete_texture:Texture = null
 var return_texture:Texture = null
 var root:TreeItem = null
@@ -44,6 +46,10 @@ func load_data(filter = null):
 		select_meta = get_selected().get_metadata(0)
 	
 	var data = Database.commit(table, Database.READ)
+	
+	if process_data_func:
+		data = process_data_func.call_func(data)
+	
 	var keys = data.keys()
 	keys.sort()
 	
@@ -69,6 +75,8 @@ func load_data(filter = null):
 		if select_meta.get("key", "") == key:
 			item.select(0)
 			still_selected = true
+			
+	ensure_cursor_is_visible()
 	
 	if not still_selected:
 		emit_signal("element_selected", null)

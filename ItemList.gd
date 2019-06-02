@@ -17,7 +17,12 @@ func _ready():
 	List.table = table
 	AddButton.text = button_label
 	
+	List.process_data_func = funcref(self, "process_data")
+	
 	List.load_data()
+
+func process_data(data):
+	return data
 
 func _set_search_placeholder(v):
 	search_placeholder = v

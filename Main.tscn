@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://editor.theme" type="Theme" id=1]
-[ext_resource path="res://equipment/EquipmentTab.tscn" type="PackedScene" id=2]
-[ext_resource path="res://enemies/EnemiesTab.tscn" type="PackedScene" id=3]
+[ext_resource path="res://enemies/EnemiesTab.tscn" type="PackedScene" id=2]
+[ext_resource path="res://equipment/EquipmentTab.tscn" type="PackedScene" id=3]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -10,7 +10,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource( 1 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="TabContainer" type="TabContainer" parent="."]
@@ -19,16 +19,16 @@ anchor_bottom = 1.0
 mouse_filter = 1
 tab_align = 0
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
-[node name="Enemies" parent="TabContainer" instance=ExtResource( 3 )]
+[node name="Enemies" parent="TabContainer" instance=ExtResource( 2 )]
 margin_left = 5.0
 margin_top = 35.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Equipment" parent="TabContainer" instance=ExtResource( 2 )]
+[node name="Equipment" parent="TabContainer" instance=ExtResource( 3 )]
 visible = false
 margin_left = 5.0
 margin_top = 35.0

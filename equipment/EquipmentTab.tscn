@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ItemList.tscn" type="PackedScene" id=1]
 [ext_resource path="res://equipment/EquipmentTab.gd" type="Script" id=2]
+[ext_resource path="res://equipment/EquipmentScripts.tscn" type="PackedScene" id=3]
+[ext_resource path="res://equipment/EquipmentData.tscn" type="PackedScene" id=4]
 
 [node name="Equipment" type="PanelContainer"]
 anchor_right = 1.0
@@ -28,3 +30,18 @@ margin_right = 1266.0
 margin_bottom = 706.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Data" parent="HBoxContainer/TabContainer" instance=ExtResource( 4 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Scripts" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+[connection signal="add_button_pressed" from="HBoxContainer/ItemList" to="." method="_on_ItemList_add_button_pressed"]
+[connection signal="item_selected" from="HBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]

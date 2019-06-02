@@ -10,6 +10,8 @@ var mod_path:String = ""
 
 var _fighters:CSVData = null
 var _equipment:CSVData = null
+var _items:CSVData = null
+var _status_effects:CSVData = null
 
 enum {CREATE,READ,UPDATE,DELETE}
 
@@ -17,9 +19,11 @@ enum Table {
 	NONE,
 	FIGHTERS,
 	EQUIPMENT,
+	ITEMS,
+	STATUS_EFFECTS,
 }
 
-var undo_redo = UndoRedo.new()
+#var undo_redo = UndoRedo.new()
 
 func _init():
 	root_path = "res://test"
@@ -39,6 +43,12 @@ func _get_paths(table:int):
 		Table.EQUIPMENT:
 			file = "equipment.csv"
 			schema = "equipment_schema.json"
+		Table.ITEMS:
+			file = "items.csv"
+			schema = "items_schema.json"
+		Table.STATUS_EFFECTS:
+			file = "statuseffects.csv"
+			schema = "statuseffects_schema.json"
 			
 	var result = {}
 	
@@ -53,6 +63,8 @@ func load_data():
 	
 	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "Name")
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
+	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
+	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
 	
 func save_data():
 	pass
@@ -63,6 +75,10 @@ func get_table(table):
 			return _fighters
 		Table.EQUIPMENT:
 			return _equipment
+		Table.ITEMS:
+			return _items
+		Table.STATUS_EFFECTS:
+			return _status_effects
 		_:
 			return null
 	
