@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://equipment/EquipmentData.tscn" type="PackedScene" id=1]
+[ext_resource path="res://equipment/EquipmentScripts.tscn" type="PackedScene" id=2]
+[ext_resource path="res://equipment/TypeTabContainer.gd" type="Script" id=3]
+
+[node name="TabTypeContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1265.0
+margin_bottom = 677.0
+
+[node name="Data" parent="TabContainer" instance=ExtResource( 1 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Scripts" parent="TabContainer" instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="CreateContainer" type="CenterContainer" parent="."]
+visible = false
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1265.0
+margin_bottom = 677.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CreateContainer"]
+margin_left = 531.0
+margin_top = 325.0
+margin_right = 727.0
+margin_bottom = 345.0
+
+[node name="CreateButton" type="Button" parent="CreateContainer/HBoxContainer"]
+margin_right = 66.0
+margin_bottom = 20.0
+text = "Create it"
+
+[node name="CopyButton" type="Button" parent="CreateContainer/HBoxContainer"]
+margin_left = 70.0
+margin_right = 196.0
+margin_bottom = 20.0
+text = "Copy from normal"

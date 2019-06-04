@@ -17,6 +17,8 @@ onready var AppearForPartsCheck = find_node("AppearForPartsCheck")
 onready var UpgradeOption = find_node("UpgradeOption")
 onready var WeakenOption = find_node("WeakenOption")
 
+onready var DescriptionEdit = find_node("DescriptionEdit")
+
 var data_id:String = ""
 var data:Dictionary = {}
 
@@ -50,6 +52,8 @@ func set_data(data):
 	_setup(UpgradeOption, "Upgrade", "")
 	_setup(WeakenOption, "Weaken", "")
 	
+	_setup(DescriptionEdit, "Description", "")
+	
 func _setup(node, key, def):
 	if node is SpinBox:
 		node.value = data.get(key, def)
@@ -77,6 +81,9 @@ func _setup(node, key, def):
 				
 		Utils.update_option_tooltip(node, node.selected)
 		Utils.connect_signal(node, key, "item_selected", self, "_on_OptionButton_item_selected")
+	elif node == DescriptionEdit:
+		node.text = data.get(key, def)
+		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
 	

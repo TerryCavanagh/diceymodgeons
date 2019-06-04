@@ -1,0 +1,212 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://DescriptionEdit.gd" type="Script" id=1]
+[ext_resource path="res://assets/symbols.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 270, 0, 90, 90 )
+
+[node name="DescriptionEdit" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_right = 1118.0
+margin_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+show_line_numbers = true
+caret_blink = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 1122.0
+margin_right = 1280.0
+margin_bottom = 720.0
+rect_min_size = Vector2( 150, 0 )
+scroll_horizontal_enabled = false
+
+[node name="Symbols" type="GridContainer" parent="ScrollContainer"]
+margin_right = 158.0
+margin_bottom = 266.0
+rect_min_size = Vector2( 150, 0 )
+columns = 3
+
+[node name="TextureRect" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 54.0
+margin_right = 104.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 108.0
+margin_right = 158.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 54.0
+margin_top = 54.0
+margin_right = 104.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect6" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 108.0
+margin_top = 54.0
+margin_right = 158.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect7" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_top = 108.0
+margin_right = 50.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect8" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 54.0
+margin_top = 108.0
+margin_right = 104.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect9" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 108.0
+margin_top = 108.0
+margin_right = 158.0
+margin_bottom = 158.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect10" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_top = 162.0
+margin_right = 50.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect11" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 54.0
+margin_top = 162.0
+margin_right = 104.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect12" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 108.0
+margin_top = 162.0
+margin_right = 158.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect13" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_top = 216.0
+margin_right = 50.0
+margin_bottom = 266.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect14" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 54.0
+margin_top = 216.0
+margin_right = 104.0
+margin_bottom = 266.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="TextureRect15" type="TextureButton" parent="ScrollContainer/Symbols"]
+margin_left = 108.0
+margin_top = 216.0
+margin_right = 158.0
+margin_bottom = 266.0
+rect_min_size = Vector2( 50, 50 )
+focus_mode = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource( 1 )
+expand = true
+stretch_mode = 5
+[connection signal="text_changed" from="TextEdit" to="." method="_on_TextEdit_text_changed"]
+[connection signal="pressed" from="ScrollContainer/Symbols/TextureRect" to="." method="_on_TextureRect_pressed"]
