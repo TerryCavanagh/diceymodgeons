@@ -32,14 +32,7 @@ func _setup(node, node_name, key, def):
 	var idx = node.get_position_in_parent()
 	# TODO This is broken in godot right now so wait for fix
 	#TabContainer.set_tab_title(idx, node_name)
-	_connect(node, key, "text_changed", "_on_Script_text_changed")
-	
-func _connect(node, key, _signal, _func):
-	var param = [_signal, self, _func]
-	if node.callv("is_connected", param):
-		node.callv("disconnect", param)
-	param.push_back([node, key])
-	node.callv("connect", param)
+	Utils.connect_signal(node, key, "text_changed", self, "_on_Script_text_changed")
 	
 func _on_Script_text_changed(text, node, key):
 	if not data_id: return

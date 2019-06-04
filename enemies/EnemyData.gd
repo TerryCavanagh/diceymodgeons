@@ -53,31 +53,24 @@ func set_data(data):
 func _setup(node, key, def):
 	if node is SpinBox:
 		node.value = data.get(key, def)
-		_connect(node, key, "value_changed", "_on_SpinBox_value_changed")
+		Utils.connect_signal(node, key, "value_changed", self, "_on_SpinBox_value_changed")
 	elif node is LineEdit:
 		node.text = data.get(key, def)
-		_connect(node, key, "text_changed", "_on_LineEdit_text_changed")
+		Utils.connect_signal(node, key, "text_changed", self, "_on_LineEdit_text_changed")
 	elif node is CheckBox:
 		node.pressed = data.get(key, def)
-		_connect(node, key, "toggled", "_on_CheckBox_toggled")
+		Utils.connect_signal(node, key, "toggled", self, "_on_CheckBox_toggled")
 	elif node is TextEdit:
 		node.text = data.get(key, def)
-		_connect(node, key, "text_changed", "_on_TextEdit_text_changed")
+		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	elif node == InnateContainer:
 		node.set_data(data)
-		_connect(node, key, "value_changed", "_on_InnateContainer_value_changed")
+		Utils.connect_signal(node, key, "value_changed", self, "_on_InnateContainer_value_changed")
 	elif node == EquipmentContainer or node == SuperEquipmentContainer:
 		node.set_data(data, key)
-		_connect(node, key, "value_changed", "_on_EquipmentContainer_value_changed")
+		Utils.connect_signal(node, key, "value_changed", self, "_on_EquipmentContainer_value_changed")
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
-		
-func _connect(node, key, _signal, _func):
-	var param = [_signal, self, _func]
-	if node.callv("is_connected", param):
-		node.callv("disconnect", param)
-	param.push_back([node, key])
-	node.callv("connect", param)
 	
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return

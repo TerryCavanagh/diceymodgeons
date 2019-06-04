@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://equipment/EquipmentData.gd" type="Script" id=1]
+[ext_resource path="res://equipment/SlotsContainer.tscn" type="PackedScene" id=2]
 
 [node name="EquipmentData" type="PanelContainer"]
 anchor_right = 1.0
@@ -121,34 +122,81 @@ align = 2
 [node name="Row3" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 52.0
 margin_right = 1266.0
-margin_bottom = 90.0
+margin_bottom = 76.0
 
-[node name="UpgradeContainer" type="VBoxContainer" parent="VBoxContainer/Row3"]
+[node name="CastBackwardsCheck" type="CheckBox" parent="VBoxContainer/Row3"]
+margin_right = 131.0
+margin_bottom = 24.0
+text = "Cast backwards?"
+
+[node name="SingleUseCheck" type="CheckBox" parent="VBoxContainer/Row3"]
+margin_left = 135.0
+margin_right = 285.0
+margin_bottom = 24.0
+text = "Single use in battle"
+
+[node name="SpecialCheck" type="CheckBox" parent="VBoxContainer/Row3"]
+margin_left = 289.0
+margin_right = 384.0
+margin_bottom = 24.0
+text = "Is special?"
+
+[node name="ErrorImmuneCheck" type="CheckBox" parent="VBoxContainer/Row3"]
+margin_left = 388.0
+margin_right = 523.0
+margin_bottom = 24.0
+text = "Immune to error"
+
+[node name="ShowGoldCheck" type="CheckBox" parent="VBoxContainer/Row3"]
+margin_left = 527.0
+margin_right = 626.0
+margin_bottom = 24.0
+text = "Shows gold"
+
+[node name="AppearForPartsCheck" type="CheckBox" parent="VBoxContainer/Row3"]
+margin_left = 630.0
+margin_right = 767.0
+margin_bottom = 24.0
+text = "Appears for parts"
+
+[node name="SlotsContainer" parent="VBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 80.0
+margin_right = 1266.0
+margin_bottom = 212.0
+
+[node name="Row5" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 216.0
+margin_right = 1266.0
+margin_bottom = 254.0
+
+[node name="UpgradeContainer" type="VBoxContainer" parent="VBoxContainer/Row5"]
 margin_right = 180.0
 margin_bottom = 38.0
 
-[node name="Label" type="Label" parent="VBoxContainer/Row3/UpgradeContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/Row5/UpgradeContainer"]
 margin_right = 180.0
 margin_bottom = 14.0
 text = "Upgrade modifier:"
 
-[node name="UpgradeOption" type="OptionButton" parent="VBoxContainer/Row3/UpgradeContainer"]
+[node name="UpgradeOption" type="OptionButton" parent="VBoxContainer/Row5/UpgradeContainer"]
 margin_top = 18.0
 margin_right = 180.0
 margin_bottom = 38.0
 rect_min_size = Vector2( 180, 0 )
 
-[node name="WeakenContainer" type="VBoxContainer" parent="VBoxContainer/Row3"]
+[node name="WeakenContainer" type="VBoxContainer" parent="VBoxContainer/Row5"]
 margin_left = 184.0
 margin_right = 364.0
 margin_bottom = 38.0
 
-[node name="Label" type="Label" parent="VBoxContainer/Row3/WeakenContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/Row5/WeakenContainer"]
 margin_right = 180.0
 margin_bottom = 14.0
 text = "Weaken modifier:"
 
-[node name="WeakenOption" type="OptionButton" parent="VBoxContainer/Row3/WeakenContainer"]
+[node name="WeakenOption" type="OptionButton" parent="VBoxContainer/Row5/WeakenContainer"]
 margin_top = 18.0
 margin_right = 180.0
 margin_bottom = 38.0

@@ -6,9 +6,9 @@ var items:Dictionary = {
 	"categories": [],
 	"colors": [],
 	"cast_backwards": [],
-	"slots": [],
-	"upgrade_modifier": [],
-	"weaken_modified": [],
+	"slots": {},
+	"upgrade_modifier": {},
+	"weaken_modified": {}
 	}
 
 func _init():

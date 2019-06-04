@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 
 Database="*res://Database.gd"
 Gamedata="*res://Gamedata.gd"
+Utils="*res://Utils.gd"
 
 [debug]
 
