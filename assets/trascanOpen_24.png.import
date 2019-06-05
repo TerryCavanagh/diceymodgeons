@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/symbols.png-792c3623ee22d0030e5391b59154c23d.stex"
+path="res://.import/trascanOpen_24.png-abb4d0b3c998c7ef8d118c97c8ad040e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/symbols.png"
-dest_files=[ "res://.import/symbols.png-792c3623ee22d0030e5391b59154c23d.stex" ]
+source_file="res://assets/trascanOpen_24.png"
+dest_files=[ "res://.import/trascanOpen_24.png-abb4d0b3c998c7ef8d118c97c8ad040e.stex" ]
 
 [params]
 

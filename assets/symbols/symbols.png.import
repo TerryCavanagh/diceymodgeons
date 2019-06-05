@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/symbols.png-296f33db3bf291448095db4b30b04044.image"
+
+[deps]
+
+source_file="res://assets/symbols/symbols.png"
+dest_files=[ "res://.import/symbols.png-296f33db3bf291448095db4b30b04044.image" ]
+
+[params]
+

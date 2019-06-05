@@ -1,7 +1,9 @@
+tool
 extends Node
 
 var innates:Dictionary = {}
 var scripts:Dictionary = {"constants": [], "functions": []}
+var symbols:Dictionary = {}
 var items:Dictionary = {
 	"categories": [],
 	"colors": [],
@@ -20,6 +22,7 @@ func load_data():
 		var json = parse_json(file.get_as_text())
 		innates = json.innates
 		scripts = json.scripts
+		symbols = json.symbols
 		items = json.items
 		file.close()
 	else:

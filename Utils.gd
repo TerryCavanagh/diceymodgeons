@@ -1,5 +1,13 @@
 extends Node
 
+var delete_texture:Texture
+var return_texture:Texture
+
+var fonts:Dictionary = {}
+
+func _init():
+	pass
+
 func connect_signal(node:Node, key:String, _signal:String, _target:Node, _func:String)->void:
 	var param = [_signal, _target, _func]
 	if node.callv("is_connected", param):

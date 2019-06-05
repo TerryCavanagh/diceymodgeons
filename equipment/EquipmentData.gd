@@ -19,6 +19,8 @@ onready var WeakenOption = find_node("WeakenOption")
 
 onready var DescriptionEdit = find_node("DescriptionEdit")
 
+onready var EquipmentCard = find_node("EquipmentCard")
+
 var data_id:String = ""
 var data:Dictionary = {}
 
@@ -53,6 +55,11 @@ func set_data(data):
 	_setup(WeakenOption, "Weaken", "")
 	
 	_setup(DescriptionEdit, "Description", "")
+	
+	EquipmentCard.set_title(data_id)
+	EquipmentCard.change_size(data.get("Size", 1))
+	EquipmentCard.set_description(data.get("Description", ""))
+	EquipmentCard.change_color(data.get("Colour", ""), data_id.find("_upgraded") > -1)
 	
 func _setup(node, key, def):
 	if node is SpinBox:
@@ -99,6 +106,11 @@ func _on_CheckBox_toggled(value, node, key):
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
 	
+	if node == DescriptionEdit:
+		EquipmentCard.set_description(node.text)
+	
 func _on_OptionButton_item_selected(id, node, key):
 	if not data_id: return
 	Utils.update_option_tooltip(node, id)
+	if node == ColorOption:
+		EquipmentCard.change_color(node.get_item_text(node.selected).to_upper(), data_id.find("_upgraded") > -1)

@@ -19,17 +19,8 @@ func _ready():
 	Database.connect("entry_updated", self, "_on_entry_updated")
 	Database.connect("entry_deleted", self, "_on_entry_deleted")
 	
-	var delete_img = preload("res://assets/trashcanOpen.png")
-	delete_img.resize(24, 24, Image.INTERPOLATE_LANCZOS)
-	
-	delete_texture = ImageTexture.new()
-	delete_texture.create_from_image(delete_img)
-	
-	var return_img = preload("res://assets/return.png")
-	return_img.resize(24, 24, Image.INTERPOLATE_LANCZOS)
-	
-	return_texture = ImageTexture.new()
-	return_texture.create_from_image(return_img)
+	delete_texture = Utils.delete_texture
+	return_texture = Utils.return_texture
 	
 	set_column_titles_visible(false)
 	set_column_expand(0, true)
