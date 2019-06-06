@@ -14,6 +14,8 @@ onready var ErrorImmuneCheck = find_node("ErrorImmuneCheck")
 onready var ShowGoldCheck = find_node("ShowGoldCheck")
 onready var AppearForPartsCheck = find_node("AppearForPartsCheck")
 
+onready var SlotsContainer = find_node("SlotsContainer")
+
 onready var UpgradeOption = find_node("UpgradeOption")
 onready var WeakenOption = find_node("WeakenOption")
 
@@ -51,6 +53,8 @@ func set_data(data):
 	_setup(ShowGoldCheck, "Show Gold", false)
 	_setup(AppearForPartsCheck, "Appears For Parts", false)
 	
+	_setup(SlotsContainer, "Slots", [])
+	
 	_setup(UpgradeOption, "Upgrade", "")
 	_setup(WeakenOption, "Weaken", "")
 	
@@ -76,21 +80,16 @@ func _setup(node, key, def):
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	elif node is OptionButton:
 		var s = str(data.get(key, def))
-		if s.empty():
-			node.select(0)
-		else:
-			if node.has_meta("list"):
-				var list = node.get_meta("list")
-				node.select(list.find(s))
-			elif node.has_meta("dict"):
-				var dict = node.get_meta("dict")
-				node.select(dict.keys().find(s))
-				
-		Utils.update_option_tooltip(node, node.selected)
+		Utils.option_select(node, s)
 		Utils.connect_signal(node, key, "item_selected", self, "_on_OptionButton_item_selected")
 	elif node == DescriptionEdit:
 		node.text = data.get(key, def)
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
+	elif node == SlotsContainer:
+		node.set_data(data)
+		Utils.connect_signal(node, "Slots", "slots_changed", self, "_on_SlotsContainer_slots_changed")
+		Utils.connect_signal(node, "NEED TOTAL?", "total_changed", self, "_on_SlotsContainer_total_changed")
+		pass
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
 	
@@ -114,3 +113,11 @@ func _on_OptionButton_item_selected(id, node, key):
 	Utils.update_option_tooltip(node, id)
 	if node == ColorOption:
 		EquipmentCard.change_color(node.get_item_text(node.selected).to_upper(), data_id.find("_upgraded") > -1)
+		
+func _on_SlotsContainer_slots_changed(slots, node, key):
+	if not data_id: return
+	print('Slots changed to: %s' % slots)
+
+func _on_SlotsContainer_total_changed(new_total, node, key):
+	if not data_id: return
+	print('Need total changed to: %s' % new_total)

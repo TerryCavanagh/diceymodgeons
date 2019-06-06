@@ -71,7 +71,7 @@ margin_top = 76.0
 margin_right = 1266.0
 margin_bottom = 100.0
 
-[node name="Label" type="Label" parent="VBoxContainer/ExtraContainer"]
+[node name="ExtraLabel" type="Label" parent="VBoxContainer/ExtraContainer"]
 margin_top = 5.0
 margin_right = 35.0
 margin_bottom = 19.0
@@ -81,6 +81,7 @@ text = "Extra:"
 margin_left = 39.0
 margin_right = 113.0
 margin_bottom = 24.0
+min_value = -1.0
 allow_greater = true
 align = 2
 

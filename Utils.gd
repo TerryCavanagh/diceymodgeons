@@ -49,3 +49,21 @@ func update_option_tooltip(node:Node, idx:int)->void:
 		node.hint_tooltip = ""
 	else:
 		node.hint_tooltip = tooltip
+		
+func option_get_selected_key(node:OptionButton):
+	var meta = node.get_item_metadata(node.selected)
+	if not meta: return ""
+	return meta.get("key", "")
+		
+func option_select(node:OptionButton, value):
+	if value.empty():
+		node.select(0)
+	else:
+		if node.has_meta("list"):
+			var list = node.get_meta("list")
+			node.select(list.find(value))
+		elif node.has_meta("dict"):
+			var dict = node.get_meta("dict")
+			node.select(dict.keys().find(value))
+			
+	update_option_tooltip(node, node.selected)
