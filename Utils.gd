@@ -8,12 +8,14 @@ var fonts:Dictionary = {}
 func _init():
 	pass
 
-func connect_signal(node:Node, key:String, _signal:String, _target:Node, _func:String)->void:
+func disconnect_signal(node:Node, _signal:String, _target:Node, _func:String)->void:
 	var param = [_signal, _target, _func]
 	if node.callv("is_connected", param):
 		node.callv("disconnect", param)
-	param.push_back([node, key])
-	node.callv("connect", param)
+
+func connect_signal(node:Node, key:String, _signal:String, _target:Node, _func:String)->void:
+	disconnect_signal(node, _signal, _target, _func)
+	node.connect(_signal, _target, _func, [node, key])
 	
 func fill_options(node:OptionButton, data, capitalize:bool = false)->void:
 	node.clear()

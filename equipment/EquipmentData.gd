@@ -95,18 +95,23 @@ func _setup(node, key, def):
 	
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
 
 func _on_LineEdit_text_changed(value, node, key):
 	if not data_id: return
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
 	
 func _on_CheckBox_toggled(value, node, key):
 	if not data_id: return
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
 	
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
 	
 	if node == DescriptionEdit:
 		EquipmentCard.set_description(node.text)
+		
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, node.text)
 	
 func _on_OptionButton_item_selected(id, node, key):
 	if not data_id: return
@@ -114,10 +119,17 @@ func _on_OptionButton_item_selected(id, node, key):
 	if node == ColorOption:
 		EquipmentCard.change_color(node.get_item_text(node.selected).to_upper(), data_id.find("_upgraded") > -1)
 		
+	var value = Utils.option_get_selected_key(node)
+	
+	if (node == ColorOption or node == UpgradeOption or node == WeakenOption) and node.selected == 0:
+		value = ""
+		
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
+		
 func _on_SlotsContainer_slots_changed(slots, node, key):
 	if not data_id: return
-	print('Slots changed to: %s' % slots)
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, slots)
 
 func _on_SlotsContainer_total_changed(new_total, node, key):
 	if not data_id: return
-	print('Need total changed to: %s' % new_total)
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, new_total)

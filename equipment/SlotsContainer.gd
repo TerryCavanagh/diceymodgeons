@@ -15,7 +15,10 @@ onready var ErrorLabel = find_node("ErrorLabel")
 
 var data_id:String = ""
 var data:Dictionary = {}
+var current_slots:Array = []
 var slots:Array = []
+
+var is_valid = false
 
 func _ready():
 	var dict = Gamedata.items.get("slots", {})
@@ -30,14 +33,18 @@ func set_data(data):
 	self.data = data
 	
 	slots = data.get("Slots", [])
+	current_slots = slots.duplicate()
+	
 	visible = not slots.empty()
 	
 	for slot in SlotOptions:
 		slot.visible = false
 		Utils.connect_signal(slot, "Slots", "item_selected", self, "_on_Slot_item_selected")
+	Utils.connect_signal(SlotsNumberSpin, "Nothing", "value_changed", self, "_on_SlotsNumberSpin_value_changed")
+	
+	Utils.connect_signal(ExtraSpin, "Nothing", "value_changed", self, "_on_ExtraSpin_value_changed")
 	
 	SlotsNumberSpin.value = slots.size()
-	Utils.connect_signal(SlotsNumberSpin, "Nothing", "value_changed", self, "_on_SlotsNumberSpin_value_changed")
 	
 	for i in slots.size():
 		var slot = slots[i]
@@ -45,6 +52,9 @@ func set_data(data):
 			continue
 		SlotOptions[i].visible = true
 		Utils.option_select(SlotOptions[i], slot)
+	
+	# it will get visible if needed inside _check()
+	ExtraSpin.visible = false
 	
 	var total = data.get("NEED TOTAL?", null)
 	if total:
@@ -54,7 +64,7 @@ func set_data(data):
 		
 	_check()
 	
-func _check():
+func _check()->bool:
 	var slots = []
 	for i in SlotOptions.size():
 		if not SlotOptions[i].visible:
@@ -64,21 +74,33 @@ func _check():
 			slots.push_back(slot)
 			
 	ExtraContainer.visible = false
+	ExtraContainer.hint_tooltip = ""
+	ExtraSpin.visible = false
 	ExtraSpin.min_value = 0
+	
 	var result = true
 	var error = ""
+	
 	if slots.size() == 1 and slots[0] == "COUNTDOWN":
 		ExtraContainer.visible = true
+		ExtraSpin.visible = true
 		ExtraSpin.min_value = 1
+		# force emitting the value_changed signal
+		ExtraSpin.value = ExtraSpin.value
 		ExtraLabel.text = "Countdown:"
+		
 	elif slots.size() == 2 and slots[0] == "NORMAL" and slots[1] == "NORMAL":
 		ExtraContainer.visible = true
+		ExtraSpin.visible = true
 		ExtraSpin.min_value = -1
+		# force emitting the value_changed signal
+		ExtraSpin.value = ExtraSpin.value
 		ExtraLabel.text = "Optional minimum sum value:"
+		ExtraContainer.hint_tooltip = "Set it to -1 to disable a minimum sum."
 	
 	if slots.size() > 1 and slots.has("COUNTDOWN"):
 		result = false
-		error = "COUNTDOWN cards can only have 1 slot"
+		error = "COUNTDOWN equipment can only have 1 slot."
 		
 	if result:
 		ErrorLabel.modulate = Color.green
@@ -87,18 +109,19 @@ func _check():
 		ErrorLabel.modulate = Color.red
 		ErrorLabel.text = error
 		
+	is_valid = result
+	current_slots = slots
+	
 	return result
 	
 func _on_Slot_item_selected(idx, node, key):
-	if not data_id: return
+	if not data_id or not ExtraContainer.visible: return
 	Utils.update_option_tooltip(node, idx)
-	# get the new values from the slots
-	# check them
-	# emit signal if slots are okay
-	_check()
+	if _check():
+		emit_signal("slots_changed", current_slots)
 	
 func _on_SlotsNumberSpin_value_changed(value, node, key):
-	if not data_id: return
+	if not data_id or not ExtraContainer.visible: return
 	for i in SlotOptions.size():
 		if i < value:
 			if not SlotOptions[i].visible:
@@ -106,7 +129,10 @@ func _on_SlotsNumberSpin_value_changed(value, node, key):
 		else:
 			SlotOptions[i].visible = false
 			
-	_check()
+	if _check():
+		emit_signal("slots_changed", current_slots)
 	
 func _on_ExtraSpin_value_changed(value, node, key):
-	if not data_id: return
+	if not data_id or not ExtraContainer.visible or not node.visible: return
+	if value == -1: value = null
+	emit_signal("total_changed", value)

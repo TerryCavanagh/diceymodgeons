@@ -60,6 +60,9 @@ func set_description(desc:String):
 		elif s == "gray":
 			pass
 	result += desc.substr(last, desc.length() - last)
+	
+	result = result.replace("<d6>", "[img]res://assets/symbols/d6.png[/img]")
+	
 	regex.compile(arrows_regex)
 	result = regex.sub(result, "[color=red]99[/color]", true)
 	Description.clear()
