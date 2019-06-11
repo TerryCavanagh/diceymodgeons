@@ -36,4 +36,4 @@ func _setup(node, node_name, key, def):
 	
 func _on_Script_text_changed(text, node, key):
 	if not data_id: return
-	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, data_id, key, text)
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, text)
