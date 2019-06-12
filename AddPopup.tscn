@@ -1,9 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://enemies/AddNewEnemyPopup.gd" type="Script" id=1]
+[ext_resource path="res://AddPopup.gd" type="Script" id=1]
 
-[node name="AddNewEnemyPopup" type="WindowDialog"]
-visible = true
+[node name="AddPopup" type="WindowDialog"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 400, 100 )
@@ -37,7 +36,8 @@ __meta__ = {
 [node name="NameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 margin_right = 1248.0
 margin_bottom = 24.0
-placeholder_text = "Enemy name"
+placeholder_text = "Name"
+caret_blink = true
 
 [node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 margin_top = 28.0
@@ -64,7 +64,8 @@ margin_left = 644.0
 margin_right = 698.0
 margin_bottom = 20.0
 text = "Cancel"
-[connection signal="about_to_show" from="." to="." method="_on_AddNewEnemyPopup_about_to_show"]
+[connection signal="about_to_show" from="." to="." method="_on_AddPopup_about_to_show"]
+[connection signal="popup_hide" from="." to="." method="_on_AddPopup_popup_hide"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/NameEdit" to="." method="_on_NameEdit_text_changed"]
 [connection signal="text_entered" from="MarginContainer/VBoxContainer/NameEdit" to="." method="_on_NameEdit_text_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/OK" to="." method="_on_OK_pressed"]
