@@ -44,7 +44,7 @@ func _on_PopupMenu_index_pressed(idx):
 		"open":
 			pass
 		"save":
-			pass
+			Database.save_data()
 		"preferences":
 			pass
 		"quit":

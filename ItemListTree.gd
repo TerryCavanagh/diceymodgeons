@@ -20,6 +20,8 @@ func _ready():
 	Database.connect("entry_updated", self, "_on_entry_updated")
 	Database.connect("entry_deleted", self, "_on_entry_deleted")
 	
+	Database.connect("save_completed", self, "_on_save_completed")
+	
 	delete_texture = preload("res://assets/trascanOpen_20.png")
 	return_texture = preload("res://assets/return_20.png")
 	
@@ -142,6 +144,10 @@ func _on_entry_updated(table, key, equals):
 			break
 			
 		child = child.get_next()
+		
+func _on_save_completed(table):
+	if not table == self.table: return
+	load_data(filter)
 
 func _on_List_item_selected():
 	var item = get_selected()

@@ -128,6 +128,10 @@ func _on_OptionButton_item_selected(id, node, key):
 	if (node == ColorOption or node == UpgradeOption or node == WeakenOption) and node.selected == 0:
 		value = ""
 		
+	if node == SizeOption:
+		value = node.selected + 1
+		EquipmentCard.change_size(value)
+		
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
 		
 func _on_SlotsContainer_slots_changed(slots, node, key):

@@ -5,6 +5,8 @@ signal entry_key_changed(table, old_key, new_key)
 signal entry_updated(table, key, equals)
 signal entry_deleted(table, key)
 
+signal save_completed(table)
+
 var root_path:String = ""
 var mod_path:String = ""
 
@@ -67,7 +69,14 @@ func load_data():
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
 	
 func save_data():
-	pass
+	_fighters.save_data()
+	emit_signal("save_completed", Table.FIGHTERS)
+	_equipment.save_data()
+	emit_signal("save_completed", Table.EQUIPMENT)
+	_items.save_data()
+	emit_signal("save_completed", Table.ITEMS)
+	_status_effects.save_data()
+	emit_signal("save_completed", Table.STATUS_EFFECTS)
 	
 func get_table(table):
 	match table:
@@ -235,7 +244,6 @@ func _delete(data, key, field, value):
 
 class CSVData:
 	var headers:Array = []
-	var content:Array = []
 	
 	var append:Array = []
 	var merge:Array = []
@@ -251,8 +259,13 @@ class CSVData:
 	
 	func _init(paths:Dictionary, key:String):
 		self.paths = paths
+		KEY = key
 		load_schema(paths.get("schema", ""))
-		load_data(paths.get("original", ""), key)
+		load_data(paths.get("original", ""), "default")
+		load_data(paths.get("append", ""), "added")
+		load_data(paths.get("merge", ""), "merged")
+		
+		original_data = data.duplicate(true)
 		
 	func load_schema(path:String):
 		var file = File.new()
@@ -262,21 +275,22 @@ class CSVData:
 		else:
 			printerr("No schema loaded!!!")
 	
-	func load_data(path:String, key:String):
-		KEY = key
+	func load_data(path:String, origin:String):
 		var file = File.new()
+		if not file.file_exists(path):
+			printerr("File %s doesn't exist" % path)
+			return
+			
 		if file.open(path, File.READ) == OK:
 			headers = Array(file.get_csv_line())
+			var content = []
 			while not file.eof_reached():
 				content.push_back(Array(file.get_csv_line()))
 				
+			_content_to_data(content, origin)
 			file.close()
 		else:
 			printerr("File %s can't be opened" % path)
-			
-		_content_to_data(content, "default")
-			
-		original_data = data.duplicate(true)
 		
 	func _content_to_data(content, source):
 		for c in content:
@@ -294,8 +308,38 @@ class CSVData:
 			
 			hashes[id] = data[id].hash()
 	
-	func save_data(path:String):
-		pass
+	func save_data():
+		var path = paths.get("append", "")
+		
+		var content = _data_to_content("added")
+		if not content or content.empty(): return
+		
+		var file = File.new()
+		if file.open(path, File.WRITE) == OK:
+			file.store_csv_line(PoolStringArray(headers))
+			for entry in content:
+				file.store_csv_line(PoolStringArray(entry))
+				
+			file.close()
+		
+		
+	func _data_to_content(source):
+		var subdata = []
+		for key in data.keys():
+			var value = data[key]
+			if value.get("__from", "default") == source:
+				# TODO do this after knowing that the data has been saved correctly
+				hashes[key] = value.hash()
+				subdata.push_back(value)
+		
+		var values = []
+		for entry in subdata:
+			var csv = []
+			for header in headers:
+				csv.push_back(_convert_to_csv(header, entry[header]))
+			values.push_back(csv)
+		
+		return values
 		
 	func create(key):
 		data[key] = {}
@@ -377,22 +421,59 @@ class CSVData:
 		
 	func _convert_from_script(value:String):
 		var result = value
+		result = result.replace("||", "\n")
 		result = result.replace("|", ",")
 		result = result.replace("[;]", ",")
 		result = result.replace("~", '"')
 		result = beautify_code(result)
 		return result
-		
-	func _convert_to_csv(data):
-		pass
+			
+	func _convert_to_csv(header:String, value):
+		if not schema.has(header): return value
+			
+		match schema[header]:
+			"number":
+				if value:
+					return str(value)
+				else:
+					return ""
+			"point":
+				if value:
+					return PoolStringArray([str(value.x), str(value.y)]).join("|")
+				else:
+					return "0|0"
+			"list":
+				if value:
+					return PoolStringArray(value).join("|")
+				else:
+					return ""
+			"bool":
+				if value:
+					return "YES"
+				else:
+					return "NO"
+			"script":
+				return _convert_to_script(value)
+			"text":
+				return _convert_to_text(value)
+			_:
+				return value
 	
 	func _convert_to_text(value:String):
-		# TODO
-		return value
+		var result = value
+		result = result.replace("\n", "|")
+		result = result.replace(",", "[;]")
+		result = result.replace('"', "~")
+		result = result.strip_edges()
+		return result
 		
 	func _convert_to_script(value:String):
-		# TODO
-		return value
+		var result = value
+		result = result.replace("\n", " ")
+		result = result.replace(",", "|")
+		result = result.replace('"', "~")
+		result = result.strip_edges()
+		return result
 		
 	# modification from https://notabug.org/Yeldham/json-beautifier-for-godot
 	func beautify_code(json: String, spaces:=0) -> String:
