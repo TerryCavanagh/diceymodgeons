@@ -1,10 +1,5 @@
 extends Node
 
-var delete_texture:Texture
-var return_texture:Texture
-
-var fonts:Dictionary = {}
-
 func _init():
 	pass
 

@@ -98,9 +98,12 @@ func _check()->bool:
 		ExtraLabel.text = "Optional minimum sum value:"
 		ExtraContainer.hint_tooltip = "Set it to -1 to disable a minimum sum."
 	
-	if slots.size() > 1 and slots.has("COUNTDOWN"):
+	if slots.has("COUNTDOWN") and slots.size() > 1:
 		result = false
 		error = "COUNTDOWN equipment can only have 1 slot."
+	elif slots.has("DOUBLES") and (not slots.size() == 2 or not (slots[0] == "DOUBLES" and slots[1] == "DOUBLES")):
+		result = false
+		error ="Equipment can only have 2 DOUBLES slots."
 		
 	if result:
 		ErrorLabel.modulate = Color.green
@@ -115,13 +118,13 @@ func _check()->bool:
 	return result
 	
 func _on_Slot_item_selected(idx, node, key):
-	if not data_id or not ExtraContainer.visible: return
+	if not data_id or not visible: return
 	Utils.update_option_tooltip(node, idx)
 	if _check():
 		emit_signal("slots_changed", current_slots)
 	
 func _on_SlotsNumberSpin_value_changed(value, node, key):
-	if not data_id or not ExtraContainer.visible: return
+	if not data_id or not visible: return
 	for i in SlotOptions.size():
 		if i < value:
 			if not SlotOptions[i].visible:

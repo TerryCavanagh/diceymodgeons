@@ -36,6 +36,10 @@ window/size/width=1280
 window/size/height=720
 window/dpi/allow_hidpi=true
 
+[memory]
+
+limits/message_queue/max_size_kb=8192
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

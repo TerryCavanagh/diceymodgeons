@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ItemList.tscn" type="PackedScene" id=1]
 [ext_resource path="res://equipment/EquipmentTab.gd" type="Script" id=2]
 [ext_resource path="res://equipment/TypeTabContainer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://AddPopup.tscn" type="PackedScene" id=4]
 
 [node name="Equipment" type="PanelContainer"]
 anchor_right = 1.0
@@ -45,5 +46,19 @@ type = 2
 [node name="Downgraded" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
 type = 3
+
+[node name="AddNewEquipmentPopup" parent="." instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+window_title = "Add new equipment"
+empty_name_message = "The equipment needs a name."
+bad_name_message = "The equipment already exists."
+exception_message = "Underscore is not accepted."
+good_name_message = "Great choice!."
+table = 2
 [connection signal="add_button_pressed" from="HBoxContainer/ItemList" to="." method="_on_ItemList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]

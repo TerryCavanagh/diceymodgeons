@@ -6,14 +6,14 @@ func _run():
 
 func _prepare_images():
 	var delete_img = preload("res://assets/trashcanOpen.png")
-	delete_img.resize(24, 24, Image.INTERPOLATE_LANCZOS)
+	delete_img.resize(20, 20, Image.INTERPOLATE_LANCZOS)
 	
-	delete_img.save_png("res://assets/trascanOpen_24.png")
+	delete_img.save_png("res://assets/trascanOpen_20.png")
 	
 	var return_img = preload("res://assets/return.png")
-	return_img.resize(24, 24, Image.INTERPOLATE_LANCZOS)
+	return_img.resize(20, 20, Image.INTERPOLATE_LANCZOS)
 	
-	return_img.save_png("res://assets/return_24.png")
+	return_img.save_png("res://assets/return_20.png")
 	
 	var symbols_img = preload("res://assets/symbols/symbols.png")
 	

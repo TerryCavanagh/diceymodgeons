@@ -5,7 +5,7 @@
 [ext_resource path="res://enemies/EnemyScripts.tscn" type="PackedScene" id=3]
 [ext_resource path="res://enemies/EnemyData.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ItemList.tscn" type="PackedScene" id=5]
-[ext_resource path="res://enemies/AddNewEnemyPopup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://AddPopup.tscn" type="PackedScene" id=6]
 
 [node name="Enemies" type="PanelContainer"]
 anchor_right = 1.0
@@ -56,12 +56,15 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="AddNewEnemyPopup" parent="." instance=ExtResource( 6 )]
-visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1273.0
 margin_bottom = 713.0
+empty_name_message = "The enemy needs a name."
+bad_name_message = "The enemy already exists."
+exception_message = "Underscore is not accepted."
+good_name_message = "Great name! you have a thing for names, don't you?"
 [connection signal="add_button_pressed" from="HBoxContainer/ItemList" to="." method="_on_TreeList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/ItemList" to="." method="_on_TreeList_item_selected"]

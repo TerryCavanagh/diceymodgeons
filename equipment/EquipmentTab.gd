@@ -8,12 +8,27 @@ onready var Weakened = find_node("Weakened")
 onready var Downgraded = find_node("Downgraded")
 onready var Scripts = find_node("Scripts")
 
+onready var AddNewEquipmentPopup = find_node("AddNewEquipmentPopup")
+
 
 func _ready():
 	TabContainer.visible = false
 	
 	ItemList.process_data_func = funcref(self, "_process_data")
+	ItemList.modified_func = funcref(self, "_data_modified")
 	ItemList.start_load()
+	
+func _data_modified(key):
+	var table = Database.get_table(Database.Table.EQUIPMENT)
+	var modified = false
+	var keys = [key, '%s_upgraded' % key, '%s_downgraded' % key, '%s_weakened' % key]
+	for k in keys:
+		if table.find(k):
+			modified = not table.compare(k)
+		if modified:
+			return true
+			
+	return false
 	
 func _process_data(data):
 	var result = {}
@@ -39,5 +54,4 @@ func _on_ItemList_item_selected(key):
 
 
 func _on_ItemList_add_button_pressed():
-	#AddNewEnemyPopup.popup_centered(Vector2(400, 120))
-	pass
+	AddNewEquipmentPopup.popup_centered(Vector2(400, 120))

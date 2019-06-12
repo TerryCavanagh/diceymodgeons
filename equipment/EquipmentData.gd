@@ -63,7 +63,7 @@ func set_data(data):
 	EquipmentCard.set_title(data_id)
 	EquipmentCard.change_size(data.get("Size", 1))
 	EquipmentCard.set_description(data.get("Description", ""))
-	EquipmentCard.change_color(data.get("Colour", ""), data_id.find("_upgraded") > -1)
+	EquipmentCard.change_color(data.get("Colour", "GRAY"), data_id.find("_upgraded") > -1)
 	
 func _setup(node, key, def):
 	if node is SpinBox:
@@ -117,7 +117,11 @@ func _on_OptionButton_item_selected(id, node, key):
 	if not data_id: return
 	Utils.update_option_tooltip(node, id)
 	if node == ColorOption:
-		EquipmentCard.change_color(node.get_item_text(node.selected).to_upper(), data_id.find("_upgraded") > -1)
+		var color = node.get_item_text(node.selected).to_upper()
+		if node.selected == 0:
+			# TODO change it for the category's color
+			color = "GRAY"
+		EquipmentCard.change_color(color, data_id.find("_upgraded") > -1)
 		
 	var value = Utils.option_get_selected_key(node)
 	

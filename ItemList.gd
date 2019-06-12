@@ -13,6 +13,7 @@ onready var List = find_node("List")
 onready var AddButton = find_node("AddButton")
 
 var process_data_func:FuncRef = null setget _set_process_data_func
+var modified_func:FuncRef = null setget _set_modified_func
 
 func _ready():
 	Search.placeholder_text = search_placeholder
@@ -20,6 +21,7 @@ func _ready():
 	AddButton.text = button_label
 	
 	List.process_data_func = process_data_func
+	List.modified_func = modified_func
 	
 	
 func start_load():
@@ -45,8 +47,13 @@ func _on_List_element_selected(key):
 
 func _on_AddButton_pressed():
 	emit_signal("add_button_pressed")
-	
+
 func _set_process_data_func(value):
 	process_data_func = value
 	if not List: return
 	List.process_data_func = process_data_func
+	
+func _set_modified_func(value):
+	modified_func = value
+	if not List: return
+	List.modified_func = modified_func
