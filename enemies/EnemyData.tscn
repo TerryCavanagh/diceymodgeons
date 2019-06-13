@@ -48,7 +48,7 @@ custom_styles/bg = SubResource( 1 )
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 1246.0
-margin_bottom = 1368.0
+margin_bottom = 1786.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 16
@@ -194,7 +194,7 @@ rect_min_size = Vector2( 200, 0 )
 [node name="EquipmentPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 80.0
 margin_right = 1238.0
-margin_bottom = 549.0
+margin_bottom = 743.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
@@ -202,7 +202,7 @@ custom_styles/panel = SubResource( 2 )
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 1230.0
-margin_bottom = 461.0
+margin_bottom = 655.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
 margin_right = 1222.0
@@ -215,21 +215,21 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
 margin_right = 1222.0
-margin_bottom = 418.0
+margin_bottom = 612.0
 
 [node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
-margin_top = 422.0
+margin_top = 616.0
 margin_right = 1222.0
-margin_bottom = 453.0
+margin_bottom = 647.0
 text = "To add equipment drag the equipment from Available to Equipped. 
 To Remove equipment drag the equipment from Equipped to Available."
 align = 1
 valign = 1
 
 [node name="Row4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 565.0
+margin_top = 759.0
 margin_right = 1238.0
-margin_bottom = 589.0
+margin_bottom = 783.0
 size_flags_horizontal = 3
 
 [node name="SuperCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/Row4"]
@@ -250,9 +250,9 @@ margin_bottom = 24.0
 text = "Is boss?"
 
 [node name="SuperRow" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 605.0
+margin_top = 799.0
 margin_right = 1238.0
-margin_bottom = 1102.0
+margin_bottom = 1490.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
@@ -260,7 +260,7 @@ custom_styles/panel = SubResource( 2 )
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 1230.0
-margin_bottom = 489.0
+margin_bottom = 683.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer"]
 margin_right = 1222.0
@@ -316,38 +316,38 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 46.0
 margin_right = 1222.0
-margin_bottom = 446.0
+margin_bottom = 640.0
 
 [node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer"]
-margin_top = 450.0
+margin_top = 644.0
 margin_right = 1222.0
-margin_bottom = 481.0
+margin_bottom = 675.0
 text = "To add equipment drag the equipment from Available to Equipped. 
 To Remove equipment drag the equipment from Equipped to Available."
 align = 1
 valign = 1
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1118.0
+margin_top = 1506.0
 margin_right = 1238.0
-margin_bottom = 1122.0
+margin_bottom = 1510.0
 
 [node name="InnateContainer" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 1138.0
+margin_top = 1526.0
 margin_right = 1238.0
-margin_bottom = 1156.0
+margin_bottom = 1544.0
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1172.0
+margin_top = 1560.0
 margin_right = 1238.0
-margin_bottom = 1176.0
+margin_bottom = 1564.0
 
 [node name="Row5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1192.0
+margin_top = 1580.0
 margin_right = 1238.0
-margin_bottom = 1360.0
+margin_bottom = 1748.0
 size_flags_horizontal = 3
 
 [node name="FirstWordsContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Row5"]
@@ -390,3 +390,11 @@ rect_min_size = Vector2( 0, 150 )
 size_flags_horizontal = 3
 show_line_numbers = true
 caret_blink = true
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer"]
+margin_top = 1764.0
+margin_right = 1238.0
+margin_bottom = 1778.0
+text = "Add an extra new line to separate the dialog boxes"
+align = 1
+valign = 1

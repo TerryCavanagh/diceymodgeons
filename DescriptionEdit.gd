@@ -38,4 +38,10 @@ func _on_TextEdit_text_changed():
 
 
 func _on_TextureButton_pressed(symbol):
-	TextEdit.insert_text_at_cursor("[%s]" % symbol)
+	# TODO remove this hardcoded thing
+	var t = ""
+	if symbol == "d6":
+		t = "<%s>" % symbol
+	else:
+		t = "[%s]" % symbol
+	TextEdit.insert_text_at_cursor(t)

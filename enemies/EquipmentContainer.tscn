@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://enemies/EquipmentContainer.gd" type="Script" id=1]
 [ext_resource path="res://enemies/EquipmentList.tscn" type="PackedScene" id=2]
+[ext_resource path="res://equipment/EquipmentCard.tscn" type="PackedScene" id=3]
 
 [node name="EquipmentContainer" type="HBoxContainer"]
 anchor_right = 1.0
@@ -14,35 +15,34 @@ __meta__ = {
 }
 
 [node name="AvailableContainer" parent="." instance=ExtResource( 2 )]
+margin_right = 486.0
 title = "Available"
 can_add = false
 
 [node name="EquippedContainer" parent="." instance=ExtResource( 2 )]
-margin_left = 428.0
-margin_right = 852.0
+margin_left = 490.0
+margin_right = 976.0
 title = "Equipped"
 can_remove = true
 
-[node name="DescriptionContainer" type="VBoxContainer" parent="."]
-margin_left = 856.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_left = 980.0
 margin_right = 1280.0
 margin_bottom = 720.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+rect_min_size = Vector2( 300, 0 )
 
-[node name="Label" type="Label" parent="DescriptionContainer"]
-margin_right = 424.0
-margin_bottom = 14.0
-text = "Description"
-align = 1
-valign = 1
+[node name="Control" type="Control" parent="CenterContainer"]
+margin_left = 150.0
+margin_top = 360.0
+margin_right = 150.0
+margin_bottom = 360.0
 
-[node name="Description" type="RichTextLabel" parent="DescriptionContainer"]
-margin_top = 18.0
-margin_right = 424.0
-margin_bottom = 720.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="EquipmentCard" parent="CenterContainer/Control" instance=ExtResource( 3 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_bottom = 297.0
 [connection signal="item_selected" from="AvailableContainer" to="." method="_on_AvailableContainer_item_selected"]
 [connection signal="item_selected" from="EquippedContainer" to="." method="_on_EquippedContainer_item_selected"]
 [connection signal="value_changed" from="EquippedContainer" to="." method="_on_EquippedContainer_value_changed"]

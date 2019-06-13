@@ -37,6 +37,7 @@ func _create_item(popup:PopupMenu, label:String, scancode:int, meta, ctrl:bool =
 func _on_PopupMenu_index_pressed(idx):
 	var popup = get_popup()
 	var meta = popup.get_item_metadata(idx)
+	# TODO check that the data has been saved before new, open or quit
 	match meta:
 		"new":
 			pass
@@ -47,4 +48,4 @@ func _on_PopupMenu_index_pressed(idx):
 		"preferences":
 			pass
 		"quit":
-			pass
+			get_tree().quit()

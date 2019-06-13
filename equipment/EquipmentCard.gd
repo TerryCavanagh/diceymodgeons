@@ -68,12 +68,7 @@ func set_description(desc:String):
 	Description.clear()
 	Description.bbcode_text = "[center]%s[/center]" % result
 	
-	yield(get_tree(), "idle_frame")
-	Description.rect_position.y = (result.split("\n").size() - 1) * -42
-	if card_size == 2:
-		Description.rect_position.y += 150
-	Description.rect_pivot_offset = Description.rect_size / 2.0
-	Description.rect_scale = Vector2(0.85, 0.85)
+	_update_description_position()
 
 func change_size(s):
 	card_size = s
@@ -91,3 +86,13 @@ func change_size(s):
 		margin_right = rect_pivot_offset.x
 		margin_top = -rect_pivot_offset.y
 		margin_bottom = rect_pivot_offset.y
+		
+	_update_description_position()
+
+func _update_description_position():
+	yield(get_tree(), "idle_frame")
+	Description.rect_position.y = (Description.get_line_count() - 1) * -42
+	if card_size == 2:
+		Description.rect_position.y += 150
+	Description.rect_pivot_offset = Description.rect_size / 2.0
+	Description.rect_scale = Vector2(0.85, 0.85)
