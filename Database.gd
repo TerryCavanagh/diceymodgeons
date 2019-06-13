@@ -25,6 +25,12 @@ enum Table {
 	STATUS_EFFECTS,
 }
 
+enum Origin {
+	DEFAULT,
+	APPEND,
+	MERGE,
+}
+
 #var undo_redo = UndoRedo.new()
 
 func _init():
@@ -54,10 +60,11 @@ func _get_paths(table:int):
 			
 	var result = {}
 	
-	result["original"] = "%s/data/text/%s" % [root_path, file]
 	result["schema"] = "%s/data/text/%s" % [root_path, schema]
-	result["append"] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
-	result["merge"] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
+	
+	result[Origin.DEFAULT] = "%s/data/text/%s" % [root_path, file]
+	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.MERGE] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
 	
 	return result
 	
@@ -261,9 +268,9 @@ class CSVData:
 		self.paths = paths
 		KEY = key
 		load_schema(paths.get("schema", ""))
-		load_data(paths.get("original", ""), "default")
-		load_data(paths.get("append", ""), "added")
-		load_data(paths.get("merge", ""), "merged")
+		load_data(paths.get(Origin.DEFAULT, ""), Origin.DEFAULT)
+		load_data(paths.get(Origin.APPEND, ""), Origin.APPEND)
+		load_data(paths.get(Origin.MERGE, ""), Origin.MERGE)
 		
 		original_data = data.duplicate(true)
 		
@@ -275,7 +282,7 @@ class CSVData:
 		else:
 			printerr("No schema loaded!!!")
 	
-	func load_data(path:String, origin:String):
+	func load_data(path:String, origin:int):
 		var file = File.new()
 		if not file.file_exists(path):
 			printerr("File %s doesn't exist" % path)
@@ -309,9 +316,9 @@ class CSVData:
 			hashes[id] = data[id].hash()
 	
 	func save_data():
-		var path = paths.get("append", "")
+		var path = paths.get(Origin.APPEND, "")
 		
-		var content = _data_to_content("added")
+		var content = _data_to_content(Origin.APPEND)
 		if not content or content.empty(): return
 		
 		var file = File.new()
@@ -327,7 +334,7 @@ class CSVData:
 		var subdata = []
 		for key in data.keys():
 			var value = data[key]
-			if value.get("__from", "default") == source:
+			if value.get("__from", Origin.DEFAULT) == source:
 				# TODO do this after knowing that the data has been saved correctly
 				hashes[key] = value.hash()
 				subdata.push_back(value)
@@ -350,7 +357,7 @@ class CSVData:
 			else:
 				data[key][h] = _convert_from_csv(h, "")
 			
-		data[key]["__from"] = "added"
+		data[key]["__from"] = Origin.APPEND
 		
 		hashes[key] = data[key].hash()
 		

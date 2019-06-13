@@ -31,7 +31,6 @@ func _create_item(popup:PopupMenu, label:String, scancode:int, meta, ctrl:bool =
 	var shortcut = ShortCut.new()
 	shortcut.resource_name = label
 	shortcut.shortcut = ev
-	print(shortcut.is_valid(), "  ", shortcut.get_as_text())
 	popup.add_shortcut(shortcut)
 	popup.set_item_metadata(popup.get_item_count() - 1, meta)
 

@@ -62,7 +62,7 @@ func load_data(filter = null, select_key = null):
 	var still_selected = false
 	for key in keys:
 		var enemy = data[key]
-		var origin = enemy.get("__from", "default")
+		var origin = enemy.get("__from", Database.Origin.DEFAULT)
 		var metadata = {"key":key, "origin":origin, "modified": _modified(key)}
 		var item = create_item(root)
 		_set_item_data(item, metadata)
@@ -81,34 +81,37 @@ func _modified(key):
 	else:
 		return not Database.get_table(table).compare(key)
 	
-func _set_item_data(item, metadata):
+func _set_item_data(item:TreeItem, metadata):
 	var key = metadata.get("key", "")
 	if key.empty(): return
 	
-	var origin = metadata.get("origin", "default")
+	var origin = metadata.get("origin", Database.Origin.DEFAULT)
 	var modified = metadata.get("modified", false)
 	
 	var t = key
 	if modified:
 		t = "%s %s" % [key, "(*)"]
-		if origin == "default":
-			origin = "merged"
+		if origin == Database.Origin.DEFAULT:
+			origin = Database.Origin.MERGE
 	
 	item.set_text(0, t)
+	item.set_editable(0, true)
 	item.set_tooltip(0, key)
 	
 	item.set_metadata(0, metadata)
+	
+	item.set_selectable(1, false)
 	
 	if item.get_button_count(1) > 0:
 		item.erase_button(1, 0)
 	
 	match origin:
-		"default":
+		Database.Origin.DEFAULT:
 			pass
-		"added":
+		Database.Origin.APPEND:
 			item.add_button(1, delete_texture, 0, false)
 			item.set_tooltip(1, "Delete")
-		"merged":
+		Database.Origin.MERGE:
 			item.add_button(1, return_texture, 0, false)
 			item.set_tooltip(1, "Return to original")
 	
