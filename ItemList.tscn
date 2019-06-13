@@ -25,7 +25,7 @@ margin_right = 300.0
 margin_bottom = 682.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-columns = 2
+columns = 3
 allow_reselect = true
 hide_folding = true
 hide_root = true
@@ -39,6 +39,7 @@ text = "Add a new enemy"
 [connection signal="text_changed" from="Search" to="List" method="_on_Search_text_changed"]
 [connection signal="button_pressed" from="List" to="List" method="_on_List_button_pressed"]
 [connection signal="element_selected" from="List" to="." method="_on_List_element_selected"]
+[connection signal="item_edited" from="List" to="List" method="_on_List_item_edited"]
 [connection signal="item_selected" from="List" to="List" method="_on_List_item_selected"]
 [connection signal="nothing_selected" from="List" to="List" method="_on_List_nothing_selected"]
 [connection signal="pressed" from="AddButton" to="." method="_on_AddButton_pressed"]

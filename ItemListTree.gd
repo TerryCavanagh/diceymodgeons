@@ -13,6 +13,12 @@ var filter = null
 
 var table = null
 
+enum Column {
+	MODIFIED = 0,
+	NAME = 1,
+	BUTTON = 2,
+}
+
 func _ready():
 	
 	Database.connect("entry_created", self, "_on_entry_created")
@@ -26,9 +32,11 @@ func _ready():
 	return_texture = preload("res://assets/return_20.png")
 	
 	set_column_titles_visible(false)
-	set_column_expand(0, true)
-	set_column_expand(1, false)
-	set_column_min_width(1, 30)
+	set_column_expand(Column.MODIFIED, false)
+	set_column_expand(Column.NAME, true)
+	set_column_expand(Column.BUTTON, false)
+	set_column_min_width(Column.MODIFIED, 15)
+	set_column_min_width(Column.BUTTON, 30)
 	
 func load_data(filter = null, select_key = null):
 	self.filter = filter
@@ -37,7 +45,7 @@ func load_data(filter = null, select_key = null):
 	
 	var select_meta = {}
 	if not select_key and get_selected():
-		select_meta = get_selected().get_metadata(0)
+		select_meta = get_selected().get_metadata(Column.NAME)
 	
 	var data = Database.commit(table, Database.READ)
 	
@@ -88,32 +96,34 @@ func _set_item_data(item:TreeItem, metadata):
 	var origin = metadata.get("origin", Database.Origin.DEFAULT)
 	var modified = metadata.get("modified", false)
 	
-	var t = key
 	if modified:
-		t = "%s %s" % [key, "(*)"]
+		item.set_text(Column.MODIFIED, "*")
 		if origin == Database.Origin.DEFAULT:
 			origin = Database.Origin.MERGE
+	else:
+		item.set_text(Column.MODIFIED, "")
 	
-	item.set_text(0, t)
-	item.set_editable(0, true)
-	item.set_tooltip(0, key)
+	item.set_text(Column.NAME, key)
+	item.set_editable(Column.NAME, true)
+	item.set_tooltip(Column.NAME, key)
 	
-	item.set_metadata(0, metadata)
+	item.set_metadata(Column.NAME, metadata)
 	
-	item.set_selectable(1, false)
+	item.set_selectable(Column.MODIFIED, false)
+	item.set_selectable(Column.BUTTON, false)
 	
-	if item.get_button_count(1) > 0:
-		item.erase_button(1, 0)
+	if item.get_button_count(Column.BUTTON) > 0:
+		item.erase_button(Column.BUTTON, 0)
 	
 	match origin:
 		Database.Origin.DEFAULT:
 			pass
 		Database.Origin.APPEND:
-			item.add_button(1, delete_texture, 0, false)
-			item.set_tooltip(1, "Delete")
+			item.add_button(Column.BUTTON, delete_texture, 0, false)
+			item.set_tooltip(Column.BUTTON, "Delete")
 		Database.Origin.MERGE:
-			item.add_button(1, return_texture, 0, false)
-			item.set_tooltip(1, "Return to original")
+			item.add_button(Column.BUTTON, return_texture, 0, false)
+			item.set_tooltip(Column.BUTTON, "Return to original")
 	
 func _on_entry_created(table, key):
 	if not table == self.table: return
@@ -136,7 +146,7 @@ func _on_entry_updated(table, key, equals):
 		key = key.left(key.find("_"))
 		
 	while child:
-		var metadata = child.get_metadata(0)
+		var metadata = child.get_metadata(Column.NAME)
 		var child_key = metadata.get("key", "")
 		if child_key.empty():
 			break
@@ -154,14 +164,14 @@ func _on_save_completed(table):
 
 func _on_List_item_selected():
 	var item = get_selected()
-	emit_signal("element_selected", item.get_metadata(0).get("key", ""))
+	emit_signal("element_selected", item.get_metadata(Column.NAME).get("key", ""))
 
 func _on_List_button_pressed(item, column, id):
-	var meta = item.get_metadata(0)
+	var meta = item.get_metadata(Column.NAME)
 	match meta.origin:
-		"added":
+		Database.Origin.APPEND:
 			print("Trying to remove %s" % [meta.key])
-		"merged":
+		Database.Origin.MERGE:
 			print("Trying to undo to original %s" % [meta.key])
 
 func _on_Search_text_changed(new_text):
@@ -169,3 +179,14 @@ func _on_Search_text_changed(new_text):
 
 func _on_List_nothing_selected():
 	emit_signal("element_selected", null)
+
+func _on_List_item_edited():
+	var item = get_selected()
+	var meta = item.get_metadata(Column.NAME)
+	var old_key = meta.get("key", "")
+	var new_key = item.get_text(Column.NAME)
+	if new_key.strip_edges().empty() or old_key == new_key:
+		_set_item_data(item, meta)
+		return
+		
+	Database.commit(table, Database.UPDATE, old_key, Database.get_table(table).KEY, new_key)
