@@ -16,6 +16,7 @@ func _ready():
 func _load_equipment_list():
 	var equipment = Database.commit(Database.Table.EQUIPMENT, Database.READ)
 	if not equipment: return false
+	_equipment = []
 	# TODO what about the ones ending in ? or having a @
 	for key in equipment.keys():
 		if key.find("_") > -1 or key.find("?") > -1: continue
