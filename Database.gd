@@ -5,6 +5,7 @@ signal entry_key_changed(table, old_key, new_key)
 signal entry_updated(table, key, equals)
 signal entry_deleted(table, key)
 
+signal data_loaded()
 signal save_completed(table)
 
 var root_path:String = ""
@@ -36,10 +37,7 @@ enum Origin {
 func _init():
 	root_path = "res://test"
 	mod_path = "mods/garfield"
-	load_data()
-	
-func load_mod(mod_name:String):
-	mod_path = "mods/%s" % mod_name
+	#load_data(root_path, mod_path)
 	
 func _get_paths(table:int):
 	var file = ""
@@ -68,12 +66,16 @@ func _get_paths(table:int):
 	
 	return result
 	
-func load_data():
+func load_data(root_path:String, mod:String):
+	self.root_path = root_path
+	self.mod_path = 'mods/%s' % mod
 	
 	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "Name")
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
 	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
+	
+	emit_signal("data_loaded")
 	
 func save_data():
 	_fighters.save_data()

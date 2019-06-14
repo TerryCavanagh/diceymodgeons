@@ -11,18 +11,25 @@ var data:Dictionary = {}
 var _equipment:Array = []
 
 func _ready():
+	set_data({}, "")
+	
+func _load_equipment_list():
 	var equipment = Database.commit(Database.Table.EQUIPMENT, Database.READ)
+	if not equipment: return false
 	# TODO what about the ones ending in ? or having a @
 	for key in equipment.keys():
 		if key.find("_") > -1 or key.find("?") > -1: continue
 		_equipment.push_back(key)
-	set_data({}, "")
+	
+	return true
 	
 func set_data(data, key):
 	self.key = key
 	self.data = data
 	
 	EquipmentCard.visible = false
+	
+	if not _load_equipment_list(): return
 	
 	var available = _equipment
 	var equipped = data.get(self.key, [])

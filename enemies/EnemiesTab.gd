@@ -10,7 +10,6 @@ onready var AddNewEnemyPopup = find_node("AddNewEnemyPopup")
 
 func _ready():
 	TabContainer.visible = false
-	TreeList.start_load()
 
 func _on_TreeList_item_selected(key):
 	if not TabContainer: return

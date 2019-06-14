@@ -16,7 +16,6 @@ func _ready():
 	
 	ItemList.process_data_func = funcref(self, "_process_data")
 	ItemList.modified_func = funcref(self, "_data_modified")
-	ItemList.start_load()
 	
 func _data_modified(key):
 	var table = Database.get_table(Database.Table.EQUIPMENT)

@@ -1,0 +1,162 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ModSettings.gd" type="Script" id=1]
+[ext_resource path="res://WarningPopup.gd" type="Script" id=2]
+
+[node name="ModSettings" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 313.0
+margin_top = 173.0
+margin_right = 953.0
+margin_bottom = 533.0
+rect_min_size = Vector2( 640, 360 )
+custom_constants/separation = 32
+
+[node name="GamePathContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_right = 640.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/GamePathContainer"]
+margin_top = 5.0
+margin_right = 74.0
+margin_bottom = 19.0
+text = "Game path:"
+
+[node name="GamePathEdit" type="LineEdit" parent="CenterContainer/VBoxContainer/GamePathContainer"]
+margin_left = 78.0
+margin_right = 578.0
+margin_bottom = 24.0
+focus_mode = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+editable = false
+focus_mode = 0
+
+[node name="ChangeButton" type="Button" parent="CenterContainer/VBoxContainer/GamePathContainer"]
+margin_left = 582.0
+margin_right = 640.0
+margin_bottom = 24.0
+text = "Change"
+
+[node name="ModsContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 56.0
+margin_right = 640.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_right = 640.0
+margin_bottom = 14.0
+text = "MODS"
+align = 1
+valign = 1
+
+[node name="ModList" type="ItemList" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_top = 18.0
+margin_right = 640.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_top = 284.0
+margin_right = 640.0
+margin_bottom = 304.0
+text = "Create a new mod"
+
+[node name="Dialogs" type="Control" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+mouse_filter = 2
+
+[node name="WarningPopup" type="WindowDialog" parent="Dialogs"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -194.5
+margin_top = -29.0
+margin_right = 205.5
+margin_bottom = 121.0
+rect_min_size = Vector2( 400, 150 )
+popup_exclusive = true
+window_title = "Warning!"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Dialogs/WarningPopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 400, 150 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Dialogs/WarningPopup/VBoxContainer"]
+margin_top = 16.0
+margin_right = 400.0
+margin_bottom = 81.0
+text = "Remember that using this tool will spoil most of the game.
+
+This tool is a WIP version. Don't trust it and make backups
+of your mods before trying this out.
+
+"
+align = 1
+valign = 1
+
+[node name="DontShowCheck" type="CheckBox" parent="Dialogs/WarningPopup/VBoxContainer"]
+margin_left = 85.0
+margin_top = 85.0
+margin_right = 315.0
+margin_bottom = 109.0
+size_flags_horizontal = 4
+text = "Don't show this again next time"
+
+[node name="OKButton" type="Button" parent="Dialogs/WarningPopup/VBoxContainer"]
+margin_left = 184.0
+margin_top = 113.0
+margin_right = 215.0
+margin_bottom = 133.0
+size_flags_horizontal = 4
+text = "OK"
+
+[node name="FileDialogPopup" type="FileDialog" parent="Dialogs"]
+margin_left = -7.0
+margin_top = -7.0
+margin_right = 268.0
+margin_bottom = 123.0
+rect_min_size = Vector2( 1000, 600 )
+popup_exclusive = true
+window_title = "Select the game directory"
+mode_overrides_title = false
+mode = 2
+access = 2
+current_dir = "Z:/godot_projects/dicey_modgeons"
+current_path = "Z:/godot_projects/dicey_modgeons/"
+[connection signal="pressed" from="CenterContainer/VBoxContainer/GamePathContainer/ChangeButton" to="." method="_on_ChangeButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="toggled" from="Dialogs/WarningPopup/VBoxContainer/DontShowCheck" to="Dialogs/WarningPopup" method="_on_DontShowCheck_toggled"]
+[connection signal="pressed" from="Dialogs/WarningPopup/VBoxContainer/OKButton" to="Dialogs/WarningPopup" method="_on_OKButton_pressed"]
+[connection signal="dir_selected" from="Dialogs/FileDialogPopup" to="." method="_on_FileDialogPopup_dir_selected"]
