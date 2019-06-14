@@ -25,13 +25,20 @@ func set_data(data):
 	_setup(OnStartTurn, "On Start Turn", "Script: On Start Turn", "")
 	_setup(OnEndTurn, "On End Turn", "Script: End Turn", "")
 	
-func _setup(node, node_name, key, def):
+func _setup(node:Node, node_name, key, def):
 	node.text = data.get(key, def)
 	var idx = node.get_position_in_parent()
-	# TODO This is broken in godot right now so wait for fix
-	#TabContainer.set_tab_title(idx, node_name)
+	node.set_meta("original_name", node_name)
+	_change_name(node, node.text.empty())
 	Utils.connect_signal(node, key, "text_changed", self, "_on_EnemyScript_text_changed")
 	
+func _change_name(node, empty_text):
+	if empty_text:
+		node.name = node.get_meta("original_name")
+	else:
+		node.name = "[%s]" % node.get_meta("original_name")
+		
 func _on_EnemyScript_text_changed(text, node, key):
 	if not data_id: return
+	_change_name(node, text.empty())
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, data_id, key, text)

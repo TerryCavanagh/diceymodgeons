@@ -65,17 +65,31 @@ text = "MODS"
 align = 1
 valign = 1
 
-[node name="ModList" type="ItemList" parent="CenterContainer/VBoxContainer/ModsContainer"]
+[node name="ModList" type="Tree" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_top = 18.0
 margin_right = 640.0
-margin_bottom = 280.0
+margin_bottom = 198.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+columns = 5
+allow_reselect = true
+allow_rmb_select = true
+hide_root = true
+select_mode = 1
+
+[node name="ModDescription" type="RichTextLabel" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_top = 202.0
+margin_right = 640.0
+margin_bottom = 279.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
 
 [node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 284.0
+margin_top = 283.0
 margin_right = 640.0
-margin_bottom = 304.0
+margin_bottom = 303.0
 text = "Create a new mod"
 
 [node name="Dialogs" type="Control" parent="."]
@@ -156,6 +170,9 @@ access = 2
 current_dir = "Z:/godot_projects/dicey_modgeons"
 current_path = "Z:/godot_projects/dicey_modgeons/"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GamePathContainer/ChangeButton" to="." method="_on_ChangeButton_pressed"]
+[connection signal="item_activated" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_activated"]
+[connection signal="item_rmb_selected" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_rmb_selected"]
+[connection signal="item_selected" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_selected"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
 [connection signal="toggled" from="Dialogs/WarningPopup/VBoxContainer/DontShowCheck" to="Dialogs/WarningPopup" method="_on_DontShowCheck_toggled"]
 [connection signal="pressed" from="Dialogs/WarningPopup/VBoxContainer/OKButton" to="Dialogs/WarningPopup" method="_on_OKButton_pressed"]

@@ -3,10 +3,6 @@
 [ext_resource path="res://enemies/EnemyScripts.gd" type="Script" id=1]
 [ext_resource path="res://ScriptContainer.tscn" type="PackedScene" id=2]
 
-
-
-
-
 [node name="Scripts" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -67,6 +67,7 @@ func _get_paths(table:int):
 	return result
 	
 func load_data(root_path:String, mod:String):
+	# TODO before loading we should make sure that the possible data has been saved first
 	self.root_path = root_path
 	self.mod_path = 'mods/%s' % mod
 	
