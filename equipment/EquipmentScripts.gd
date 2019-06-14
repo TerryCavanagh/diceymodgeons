@@ -30,11 +30,13 @@ func set_data(data):
 func _setup(node, node_name, key, def):
 	node.text = data.get(key, def)
 	var idx = node.get_position_in_parent()
-	node.set_meta("original_name", node_name)
+	# TODO godot is broken here, metadata is shared between the same control instances
+	#node.set_meta("original_name", node_name)
 	_change_name(node, node.text.empty())
 	Utils.connect_signal(node, key, "text_changed", self, "_on_Script_text_changed")
 	
 func _change_name(node, empty_text):
+	return
 	if empty_text:
 		node.name = node.get_meta("original_name")
 	else:
