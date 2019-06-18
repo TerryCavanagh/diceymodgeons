@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://ModSettings.gd" type="Script" id=1]
-[ext_resource path="res://WarningPopup.gd" type="Script" id=2]
+[ext_resource path="res://mod_selection/ModSettings.gd" type="Script" id=1]
+[ext_resource path="res://mod_selection/WarningPopup.gd" type="Script" id=2]
+[ext_resource path="res://mod_selection/CreateModPopup.tscn" type="PackedScene" id=3]
 
 [node name="ModSettings" type="PanelContainer"]
 anchor_right = 1.0
@@ -68,23 +69,46 @@ valign = 1
 [node name="ModList" type="Tree" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_top = 18.0
 margin_right = 640.0
-margin_bottom = 198.0
+margin_bottom = 176.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
-columns = 5
+columns = 6
 allow_reselect = true
 allow_rmb_select = true
 hide_root = true
 select_mode = 1
 
 [node name="ModDescription" type="RichTextLabel" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 202.0
+margin_top = 180.0
 margin_right = 640.0
-margin_bottom = 279.0
+margin_bottom = 247.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_top = 251.0
+margin_right = 640.0
+margin_bottom = 271.0
+
+[node name="EditButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer"]
+margin_right = 318.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Edit information"
+
+[node name="LoadButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer"]
+margin_left = 322.0
+margin_right = 640.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_top = 275.0
+margin_right = 640.0
+margin_bottom = 279.0
 
 [node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_top = 283.0
@@ -169,10 +193,14 @@ mode = 2
 access = 2
 current_dir = "Z:/godot_projects/dicey_modgeons"
 current_path = "Z:/godot_projects/dicey_modgeons/"
+
+[node name="CreateModPopup" parent="Dialogs" instance=ExtResource( 3 )]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GamePathContainer/ChangeButton" to="." method="_on_ChangeButton_pressed"]
 [connection signal="item_activated" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_activated"]
 [connection signal="item_rmb_selected" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_rmb_selected"]
 [connection signal="item_selected" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_selected"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer/EditButton" to="." method="_on_EditButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
 [connection signal="toggled" from="Dialogs/WarningPopup/VBoxContainer/DontShowCheck" to="Dialogs/WarningPopup" method="_on_DontShowCheck_toggled"]
 [connection signal="pressed" from="Dialogs/WarningPopup/VBoxContainer/OKButton" to="Dialogs/WarningPopup" method="_on_OKButton_pressed"]

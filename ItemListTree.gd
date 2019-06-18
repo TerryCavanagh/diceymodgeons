@@ -170,8 +170,10 @@ func _on_List_button_pressed(item, column, id):
 	var meta = item.get_metadata(Column.NAME)
 	match meta.origin:
 		Database.Origin.APPEND:
-			print("Trying to remove %s" % [meta.key])
+			# TODO ask before deleting
+			Database.commit(table, Database.DELETE, meta.key)
 		Database.Origin.MERGE:
+			# TODO ask before reverting
 			print("Trying to undo to original %s" % [meta.key])
 
 func _on_Search_text_changed(new_text):

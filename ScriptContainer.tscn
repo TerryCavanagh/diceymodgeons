@@ -3,7 +3,6 @@
 [ext_resource path="res://ScriptContainer.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Hack_16.tres" type="DynamicFont" id=2]
 
-
 [node name="BeforeCombatContainer" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,6 +22,10 @@ syntax_highlighting = true
 show_line_numbers = true
 draw_tabs = true
 highlight_all_occurrences = true
+scroll_pass_end_of_file = true
+show_guideline = true
+auto_brace_completion = true
+brace_matching = true
 caret_blink = true
-[connection signal="request_completion" from="TextEdit" to="." method="_on_TextEdit_request_completion"]
+[connection signal="completion_requested" from="TextEdit" to="." method="_on_TextEdit_completion_requested"]
 [connection signal="text_changed" from="TextEdit" to="." method="_on_TextEdit_text_changed"]

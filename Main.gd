@@ -13,6 +13,11 @@ func _ready():
 	TabContainer.set_tab_disabled(2, true)
 	Database.connect("data_loaded", self, "_on_Database_data_loaded")
 	
+func _process(delta):
+	var modal = get_viewport().get_modal_stack_top()
+	var show_background = modal != null and modal is WindowDialog
+	$PopupBackground.visible = show_background
+	
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
 		# TODO check if there's stuff to save and ask before quitting
