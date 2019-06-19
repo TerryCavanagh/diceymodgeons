@@ -40,11 +40,13 @@ func set_data(data):
 	for slot in SlotOptions:
 		slot.visible = false
 		Utils.connect_signal(slot, "Slots", "item_selected", self, "_on_Slot_item_selected")
-	Utils.connect_signal(SlotsNumberSpin, "Nothing", "value_changed", self, "_on_SlotsNumberSpin_value_changed")
 	
 	Utils.connect_signal(ExtraSpin, "Nothing", "value_changed", self, "_on_ExtraSpin_value_changed")
 	
+	# Disconnect, set default value, and connect, SpinBox emits the value_changed signal everytime the value changes even via code
+	Utils.disconnect_signal(SlotsNumberSpin, "value_changed", self, "_on_SlotsNumberSpin_value_changed")
 	SlotsNumberSpin.value = slots.size()
+	Utils.connect_signal(SlotsNumberSpin, "Nothing", "value_changed", self, "_on_SlotsNumberSpin_value_changed")
 	
 	for i in slots.size():
 		var slot = slots[i]
