@@ -51,10 +51,13 @@ margin_bottom = 345.0
 [node name="CreateButton" type="Button" parent="CreateContainer/HBoxContainer"]
 margin_right = 66.0
 margin_bottom = 20.0
-text = "Create it"
+text = "Create"
 
 [node name="CopyButton" type="Button" parent="CreateContainer/HBoxContainer"]
+visible = false
 margin_left = 70.0
 margin_right = 196.0
 margin_bottom = 20.0
 text = "Copy from normal"
+[connection signal="pressed" from="CreateContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="pressed" from="CreateContainer/HBoxContainer/CopyButton" to="." method="_on_CopyButton_pressed"]

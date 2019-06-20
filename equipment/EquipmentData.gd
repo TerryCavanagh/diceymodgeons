@@ -87,10 +87,11 @@ func _setup(node, key, def):
 		node.text = data.get(key, def)
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	elif node == SlotsContainer:
+		var category = data.get("Category", "")
+		node.visible = not (category == "BACKUP" or category == "SKILLCARD")
 		node.set_data(data)
 		Utils.connect_signal(node, "Slots", "slots_changed", self, "_on_SlotsContainer_slots_changed")
 		Utils.connect_signal(node, "NEED TOTAL?", "total_changed", self, "_on_SlotsContainer_total_changed")
-		pass
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
 	
@@ -122,8 +123,12 @@ func _on_OptionButton_item_selected(id, node, key):
 		if node.selected == 0:
 			color = ""
 		EquipmentCard.change_color(color, Utils.option_get_selected_key(CategoryOption), data_id.find("_upgraded") > -1)
-	if node == CategoryOption and ColorOption.selected == 0:
-		EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.find("_upgraded") > -1)
+	if node == CategoryOption:
+		if ColorOption.selected == 0:
+			EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.find("_upgraded") > -1)
+			
+		var category = Utils.option_get_selected_key(CategoryOption)
+		SlotsContainer.visible = not (category == "BACKUP" or category == "SKILLCARD")
 		
 	var value = Utils.option_get_selected_key(node)
 	
@@ -138,7 +143,10 @@ func _on_OptionButton_item_selected(id, node, key):
 		
 func _on_SlotsContainer_slots_changed(slots, node, key):
 	if not data_id: return
-	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, slots)
+	if node.visible:
+		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, slots)
+	else:
+		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, [])
 
 func _on_SlotsContainer_total_changed(new_total, node, key):
 	if not data_id: return

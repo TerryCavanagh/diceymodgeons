@@ -33,9 +33,9 @@ func set_data(data):
 	self.data = data
 	
 	slots = data.get("Slots", [])
+	if slots.empty():
+		slots.push_back("NORMAL")
 	current_slots = slots.duplicate()
-	
-	visible = not slots.empty()
 	
 	for slot in SlotOptions:
 		slot.visible = false

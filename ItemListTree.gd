@@ -127,6 +127,10 @@ func _set_item_data(item:TreeItem, metadata):
 	
 func _on_entry_created(table, key):
 	if not table == self.table: return
+	# TODO maybe move this
+	# If key contains an underscore then remove the rest of the string
+	if key.find("_") > -1:
+		key = key.left(key.find("_"))
 	load_data(filter, key)
 	
 func _on_entry_key_changed(table, old_key, new_key):
