@@ -64,3 +64,12 @@ func option_select(node:OptionButton, value):
 			node.select(dict.keys().find(value))
 			
 	update_option_tooltip(node, node.selected)
+	
+func load_external_texture(path:String):
+	var texture = null
+	var img = Image.new()
+	if img.load(path) == OK:
+		texture = ImageTexture.new()
+		texture.create_from_image(img)
+	
+	return texture

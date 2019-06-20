@@ -21,7 +21,10 @@ func _process(delta):
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
 		# TODO check if there's stuff to save and ask before quitting
-		print("Are you sure?")
+		if Database.data_needs_save():
+			print("Are you sure?")
+		else:
+			get_tree().quit()
 		get_tree().quit()
 		
 func _on_Database_data_loaded():

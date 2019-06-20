@@ -20,10 +20,10 @@ margin_bottom = 713.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_left = 313.0
-margin_top = 173.0
+margin_top = 53.0
 margin_right = 953.0
-margin_bottom = 533.0
-rect_min_size = Vector2( 640, 360 )
+margin_bottom = 653.0
+rect_min_size = Vector2( 640, 600 )
 custom_constants/separation = 32
 
 [node name="GamePathContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
@@ -55,7 +55,7 @@ text = "Change"
 [node name="ModsContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 margin_top = 56.0
 margin_right = 640.0
-margin_bottom = 360.0
+margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -69,7 +69,7 @@ valign = 1
 [node name="ModList" type="Tree" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_top = 18.0
 margin_right = 640.0
-margin_bottom = 176.0
+margin_bottom = 344.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
@@ -80,17 +80,17 @@ hide_root = true
 select_mode = 1
 
 [node name="ModDescription" type="RichTextLabel" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 180.0
+margin_top = 348.0
 margin_right = 640.0
-margin_bottom = 247.0
+margin_bottom = 487.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 251.0
+margin_top = 491.0
 margin_right = 640.0
-margin_bottom = 271.0
+margin_bottom = 511.0
 
 [node name="EditButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer"]
 margin_right = 318.0
@@ -106,14 +106,14 @@ size_flags_horizontal = 3
 text = "Load"
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 275.0
+margin_top = 515.0
 margin_right = 640.0
-margin_bottom = 279.0
+margin_bottom = 519.0
 
 [node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 283.0
+margin_top = 523.0
 margin_right = 640.0
-margin_bottom = 303.0
+margin_bottom = 543.0
 text = "Create a new mod"
 
 [node name="Dialogs" type="Control" parent="."]

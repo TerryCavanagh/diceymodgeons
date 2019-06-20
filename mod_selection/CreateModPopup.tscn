@@ -3,6 +3,7 @@
 [ext_resource path="res://mod_selection/CreateModPopup.gd" type="Script" id=1]
 
 [node name="CreateModPopup" type="WindowDialog"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -680.0
@@ -22,6 +23,9 @@ custom_constants/margin_right = 16
 custom_constants/margin_top = 16
 custom_constants/margin_left = 16
 custom_constants/margin_bottom = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_left = 16.0
@@ -30,77 +34,98 @@ margin_right = 616.0
 margin_bottom = 316.0
 rect_min_size = Vector2( 600, 300 )
 
-[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 margin_right = 600.0
+margin_bottom = 108.0
+custom_constants/separation = 16
+
+[node name="IconTexture" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 108.0
+rect_min_size = Vector2( 100, 100 )
+hint_tooltip = "Click to change"
+mouse_default_cursor_shape = 2
+expand = true
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 116.0
+margin_right = 600.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 484.0
 margin_bottom = 24.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TitleContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TitleContainer"]
 margin_top = 5.0
 margin_right = 100.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 100, 0 )
 text = "Title:"
 
-[node name="TitleEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/TitleContainer"]
+[node name="TitleEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TitleContainer"]
 margin_left = 104.0
-margin_right = 600.0
+margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="AuthorContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="AuthorContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 28.0
-margin_right = 600.0
+margin_right = 484.0
 margin_bottom = 52.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/AuthorContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AuthorContainer"]
 margin_top = 5.0
 margin_right = 100.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 100, 0 )
 text = "Author:"
 
-[node name="AuthorEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/AuthorContainer"]
+[node name="AuthorEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AuthorContainer"]
 margin_left = 104.0
-margin_right = 600.0
+margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="ModVersionContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="ModVersionContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 56.0
-margin_right = 600.0
+margin_right = 484.0
 margin_bottom = 80.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ModVersionContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer"]
 margin_top = 5.0
 margin_right = 100.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 100, 0 )
 text = "Mod version:"
 
-[node name="ModVersionEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/ModVersionContainer"]
+[node name="ModVersionEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer"]
 margin_left = 104.0
-margin_right = 600.0
+margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="LicenseContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="LicenseContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 84.0
-margin_right = 600.0
+margin_right = 484.0
 margin_bottom = 108.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/LicenseContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/LicenseContainer"]
 margin_top = 5.0
 margin_right = 100.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 100, 0 )
 text = "License:"
 
-[node name="LicenseEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/LicenseContainer"]
+[node name="LicenseEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/LicenseContainer"]
 margin_left = 104.0
-margin_right = 600.0
+margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "CC BY 4.0,MIT"
@@ -115,7 +140,7 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/DescriptionContainer"]
 margin_right = 600.0
 margin_bottom = 14.0
-text = "Descrioption:"
+text = "Description:"
 
 [node name="DescriptionEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/DescriptionContainer"]
 margin_top = 18.0
@@ -141,5 +166,22 @@ margin_left = 295.0
 margin_right = 349.0
 margin_bottom = 20.0
 text = "Cancel"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 307.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 800, 400 )
+popup_exclusive = true
+window_title = "Open a File"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.png" )
+current_dir = "Z:/godot_projects/dicey_modgeons"
+current_path = "Z:/godot_projects/dicey_modgeons/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/IconTexture" to="." method="_on_IconTexture_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/CancelButton" to="." method="_on_CancelButton_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

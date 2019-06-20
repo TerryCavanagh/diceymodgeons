@@ -70,7 +70,7 @@ func load_data(filter = null, select_key = null):
 	var still_selected = false
 	for key in keys:
 		var enemy = data[key]
-		var origin = enemy.get("__from", Database.Origin.DEFAULT)
+		var origin = enemy.get("__origin", Database.Origin.DEFAULT)
 		var metadata = {"key":key, "origin":origin, "modified": _modified(key)}
 		var item = create_item(root)
 		_set_item_data(item, metadata)

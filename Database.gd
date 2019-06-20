@@ -16,6 +16,8 @@ var _equipment:CSVData = null
 var _items:CSVData = null
 var _status_effects:CSVData = null
 
+var _data_loaded = false
+
 enum {CREATE,READ,UPDATE,DELETE}
 
 enum Table {
@@ -37,7 +39,7 @@ enum Origin {
 func _init():
 	root_path = "res://test"
 	mod_path = "mods/garfield"
-	#load_data(root_path, mod_path)
+	_data_loaded = false
 	
 func _get_paths(table:int):
 	var file = ""
@@ -66,8 +68,17 @@ func _get_paths(table:int):
 	
 	return result
 	
+func data_needs_save():
+	if not _data_loaded: return false
+	
+	for key in Table.keys():
+		var table = Table.get(key)
+		if table == Table.NONE: continue
+		if get_table(table).data_needs_save():
+			return true
+	return false
+	
 func load_data(root_path:String, mod:String):
-	# TODO before loading we should make sure that the possible data has been saved first
 	self.root_path = root_path
 	self.mod_path = 'mods/%s' % mod
 	
@@ -76,6 +87,7 @@ func load_data(root_path:String, mod:String):
 	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
 	
+	_data_loaded = true
 	emit_signal("data_loaded")
 	
 func save_data():
@@ -125,7 +137,7 @@ func commit(table:int, action:int, key = null, field = null, value = null):
 				elif key != null and field != null:
 					emit_signal("entry_updated", table, key, data.compare(key))
 		READ:
-			print_debug("READ %s: %s (%s) = %s" % [table, key, field, value])
+			#print_debug("READ %s: %s (%s) = %s" % [table, key, field, value])
 			result = _read(data, key, field)
 		UPDATE:
 			print_debug("UPDATE %s: %s (%s) = %s" % [table, key, field, value])
@@ -314,7 +326,8 @@ class CSVData:
 					
 				data[id][h] = _convert_from_csv(h, c[i])
 				
-			data[id]["__from"] = source
+			data[id]["__origin"] = source
+			data[id]["__modified"] = false
 			
 			hashes[id] = data[id].hash()
 	
@@ -337,7 +350,7 @@ class CSVData:
 		var subdata = []
 		for key in data.keys():
 			var value = data[key]
-			if value.get("__from", Origin.DEFAULT) == source:
+			if value.get("__origin", null) == source:
 				# TODO do this after knowing that the data has been saved correctly
 				hashes[key] = value.hash()
 				subdata.push_back(value)
@@ -360,13 +373,28 @@ class CSVData:
 			else:
 				data[key][h] = _convert_from_csv(h, "")
 			
-		data[key]["__from"] = Origin.APPEND
+		data[key]["__origin"] = Origin.APPEND
+		data[key]["__modified"] = false
 		
 		hashes[key] = data[key].hash()
+		data[key]["__modified"] = true
 		
+	func data_needs_save():
+		for id in data:
+			if not compare(id):
+				return true
+		return false
 		
+	"""
+	Compares the entry with the saved hash
+	Returns true if they are equals
+	"""
 	func compare(id):
-		return  data.get(id, {}).hash() == hashes.get(id, null)
+		var entry = data.get(id, {})
+		entry["__modified"] = false
+		var modified = not entry.hash() == hashes.get(id, null)
+		entry["__modified"] = modified
+		return not modified
 		
 	func find(id):
 		return data.get(id, null)
@@ -375,6 +403,8 @@ class CSVData:
 		return data.erase(id)
 		
 	func change_key(old_key:String, new_key:String):
+		if old_key == new_key: return true
+		
 		var old = data.get(old_key, null)
 		if old:
 			var old_hash = hashes.get(old_key)
@@ -383,6 +413,7 @@ class CSVData:
 			old[KEY] = new_key
 			data[new_key] = old
 			hashes[new_key] = old_hash
+			data[new_key]["__modified"] = true
 			
 			return true
 		

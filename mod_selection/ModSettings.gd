@@ -80,9 +80,12 @@ func _fill_mod_list():
 				item.set_text(Column.LICENSE, json.get("license", "?"))
 				item.set_metadata(Column.NAME, {"mod": current, "polymod": json.duplicate(true)})
 				
-				item.set_cell_mode(Column.EDIT, TreeItem.CELL_MODE_CHECK)
-				item.set_checked(Column.EDIT, current_mod_loaded == current)
+				item.set_cell_mode(Column.EDIT, TreeItem.CELL_MODE_STRING)
 				item.set_editable(Column.EDIT, false)
+				if current_mod_loaded == current:
+					item.set_cell_mode(Column.EDIT, TreeItem.CELL_MODE_CHECK)
+					item.set_checked(Column.EDIT, true)
+				
 				
 				file.close()
 				
@@ -122,19 +125,26 @@ func _on_ChangeButton_pressed():
 	FileDialogPopup.popup_centered_minsize(FileDialogPopup.rect_min_size)
 
 func _on_CreateButton_pressed():
-	CreateModPopup.show_popup({})
+	CreateModPopup.show_popup()
 
 func _on_EditButton_pressed():
+	# TODO send the path too so it can actually save the data 
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
-	CreateModPopup.show_popup(meta.get("polymod", {}))
+	var icon_path = "%s/mods/%s/_polymod_icon.png" % [path, meta.get("mod", "")]
+	CreateModPopup.show_popup(meta.get("mod", ""), icon_path, meta.get("polymod", {}))
 
 func _on_LoadButton_pressed():
 	if not valid_path: return
+	if Database.data_needs_save():
+		print("Can't load, data needs save")
+		return
+		
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
 	if meta and meta.has("mod"):
 		Database.load_data(path, meta.get("mod"))
 		current_mod_loaded = meta.get("mod")
 		_fill_mod_list()
+		LoadButton.release_focus()
 
 func _on_FileDialogPopup_dir_selected(dir):
 	path = dir
@@ -151,7 +161,7 @@ func _on_ModList_item_selected():
 
 
 func _on_ModList_item_activated():
-	pass
+	_on_LoadButton_pressed()
 
 
 func _on_ModList_item_rmb_selected(position):
