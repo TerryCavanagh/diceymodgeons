@@ -2,19 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/combat_4k.jpg-e061990b741457c3a5674f1abbf7e1d6.stex"
+path="res://.import/mod_icon_placeholder.png-edf8bd957dbd528f41cf6afd530234d4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/combat_4k.jpg"
-dest_files=[ "res://.import/combat_4k.jpg-e061990b741457c3a5674f1abbf7e1d6.stex" ]
+source_file="res://assets/mod_icon_placeholder.png"
+dest_files=[ "res://.import/mod_icon_placeholder.png-edf8bd957dbd528f41cf6afd530234d4.stex" ]
 
 [params]
 
-compress/mode=1
+compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
