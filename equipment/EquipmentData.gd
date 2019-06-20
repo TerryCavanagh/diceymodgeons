@@ -29,7 +29,7 @@ var data:Dictionary = {}
 func _ready():
 	SizeOption.set_meta("list", ["1", "2"])
 	
-	Utils.fill_options(CategoryOption, Gamedata.items.get("categories", []), true)
+	Utils.fill_options(CategoryOption, Gamedata.items.get("categories", {}), true)
 	Utils.fill_options(ColorOption, Gamedata.items.get("colors", []), true)
 	Utils.fill_options(UpgradeOption, Gamedata.items.get("upgrade_modifier", {}), false)
 	Utils.fill_options(WeakenOption, Gamedata.items.get("weaken_modifier", {}), false)
@@ -63,7 +63,8 @@ func set_data(data):
 	EquipmentCard.set_title(data_id)
 	EquipmentCard.change_size(data.get("Size", 1))
 	EquipmentCard.set_description(data.get("Description", ""))
-	EquipmentCard.change_color(data.get("Colour", "GRAY"), data_id.find("_upgraded") > -1)
+	
+	EquipmentCard.change_color(data.get("Colour", ""), data.get("Category", ""), data_id.find("_upgraded") > -1)
 	
 func _setup(node, key, def):
 	if node is SpinBox:
@@ -119,9 +120,10 @@ func _on_OptionButton_item_selected(id, node, key):
 	if node == ColorOption:
 		var color = node.get_item_text(node.selected).to_upper()
 		if node.selected == 0:
-			# TODO change it for the category's color
-			color = "GRAY"
-		EquipmentCard.change_color(color, data_id.find("_upgraded") > -1)
+			color = ""
+		EquipmentCard.change_color(color, Utils.option_get_selected_key(CategoryOption), data_id.find("_upgraded") > -1)
+	if node == CategoryOption and ColorOption.selected == 0:
+		EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.find("_upgraded") > -1)
 		
 	var value = Utils.option_get_selected_key(node)
 	

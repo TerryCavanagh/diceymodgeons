@@ -12,9 +12,11 @@ var card_size = 1
 func _ready():
 	change_size(1)
 	
-func change_color(color:String, upgraded:bool = false):
+func change_color(color:String, category:String, upgraded:bool = false):
 	if color.empty():
-		color = "grey"
+		# get the category color
+		color = Gamedata.items.get("categories", {}).get(category, {}).get("color", "GRAY")
+		
 	match color:
 		"GRAY":
 			color = "grey"

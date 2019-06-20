@@ -43,7 +43,7 @@ func _update_card(key):
 	var equip = Database.commit(Database.Table.EQUIPMENT, Database.READ, key)
 	EquipmentCard.set_title(equip.get("Name", "Title"))
 	EquipmentCard.change_size(equip.get("Size", 1))
-	EquipmentCard.change_color(equip.get("Colour", "GRAY"))
+	EquipmentCard.change_color(equip.get("Colour", "GRAY"), equip.get("Category", ""))
 	EquipmentCard.set_description(equip.get("Description", ""))
 
 func _on_AvailableContainer_item_selected(equipment):

@@ -29,6 +29,8 @@ func fill_options(node:OptionButton, data, capitalize:bool = false)->void:
 			var idx = node.get_item_count() - 1
 			
 			var tooltip = data.get(key, "")
+			if tooltip is Dictionary:
+				tooltip = tooltip.get("description", "")
 			
 			node.set_item_metadata(idx, {"tooltip": tooltip, "key": key})
 			
