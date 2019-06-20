@@ -69,9 +69,9 @@ func load_data(filter = null, select_key = null):
 	
 	var still_selected = false
 	for key in keys:
-		var enemy = data[key]
-		var origin = enemy.get("__origin", Database.Origin.DEFAULT)
-		var metadata = {"key":key, "origin":origin, "modified": _modified(key)}
+		var entry = data[key]
+		var origin = entry.get("__origin", Database.Origin.DEFAULT)
+		var metadata = {"key":key, "origin":origin}
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
@@ -94,7 +94,7 @@ func _set_item_data(item:TreeItem, metadata):
 	if key.empty(): return
 	
 	var origin = metadata.get("origin", Database.Origin.DEFAULT)
-	var modified = metadata.get("modified", false)
+	var modified = _modified(key)
 	
 	if modified:
 		item.set_text(Column.MODIFIED, "*")

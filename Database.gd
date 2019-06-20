@@ -435,7 +435,7 @@ class CSVData:
 					var s = value.split("|")
 					return Vector2(float(s[0]), float(s[1]))
 			"list":
-				if value.empty():
+				if value.strip_edges().empty():
 					return []
 				else:
 					var a = Array(value.split("|"))
