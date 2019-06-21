@@ -10,11 +10,11 @@ func _ready():
 	popup.connect("index_pressed", self, "_on_PopupMenu_index_pressed")
 	popup.rect_min_size.x = 200
 	popup.clear()
-	_create_item(popup, "New mod...", KEY_N, "new", true)
-	_create_item(popup, "Open mod...", KEY_O, "open", true)
+	#_create_item(popup, "New mod...", KEY_N, "new", true)
+	#_create_item(popup, "Open mod...", KEY_O, "open", true)
 	_create_item(popup, "Save", KEY_S, "save", true)
-	popup.add_separator()
-	_create_item(popup, "Preferences", KEY_P, "preferences", true)
+	#popup.add_separator()
+	#_create_item(popup, "Preferences", KEY_P, "preferences", true)
 	popup.add_separator()
 	_create_item(popup, "Quit", KEY_Q, "quit", true)
 
@@ -48,4 +48,4 @@ func _on_PopupMenu_index_pressed(idx):
 		"preferences":
 			pass
 		"quit":
-			get_tree().quit()
+			get_tree().notification(NOTIFICATION_WM_QUIT_REQUEST)

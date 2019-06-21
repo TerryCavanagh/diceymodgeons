@@ -25,12 +25,19 @@ func _process(delta):
 	
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
-		# TODO check if there's stuff to save and ask before quitting
 		if Database.data_needs_save():
-			print("Are you sure?")
+			ConfirmPopup.popup_save("Save changes before exiting?")
+			var result = yield(ConfirmPopup, "action_chosen")
+			match result:
+				ConfirmPopup.OKAY:
+					Database.save_data()
+					get_tree().quit()
+				ConfirmPopup.OTHER:
+					get_tree().quit()
+				ConfirmPopup.CANCEL:
+					pass
 		else:
 			get_tree().quit()
-		get_tree().quit()
 		
 func _on_Database_data_loaded():
 	TabContainer.set_tab_disabled(1, false)

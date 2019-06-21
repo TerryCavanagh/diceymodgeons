@@ -101,8 +101,10 @@ func _set_item_data(item:TreeItem, metadata):
 	
 	if modified:
 		item.set_text(Column.MODIFIED, "*")
+		item.set_tooltip(Column.MODIFIED, "Item has been modified")
 	else:
 		item.set_text(Column.MODIFIED, "")
+		item.set_tooltip(Column.MODIFIED, "")
 	
 	item.set_text(Column.NAME, key)
 	item.set_editable(Column.NAME, true)
@@ -173,13 +175,18 @@ func _on_List_button_pressed(item, column, id):
 	var meta = item.get_metadata(Column.NAME)
 	match id:
 		BUTTON_DELETE_ID:
-			# TODO ask before deleting
-			Database.commit(table, Database.DELETE, meta.key)
+			ConfirmPopup.popup_confirm("Are you sure you want to delete %s?" % meta.key)
+			var result = yield(ConfirmPopup, "action_chosen")
+			if result == ConfirmPopup.OKAY:
+				Database.commit(table, Database.DELETE, meta.key)
+				emit_signal("element_selected", null)
 		BUTTON_REVERT_ID:
-			# TODO ask before reverting])
-			Database.commit(table, Database.DELETE, meta.key)
-			
-	emit_signal("element_selected", null)
+			ConfirmPopup.popup_confirm("Are you sure you want to revert to the original game data %s?" % meta.key)
+			var result = yield(ConfirmPopup, "action_chosen")
+			print(result)
+			if result == ConfirmPopup.OKAY:
+				Database.commit(table, Database.DELETE, meta.key)
+				emit_signal("element_selected", null)
 
 func _on_Search_text_changed(new_text):
 	load_data(new_text)

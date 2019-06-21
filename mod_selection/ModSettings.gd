@@ -136,8 +136,16 @@ func _on_EditButton_pressed():
 func _on_LoadButton_pressed():
 	if not valid_path: return
 	if Database.data_needs_save():
-		print("Can't load, data needs save")
-		return
+		ConfirmPopup.popup_save("Save before changing mod?")
+		var result = yield(ConfirmPopup, "action_chosen")
+		match result:
+			ConfirmPopup.OKAY:
+				Database.save_data()
+			ConfirmPopup.CANCEL:
+				return
+			ConfirmPopup.OTHER:
+				# Don't save and load the other mod
+				pass
 		
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
 	if meta and meta.has("mod"):

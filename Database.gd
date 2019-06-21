@@ -7,6 +7,7 @@ signal entry_deleted(table, key)
 
 signal data_loaded()
 signal save_completed(table)
+signal all_tables_saved()
 
 var root_path:String = ""
 var mod_path:String = ""
@@ -99,6 +100,8 @@ func save_data():
 	emit_signal("save_completed", Table.ITEMS)
 	_status_effects.save_data()
 	emit_signal("save_completed", Table.STATUS_EFFECTS)
+	
+	emit_signal("all_tables_saved")
 	
 func get_table(table):
 	match table:
