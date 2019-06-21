@@ -29,7 +29,7 @@ enum Table {
 }
 
 enum Origin {
-	DEFAULT,
+	GAME,
 	APPEND,
 	MERGE,
 }
@@ -62,7 +62,7 @@ func _get_paths(table:int):
 	
 	result["schema"] = "%s/data/text/%s" % [root_path, schema]
 	
-	result[Origin.DEFAULT] = "%s/data/text/%s" % [root_path, file]
+	result[Origin.GAME] = "%s/data/text/%s" % [root_path, file]
 	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
 	result[Origin.MERGE] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
 	
@@ -249,7 +249,7 @@ func _delete(data, key, field, value):
 			return false
 		[false, true]:
 			# erase the whole data
-			return data.data.erase(key)
+			return data.remove(key)
 		[false, false]:
 			# erase the field
 			var obj = data.find(key)
@@ -271,7 +271,10 @@ class CSVData:
 	var merge:Array = []
 	
 	var data:Dictionary = {}
-	var original_data:Dictionary = {}
+	
+	var old_data:Dictionary = {}
+	var game_data:Dictionary = {}
+	
 	var hashes:Dictionary = {}
 	
 	var paths:Dictionary = {}
@@ -283,11 +286,11 @@ class CSVData:
 		self.paths = paths
 		KEY = key
 		load_schema(paths.get("schema", ""))
-		load_data(paths.get(Origin.DEFAULT, ""), Origin.DEFAULT)
+		load_data(paths.get(Origin.GAME, ""), Origin.GAME)
 		load_data(paths.get(Origin.APPEND, ""), Origin.APPEND)
 		load_data(paths.get(Origin.MERGE, ""), Origin.MERGE)
 		
-		original_data = data.duplicate(true)
+		old_data = data.duplicate(true)
 		
 	func load_schema(path:String):
 		var file = File.new()
@@ -330,13 +333,23 @@ class CSVData:
 			data[id]["__modified"] = false
 			
 			hashes[id] = data[id].hash()
+			
+			if source == Origin.GAME:
+				game_data[id] = data[id].duplicate(true)
 	
 	func save_data():
-		var path = paths.get(Origin.APPEND, "")
+		_save(paths.get(Origin.APPEND, ""), [Origin.APPEND, Origin.GAME])
 		
-		var content = _data_to_content(Origin.APPEND)
-		if not content or content.empty(): return
+	func _save(path, origins):
+		var content = []
+		for origin in origins:
+			content += _data_to_content(origin)
 		
+		if not content or content.empty(): 
+			var file = Directory.new()
+			if file.file_exists(path):
+				file.remove(path)
+			return false
 		var file = File.new()
 		if file.open(path, File.WRITE) == OK:
 			file.store_csv_line(PoolStringArray(headers))
@@ -344,14 +357,24 @@ class CSVData:
 				file.store_csv_line(PoolStringArray(entry))
 				
 			file.close()
-		
+			return true
+			
+		return false
 		
 	func _data_to_content(source):
 		var subdata = []
 		for key in data.keys():
 			var value = data[key]
-			if value.get("__origin", null) == source:
+			var origin = value.get("__origin", null)
+			var save = false
+			if origin == Origin.GAME:
+				save = value.get("__modified", false)
+			elif not source == Origin.GAME and origin == source:
+				save = true
+			value["__modified"] = false
+			if save:
 				# TODO do this after knowing that the data has been saved correctly
+				value["__origin"] = source
 				hashes[key] = value.hash()
 				subdata.push_back(value)
 		
@@ -374,12 +397,13 @@ class CSVData:
 				data[key][h] = _convert_from_csv(h, "")
 			
 		data[key]["__origin"] = Origin.APPEND
-		data[key]["__modified"] = false
-		
-		hashes[key] = data[key].hash()
 		data[key]["__modified"] = true
+		hashes[key] = data[key].hash()
 		
 	func data_needs_save():
+		if hashes.size() != data.size():
+			return true
+			
 		for id in data:
 			if not compare(id):
 				return true
@@ -399,8 +423,23 @@ class CSVData:
 	func find(id):
 		return data.get(id, null)
 		
+	func is_in_game_data(id:String):
+		return game_data.has(id)
+		
 	func remove(id:String):
-		return data.erase(id)
+		if is_in_game_data(id):
+			#don't delete it and revert it to old game data
+			var default = game_data.get(id, {})
+			for key in default.keys():
+				data[id][key] = default.get(key)
+				
+			data[id]["__modified"] = false
+			hashes[id] = data[id].hash()
+			return true
+		else:
+			var result = data.erase(id)
+			hashes.erase(id)
+			return result
 		
 	func change_key(old_key:String, new_key:String):
 		if old_key == new_key: return true

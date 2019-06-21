@@ -2,6 +2,9 @@ extends Tree
 
 signal element_selected(key)
 
+const BUTTON_REVERT_ID = 1
+const BUTTON_DELETE_ID = 2
+
 var process_data_func:FuncRef = null
 var modified_func:FuncRef = null
 
@@ -70,8 +73,8 @@ func load_data(filter = null, select_key = null):
 	var still_selected = false
 	for key in keys:
 		var entry = data[key]
-		var origin = entry.get("__origin", Database.Origin.DEFAULT)
-		var metadata = {"key":key, "origin":origin}
+		var origin = entry.get("__origin", Database.Origin.GAME)
+		var metadata = {"key":key, "origin":origin, "is_in_game_data": Database.get_table(table).is_in_game_data(key)}
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
@@ -93,13 +96,11 @@ func _set_item_data(item:TreeItem, metadata):
 	var key = metadata.get("key", "")
 	if key.empty(): return
 	
-	var origin = metadata.get("origin", Database.Origin.DEFAULT)
+	var origin = metadata.get("origin", Database.Origin.GAME)
 	var modified = _modified(key)
 	
 	if modified:
 		item.set_text(Column.MODIFIED, "*")
-		if origin == Database.Origin.DEFAULT:
-			origin = Database.Origin.MERGE
 	else:
 		item.set_text(Column.MODIFIED, "")
 	
@@ -112,18 +113,16 @@ func _set_item_data(item:TreeItem, metadata):
 	item.set_selectable(Column.MODIFIED, false)
 	item.set_selectable(Column.BUTTON, false)
 	
-	if item.get_button_count(Column.BUTTON) > 0:
-		item.erase_button(Column.BUTTON, 0)
-	
-	match origin:
-		Database.Origin.DEFAULT:
-			pass
-		Database.Origin.APPEND:
-			item.add_button(Column.BUTTON, delete_texture, 0, false)
-			item.set_tooltip(Column.BUTTON, "Delete")
-		Database.Origin.MERGE:
-			item.add_button(Column.BUTTON, return_texture, 0, false)
-			item.set_tooltip(Column.BUTTON, "Return to original")
+	for i in item.get_button_count(Column.BUTTON):
+		item.erase_button(Column.BUTTON, i)
+		
+	if metadata.get("is_in_game_data", false) and (modified or origin == Database.Origin.APPEND):
+		item.add_button(Column.BUTTON, return_texture, BUTTON_REVERT_ID, false)
+		item.set_tooltip(Column.BUTTON, "Revert to the game data")
+	elif origin == Database.Origin.APPEND:
+		item.add_button(Column.BUTTON, delete_texture, BUTTON_DELETE_ID, false)
+		item.set_tooltip(Column.BUTTON, "Delete")
+
 	
 func _on_entry_created(table, key):
 	if not table == self.table: return
@@ -172,13 +171,15 @@ func _on_List_item_selected():
 
 func _on_List_button_pressed(item, column, id):
 	var meta = item.get_metadata(Column.NAME)
-	match meta.origin:
-		Database.Origin.APPEND:
+	match id:
+		BUTTON_DELETE_ID:
 			# TODO ask before deleting
 			Database.commit(table, Database.DELETE, meta.key)
-		Database.Origin.MERGE:
-			# TODO ask before reverting
-			print("Trying to undo to original %s" % [meta.key])
+		BUTTON_REVERT_ID:
+			# TODO ask before reverting])
+			Database.commit(table, Database.DELETE, meta.key)
+			
+	emit_signal("element_selected", null)
 
 func _on_Search_text_changed(new_text):
 	load_data(new_text)

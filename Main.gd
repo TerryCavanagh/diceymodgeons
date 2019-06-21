@@ -5,6 +5,8 @@ onready var ModSettings = find_node("Mod Settings")
 onready var Enemies = find_node("Enemies")
 onready var Equipment = find_node("Equipment")
 
+onready var ModifiedDataContainer = find_node("ModifiedDataContainer")
+
 func _ready():
 	# Disable auto accept quit to be able to ask for saving before quitting
 	get_tree().set_auto_accept_quit(false)
@@ -17,6 +19,9 @@ func _process(delta):
 	var modal = get_viewport().get_modal_stack_top()
 	var show_background = modal != null and modal is WindowDialog
 	$PopupBackground.visible = show_background
+	
+	# TODO make this better
+	ModifiedDataContainer.visible = Database.data_needs_save()
 	
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:

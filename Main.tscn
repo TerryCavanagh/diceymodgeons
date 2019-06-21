@@ -83,6 +83,25 @@ margin_top = 35.0
 margin_right = -5.0
 margin_bottom = -5.0
 
+[node name="ModifiedDataContainer" type="Control" parent="."]
+visible = false
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="ModifiedDataContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -1268.0
+margin_bottom = 28.0
+text = "Modified data"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PopupBackground" type="ColorRect" parent="."]
 visible = false
 margin_left = 6.0
