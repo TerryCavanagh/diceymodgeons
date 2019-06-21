@@ -87,18 +87,27 @@ func _check()->bool:
 		ExtraContainer.visible = true
 		ExtraSpin.visible = true
 		ExtraSpin.min_value = 1
+		ExtraSpin.max_value = 100
+		ExtraSpin.allow_greater = true
 		# force emitting the value_changed signal
 		ExtraSpin.value = ExtraSpin.value
 		ExtraLabel.text = "Countdown:"
+		ExtraContainer.hint_tooltip = ""
 		
 	elif slots.size() == 2 and slots[0] == "NORMAL" and slots[1] == "NORMAL":
 		ExtraContainer.visible = true
 		ExtraSpin.visible = true
-		ExtraSpin.min_value = -1
+		ExtraSpin.min_value = 0
+		ExtraSpin.max_value = 12
+		ExtraSpin.allow_greater = false
 		# force emitting the value_changed signal
 		ExtraSpin.value = ExtraSpin.value
-		ExtraLabel.text = "Optional minimum sum value:"
-		ExtraContainer.hint_tooltip = "Set it to -1 to disable a minimum sum."
+		ExtraLabel.text = "(Optional) Total value must equal:"
+		ExtraContainer.hint_tooltip = "(Optional) The total value of the dice must add up to the value. Set it to 0 to disable this behavior."
+		
+		if ExtraSpin.value == 1 or ExtraSpin.value > 12:
+			result = false
+			error = "The value needs to be between 2 and 12"
 	
 	if slots.has("COUNTDOWN") and slots.size() > 1:
 		result = false
@@ -139,5 +148,6 @@ func _on_SlotsNumberSpin_value_changed(value, node, key):
 	
 func _on_ExtraSpin_value_changed(value, node, key):
 	if not data_id or not ExtraContainer.visible or not node.visible: return
-	if value == -1: value = null
-	emit_signal("total_changed", value)
+	if _check():
+		if value <= 0: value = null
+		emit_signal("total_changed", value)

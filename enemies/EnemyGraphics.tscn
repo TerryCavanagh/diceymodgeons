@@ -15,6 +15,7 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+visible = false
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1273.0
@@ -47,3 +48,18 @@ margin_top = -1075.06
 margin_right = 1918.01
 margin_bottom = 1084.94
 rect_scale = Vector2( 0.24, 0.24 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="Label" type="Label" parent="CenterContainer"]
+margin_left = 567.0
+margin_top = 337.0
+margin_right = 698.0
+margin_bottom = 368.0
+text = "Nothing to see here.
+Work in progress."
+align = 1

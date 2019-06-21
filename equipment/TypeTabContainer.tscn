@@ -43,9 +43,9 @@ margin_right = 1265.0
 margin_bottom = 677.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CreateContainer"]
-margin_left = 531.0
+margin_left = 602.0
 margin_top = 325.0
-margin_right = 727.0
+margin_right = 655.0
 margin_bottom = 345.0
 
 [node name="CreateButton" type="Button" parent="CreateContainer/HBoxContainer"]
