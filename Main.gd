@@ -8,6 +8,8 @@ onready var Equipment = find_node("Equipment")
 onready var ModifiedDataContainer = find_node("ModifiedDataContainer")
 
 func _ready():
+	# setup some window information
+	OS.set_window_title("%s - Mod API %s" % [ProjectSettings.get_setting("application/config/name"), ProjectSettings.get_setting("application/config/mod_api_version")])
 	# Disable auto accept quit to be able to ask for saving before quitting
 	get_tree().set_auto_accept_quit(false)
 	# Disable tabs

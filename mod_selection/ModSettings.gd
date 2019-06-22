@@ -174,3 +174,7 @@ func _on_ModList_item_activated():
 
 func _on_ModList_item_rmb_selected(position):
 	print("Edit metadata popup")
+
+
+func _on_CreateModPopup_popup_hide():
+	_fill_mod_list()

@@ -205,3 +205,4 @@ current_path = "Z:/godot_projects/dicey_modgeons/"
 [connection signal="toggled" from="Dialogs/WarningPopup/VBoxContainer/DontShowCheck" to="Dialogs/WarningPopup" method="_on_DontShowCheck_toggled"]
 [connection signal="pressed" from="Dialogs/WarningPopup/VBoxContainer/OKButton" to="Dialogs/WarningPopup" method="_on_OKButton_pressed"]
 [connection signal="dir_selected" from="Dialogs/FileDialogPopup" to="." method="_on_FileDialogPopup_dir_selected"]
+[connection signal="popup_hide" from="Dialogs/CreateModPopup" to="." method="_on_CreateModPopup_popup_hide"]

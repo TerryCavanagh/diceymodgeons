@@ -352,7 +352,18 @@ class CSVData:
 			var file = Directory.new()
 			if file.file_exists(path):
 				file.remove(path)
+			print("No content for %s" % path)
 			return false
+			
+		var dir = Directory.new()
+		if not content or content.empty():
+			if dir.file_exists(path):
+				dir.remove(path)
+			return false
+		else:
+			if not dir.file_exists(path):
+				dir.make_dir_recursive(path.get_base_dir())
+			
 		var file = File.new()
 		if file.open(path, File.WRITE) == OK:
 			file.store_csv_line(PoolStringArray(headers))
@@ -361,6 +372,8 @@ class CSVData:
 				
 			file.close()
 			return true
+		else:
+			print("Couldn't save %s" % path)
 			
 		return false
 		

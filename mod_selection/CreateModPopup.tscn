@@ -1,13 +1,26 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://mod_selection/CreateModPopup.gd" type="Script" id=1]
 
+[sub_resource type="StyleBoxEmpty" id=1]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id=2]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+
 [node name="CreateModPopup" type="WindowDialog"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -680.0
-margin_bottom = -420.0
-rect_min_size = Vector2( 632, 332 )
+margin_right = -648.0
+margin_bottom = -288.0
+rect_min_size = Vector2( 632, 432 )
 popup_exclusive = true
 window_title = "Create a new mod"
 script = ExtResource( 1 )
@@ -30,100 +43,166 @@ __meta__ = {
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 616.0
-margin_bottom = 316.0
+margin_bottom = 416.0
 rect_min_size = Vector2( 600, 300 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 108.0
+margin_bottom = 182.0
 custom_constants/separation = 16
 
 [node name="IconTexture" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 100.0
-margin_bottom = 108.0
+margin_bottom = 182.0
 rect_min_size = Vector2( 100, 100 )
 hint_tooltip = "Click to change"
 mouse_default_cursor_shape = 2
 expand = true
-stretch_mode = 5
+stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 116.0
 margin_right = 600.0
-margin_bottom = 108.0
+margin_bottom = 182.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="DirNameContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 484.0
+margin_bottom = 42.0
+
+[node name="DirNameContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/DirNameContainer"]
 margin_right = 484.0
 margin_bottom = 24.0
 
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/DirNameContainer/DirNameContainer"]
+margin_top = 5.0
+margin_right = 120.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 120, 0 )
+text = "Directory name:"
+
+[node name="DirNameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/DirNameContainer/DirNameContainer"]
+margin_left = 124.0
+margin_right = 484.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/DirNameContainer"]
+margin_top = 28.0
+margin_right = 484.0
+margin_bottom = 42.0
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/DirNameContainer/HBoxContainer"]
+margin_right = 120.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 120, 0 )
+
+[node name="DirNameMessage" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/DirNameContainer/HBoxContainer"]
+margin_left = 124.0
+margin_right = 484.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+autowrap = true
+
+[node name="TitleContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 46.0
+margin_right = 484.0
+margin_bottom = 70.0
+
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TitleContainer"]
 margin_top = 5.0
-margin_right = 100.0
+margin_right = 120.0
 margin_bottom = 19.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 120, 0 )
 text = "Title:"
 
 [node name="TitleEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TitleContainer"]
-margin_left = 104.0
+margin_left = 124.0
 margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 
 [node name="AuthorContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 28.0
+margin_top = 74.0
 margin_right = 484.0
-margin_bottom = 52.0
+margin_bottom = 98.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AuthorContainer"]
 margin_top = 5.0
-margin_right = 100.0
+margin_right = 120.0
 margin_bottom = 19.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 120, 0 )
 text = "Author:"
 
 [node name="AuthorEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AuthorContainer"]
-margin_left = 104.0
+margin_left = 124.0
 margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="ModVersionContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 56.0
+[node name="ModVersionContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 102.0
 margin_right = 484.0
-margin_bottom = 80.0
+margin_bottom = 154.0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer"]
+[node name="ModVersionContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer"]
+margin_right = 484.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer/ModVersionContainer"]
 margin_top = 5.0
-margin_right = 100.0
+margin_right = 120.0
 margin_bottom = 19.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 120, 0 )
 text = "Mod version:"
 
-[node name="ModVersionEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer"]
-margin_left = 104.0
+[node name="ModVersionEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer/ModVersionContainer"]
+margin_left = 124.0
 margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 caret_blink = true
 
-[node name="LicenseContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 84.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer"]
+margin_top = 28.0
 margin_right = 484.0
-margin_bottom = 108.0
+margin_bottom = 52.0
+rect_min_size = Vector2( 0, 24 )
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer/HBoxContainer"]
+margin_right = 120.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 120, 0 )
+
+[node name="ModVersionMessage" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer/HBoxContainer"]
+margin_left = 124.0
+margin_right = 484.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/focus = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+bbcode_enabled = true
+scroll_active = false
+
+[node name="LicenseContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 158.0
+margin_right = 484.0
+margin_bottom = 182.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/LicenseContainer"]
 margin_top = 5.0
-margin_right = 100.0
+margin_right = 120.0
 margin_bottom = 19.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 120, 0 )
 text = "License:"
 
 [node name="LicenseEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/LicenseContainer"]
-margin_left = 104.0
+margin_left = 124.0
 margin_right = 484.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -131,9 +210,9 @@ text = "CC BY 4.0,MIT"
 caret_blink = true
 
 [node name="DescriptionContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 112.0
+margin_top = 186.0
 margin_right = 600.0
-margin_bottom = 276.0
+margin_bottom = 376.0
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/DescriptionContainer"]
@@ -144,14 +223,14 @@ text = "Description:"
 [node name="DescriptionEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/DescriptionContainer"]
 margin_top = 18.0
 margin_right = 600.0
-margin_bottom = 164.0
+margin_bottom = 190.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 280.0
+margin_top = 380.0
 margin_right = 600.0
-margin_bottom = 300.0
+margin_bottom = 400.0
 alignment = 1
 
 [node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsContainer"]
@@ -181,6 +260,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/IconTexture" to="." method="_on_IconTexture_pressed"]
+[connection signal="meta_clicked" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ModVersionContainer/HBoxContainer/ModVersionMessage" to="." method="_on_ModVersionMessage_meta_clicked"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/CancelButton" to="." method="_on_CancelButton_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

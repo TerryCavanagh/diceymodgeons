@@ -50,18 +50,21 @@ func _ready():
 		TextEdit.add_keyword_color(keyword, Color(theme_color["keyword_color"]))
 		
 	for constant in Gamedata.scripts.constants:
-		TextEdit.add_keyword_color(constant, Color(theme_color["string_color"]))
+		TextEdit.add_member_keyword(constant, Color(theme_color["string_color"]))
+		
+	TextEdit.set_completion(true, PoolStringArray([".", ",", "(", "="]));
 		
 	var key = InputEventKey.new()
 	key.scancode = KEY_SPACE
-	key.command = true
 	key.control = true
 	completion_shortcut.shortcut = key
 		
 func _input(event):
 	if not visible or not TextEdit.has_focus(): return
 	if completion_shortcut.is_shortcut(event) and event.is_pressed() and not event.is_echo():
-		TextEdit.emit_signal("request_completion")
+		print("query completion")
+		#TextEdit.emit_signal("completion_requested")
+		get_tree().set_input_as_handled()
 	
 func _set_text(value):
 	if not TextEdit: return
@@ -74,5 +77,7 @@ func _get_text():
 func _on_TextEdit_text_changed():
 	emit_signal("text_changed", TextEdit.text)
 
-func _on_TextEdit_request_completion():
-	print("hello ", name)
+func _on_TextEdit_completion_requested():
+	print("completion requested")
+	#TextEdit.code_complete(PoolStringArray(Gamedata.scripts.constants), true)
+	

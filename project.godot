@@ -19,6 +19,8 @@ config/name="Dicey Modgeons"
 run/main_scene="res://Main.tscn"
 run/low_processor_mode=true
 config/icon="res://icon.png"
+config/mod_api_version="0.8.0"
+config/app_version="0.1.0"
 
 [autoload]
 

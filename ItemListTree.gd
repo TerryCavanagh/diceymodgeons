@@ -175,13 +175,13 @@ func _on_List_button_pressed(item, column, id):
 	var meta = item.get_metadata(Column.NAME)
 	match id:
 		BUTTON_DELETE_ID:
-			ConfirmPopup.popup_confirm("Are you sure you want to delete %s?" % meta.key)
+			ConfirmPopup.popup_confirm("Are you sure you want to delete '%s'?" % meta.key)
 			var result = yield(ConfirmPopup, "action_chosen")
 			if result == ConfirmPopup.OKAY:
 				Database.commit(table, Database.DELETE, meta.key)
 				emit_signal("element_selected", null)
 		BUTTON_REVERT_ID:
-			ConfirmPopup.popup_confirm("Are you sure you want to revert to the original game data %s?" % meta.key)
+			ConfirmPopup.popup_confirm("Are you sure you want to revert '%s' to the original game data?" % meta.key)
 			var result = yield(ConfirmPopup, "action_chosen")
 			print(result)
 			if result == ConfirmPopup.OKAY:
