@@ -15,7 +15,6 @@ content_margin_top = 4.0
 content_margin_bottom = 4.0
 
 [node name="CreateModPopup" type="WindowDialog"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -648.0

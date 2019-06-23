@@ -71,10 +71,11 @@ func load_data(filter = null, select_key = null):
 	root = create_item()
 	
 	var still_selected = false
+	var t = Database.get_table(table)
 	for key in keys:
 		var entry = data[key]
 		var origin = entry.get("__origin", Database.Origin.GAME)
-		var metadata = {"key":key, "origin":origin, "is_in_game_data": Database.get_table(table).is_in_game_data(key)}
+		var metadata = {"key": key, "origin": origin, "is_in_game_data": t.is_in_game_data(key)}
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
@@ -97,6 +98,7 @@ func _set_item_data(item:TreeItem, metadata):
 	if key.empty(): return
 	
 	var origin = metadata.get("origin", Database.Origin.GAME)
+	var is_in_game = metadata.get("is_in_game_data", false)
 	var modified = _modified(key)
 	
 	if modified:
@@ -107,7 +109,7 @@ func _set_item_data(item:TreeItem, metadata):
 		item.set_tooltip(Column.MODIFIED, "")
 	
 	item.set_text(Column.NAME, key)
-	item.set_editable(Column.NAME, true)
+	item.set_editable(Column.NAME, not is_in_game)
 	item.set_tooltip(Column.NAME, key)
 	
 	item.set_metadata(Column.NAME, metadata)
@@ -118,7 +120,7 @@ func _set_item_data(item:TreeItem, metadata):
 	for i in item.get_button_count(Column.BUTTON):
 		item.erase_button(Column.BUTTON, i)
 		
-	if metadata.get("is_in_game_data", false) and (modified or origin == Database.Origin.APPEND):
+	if is_in_game and (modified or origin == Database.Origin.MERGE):
 		item.add_button(Column.BUTTON, return_texture, BUTTON_REVERT_ID, false)
 		item.set_tooltip(Column.BUTTON, "Revert to the game data")
 	elif origin == Database.Origin.APPEND:

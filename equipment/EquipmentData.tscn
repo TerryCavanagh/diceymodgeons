@@ -19,33 +19,27 @@ margin_top = 7.0
 margin_right = 1273.0
 margin_bottom = 713.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 margin_right = 1266.0
 margin_bottom = 706.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
-margin_right = 957.0
-margin_bottom = 706.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Row1" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_right = 957.0
+[node name="Row1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1266.0
 margin_bottom = 20.0
 
-[node name="SizeContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1"]
+[node name="SizeContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
 margin_right = 83.0
 margin_bottom = 20.0
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1/SizeContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/SizeContainer"]
 margin_top = 3.0
 margin_right = 30.0
 margin_bottom = 17.0
 text = "Size:"
 
-[node name="SizeOption" type="OptionButton" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1/SizeContainer"]
+[node name="SizeOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/Row1/SizeContainer"]
 margin_left = 34.0
 margin_right = 83.0
 margin_bottom = 20.0
@@ -55,47 +49,67 @@ flat = true
 items = [ "1", null, false, 0, null, "2", null, false, 1, null ]
 selected = 0
 
-[node name="CategoryContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1"]
+[node name="CategoryContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
 margin_left = 87.0
 margin_right = 330.0
 margin_bottom = 20.0
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1/CategoryContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/CategoryContainer"]
 margin_top = 3.0
 margin_right = 59.0
 margin_bottom = 17.0
 text = "Category:"
 
-[node name="CategoryOption" type="OptionButton" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1/CategoryContainer"]
+[node name="CategoryOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/Row1/CategoryContainer"]
 margin_left = 63.0
 margin_right = 243.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 180, 0 )
 clip_text = true
 
-[node name="ColorContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1"]
+[node name="ColorContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
 margin_left = 334.0
 margin_right = 555.0
 margin_bottom = 20.0
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1/ColorContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/ColorContainer"]
 margin_top = 3.0
 margin_right = 37.0
 margin_bottom = 17.0
 text = "Color:"
 
-[node name="ColorOption" type="OptionButton" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row1/ColorContainer"]
+[node name="ColorOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/Row1/ColorContainer"]
 margin_left = 41.0
 margin_right = 221.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 180, 0 )
 
-[node name="Row2" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 24.0
-margin_right = 957.0
-margin_bottom = 48.0
+[node name="DeleteButton" type="Button" parent="ScrollContainer/VBoxContainer/Row1"]
+visible = false
+margin_left = 1211.0
+margin_right = 1266.0
+margin_bottom = 20.0
+size_flags_horizontal = 10
+text = "Delete"
 
-[node name="UsesContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 1266.0
+margin_bottom = 706.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_right = 957.0
+margin_bottom = 682.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Row2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 957.0
+margin_bottom = 24.0
+
+[node name="UsesContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2"]
 margin_right = 114.0
 margin_bottom = 24.0
 hint_tooltip = "The total number of uses this equipment will have.
@@ -103,133 +117,133 @@ hint_tooltip = "The total number of uses this equipment will have.
 -1: Make it reusable
 0: 1 use"
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row2/UsesContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2/UsesContainer"]
 margin_top = 5.0
 margin_right = 36.0
 margin_bottom = 19.0
 text = "Uses:"
 
-[node name="UsesSpin" type="SpinBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row2/UsesContainer"]
+[node name="UsesSpin" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2/UsesContainer"]
 margin_left = 40.0
 margin_right = 114.0
 margin_bottom = 24.0
 min_value = -1.0
 align = 2
 
-[node name="SpellContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row2"]
+[node name="SpellContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2"]
 margin_left = 118.0
 margin_right = 275.0
 margin_bottom = 24.0
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row2/SpellContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2/SpellContainer"]
 margin_top = 5.0
 margin_right = 79.0
 margin_bottom = 19.0
 text = "Which Spell:"
 
-[node name="SpellSpin" type="SpinBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row2/SpellContainer"]
+[node name="SpellSpin" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2/SpellContainer"]
 margin_left = 83.0
 margin_right = 157.0
 margin_bottom = 24.0
 align = 2
 
-[node name="Row3" type="GridContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 52.0
+[node name="Row3" type="GridContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 28.0
 margin_right = 957.0
-margin_bottom = 104.0
+margin_bottom = 80.0
 columns = 3
 
-[node name="CastBackwardsCheck" type="CheckBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row3"]
+[node name="CastBackwardsCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
 margin_right = 135.0
 margin_bottom = 24.0
 text = "Cast backwards?"
 
-[node name="SingleUseCheck" type="CheckBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row3"]
+[node name="SingleUseCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
 margin_left = 139.0
 margin_right = 289.0
 margin_bottom = 24.0
 text = "Single use in battle"
 
-[node name="SpecialCheck" type="CheckBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row3"]
+[node name="SpecialCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
 margin_left = 293.0
 margin_right = 430.0
 margin_bottom = 24.0
 text = "Is special?"
 
-[node name="ErrorImmuneCheck" type="CheckBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row3"]
+[node name="ErrorImmuneCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
 margin_top = 28.0
 margin_right = 135.0
 margin_bottom = 52.0
 text = "Immune to error"
 
-[node name="ShowGoldCheck" type="CheckBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row3"]
+[node name="ShowGoldCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
 margin_left = 139.0
 margin_top = 28.0
 margin_right = 289.0
 margin_bottom = 52.0
 text = "Shows gold"
 
-[node name="AppearForPartsCheck" type="CheckBox" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row3"]
+[node name="AppearForPartsCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
 margin_left = 293.0
 margin_top = 28.0
 margin_right = 430.0
 margin_bottom = 52.0
 text = "Appears for parts"
 
-[node name="SlotsContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+[node name="SlotsContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 108.0
+margin_top = 84.0
 margin_right = 957.0
-margin_bottom = 212.0
+margin_bottom = 188.0
 
-[node name="Row5" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 216.0
+[node name="Row5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 192.0
 margin_right = 957.0
-margin_bottom = 254.0
+margin_bottom = 230.0
 
-[node name="UpgradeContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row5"]
+[node name="UpgradeContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5"]
 margin_right = 180.0
 margin_bottom = 38.0
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row5/UpgradeContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5/UpgradeContainer"]
 margin_right = 180.0
 margin_bottom = 14.0
 text = "Upgrade modifier:"
 
-[node name="UpgradeOption" type="OptionButton" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row5/UpgradeContainer"]
+[node name="UpgradeOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5/UpgradeContainer"]
 margin_top = 18.0
 margin_right = 180.0
 margin_bottom = 38.0
 rect_min_size = Vector2( 180, 0 )
 
-[node name="WeakenContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row5"]
+[node name="WeakenContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5"]
 margin_left = 184.0
 margin_right = 364.0
 margin_bottom = 38.0
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row5/WeakenContainer"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5/WeakenContainer"]
 margin_right = 180.0
 margin_bottom = 14.0
 text = "Weaken modifier:"
 
-[node name="WeakenOption" type="OptionButton" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row5/WeakenContainer"]
+[node name="WeakenOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5/WeakenContainer"]
 margin_top = 18.0
 margin_right = 180.0
 margin_bottom = 38.0
 rect_min_size = Vector2( 180, 0 )
 
-[node name="Row6" type="VBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-margin_top = 258.0
+[node name="Row6" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 234.0
 margin_right = 957.0
-margin_bottom = 426.0
+margin_bottom = 402.0
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row6"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row6"]
 margin_right = 957.0
 margin_bottom = 14.0
 text = "Description:"
 
-[node name="DescriptionEdit" parent="ScrollContainer/HBoxContainer/VBoxContainer/Row6" instance=ExtResource( 2 )]
+[node name="DescriptionEdit" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row6" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
@@ -237,18 +251,19 @@ margin_right = 957.0
 margin_bottom = 168.0
 rect_min_size = Vector2( 0, 150 )
 
-[node name="CenterContainer" type="CenterContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 margin_left = 961.0
 margin_right = 1266.0
-margin_bottom = 706.0
+margin_bottom = 682.0
 rect_min_size = Vector2( 305, 0 )
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="ScrollContainer/HBoxContainer/CenterContainer"]
+[node name="Control" type="Control" parent="ScrollContainer/VBoxContainer/HBoxContainer/CenterContainer"]
 margin_left = 2.0
-margin_top = 353.0
+margin_top = 341.0
 margin_right = 302.0
-margin_bottom = 353.0
+margin_bottom = 341.0
 rect_min_size = Vector2( 300, 0 )
 
-[node name="EquipmentCard" parent="ScrollContainer/HBoxContainer/CenterContainer/Control" instance=ExtResource( 4 )]
+[node name="EquipmentCard" parent="ScrollContainer/VBoxContainer/HBoxContainer/CenterContainer/Control" instance=ExtResource( 4 )]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Row1/DeleteButton" to="." method="_on_DeleteButton_pressed"]

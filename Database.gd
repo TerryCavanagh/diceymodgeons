@@ -285,6 +285,8 @@ class CSVData:
 	var KEY:String = ""
 	var schema:Dictionary = {}
 	
+	var force_needs_save:bool = false
+	
 	func _init(paths:Dictionary, key:String):
 		self.paths = paths
 		KEY = key
@@ -341,7 +343,9 @@ class CSVData:
 				game_data[id] = data[id].duplicate(true)
 	
 	func save_data():
-		_save(paths.get(Origin.APPEND, ""), [Origin.APPEND, Origin.GAME])
+		_save(paths.get(Origin.APPEND, ""), [Origin.APPEND])
+		_save(paths.get(Origin.MERGE, ""), [Origin.MERGE, Origin.GAME])
+		force_needs_save = false
 		
 	func _save(path, origins):
 		var content = []
@@ -380,17 +384,20 @@ class CSVData:
 	func _data_to_content(source):
 		var subdata = []
 		for key in data.keys():
+			compare(key)
 			var value = data[key]
 			var origin = value.get("__origin", null)
 			var save = false
-			if origin == Origin.GAME:
-				save = value.get("__modified", false)
-			elif not source == Origin.GAME and origin == source:
-				save = true
+			if origin == source:
+				if origin == Origin.GAME:
+					save = value.get("__modified", false)
+					if save:
+						value["__origin"] = Origin.MERGE
+				else:
+					save = true
 			value["__modified"] = false
 			if save:
 				# TODO do this after knowing that the data has been saved correctly
-				value["__origin"] = source
 				hashes[key] = value.hash()
 				subdata.push_back(value)
 		
@@ -417,6 +424,9 @@ class CSVData:
 		hashes[key] = data[key].hash()
 		
 	func data_needs_save():
+		if force_needs_save:
+			return true
+			
 		if hashes.size() != data.size():
 			return true
 			
@@ -455,6 +465,8 @@ class CSVData:
 		else:
 			var result = data.erase(id)
 			hashes.erase(id)
+			# force the needs save because we removed the entry in both data and hashes and there's no way to know it
+			force_needs_save = true
 			return result
 		
 	func change_key(old_key:String, new_key:String):

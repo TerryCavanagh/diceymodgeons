@@ -1,8 +1,12 @@
 extends PanelContainer
 
+signal equipment_deleted(key)
+
 onready var SizeOption = find_node("SizeOption")
 onready var CategoryOption = find_node("CategoryOption")
 onready var ColorOption = find_node("ColorOption")
+
+onready var DeleteButton = find_node("DeleteButton")
 
 onready var UsesSpin = find_node("UsesSpin")
 onready var SpellSpin = find_node("SpellSpin")
@@ -59,6 +63,10 @@ func set_data(data):
 	_setup(WeakenOption, "Weaken", "")
 	
 	_setup(DescriptionEdit, "Description", "")
+	
+	if data_id.find("_") > -1:
+		var table = Database.get_table(Database.Table.EQUIPMENT)
+		DeleteButton.visible = not table.is_in_game_data(data_id)
 	
 	EquipmentCard.set_title(data_id)
 	EquipmentCard.change_size(data.get("Size", 1))
@@ -151,3 +159,11 @@ func _on_SlotsContainer_slots_changed(slots, node, key):
 func _on_SlotsContainer_total_changed(new_total, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, new_total)
+
+func _on_DeleteButton_pressed():
+	if not data_id: return
+	ConfirmPopup.popup_confirm("Are you sure you want to delete '%s'?" % data_id)
+	var result = yield(ConfirmPopup, "action_chosen")
+	if result == ConfirmPopup.OKAY:
+		Database.commit(Database.Table.EQUIPMENT, Database.DELETE, data_id)
+		emit_signal("equipment_deleted", data_id)

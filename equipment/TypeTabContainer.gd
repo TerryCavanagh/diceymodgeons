@@ -23,6 +23,8 @@ func _ready():
 	CreateContainer.visible = true
 	if type == TabType.NORMAL:
 		CopyButton.visible = false
+	else:
+		Data.connect("equipment_deleted", self, "_on_equipment_deleted")
 	
 func set_key(key:String):
 	if not TabContainer: return
@@ -65,14 +67,19 @@ func _get_full_key(type):
 func _on_CreateButton_pressed():
 	var full_key = _get_full_key(type)
 	if Database.commit(Database.Table.EQUIPMENT, Database.READ, full_key):
-		print("Can't create something that's already created")
+		ConfirmPopup.popup_accept("The equipment '%s' is already created." % full_key)
 	elif Database.commit(Database.Table.EQUIPMENT, Database.CREATE, full_key):
-		print("%s created successfully" % full_key)
+		# Everything is correct
+		pass
 	else:
-		print("Uhm, something went wrong")
+		ConfirmPopup.popup_accept("Something went wrong", "Ooops...")
 		
 	set_key(current_key)
 
 
 func _on_CopyButton_pressed():
 	pass # Replace with function body.
+	
+func _on_equipment_deleted(key):
+	# Equipment was deleted, set it to empty
+	set_key("")
