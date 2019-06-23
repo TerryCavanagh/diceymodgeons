@@ -417,7 +417,11 @@ class CSVData:
 			if h == KEY:
 				data[key][h] = key
 			else:
-				data[key][h] = _convert_from_csv(h, "")
+				var default = schema[h].get("default", "")
+				if default is String and default == "":
+					data[key][h] = _convert_from_csv(h, "")
+				else:
+					data[key][h] = default
 			
 		data[key]["__origin"] = Origin.APPEND
 		data[key]["__modified"] = true
@@ -489,7 +493,7 @@ class CSVData:
 	func _convert_from_csv(header:String, value:String):
 		if not schema.has(header): return value
 		
-		match schema[header]:
+		match schema[header].type:
 			"number":
 				if value.empty():
 					return float(0)
@@ -513,6 +517,11 @@ class CSVData:
 					return false
 				else:
 					return value.to_lower() == "yes"
+			"empty_bool":
+				if value.empty():
+					return false
+				else:
+					return value.to_lower() == schema[header].get("on_true", "none")
 			"script":
 				return _convert_from_script(value)
 			"text":
@@ -539,9 +548,13 @@ class CSVData:
 	func _convert_to_csv(header:String, value):
 		if not schema.has(header): return value
 			
-		match schema[header]:
+		match schema[header].type:
 			"number":
-				if value:
+				if schema[header].has("empty_on"):
+					var empty_on = schema[header].get("empty_on", null)
+					if value == empty_on:
+						return ""
+				elif value != null:
 					return str(value)
 				else:
 					return ""
@@ -560,6 +573,13 @@ class CSVData:
 					return "YES"
 				else:
 					return "NO"
+			"empty_bool":
+				var on_true = schema[header].get("on_true", "none")
+				var on_false = schema[header].get("on_false", "")
+				if value:
+					return on_true
+				else:
+					return on_false
 			"script":
 				return _convert_to_script(value)
 			"text":
