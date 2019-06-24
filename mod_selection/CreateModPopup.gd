@@ -90,10 +90,12 @@ func _setup(node, key, def):
 		node.text = data.get(key, def)
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 
+var dir_check = Directory.new()
 func _check(node):
 	if not node: return false
 	
 	var result = false
+	var dir_already_exists = false
 	if node is LineEdit:
 		if node.text.empty():
 			result = false
@@ -101,28 +103,32 @@ func _check(node):
 			result = true
 			if node == DirNameEdit:
 				result = dir_name_regex.search(node.text) != null
+				if result:
+					var path = Settings.get_value(Settings.GAME_PATH).plus_file("mods").plus_file(node.text)
+					result = not dir_check.dir_exists(path)
+					dir_already_exists = dir_check.dir_exists(path)
 			elif node == ModVersionEdit:
 				result = semver_regex.search(node.text) != null
 			
 		if result:
 			node.add_stylebox_override("normal", okay_style)
 			if node == DirNameEdit:
-				DirNameMessage.text = "All correct."
-				DirNameMessage.modulate = Color.green
+				DirNameMessage.text = "Directory name correct."
 			elif node == ModVersionEdit:
-				ModVersionMessage.bbcode_text = "[color=green]All correct.[/color]"
+				ModVersionMessage.bbcode_text = "Mod version correct."
 		else:
 			node.add_stylebox_override("normal", wrong_style)
 			if node == DirNameEdit:
-				DirNameMessage.text = "The directory name can only contain alphanumeric characters."
-				DirNameMessage.modulate = Color.red
+				if dir_already_exists:
+					DirNameMessage.text = "Directory already exists."
+				else:
+					DirNameMessage.text = "Can only contain alphanumeric characters."
 			elif node == ModVersionEdit:
-				ModVersionMessage.bbcode_text = "[color=red]The mod version follows the SemVer Specification. [url=https://semver.org/]Read more here[/url][/color]"
+				ModVersionMessage.bbcode_text = "The mod version follows the SemVer Specification. [url=https://semver.org/]Read more here[/url]"
 				
 		if node == ModVersionEdit:
 			var f = ModVersionMessage.get_font("normal_font")
 			var h = f.get_wordwrap_string_size(ModVersionMessage.text, ModVersionMessage.rect_size.x).y
-			print(h)
 			ModVersionMessage.get_parent().rect_min_size.y = h + 8
 			
 	elif node is TextEdit:
