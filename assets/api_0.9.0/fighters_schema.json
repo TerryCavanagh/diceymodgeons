@@ -13,7 +13,7 @@
 	},
 	"CombatAnimation": {
 		"type": "string",
-		"default": ""
+		"default": "frog"
 	},
 	"CombatAnimationOffset": {
 		"type": "point",
@@ -21,7 +21,7 @@
 	},
 	"OverworldAnimation": {
 		"type": "string",
-		"default": ""
+		"default": "frog"
 	},
 	"OverworldAnimationOffset": {
 		"type": "point",
