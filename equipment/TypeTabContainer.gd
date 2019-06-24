@@ -4,7 +4,8 @@ enum TabType {
 	NORMAL,
 	UPGRADED,
 	WEAKENED,
-	DOWNGRADED
+	DOWNGRADED,
+	DECKUPGRADE
 }
 
 export (TabType) var type = TabType.NORMAL
@@ -61,6 +62,8 @@ func _get_full_key(type):
 			key += "_weakened"
 		TabType.DOWNGRADED:
 			key += "_downgraded"
+		TabType.DECKUPGRADE:
+			key += "_deckupgrade"
 			
 	return key
 

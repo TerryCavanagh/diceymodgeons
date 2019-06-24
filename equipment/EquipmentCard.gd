@@ -40,6 +40,7 @@ func set_title(title:String):
 	if title.findn("_weakened") > -1 or title.findn("_downgraded") > -1:
 		self_modulate.a = 0.5
 	title = title.replacen("_upgraded", "+")
+	title = title.replacen("_deckupgrade", "+")
 	title = title.replacen("_weakened", "-")
 	title = title.replacen("_downgraded", "-")
 	Title.text = title
@@ -97,4 +98,4 @@ func _update_description_position():
 	if card_size == 2:
 		Description.rect_position.y += 150
 	Description.rect_pivot_offset = Description.rect_size / 2.0
-	Description.rect_scale = Vector2(0.85, 0.85)
+	Description.rect_scale = Vector2(0.8, 0.8)

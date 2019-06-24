@@ -2,8 +2,8 @@
 
 [ext_resource path="res://editor.theme" type="Theme" id=1]
 [ext_resource path="res://FileMenu.gd" type="Script" id=2]
-[ext_resource path="res://equipment/EquipmentTab.tscn" type="PackedScene" id=3]
-[ext_resource path="res://mod_selection/ModSettings.tscn" type="PackedScene" id=4]
+[ext_resource path="res://mod_selection/ModSettings.tscn" type="PackedScene" id=3]
+[ext_resource path="res://equipment/EquipmentTab.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Main.gd" type="Script" id=5]
 [ext_resource path="res://enemies/EnemiesTab.tscn" type="PackedScene" id=6]
 
@@ -63,7 +63,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Mod Selection" parent="VBoxContainer/TabContainer" instance=ExtResource( 4 )]
+[node name="Mod Selection" parent="VBoxContainer/TabContainer" instance=ExtResource( 3 )]
 margin_left = 5.0
 margin_top = 35.0
 margin_right = -5.0
@@ -76,7 +76,7 @@ margin_top = 35.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Equipment" parent="VBoxContainer/TabContainer" instance=ExtResource( 3 )]
+[node name="Equipment" parent="VBoxContainer/TabContainer" instance=ExtResource( 4 )]
 visible = false
 margin_left = 5.0
 margin_top = 35.0

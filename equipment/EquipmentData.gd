@@ -75,7 +75,7 @@ func set_data(data):
 	EquipmentCard.change_size(data.get("Size", 1))
 	EquipmentCard.set_description(data.get("Description", ""))
 	
-	EquipmentCard.change_color(data.get("Colour", ""), data.get("Category", ""), data_id.find("_upgraded") > -1)
+	EquipmentCard.change_color(data.get("Colour", ""), data.get("Category", ""), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
 	
 	var items = Database.commit(Database.Table.ITEMS, Database.READ)
 	var values = {}
@@ -142,10 +142,10 @@ func _on_OptionButton_item_selected(id, node, key):
 		var color = node.get_item_text(node.selected).to_upper()
 		if node.selected == 0:
 			color = ""
-		EquipmentCard.change_color(color, Utils.option_get_selected_key(CategoryOption), data_id.find("_upgraded") > -1)
+		EquipmentCard.change_color(color, Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
 	if node == CategoryOption:
 		if ColorOption.selected == 0:
-			EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.find("_upgraded") > -1)
+			EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
 			
 		var category = Utils.option_get_selected_key(CategoryOption)
 		SlotsContainer.visible = not (category == "BACKUP" or category == "SKILLCARD")

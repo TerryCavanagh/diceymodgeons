@@ -47,6 +47,10 @@ type = 2
 visible = false
 type = 3
 
+[node name="Deck Upgrade" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
+visible = false
+type = 4
+
 [node name="AddNewEquipmentPopup" parent="." instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
