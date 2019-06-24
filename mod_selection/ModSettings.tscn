@@ -167,10 +167,12 @@ __meta__ = {
 margin_top = 16.0
 margin_right = 400.0
 margin_bottom = 81.0
-text = "Remember that using this tool will spoil most of the game.
+text = "Beaware. This tool spoils THE WHOLE game.
+Proceed at your own peril!
 
-This tool is a WIP version. Don't trust it and make backups
-of your mods before trying this out.
+This editor is WIP. Some features aren't available yet.
+
+Backup your work before using this tool!!!
 
 "
 align = 1

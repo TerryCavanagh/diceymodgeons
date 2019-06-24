@@ -153,6 +153,10 @@ func _on_LoadButton_pressed():
 		
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
 	if meta and meta.has("mod"):
+		if not meta.get("polymod", {}).get("api_version", "") == ProjectSettings.get_setting("application/config/mod_api_version"):
+			ConfirmPopup.popup_accept("The mod API version differs from the supported API by the editor.\nYou can still edit it but issues may happen.\nAn automatic upgrade will happen in the future.")
+			yield(ConfirmPopup, "action_chosen")
+			
 		Database.load_data(path, meta.get("mod"))
 		current_mod_loaded = meta.get("mod")
 		_fill_mod_list()
@@ -186,9 +190,14 @@ func _on_LaunchButton_pressed():
 	if Database.data_needs_save():
 		ConfirmPopup.popup_save("The data needs to be saved before launching the game.")
 		var result = yield(ConfirmPopup, "action_chosen")
-		if result == ConfirmPopup.CANCEL:
-			return
-		Database.save_data()
+		match result:
+			ConfirmPopup.OKAY:
+				Database.save_data()
+			ConfirmPopup.CANCEL:
+				return
+			ConfirmPopup.OTHER:
+				# Don't save and launch without saving
+				pass
 
 	var mod = current_mod_loaded
 	var exec = ""
