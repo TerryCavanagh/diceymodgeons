@@ -16,8 +16,16 @@ margin_left = 7.0
 margin_top = 7.0
 margin_right = 1273.0
 margin_bottom = 713.0
+tab_align = 0
 
 [node name="On Execute" parent="TabContainer" instance=ExtResource( 2 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Before Execute" parent="TabContainer" instance=ExtResource( 2 )]
+visible = false
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
@@ -52,6 +60,27 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="On End Turn" parent="TabContainer" instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="On Any Equipment Use" parent="TabContainer" instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="On Snap" parent="TabContainer" instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="On Fury" parent="TabContainer" instance=ExtResource( 2 )]
 visible = false
 margin_left = 4.0
 margin_top = 32.0

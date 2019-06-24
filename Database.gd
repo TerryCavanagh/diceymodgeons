@@ -121,6 +121,7 @@ func commit(table:int, action:int, key = null, field = null, value = null):
 	Makes a database commit.
 	- table: The database table
 	- action: The action (CREATE, READ, UPDATE, DELETE)
+	- key: The data key
 	- field: The field
 	- Value: The value
 	"""

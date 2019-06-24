@@ -17,9 +17,11 @@ onready var SpecialCheck = find_node("SpecialCheck")
 onready var ErrorImmuneCheck = find_node("ErrorImmuneCheck")
 onready var ShowGoldCheck = find_node("ShowGoldCheck")
 onready var AppearForPartsCheck = find_node("AppearForPartsCheck")
+onready var SFXCheck = find_node("SFXCheck")
 
 onready var SlotsContainer = find_node("SlotsContainer")
 
+onready var GadgetOption = find_node("GadgetOption")
 onready var UpgradeOption = find_node("UpgradeOption")
 onready var WeakenOption = find_node("WeakenOption")
 
@@ -50,12 +52,13 @@ func set_data(data):
 	_setup(SpellSpin, "Witch Spell", 0)
 	
 	# TODO
-	#_setup(CastBackwardsCheck, "Cast Backwards?", false)
+	_setup(CastBackwardsCheck, "Cast Backwards?", false)
 	_setup(SingleUseCheck, "Single use?", false)
 	_setup(SpecialCheck, "Special?", false)
 	_setup(ErrorImmuneCheck, "Error Immune", false)
 	_setup(ShowGoldCheck, "Show Gold", false)
 	_setup(AppearForPartsCheck, "Appears For Parts", false)
+	_setup(SFXCheck, "SFX", false)
 	
 	_setup(SlotsContainer, "Slots", [])
 	
@@ -73,6 +76,15 @@ func set_data(data):
 	EquipmentCard.set_description(data.get("Description", ""))
 	
 	EquipmentCard.change_color(data.get("Colour", ""), data.get("Category", ""), data_id.find("_upgraded") > -1)
+	
+	var items = Database.commit(Database.Table.ITEMS, Database.READ)
+	var values = {}
+	values["None"] = "No gadget"
+	for item in items.keys():
+		values[item] = items[item].get("Description", "")
+	Utils.fill_options(GadgetOption, values, false)
+	
+	_setup(GadgetOption, "Gadget", "")
 	
 func _setup(node, key, def):
 	if node is SpinBox:
