@@ -9,6 +9,6 @@ Currently you need a master build from Godot to modify this project. You can use
 ### Licenses
 Source code is MIT licenced. See LICENSE.md
 
-Graphics are licenced by Distractionware Limited
+Graphics made for Dicey Dungeons by Marlowe Dobbe
 
 `return*.png` and `trashcanOpen*.png` are licenced by https://creativecommons.org/publicdomain/zero/1.0/
