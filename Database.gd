@@ -92,6 +92,8 @@ func load_data(root_path:String, mod:String):
 	emit_signal("data_loaded")
 	
 func save_data():
+	if not data_needs_save(): return
+	
 	_fighters.save_data()
 	emit_signal("save_completed", Table.FIGHTERS)
 	_equipment.save_data()
