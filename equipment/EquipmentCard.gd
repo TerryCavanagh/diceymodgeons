@@ -43,7 +43,7 @@ func set_title(title:String):
 	title = title.replacen("_deckupgrade", "+")
 	title = title.replacen("_weakened", "-")
 	title = title.replacen("_downgraded", "-")
-	Title.text = title
+	Title.text = title.to_upper()
 	
 func set_description(desc:String):
 	var regex = RegEx.new()
