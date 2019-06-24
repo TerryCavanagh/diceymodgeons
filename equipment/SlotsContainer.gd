@@ -33,8 +33,6 @@ func set_data(data):
 	self.data = data
 	
 	slots = data.get("Slots", [])
-	if slots.empty():
-		slots.push_back("NORMAL")
 	current_slots = slots.duplicate()
 	
 	for slot in SlotOptions:
@@ -57,6 +55,7 @@ func set_data(data):
 	
 	# it will get visible if needed inside _check()
 	ExtraSpin.visible = false
+	ExtraSpin.min_value = 0
 	
 	var total = data.get("NEED TOTAL?", null)
 	if total:

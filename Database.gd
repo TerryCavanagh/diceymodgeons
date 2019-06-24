@@ -465,6 +465,7 @@ class CSVData:
 				
 			data[id]["__modified"] = false
 			hashes[id] = data[id].hash()
+			force_needs_save = true
 			return true
 		else:
 			var result = data.erase(id)
