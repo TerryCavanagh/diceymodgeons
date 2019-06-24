@@ -18,7 +18,8 @@ func _init():
 	
 func load_data():
 	var file = File.new()
-	if file.open("res://assets/gamedata.json", File.READ) == OK:
+	var path = "res://assets/api_%s/gamedata.json" % [ProjectSettings.get_setting("application/config/mod_api_version")]
+	if file.open(path, File.READ) == OK:
 		var json = parse_json(file.get_as_text())
 		innates = json.innates
 		scripts = json.scripts

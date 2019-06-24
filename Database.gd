@@ -61,7 +61,7 @@ func _get_paths(table:int):
 			
 	var result = {}
 	
-	result["schema"] = "%s/data/text/%s" % [root_path, schema]
+	result["schema"] = "res://assets/api_%s/%s" % [ProjectSettings.get_setting("application/config/mod_api_version"), schema]
 	
 	result[Origin.GAME] = "%s/data/text/%s" % [root_path, file]
 	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]

@@ -1,0 +1,114 @@
+{
+	"Name": {
+		"type": "string",
+		"default": ""
+	},
+	"Health": {
+		"type": "number",
+		"default": 1,
+	},
+	"Voice": {
+		"type": "string",
+		"default": ""
+	},
+	"CombatAnimation": {
+		"type": "string",
+		"default": ""
+	},
+	"CombatAnimationOffset": {
+		"type": "point",
+		"default": ""
+	},
+	"OverworldAnimation": {
+		"type": "string",
+		"default": ""
+	},
+	"OverworldAnimationOffset": {
+		"type": "point",
+		"default": ""
+	},
+	"VfxOffset": {
+		"type": "point",
+		"default": ""
+	},
+	"Dice": {
+		"type": "number",
+		"default": 1
+	},
+	"Level": {
+		"type": "number",
+		"default": 1
+	},
+	"Equipment": {
+		"type": "list",
+		"default": ""
+	},
+	"Super Equipment": {
+		"type": "list",
+		"default": ""
+	},
+	"Super Dice": {
+		"type": "number",
+		"default": 0
+	},
+	"Super Health": {
+		"type": "number",
+		"default": 0
+	},
+	"Super?": {
+		"type": "bool",
+		"default": false
+	},
+	"Boss?": {
+		"type": "bool",
+		"default": false
+	},
+	"Rare?": {
+		"type": "bool",
+		"default": false
+	},
+	"Script: Before Combat": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: After Combat": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: Before Start Turn": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On Start Turn": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: End Turn": {
+		"type": "script",
+		"default": ""
+	},
+	"Elemental Type": {
+		"type": "string",
+		"default": ""
+	},
+	"Innate": {
+		"type": "list",
+		"default": ""
+	},
+	"AI": {
+		"type": "string",
+		"default": ""
+	},
+	"Chat Voice": {
+		"type": "string",
+		"default": "chat_monster1"
+	},
+	"First Words": {
+		"type": "text",
+		"default": ""
+	},
+	"Last Words": {
+		"type": "text",
+		"default": ""
+	}
+}

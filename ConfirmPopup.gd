@@ -34,6 +34,7 @@ func _ready():
 func _popup(text:String, title:String):
 	window_title = title
 	dialog_text = text
+	rect_size = rect_min_size
 	call_deferred("popup_centered_minsize", rect_min_size)
 	
 func popup_confirm(text:String, title:String = ""):

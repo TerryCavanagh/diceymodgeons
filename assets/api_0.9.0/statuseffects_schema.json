@@ -1,0 +1,38 @@
+{
+	"Name": {
+		"type": "string",
+		"default": ""
+	},
+	"Displayed As": {
+		"type": "string",
+		"default": ""
+	},
+	"Symbol": {
+		"type": "string",
+		"default": ""
+	},
+	"Description": {
+		"type": "text",
+		"default": ""
+	},
+	"External Scripts?": {
+		"type": "bool",
+		"default": ""
+	},
+	"Stacks?": {
+		"type": "bool",
+		"default": ""
+	},
+	"Remove at End Turn?": {
+		"type": "bool",
+		"default": ""
+	},
+	"Remove at Start Turn?": {
+		"type": "bool",
+		"default": ""
+	},
+	"Invisible?": {
+		"type": "bool",
+		"default": ""
+	}
+}
