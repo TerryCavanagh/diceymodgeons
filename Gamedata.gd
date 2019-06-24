@@ -18,7 +18,7 @@ func _init():
 	
 func load_data():
 	var file = File.new()
-	if file.open("res://test/data/text/gamedata.json", File.READ) == OK:
+	if file.open("res://assets/gamedata.json", File.READ) == OK:
 		var json = parse_json(file.get_as_text())
 		innates = json.innates
 		scripts = json.scripts
