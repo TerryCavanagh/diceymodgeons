@@ -110,11 +110,23 @@ margin_top = 515.0
 margin_right = 640.0
 margin_bottom = 519.0
 
-[node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_top = 523.0
 margin_right = 640.0
 margin_bottom = 543.0
+
+[node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2"]
+margin_right = 318.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
 text = "Create a new mod"
+
+[node name="LaunchButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2"]
+margin_left = 322.0
+margin_right = 640.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Launch current loaded mod"
 
 [node name="Dialogs" type="Control" parent="."]
 margin_left = 7.0
@@ -197,11 +209,11 @@ current_path = "Z:/godot_projects/dicey_modgeons/"
 [node name="CreateModPopup" parent="Dialogs" instance=ExtResource( 3 )]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GamePathContainer/ChangeButton" to="." method="_on_ChangeButton_pressed"]
 [connection signal="item_activated" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_activated"]
-[connection signal="item_rmb_selected" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_rmb_selected"]
 [connection signal="item_selected" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_selected"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer/EditButton" to="." method="_on_EditButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2/LaunchButton" to="." method="_on_LaunchButton_pressed"]
 [connection signal="toggled" from="Dialogs/WarningPopup/VBoxContainer/DontShowCheck" to="Dialogs/WarningPopup" method="_on_DontShowCheck_toggled"]
 [connection signal="pressed" from="Dialogs/WarningPopup/VBoxContainer/OKButton" to="Dialogs/WarningPopup" method="_on_OKButton_pressed"]
 [connection signal="dir_selected" from="Dialogs/FileDialogPopup" to="." method="_on_FileDialogPopup_dir_selected"]

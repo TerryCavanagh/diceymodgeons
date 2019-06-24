@@ -60,6 +60,7 @@ func show_popup(mod:String = "", icon_path:String = "", data:Dictionary = {}):
 		SaveButton.text = "Create"
 		is_new_mod = true
 		DirNameEdit.editable = true
+		DirNameMessage.visible = true
 		data["mod_version"] = "0.0.1"
 		data["license"] = "CC BY 4.0,MIT"
 		data["api_version"] = ProjectSettings.get_setting("application/config/mod_api_version")
@@ -68,6 +69,7 @@ func show_popup(mod:String = "", icon_path:String = "", data:Dictionary = {}):
 		SaveButton.text = "Edit"
 		is_new_mod = false
 		DirNameEdit.editable = false
+		DirNameMessage.visible = false
 		
 	_set_icon(icon_path)
 	

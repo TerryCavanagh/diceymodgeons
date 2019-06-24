@@ -9,6 +9,7 @@ onready var CreateModPopup = find_node("CreateModPopup")
 onready var CreateButton = find_node("CreateButton")
 onready var EditButton = find_node("EditButton")
 onready var LoadButton = find_node("LoadButton")
+onready var LaunchButton = find_node("LaunchButton")
 
 var path = null
 var valid_path:bool = false
@@ -52,6 +53,7 @@ func _ready():
 	ModList.set_column_min_width(Column.EDIT, 32)
 	
 func _fill_mod_list():
+	get_focus_owner().release_focus()
 	ModList.clear()
 	var filled = true
 	var root = ModList.create_item()
@@ -101,6 +103,7 @@ func _fill_mod_list():
 	if not filled or not ModList.get_selected():
 		EditButton.disabled = true
 		LoadButton.disabled = true
+		LaunchButton.disabled = true
 		ModDescription.text = ""
 	
 func _check_valid_path():
@@ -114,6 +117,7 @@ func _check_valid_path():
 		GamePathEdit.text = "Not a valid path"
 		EditButton.disabled = true
 		LoadButton.disabled = true
+		LaunchButton.disabled = true
 		ModDescription.text = ""
 	else:
 		CreateButton.focus_mode = Control.FOCUS_ALL
@@ -153,6 +157,7 @@ func _on_LoadButton_pressed():
 		current_mod_loaded = meta.get("mod")
 		_fill_mod_list()
 		LoadButton.release_focus()
+		LaunchButton.disabled = false
 
 func _on_FileDialogPopup_dir_selected(dir):
 	path = dir
@@ -172,9 +177,36 @@ func _on_ModList_item_activated():
 	_on_LoadButton_pressed()
 
 
-func _on_ModList_item_rmb_selected(position):
-	print("Edit metadata popup")
-
-
 func _on_CreateModPopup_popup_hide():
 	_fill_mod_list()
+
+func _on_LaunchButton_pressed():
+	if not current_mod_loaded or current_mod_loaded.empty(): return
+	
+	if Database.data_needs_save():
+		ConfirmPopup.popup_save("The data needs to be saved before launching the game.")
+		var result = yield(ConfirmPopup, "action_chosen")
+		if result == ConfirmPopup.CANCEL:
+			return
+		Database.save_data()
+
+	var mod = current_mod_loaded
+	var exec = ""
+	match OS.get_name():
+		"Windows":
+			exec = path.plus_file("diceydungeons.exe")
+		"OSX":
+			pass
+		"X11":
+			pass
+	var file = File.new()
+	if not exec.empty() and file.file_exists(exec):
+		var pid = OS.execute(exec, ["mod=%s" % mod], false)
+		if pid == -1:
+			ConfirmPopup.popup_accept("Something went wrong when trying to launch the game!")
+		else:
+			ConfirmPopup.popup_accept("Game is running.\nThe game will close itself when this alert is dismissed.")
+			var result = yield(ConfirmPopup, "action_chosen")
+			OS.kill(pid)
+	else:
+		ConfirmPopup.popup_accept("Couldn't find the game's executable.")
