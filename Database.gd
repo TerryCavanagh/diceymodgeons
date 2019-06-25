@@ -542,7 +542,6 @@ class CSVData:
 		
 	func _convert_from_script(value:String):
 		var result = value
-		result = result.replace("||", "\n")
 		result = result.replace("|", ",")
 		result = result.replace("[;]", ",")
 		result = result.replace("~", '"')
@@ -558,7 +557,8 @@ class CSVData:
 					var empty_on = schema[header].get("empty_on", null)
 					if value == empty_on:
 						return ""
-				elif value != null:
+						
+				if value != null:
 					return str(value)
 				else:
 					return ""
@@ -602,7 +602,7 @@ class CSVData:
 	func _convert_to_script(value:String):
 		var result = value
 		result = result.replace("\n", " ")
-		result = result.replace(",", "|")
+		result = result.replace(",", "[;]")
 		result = result.replace('"', "~")
 		result = result.strip_edges()
 		return result
