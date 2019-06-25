@@ -79,7 +79,7 @@ func load_data(filter = null, select_key = null):
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
-			item.select(0)
+			item.select(Column.NAME)
 			still_selected = true
 			
 	ensure_cursor_is_visible()
