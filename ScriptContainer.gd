@@ -49,10 +49,12 @@ func _ready():
 	for keyword in haxe_keywords:
 		TextEdit.add_keyword_color(keyword, Color(theme_color["keyword_color"]))
 		
+	"""
 	for constant in Gamedata.scripts.constants:
 		TextEdit.add_member_keyword(constant, Color(theme_color["string_color"]))
 		
-	TextEdit.set_completion(true, PoolStringArray([".", ",", "(", "="]));
+	TextEdit.set_completion(true, PoolStringArray([".", ",", "(", "="]))
+	"""
 		
 	var key = InputEventKey.new()
 	key.scancode = KEY_SPACE

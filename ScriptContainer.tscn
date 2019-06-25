@@ -27,5 +27,4 @@ show_guideline = true
 auto_brace_completion = true
 brace_matching = true
 caret_blink = true
-[connection signal="completion_requested" from="TextEdit" to="." method="_on_TextEdit_completion_requested"]
 [connection signal="text_changed" from="TextEdit" to="." method="_on_TextEdit_text_changed"]
