@@ -8,8 +8,7 @@ onready var Equipment = find_node("Equipment")
 onready var ModifiedDataContainer = find_node("ModifiedDataContainer")
 
 func _ready():
-	# setup some window information
-	OS.set_window_title("%s - Mod API %s" % [ProjectSettings.get_setting("application/config/name"), ProjectSettings.get_setting("application/config/mod_api_version")])
+	_set_window_title()
 	# Disable auto accept quit to be able to ask for saving before quitting
 	get_tree().set_auto_accept_quit(false)
 	# Disable tabs
@@ -24,6 +23,16 @@ func _process(delta):
 	
 	# TODO make this better
 	ModifiedDataContainer.visible = Database.data_needs_save()
+	
+func _set_window_title(mod = null):
+	var current_mod = "No mod loaded"
+	if mod:
+		current_mod = "Loaded mod: %s" % mod
+	
+	var title = ProjectSettings.get_setting("application/config/name")
+	var api = ProjectSettings.get_setting("application/config/mod_api_version")
+	# setup some window information
+	OS.set_window_title("%s - %s - Mod API %s" % [title, current_mod, api])
 	
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
@@ -41,9 +50,12 @@ func _notification(what):
 		else:
 			get_tree().quit()
 		
-func _on_Database_data_loaded():
+func _on_Database_data_loaded(mod):
+	_set_window_title(mod)
 	TabContainer.set_tab_disabled(1, false)
 	TabContainer.set_tab_disabled(2, false)
 	
 	Enemies.TreeList.start_load()
 	Equipment.ItemList.start_load()
+	
+	TabContainer.current_tab += 1

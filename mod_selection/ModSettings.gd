@@ -53,7 +53,9 @@ func _ready():
 	ModList.set_column_min_width(Column.EDIT, 32)
 	
 func _fill_mod_list():
-	get_focus_owner().release_focus()
+	if get_focus_owner():
+		get_focus_owner().release_focus()
+		
 	ModList.clear()
 	var filled = true
 	var root = ModList.create_item()
@@ -157,7 +159,7 @@ func _on_LoadButton_pressed():
 			ConfirmPopup.popup_accept("The mod API version differs from the supported API by the editor.\nYou can still edit it but issues may happen.\nAn automatic upgrade will happen in the future.")
 			yield(ConfirmPopup, "action_chosen")
 			
-		Database.load_data(path, meta.get("mod"))
+		Database.load_data(path, meta)
 		current_mod_loaded = meta.get("mod")
 		_fill_mod_list()
 		LoadButton.release_focus()

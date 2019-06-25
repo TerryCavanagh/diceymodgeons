@@ -79,9 +79,11 @@ func data_needs_save():
 			return true
 	return false
 	
-func load_data(root_path:String, mod:String):
+func load_data(root_path:String, metadata:Dictionary):
+	if not metadata.has("mod"): return
+	
 	self.root_path = root_path
-	self.mod_path = 'mods/%s' % mod
+	self.mod_path = 'mods/%s' % metadata.get("mod")
 	
 	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "Name")
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
@@ -89,7 +91,7 @@ func load_data(root_path:String, mod:String):
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
 	
 	_data_loaded = true
-	emit_signal("data_loaded")
+	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")))
 	
 func save_data():
 	if not data_needs_save(): return
