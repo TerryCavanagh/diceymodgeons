@@ -21,7 +21,7 @@ run/low_processor_mode=true
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
 config/mod_api_version="0.9.0"
-config/app_version="0.1.0"
+config/app_version="0.1.2"
 
 [autoload]
 

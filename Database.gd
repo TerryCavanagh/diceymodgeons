@@ -547,6 +547,7 @@ class CSVData:
 		result = result.replace("|", ",")
 		result = result.replace("[;]", ",")
 		result = result.replace("~", '"')
+		result = result.replace("#", '||')
 		result = beautify_code(result)
 		return result
 			
@@ -604,6 +605,7 @@ class CSVData:
 	func _convert_to_script(value:String):
 		var result = value
 		result = result.replace("\n", " ")
+		result = result.replace("\t", "") # remove tabs because it breaks the game
 		result = result.replace(",", "[;]")
 		result = result.replace('"', "~")
 		result = result.strip_edges()
