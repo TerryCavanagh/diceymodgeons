@@ -141,7 +141,7 @@
 		"categories": {
 			"MAGIC": {
 				"description": "Magic equipment",
-				"color": "BLUE"
+				"color": "YELLOW"
 			},
 			"WEAPON": {
 				"description": "Weapon equipment",
@@ -149,19 +149,19 @@
 			},
 			"SHIELD": {
 				"description": "Shield equipment",
-				"color": "YELLOW"
+				"color": "ORANGE"
 			},
 			"ITEM": {
 				"description": "An item",
-				"color": "BLUE"
+				"color": "GREEN"
 			},
 			"SKILLCARD": {
 				"description": "Skillcard",
-				"color": "YELLOW"
+				"color": "WHITE"
 			},
 			"FINAL": {
 				"description": "Final",
-				"color": "YELLOW"
+				"color": "ORANGE"
 			},
 			"BACKUP": {
 				"description": "Backup",
