@@ -1,6 +1,5 @@
 extends PanelContainer
 
-onready var NameEdit = find_node("NameEdit")
 onready var LevelBox = find_node("LevelBox")
 onready var HealthBox = find_node("HealthBox")
 onready var DiceBox = find_node("DiceBox")

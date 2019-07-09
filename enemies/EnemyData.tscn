@@ -58,24 +58,6 @@ margin_right = 1238.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="NameContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-visible = false
-margin_right = 246.0
-margin_bottom = 24.0
-hint_tooltip = "The chat voice (aka the sound that will play when the enemy chats)"
-
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/NameContainer"]
-margin_top = 5.0
-margin_right = 42.0
-margin_bottom = 19.0
-text = "Name:"
-
-[node name="NameEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Row1/NameContainer"]
-margin_left = 46.0
-margin_right = 246.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 200, 0 )
-
 [node name="LevelContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
 margin_right = 120.0
 margin_bottom = 24.0
