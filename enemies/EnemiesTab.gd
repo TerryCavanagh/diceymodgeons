@@ -5,6 +5,7 @@ onready var TreeList = find_node("ItemList")
 onready var Data = find_node("Data")
 onready var Graphics = find_node("Graphics")
 onready var Scripts = find_node("Scripts")
+onready var Chat = find_node("Chat")
 
 onready var AddNewEnemyPopup = find_node("AddNewEnemyPopup")
 
@@ -22,6 +23,7 @@ func _on_TreeList_item_selected(key):
 	Data.set_data(data)
 	Graphics.set_data(data)
 	Scripts.set_data(data)
+	Chat.set_data(data)
 
 func _on_TreeList_add_button_pressed():
 	AddNewEnemyPopup.popup_centered(Vector2(400, 120))

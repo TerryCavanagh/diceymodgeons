@@ -48,7 +48,7 @@ custom_styles/bg = SubResource( 1 )
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 1246.0
-margin_bottom = 1398.0
+margin_bottom = 1144.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 16
@@ -116,6 +116,7 @@ allow_greater = true
 align = 2
 
 [node name="Row3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+visible = false
 margin_top = 40.0
 margin_right = 1238.0
 margin_bottom = 64.0
@@ -156,28 +157,10 @@ margin_right = 247.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 200, 0 )
 
-[node name="AIContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row3"]
-margin_left = 529.0
-margin_right = 751.0
-margin_bottom = 24.0
-hint_tooltip = "The AI"
-
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row3/AIContainer"]
-margin_top = 5.0
-margin_right = 18.0
-margin_bottom = 19.0
-text = "AI:"
-
-[node name="AIEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Row3/AIContainer"]
-margin_left = 22.0
-margin_right = 222.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 200, 0 )
-
 [node name="EquipmentPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 80.0
+margin_top = 40.0
 margin_right = 1238.0
-margin_bottom = 549.0
+margin_bottom = 509.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
@@ -210,9 +193,9 @@ align = 1
 valign = 1
 
 [node name="Row4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 565.0
+margin_top = 525.0
 margin_right = 1238.0
-margin_bottom = 589.0
+margin_bottom = 549.0
 size_flags_horizontal = 3
 
 [node name="SuperCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/Row4"]
@@ -233,9 +216,9 @@ margin_bottom = 24.0
 text = "Is boss?"
 
 [node name="SuperRow" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 605.0
+margin_top = 565.0
 margin_right = 1238.0
-margin_bottom = 1102.0
+margin_bottom = 1062.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
@@ -311,26 +294,27 @@ align = 1
 valign = 1
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1118.0
+margin_top = 1078.0
 margin_right = 1238.0
-margin_bottom = 1122.0
+margin_bottom = 1082.0
 
 [node name="InnateContainer" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 1138.0
+margin_top = 1098.0
 margin_right = 1238.0
-margin_bottom = 1156.0
+margin_bottom = 1116.0
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1172.0
+margin_top = 1132.0
 margin_right = 1238.0
-margin_bottom = 1176.0
+margin_bottom = 1136.0
 
 [node name="Row5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1192.0
+visible = false
+margin_top = 1152.0
 margin_right = 1238.0
-margin_bottom = 1360.0
+margin_bottom = 1320.0
 size_flags_horizontal = 3
 
 [node name="FirstWordsContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/Row5"]
@@ -375,9 +359,10 @@ show_line_numbers = true
 caret_blink = true
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1376.0
+visible = false
+margin_top = 1152.0
 margin_right = 1238.0
-margin_bottom = 1390.0
+margin_bottom = 1166.0
 text = "Add an extra new line to separate the dialog boxes"
 align = 1
 valign = 1

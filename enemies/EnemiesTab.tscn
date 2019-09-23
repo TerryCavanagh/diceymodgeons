@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://enemies/EnemiesTab.gd" type="Script" id=1]
 [ext_resource path="res://enemies/EnemyGraphics.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://enemies/EnemyData.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ItemList.tscn" type="PackedScene" id=5]
 [ext_resource path="res://AddPopup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://enemies/EnemyChat.tscn" type="PackedScene" id=7]
 
 [node name="Enemies" type="PanelContainer"]
 anchor_right = 1.0
@@ -49,6 +50,13 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Scripts" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Chat" parent="HBoxContainer/TabContainer" instance=ExtResource( 7 )]
 visible = false
 margin_left = 4.0
 margin_top = 32.0

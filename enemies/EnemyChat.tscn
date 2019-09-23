@@ -1,0 +1,208 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://enemies/EnemyChat.gd" type="Script" id=1]
+
+[node name="EnemyWords" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1254.0
+margin_bottom = 1168.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 24.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_right = 193.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer3"]
+margin_top = 5.0
+margin_right = 39.0
+margin_bottom = 19.0
+text = "Voice:"
+
+[node name="VoiceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer3"]
+margin_left = 43.0
+margin_right = 193.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 197.0
+margin_right = 422.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 71.0
+margin_bottom = 19.0
+text = "Chat Voice:"
+
+[node name="ChatVoiceEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+margin_left = 75.0
+margin_right = 225.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_left = 426.0
+margin_right = 647.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 67.0
+margin_bottom = 19.0
+text = "Chat Style:"
+
+[node name="ChatStyleEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_left = 71.0
+margin_right = 221.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 40.0
+margin_right = 1254.0
+margin_bottom = 64.0
+
+[node name="AlwaysFirstWordsCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 180.0
+margin_bottom = 24.0
+text = "Always say First Words?"
+
+[node name="AlwaysLastWordsCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 184.0
+margin_right = 362.0
+margin_bottom = 24.0
+text = "Always say Last Words?"
+
+[node name="WordsContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 80.0
+margin_right = 1254.0
+margin_bottom = 248.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/WordsContainer"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "First Words"
+
+[node name="FirstWordsEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/WordsContainer"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WordsContainer2" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 264.0
+margin_right = 1254.0
+margin_bottom = 432.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/WordsContainer2"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Last Words 1"
+
+[node name="LastWords1Edit" type="TextEdit" parent="ScrollContainer/VBoxContainer/WordsContainer2"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WordsContainer3" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 448.0
+margin_right = 1254.0
+margin_bottom = 616.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/WordsContainer3"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Last Words 2"
+
+[node name="LastWords2Edit" type="TextEdit" parent="ScrollContainer/VBoxContainer/WordsContainer3"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WordsContainer4" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 632.0
+margin_right = 1254.0
+margin_bottom = 800.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/WordsContainer4"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Last Words 3"
+
+[node name="LastWords3Edit" type="TextEdit" parent="ScrollContainer/VBoxContainer/WordsContainer4"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WordsContainer5" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 816.0
+margin_right = 1254.0
+margin_bottom = 984.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/WordsContainer5"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Last Words (If they win)"
+
+[node name="LastWordsIfTheyWinEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/WordsContainer5"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WordsContainer6" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 1000.0
+margin_right = 1254.0
+margin_bottom = 1168.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/WordsContainer6"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Last Words Endgame"
+
+[node name="LastWordsEndgameEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/WordsContainer6"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
