@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Reference",
+"class": "AtfParser",
+"language": "GDScript",
+"path": "res://texture_splitter/AtfParser.gd"
+} ]
 _global_script_class_icons={
-
+"AtfParser": ""
 }
 
 [application]

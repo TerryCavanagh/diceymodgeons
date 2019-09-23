@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://editor.theme" type="Theme" id=1]
 [ext_resource path="res://FileMenu.gd" type="Script" id=2]
-[ext_resource path="res://equipment/EquipmentTab.tscn" type="PackedScene" id=3]
-[ext_resource path="res://enemies/EnemiesTab.tscn" type="PackedScene" id=4]
+[ext_resource path="res://enemies/EnemiesTab.tscn" type="PackedScene" id=3]
+[ext_resource path="res://equipment/EquipmentTab.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Main.gd" type="Script" id=5]
 [ext_resource path="res://mod_selection/ModSettings.tscn" type="PackedScene" id=6]
+[ext_resource path="res://texture_splitter/TextureSplitter.tscn" type="PackedScene" id=7]
 
 [node name="Main" type="PanelContainer"]
 anchor_right = 1.0
@@ -69,14 +70,21 @@ margin_top = 35.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Enemies" parent="VBoxContainer/TabContainer" instance=ExtResource( 4 )]
+[node name="Enemies" parent="VBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
 margin_left = 5.0
 margin_top = 35.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Equipment" parent="VBoxContainer/TabContainer" instance=ExtResource( 3 )]
+[node name="Equipment" parent="VBoxContainer/TabContainer" instance=ExtResource( 4 )]
+visible = false
+margin_left = 5.0
+margin_top = 35.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="TextureSplitter" parent="VBoxContainer/TabContainer" instance=ExtResource( 7 )]
 visible = false
 margin_left = 5.0
 margin_top = 35.0
