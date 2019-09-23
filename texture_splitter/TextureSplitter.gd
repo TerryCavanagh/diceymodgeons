@@ -2,10 +2,16 @@ extends PanelContainer
 
 onready var OpenButton = find_node("OpenButton")
 onready var SavePNGButton = find_node("SavePNGButton")
+onready var SaveSplitButton = find_node("SaveSplitButton")
+onready var MergePNGButton = find_node("MergePNGButton")
+
+onready var PCKLabel = find_node("PCKLabel")
 onready var SpriteList = find_node("SpriteList")
 onready var TexturePanel = find_node("TexturePanel")
 onready var SpriteTexture = find_node("SpriteTexture")
 onready var SaveDialog = find_node("SaveDialog")
+
+onready var WarningPopup = find_node("WarningPopup")
 
 enum DialogMode {
 	OpenPCK,
@@ -14,6 +20,7 @@ enum DialogMode {
 	SaveSplit,
 }
 
+var pck_opened = false setget _set_pck_opened
 var sprites = []
 var image_filename = null
 var pck_size = Vector2()
@@ -22,10 +29,11 @@ var loaded_image:Image = null
 var dialog_mode = DialogMode.OpenPCK
 
 func _ready():
+	SaveDialog.current_dir = "%s/data" % Settings.get_value(Settings.GAME_PATH)
 	print(sprites)
-	parse_pck("res://assets/test/pack_1080.pck")
-	decode_image("res://assets/test/pack_1080.atf")
-	SpriteTexture.set_sprites(sprites)
+	#parse_pck("res://assets/test/pack_1080.pck")
+	#decode_image("res://assets/test/pack_1080.atf")
+	#SpriteTexture.set_sprites(sprites)
 	
 func parse_pck(path):
 	sprites = []
@@ -53,10 +61,18 @@ func parse_pck(path):
 								"rect": Rect2(x, y, w, h),
 								"rotated": r
 							})
-							
+	else:
+		# TODO show warning
+		self.pck_opened = false
+		return
+		
 	SpriteList.clear()
-	for sprite in sprites:
-		SpriteList.add_item(sprite.get("name", "Unknown"))
+	self.pck_opened = not sprites.empty() and image_filename != null
+	if pck_opened:
+		decode_image('%s/%s' % [path.get_base_dir(), image_filename])
+		PCKLabel.text = path
+		for sprite in sprites:
+			SpriteList.add_item(sprite.get("name", "Unknown"))
 	
 func decode_image(path):
 	var file = File.new()
@@ -97,7 +113,6 @@ func save_sprite_rotated(sprite, dir):
 	print('%s => %s' % [sprite, target])
 	_save_viewport(viewport, target)
 
-	
 func save_sprites(src_dir, dest_file):
 	var viewport = _create_viewport(pck_size)
 	
@@ -117,8 +132,7 @@ func save_sprites(src_dir, dest_file):
 		viewport.add_child(s)
 		
 	_save_viewport(viewport, dest_file, true)
-	
-	
+		
 func _create_viewport(size):
 	var viewport = Viewport.new()
 	viewport.render_target_clear_mode = Viewport.CLEAR_MODE_ALWAYS
@@ -148,17 +162,47 @@ func _save_viewport(viewport, target, compressed = false):
 	viewport.queue_free()
 	remove_child(viewport)
 	
+func _on_OpenButton_pressed():
+	SaveDialog.mode = FileDialog.MODE_OPEN_FILE
+	SaveDialog.filters = PoolStringArray(["*.pck"])
+	dialog_mode = DialogMode.OpenPCK
+	SaveDialog.popup_centered()
+	
 func _on_SavePNGButton_pressed():
-	if not loaded_image: return
-	loaded_image.save_png("res://assets/test/pack_1080.png")
+	if not pck_opened: return
+	SaveDialog.mode = FileDialog.MODE_SAVE_FILE
+	SaveDialog.filters = PoolStringArray(["*.png"])
+	dialog_mode = DialogMode.SavePNG
+	SaveDialog.popup_centered()
 
 func _on_SaveSplitButton_pressed():
+	if not pck_opened: return
 	SaveDialog.mode = FileDialog.MODE_OPEN_DIR
+	SaveDialog.filters = PoolStringArray()
 	dialog_mode = DialogMode.SaveSplit
 	SaveDialog.popup_centered()
 	
 func _on_MergePNGButton_pressed():
-	save_sprites("res://test/test_img", "res://test/test_img/__merged")
+	if sprites.empty(): return
+	var src = "res://test/test_img"
+	var target = "res://test/test_img/__merged"
+	var dir = Directory.new()
+	if dir.open(src) == OK:
+		var files_missing = []
+		for sprite in sprites:
+			var f = "%s/%s.png" % [src, sprite.name]
+			if not dir.file_exists(f):
+				files_missing.push_back('%s.png' % sprite.name)
+				
+		if not files_missing.empty():
+			WarningPopup.window_title = "Files Missing!"
+			WarningPopup.dialog_text = "The following files are missing:\n%s" % PoolStringArray(files_missing).join("\n")
+			WarningPopup.popup_centered(Vector2(400, 100))
+		else:
+			save_sprites(src, target)
+			WarningPopup.window_title = "File saved correctly!"
+			WarningPopup.dialog_text = "File saved as %s" % target
+			WarningPopup.popup_centered(Vector2(400, 100))
 
 func _on_SaveDialog_dir_selected(dir):
 	if not loaded_image: return
@@ -166,9 +210,24 @@ func _on_SaveDialog_dir_selected(dir):
 		DialogMode.SaveSplit:
 			for sprite in sprites:
 				if sprite.rotated:
-					var w = save_sprite_rotated(sprite, dir)
+					save_sprite_rotated(sprite, dir)
 				else:
 					save_sprite(sprite, dir)
 
 func _on_SaveDialog_file_selected(path):
-	pass # Replace with function body.
+	match dialog_mode:
+		DialogMode.OpenPCK:
+			parse_pck(path)
+		DialogMode.SavePNG:
+			loaded_image.save_png(path)
+
+func _set_pck_opened(value):
+	pck_opened = value
+	if pck_opened:
+		SavePNGButton.disabled = false
+		SaveSplitButton.disabled = false
+		MergePNGButton.disabled = false
+	else:
+		SavePNGButton.disabled = true
+		SaveSplitButton.disabled = true
+		MergePNGButton.disabled = true
