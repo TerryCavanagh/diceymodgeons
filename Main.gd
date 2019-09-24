@@ -4,6 +4,7 @@ onready var TabContainer = find_node("TabContainer")
 onready var ModSettings = find_node("Mod Settings")
 onready var Enemies = find_node("Enemies")
 onready var Equipment = find_node("Equipment")
+onready var Items = find_node("Items")
 
 onready var ModifiedDataContainer = find_node("ModifiedDataContainer")
 
@@ -14,6 +15,7 @@ func _ready():
 	# Disable tabs
 	TabContainer.set_tab_disabled(1, true)
 	TabContainer.set_tab_disabled(2, true)
+	TabContainer.set_tab_disabled(3, true)
 	Database.connect("data_loaded", self, "_on_Database_data_loaded")
 	
 func _process(delta):
@@ -54,8 +56,10 @@ func _on_Database_data_loaded(mod):
 	_set_window_title(mod)
 	TabContainer.set_tab_disabled(1, false)
 	TabContainer.set_tab_disabled(2, false)
+	TabContainer.set_tab_disabled(3, false)
 	
 	Enemies.TreeList.start_load()
 	Equipment.ItemList.start_load()
+	Items.ItemList.start_load()
 	
 	TabContainer.current_tab += 1

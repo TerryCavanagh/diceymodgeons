@@ -22,9 +22,5 @@ syntax_highlighting = true
 show_line_numbers = true
 draw_tabs = true
 highlight_all_occurrences = true
-scroll_pass_end_of_file = true
-show_guideline = true
-auto_brace_completion = true
-brace_matching = true
 caret_blink = true
 [connection signal="text_changed" from="TextEdit" to="." method="_on_TextEdit_text_changed"]

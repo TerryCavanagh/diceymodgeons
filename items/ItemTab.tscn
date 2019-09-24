@@ -1,0 +1,110 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ItemList.tscn" type="PackedScene" id=1]
+[ext_resource path="res://items/ItemTab.gd" type="Script" id=2]
+[ext_resource path="res://ScriptContainer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://AddPopup.tscn" type="PackedScene" id=4]
+
+[node name="ItemTab" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="ItemList" parent="HBoxContainer" instance=ExtResource( 1 )]
+table = 3
+search_placeholder = "Search an item"
+button_label = "Add a new item"
+
+[node name="ItemContainer" type="ScrollContainer" parent="HBoxContainer"]
+margin_left = 304.0
+margin_right = 1266.0
+margin_bottom = 706.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ItemContainer"]
+margin_right = 962.0
+margin_bottom = 706.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ItemContainer/VBoxContainer"]
+margin_right = 962.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="Label" type="Label" parent="HBoxContainer/ItemContainer/VBoxContainer/VBoxContainer"]
+margin_right = 962.0
+margin_bottom = 14.0
+text = "Description:"
+
+[node name="DescriptionEdit" type="TextEdit" parent="HBoxContainer/ItemContainer/VBoxContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 962.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ItemContainer/VBoxContainer"]
+margin_top = 204.0
+margin_right = 962.0
+margin_bottom = 228.0
+
+[node name="Label" type="Label" parent="HBoxContainer/ItemContainer/VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 94.0
+margin_bottom = 19.0
+text = "Requirements:"
+
+[node name="RequirementOption" type="OptionButton" parent="HBoxContainer/ItemContainer/VBoxContainer/HBoxContainer"]
+margin_left = 98.0
+margin_right = 218.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 120, 0 )
+
+[node name="RequirementValueSpin" type="SpinBox" parent="HBoxContainer/ItemContainer/VBoxContainer/HBoxContainer"]
+margin_left = 222.0
+margin_right = 296.0
+margin_bottom = 24.0
+align = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/ItemContainer/VBoxContainer"]
+margin_top = 232.0
+margin_right = 962.0
+margin_bottom = 706.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/ItemContainer/VBoxContainer/VBoxContainer2"]
+margin_right = 962.0
+margin_bottom = 14.0
+text = "Script:"
+
+[node name="ScriptContainer" parent="HBoxContainer/ItemContainer/VBoxContainer/VBoxContainer2" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 18.0
+margin_right = 962.0
+margin_bottom = 474.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AddNewItemPopup" parent="." instance=ExtResource( 4 )]
+window_title = "Add a new item"
+empty_name_message = "The item needs a name."
+bad_name_message = "Item already exists."
+exception_message = "Underscore is not accepted."
+good_name_message = "Great name! you have a thing for names, don't you?"
+table = 3
+[connection signal="add_button_pressed" from="HBoxContainer/ItemList" to="." method="_on_ItemList_add_button_pressed"]
+[connection signal="item_selected" from="HBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
