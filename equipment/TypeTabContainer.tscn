@@ -49,7 +49,7 @@ margin_right = 655.0
 margin_bottom = 345.0
 
 [node name="CreateButton" type="Button" parent="CreateContainer/HBoxContainer"]
-margin_right = 66.0
+margin_right = 53.0
 margin_bottom = 20.0
 text = "Create"
 

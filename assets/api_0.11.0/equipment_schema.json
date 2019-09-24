@@ -122,5 +122,14 @@
 	"Script: On Fury": {
 		"type": "script",
 		"default": ""
+	},
+	"Parallel Universe": {
+		"type": "bool",
+		"default": false
+	},
+	"Hide Reuseable": {
+		"type": "bool",
+		"default": false
 	}
+	
 }

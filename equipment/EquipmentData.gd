@@ -5,6 +5,7 @@ signal equipment_deleted(key)
 onready var SizeOption = find_node("SizeOption")
 onready var CategoryOption = find_node("CategoryOption")
 onready var ColorOption = find_node("ColorOption")
+onready var AlternateStatusOption = find_node("AlternateStatusOption")
 
 onready var DeleteButton = find_node("DeleteButton")
 
@@ -18,6 +19,8 @@ onready var ErrorImmuneCheck = find_node("ErrorImmuneCheck")
 onready var ShowGoldCheck = find_node("ShowGoldCheck")
 onready var AppearForPartsCheck = find_node("AppearForPartsCheck")
 onready var SFXCheck = find_node("SFXCheck")
+onready var ParallelUniverseCheck = find_node("ParallelUniverseCheck")
+onready var HideReusableCheck = find_node("HideReusableCheck")
 
 onready var SlotsContainer = find_node("SlotsContainer")
 
@@ -44,9 +47,14 @@ func set_data(data):
 	data_id = data.get("Name", "")
 	self.data = data
 	
+	var status = Database.commit(Database.Table.STATUS_EFFECTS, Database.READ, null, "Name")
+	status.push_front('NONE')
+	Utils.fill_options(AlternateStatusOption, status, true)
+	
 	_setup(SizeOption, "Size", 1)
 	_setup(CategoryOption, "Category", "")
 	_setup(ColorOption, "Colour", "")
+	_setup(AlternateStatusOption, "Alternate Status Trigger", "")
 	
 	_setup(UsesSpin, "Uses?", 0)
 	_setup(SpellSpin, "Witch Spell", 0)
@@ -59,6 +67,8 @@ func set_data(data):
 	_setup(ShowGoldCheck, "Show Gold", false)
 	_setup(AppearForPartsCheck, "Appears For Parts", false)
 	_setup(SFXCheck, "SFX", false)
+	_setup(ParallelUniverseCheck, "Parallel Universe", false)
+	_setup(HideReusableCheck, "Hide Reusable", false)
 	
 	_setup(SlotsContainer, "Slots", [])
 	
@@ -152,7 +162,7 @@ func _on_OptionButton_item_selected(id, node, key):
 		
 	var value = Utils.option_get_selected_key(node)
 	
-	if (node == ColorOption or node == UpgradeOption or node == WeakenOption) and node.selected == 0:
+	if (node == ColorOption or node == UpgradeOption or node == WeakenOption or node == AlternateStatusOption) and node.selected == 0:
 		value = ""
 		
 	if node == SizeOption:
