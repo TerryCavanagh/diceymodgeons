@@ -12,7 +12,8 @@ func _ready():
 	for symbol in Gamedata.symbols.keys():
 		var data = Gamedata.symbols[symbol]
 		var button = TextureButton.new()
-		button.texture_normal = load("res://assets/symbols/%s.png" % symbol)
+		var n = Gamedata.symbols.get(symbol).get("image_name", symbol)
+		button.texture_normal = load("res://assets/symbols/%s.png" % n)
 		button.hint_tooltip = symbol
 		button.expand = true
 		button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED

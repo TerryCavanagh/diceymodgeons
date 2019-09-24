@@ -57,7 +57,8 @@ func set_description(desc:String):
 		last  = m.get_end()
 		var s = m.get_string(2).strip_edges()
 		if Gamedata.symbols.has(s):
-			result += "[img]res://assets/symbols/%s.png[/img]" % s
+			var n = Gamedata.symbols.get(s).get("image_name", s)
+			result += "[img]res://assets/symbols/%s.png[/img]" % n
 		elif s.empty():
 			result += "[img]res://assets/symbols/d6.png[/img]"
 		elif s == "gray":

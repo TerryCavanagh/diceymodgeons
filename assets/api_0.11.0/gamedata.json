@@ -84,6 +84,35 @@
 			"tile": 1,
 			"color": "0xFFFFFF"
 		},
+		"dice1": {
+			"tile": 0,
+			"color": "0xFFFFFF"
+		},
+		"dice2": {
+			"tile": 0,
+			"color": "0xFFFFFF"
+		},
+		"dice3": {
+			"tile": 0,
+			"color": "0xFFFFFF"
+		},
+		"dice4": {
+			"tile": 0,
+			"color": "0xFFFFFF"
+		},
+		"dice5": {
+			"tile": 0,
+			"color": "0xFFFFFF"
+		},
+		"dice6": {
+			"tile": 0,
+			"color": "0xFFFFFF"
+		},
+		"dice?": {
+			"tile": 0,
+			"color": "0xFFFFFF",
+			"image_name": "dice__"
+		},
 		"gold": {
 			"tile": 9,
 			"color": "0xfdf631"
@@ -135,6 +164,14 @@
 		"mana": {
 			"tile": 26,
 			"color": "0xffffff"
+		},
+		"potion": {
+			"tile": 27,
+			"color": "0xec6cee"
+		},
+		"vanish": {
+			"tile": 31,
+			"color": "0xec6cee"
 		}
 	},
 	"items": {

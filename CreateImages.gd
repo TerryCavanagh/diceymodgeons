@@ -29,4 +29,5 @@ func _prepare_images():
 	for symbol in Gamedata.symbols.keys():
 		var data = Gamedata.symbols[symbol]
 		var idx = data.get("tile", 0)
-		symbols_array[idx].save_png("res://assets/symbols/%s.png" % symbol)
+		var name = data.get("image_name", symbol)
+		symbols_array[idx].save_png("res://assets/symbols/%s.png" % name)
