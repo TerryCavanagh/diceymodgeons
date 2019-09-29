@@ -7,6 +7,7 @@ const BUTTON_DELETE_ID = 2
 
 var process_data_func:FuncRef = null
 var modified_func:FuncRef = null
+var change_text_func:FuncRef = null
 
 var delete_texture:Texture = null
 var return_texture:Texture = null
@@ -64,8 +65,14 @@ func load_data(filter = null, select_key = null):
 	if filter:
 		filter = filter.to_lower()
 		var new_keys = []
+		
+		var items = {}
 		for key in keys:
-			if key.findn(filter) > -1:
+			items[key] = key
+			if change_text_func:
+				items[key] = change_text_func.call_func(key)
+		for key in items.keys():
+			if items.get(key).findn(filter) > -1:
 				new_keys.push_back(key)
 		
 		keys = new_keys
@@ -111,9 +118,13 @@ func _set_item_data(item:TreeItem, metadata):
 		item.set_text(Column.MODIFIED, "")
 		item.set_tooltip(Column.MODIFIED, "")
 	
-	item.set_text(Column.NAME, key)
+	var n = key
+	if change_text_func:
+		n = change_text_func.call_func(key)
+	
+	item.set_text(Column.NAME, n)
 	item.set_editable(Column.NAME, not is_in_game)
-	item.set_tooltip(Column.NAME, key)
+	item.set_tooltip(Column.NAME, n)
 	
 	item.set_metadata(Column.NAME, metadata)
 	

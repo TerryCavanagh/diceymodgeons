@@ -140,7 +140,15 @@ func get_table(table):
 			return _episodes
 		_:
 			return null
+			
+func mixed_key(keys:Array, data):
+	var result = []
+	for k in keys:
+		result.push_back(data.get(k, ""))
 	
+	return PoolStringArray(result).join("#")
+	
+		
 func commit(table:int, action:int, key = null, field = null, value = null):
 	"""
 	Makes a database commit.

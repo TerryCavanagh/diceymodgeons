@@ -1,6 +1,7 @@
 extends PanelContainer
 
 onready var DifficultySpin = find_node("DifficultySpin")
+onready var EpisodesContainer = find_node("EpisodesContainer")
 
 var data_id:String = ""
 var data:Dictionary = {}
@@ -10,14 +11,8 @@ func set_data(data):
 	self.data = data
 	
 	_setup(DifficultySpin, "Difficulty", 1)
-	
-	var ep = Database.commit(Database.Table.EPISODES, Database.READ)
-	var episodes = {}
-	for e in ep.keys():
-		if ep.get(e).get("Character", "") == data_id:
-			print('Adding %s' % e)
-			episodes[e] = ep.get(e)
-	print(episodes.keys())
+
+	EpisodesContainer.setup(data_id)
 
 func _setup(node:Node, key, def):
 	if node is SpinBox:

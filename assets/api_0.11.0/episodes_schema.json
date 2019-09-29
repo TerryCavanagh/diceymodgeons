@@ -8,7 +8,7 @@
 		"default": 1
 	},
 	"Episode Name": {
-		"type": "string",
+		"type": "text",
 		"default": ""
 	},
 	"Description": {
