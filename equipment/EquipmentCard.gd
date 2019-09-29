@@ -44,6 +44,7 @@ func set_title(title:String):
 	title = title.replacen("_weakened", "-")
 	title = title.replacen("_downgraded", "-")
 	Title.text = title.to_upper()
+	Title.rect_scale = Vector2(0.8, 0.8)
 	
 func set_description(desc:String):
 	var regex = RegEx.new()
@@ -100,3 +101,7 @@ func _update_description_position():
 		Description.rect_position.y += 150
 	Description.rect_pivot_offset = Description.rect_size / 2.0
 	Description.rect_scale = Vector2(0.8, 0.8)
+
+func _on_VBoxContainer_sort_children():
+	Description.rect_scale = Vector2(0.8, 0.8)
+	Title.rect_scale = Vector2(0.8, 0.8)

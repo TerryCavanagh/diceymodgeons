@@ -49,7 +49,14 @@ func set_data(data):
 	
 	var status = Database.commit(Database.Table.STATUS_EFFECTS, Database.READ, null, "Name")
 	status.push_front('NONE')
-	Utils.fill_options(AlternateStatusOption, status, true)
+	var filtered = []
+	for s in status:
+		if s.begins_with("alternate_"):
+			continue
+		
+		filtered.push_back(s)
+		
+	Utils.fill_options(AlternateStatusOption, filtered, true)
 	
 	_setup(SizeOption, "Size", 1)
 	_setup(CategoryOption, "Category", "")
@@ -60,7 +67,7 @@ func set_data(data):
 	_setup(SpellSpin, "Witch Spell", 0)
 	
 	# TODO
-	_setup(CastBackwardsCheck, "Cast Backwards?", false)
+	#_setup(CastBackwardsCheck, "Cast Backwards?", false)
 	_setup(SingleUseCheck, "Single use?", false)
 	_setup(SpecialCheck, "Special?", false)
 	_setup(ErrorImmuneCheck, "Error Immune", false)

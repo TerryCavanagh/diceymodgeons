@@ -55,6 +55,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ItemContainer/VBoxContainer"]
+visible = false
 margin_top = 204.0
 margin_right = 962.0
 margin_bottom = 228.0
@@ -78,7 +79,7 @@ margin_bottom = 24.0
 align = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/ItemContainer/VBoxContainer"]
-margin_top = 232.0
+margin_top = 204.0
 margin_right = 962.0
 margin_bottom = 706.0
 rect_min_size = Vector2( 0, 200 )
@@ -95,7 +96,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 18.0
 margin_right = 962.0
-margin_bottom = 474.0
+margin_bottom = 502.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

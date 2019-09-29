@@ -1,0 +1,96 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://characters/DescriptionContainer.gd" type="Script" id=1]
+
+[node name="DescriptionContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1254.0
+margin_bottom = 1012.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 250.0
+rect_min_size = Vector2( 0, 250 )
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Initial Description:"
+
+[node name="InitialDescription" type="TextEdit" parent="ScrollContainer/VBoxContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 250.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 254.0
+margin_right = 1254.0
+margin_bottom = 504.0
+rect_min_size = Vector2( 0, 250 )
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainer2"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Middle Description:"
+
+[node name="MiddleDescription" type="TextEdit" parent="ScrollContainer/VBoxContainer/VBoxContainer2"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 250.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 508.0
+margin_right = 1254.0
+margin_bottom = 758.0
+rect_min_size = Vector2( 0, 250 )
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainer3"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Endgame Description:"
+
+[node name="EndgameDescription" type="TextEdit" parent="ScrollContainer/VBoxContainer/VBoxContainer3"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 250.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 762.0
+margin_right = 1254.0
+margin_bottom = 1012.0
+rect_min_size = Vector2( 0, 250 )
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainer4"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Post Endgame Description:"
+
+[node name="PostEndgameDescription" type="TextEdit" parent="ScrollContainer/VBoxContainer/VBoxContainer4"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 250.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

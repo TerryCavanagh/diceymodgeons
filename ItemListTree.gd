@@ -12,6 +12,8 @@ var delete_texture:Texture = null
 var return_texture:Texture = null
 var root:TreeItem = null
 
+var sort_items:bool = true
+
 var filter = null
 
 var table = null
@@ -56,7 +58,8 @@ func load_data(filter = null, select_key = null):
 		data = process_data_func.call_func(data)
 	
 	var keys = data.keys()
-	keys.sort()
+	if sort_items:
+		keys.sort()
 	
 	if filter:
 		filter = filter.to_lower()

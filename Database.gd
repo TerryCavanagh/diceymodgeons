@@ -16,6 +16,8 @@ var _fighters:CSVData = null
 var _equipment:CSVData = null
 var _items:CSVData = null
 var _status_effects:CSVData = null
+var _characters:CSVData = null
+var _episodes:CSVData = null
 
 var _data_loaded = false
 
@@ -27,6 +29,9 @@ enum Table {
 	EQUIPMENT,
 	ITEMS,
 	STATUS_EFFECTS,
+	CHARACTERS,
+	EPISODES,
+	#REMIX,
 }
 
 enum Origin {
@@ -58,6 +63,12 @@ func _get_paths(table:int):
 		Table.STATUS_EFFECTS:
 			file = "statuseffects.csv"
 			schema = "statuseffects_schema.json"
+		Table.CHARACTERS:
+			file = "characters.csv"
+			schema = "characters_schema.json"
+		Table.EPISODES:
+			file = "episodes.csv"
+			schema = "episodes_schema.json"
 			
 	var result = {}
 	
@@ -89,6 +100,8 @@ func load_data(root_path:String, metadata:Dictionary):
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
 	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
+	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "Character")
+	_episodes = CSVData.new(_get_paths(Table.EPISODES), "Character#Level")
 	
 	_data_loaded = true
 	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")))
@@ -104,6 +117,10 @@ func save_data():
 	emit_signal("save_completed", Table.ITEMS)
 	_status_effects.save_data()
 	emit_signal("save_completed", Table.STATUS_EFFECTS)
+	_characters.save_data()
+	emit_signal("save_completed", Table.CHARACTERS)
+	_episodes.save_data()
+	emit_signal("save_completed", Table.EPISODES)
 	
 	emit_signal("all_tables_saved")
 	
@@ -117,6 +134,10 @@ func get_table(table):
 			return _items
 		Table.STATUS_EFFECTS:
 			return _status_effects
+		Table.CHARACTERS:
+			return _characters
+		Table.EPISODES:
+			return _episodes
 		_:
 			return null
 	
@@ -331,12 +352,22 @@ class CSVData:
 		for c in content:
 			if c.size() != headers.size(): continue
 			var id = ""
+			var key_ids = []
+			var keys = KEY.split("#")
 			for i in headers.size():
 				var h = headers[i]
-				if h == KEY:
-					id = c[i]
-					data[id] = {}
+				for j in keys.size():
+					if h == keys[j]:
+						key_ids.push_back(c[i])
 					
+			id = PoolStringArray(key_ids).join("#")
+			data[id] = {}
+					
+			if data.get(id, null) == null:
+				continue
+					
+			for i in headers.size():
+				var h = headers[i]
 				data[id][h] = _convert_from_csv(h, c[i])
 				
 			data[id]["__origin"] = source

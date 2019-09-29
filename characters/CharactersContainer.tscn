@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://characters/CharactersContainer.gd" type="Script" id=1]
+[ext_resource path="res://ItemList.tscn" type="PackedScene" id=2]
+[ext_resource path="res://characters/CharacterData.tscn" type="PackedScene" id=3]
+[ext_resource path="res://characters/DescriptionContainer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://characters/GraphicsContainer.tscn" type="PackedScene" id=5]
+
+[node name="CharactersContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="CharacterList" parent="HBoxContainer" instance=ExtResource( 2 )]
+table = 5
+search_placeholder = "Search character"
+button_label = "Add new character"
+sort_items = false
+
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
+margin_left = 304.0
+margin_right = 1266.0
+margin_bottom = 706.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Data" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Graphics" parent="HBoxContainer/TabContainer" instance=ExtResource( 5 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Descriptions" parent="HBoxContainer/TabContainer" instance=ExtResource( 4 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+[connection signal="add_button_pressed" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_add_button_pressed"]
+[connection signal="item_selected" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_item_selected"]

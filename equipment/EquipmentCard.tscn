@@ -48,7 +48,7 @@ custom_constants/separation = 0
 [node name="Title" type="Label" parent="VBoxContainer"]
 margin_right = 826.0
 margin_bottom = 106.0
-rect_scale = Vector2( 0.9, 0.9 )
+rect_scale = Vector2( 0.8, 0.8 )
 rect_pivot_offset = Vector2( 413, 53 )
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -98,3 +98,4 @@ scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="sort_children" from="VBoxContainer" to="." method="_on_VBoxContainer_sort_children"]
