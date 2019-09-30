@@ -41,7 +41,7 @@
 	},
 	"Dice": {
 		"type": "number",
-		"default": 1
+		"default": 0
 	},
 	"Health": {
 		"type": "number",

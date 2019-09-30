@@ -44,6 +44,9 @@ func _ready():
 	set_column_min_width(Column.MODIFIED, 15)
 	set_column_min_width(Column.BUTTON, 30)
 	
+func force_reload(select_key = null):
+	load_data(filter, select_key)
+	
 func load_data(filter = null, select_key = null):
 	self.filter = filter
 	

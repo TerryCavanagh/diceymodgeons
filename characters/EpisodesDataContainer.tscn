@@ -1,0 +1,346 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://characters/EpisodesDataContainer.gd" type="Script" id=1]
+[ext_resource path="res://enemies/EquipmentContainer.tscn" type="PackedScene" id=2]
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 8.0
+content_margin_right = 8.0
+content_margin_top = 8.0
+content_margin_bottom = 8.0
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.164706, 0.164706, 0.164706, 1 )
+
+[node name="EpisodesDataContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1254.0
+margin_bottom = 913.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 24.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 96.0
+margin_bottom = 19.0
+text = "Episode Name:"
+
+[node name="NameEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+margin_left = 100.0
+margin_right = 1254.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 120, 0 )
+size_flags_horizontal = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 1254.0
+margin_bottom = 52.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer3"]
+margin_right = 111.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 33.0
+margin_bottom = 19.0
+text = "Dice:"
+
+[node name="DiceSpin" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer2"]
+margin_left = 37.0
+margin_right = 111.0
+margin_bottom = 24.0
+align = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer3"]
+margin_left = 115.0
+margin_right = 239.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer3"]
+margin_top = 5.0
+margin_right = 46.0
+margin_bottom = 19.0
+text = "Health:"
+
+[node name="HealthSpin" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer3"]
+margin_left = 50.0
+margin_right = 124.0
+margin_bottom = 24.0
+min_value = 1.0
+value = 1.0
+allow_greater = true
+align = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer3"]
+margin_left = 243.0
+margin_right = 413.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer4"]
+margin_top = 5.0
+margin_right = 46.0
+margin_bottom = 19.0
+text = "Layout:"
+
+[node name="LayoutOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer4"]
+margin_left = 50.0
+margin_right = 170.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 120, 0 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 56.0
+margin_right = 1254.0
+margin_bottom = 76.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 241.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer2/HBoxContainer3"]
+margin_top = 3.0
+margin_right = 37.0
+margin_bottom = 17.0
+text = "Limit:"
+
+[node name="LimitOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/HBoxContainer2/HBoxContainer3"]
+margin_left = 41.0
+margin_right = 241.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 200, 0 )
+clip_text = true
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 245.0
+margin_right = 557.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer2/HBoxContainer4"]
+margin_top = 3.0
+margin_right = 108.0
+margin_bottom = 17.0
+text = "Weakened Limit:"
+
+[node name="WeakenedLimitOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/HBoxContainer2/HBoxContainer4"]
+margin_left = 112.0
+margin_right = 312.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 200, 0 )
+clip_text = true
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 80.0
+margin_right = 1254.0
+margin_bottom = 132.0
+columns = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/GridContainer"]
+margin_right = 177.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 99.0
+margin_bottom = 19.0
+text = "Super Enemy 2:"
+
+[node name="SuperEnemy2Spin" type="SpinBox" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer2"]
+margin_left = 103.0
+margin_right = 177.0
+margin_bottom = 24.0
+align = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/GridContainer"]
+margin_left = 181.0
+margin_right = 358.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer3"]
+margin_top = 5.0
+margin_right = 99.0
+margin_bottom = 19.0
+text = "Super Enemy 3:"
+
+[node name="SuperEnemy3Spin" type="SpinBox" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer3"]
+margin_left = 103.0
+margin_right = 177.0
+margin_bottom = 24.0
+min_value = 1.0
+value = 1.0
+allow_greater = true
+align = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/GridContainer"]
+margin_top = 28.0
+margin_right = 177.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer4"]
+margin_top = 5.0
+margin_right = 99.0
+margin_bottom = 19.0
+text = "Super Enemy 4:"
+
+[node name="SuperEnemy4Spin" type="SpinBox" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer4"]
+margin_left = 103.0
+margin_right = 177.0
+margin_bottom = 24.0
+min_value = 1.0
+value = 1.0
+allow_greater = true
+align = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/GridContainer"]
+margin_left = 181.0
+margin_top = 28.0
+margin_right = 358.0
+margin_bottom = 52.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer5"]
+margin_top = 5.0
+margin_right = 99.0
+margin_bottom = 19.0
+text = "Super Enemy 5:"
+
+[node name="SuperEnemy5Spin" type="SpinBox" parent="ScrollContainer/VBoxContainer/GridContainer/HBoxContainer5"]
+margin_left = 103.0
+margin_right = 177.0
+margin_bottom = 24.0
+min_value = 1.0
+value = 1.0
+allow_greater = true
+align = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 136.0
+margin_right = 1254.0
+margin_bottom = 286.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Episode Description:"
+
+[node name="DescriptionEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 290.0
+margin_right = 1254.0
+margin_bottom = 440.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/VBoxContainer2"]
+margin_right = 1254.0
+margin_bottom = 14.0
+text = "Rules Description:"
+
+[node name="RulesDescriptionEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/VBoxContainer2"]
+margin_top = 18.0
+margin_right = 1254.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EquipmentPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 444.0
+margin_right = 1254.0
+margin_bottom = 913.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1246.0
+margin_bottom = 461.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
+margin_right = 1238.0
+margin_bottom = 14.0
+text = "Equipment"
+align = 1
+
+[node name="EquipmentContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 18.0
+margin_right = 1238.0
+margin_bottom = 418.0
+
+[node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
+margin_top = 422.0
+margin_right = 1238.0
+margin_bottom = 453.0
+text = "To add equipment drag the equipment from Available to Equipped. 
+To Remove equipment drag the equipment from Equipped to Available."
+align = 1
+valign = 1
+
+[node name="SkillcardPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+margin_top = 444.0
+margin_right = 1254.0
+margin_bottom = 913.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/SkillcardPanel"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1246.0
+margin_bottom = 461.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SkillcardPanel/VBoxContainer"]
+margin_right = 1238.0
+margin_bottom = 14.0
+text = "Skillcard"
+align = 1
+
+[node name="SkillcardContainer" parent="ScrollContainer/VBoxContainer/SkillcardPanel/VBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 18.0
+margin_right = 1238.0
+margin_bottom = 418.0
+
+[node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/SkillcardPanel/VBoxContainer"]
+margin_top = 422.0
+margin_right = 1238.0
+margin_bottom = 453.0
+text = "To add equipment drag the equipment from Available to Equipped. 
+To Remove equipment drag the equipment from Equipped to Available."
+align = 1
+valign = 1

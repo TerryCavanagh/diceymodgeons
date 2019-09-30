@@ -23,6 +23,7 @@
 		"burncurse": "is burnt every turn",
 		"immunestatus": "is immune to lock and freeze"
 	},
+	"layout": {"EQUIPMENT" : "EQUIPMENT", "SPELLBOOK": "SPELLBOOK", "DECK": "DECK"},
 	"scripts": {
 		"constants": [
 			"ALL", "NONE", "ICE", "FIRE", "SHOCK", "WEAKEN", "POISON", "CURSE", "SILENCE", "CONFUSE", "BLIND", "LOCK", "SHIELD", "REDUCE", "PIERCE", "DODGE", "FURY", "REEQUIPNEXT", "EXTRATURN", "SURVIVE", "VAMPIRE", "RECYCLE", "ALTERNATE", "THORNS"

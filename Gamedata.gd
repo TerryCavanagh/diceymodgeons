@@ -4,6 +4,7 @@ extends Node
 var innates:Dictionary = {}
 var scripts:Dictionary = {"constants": [], "functions": []}
 var symbols:Dictionary = {}
+var layout:Dictionary = {}
 var items:Dictionary = {
 	"categories": [],
 	"colors": [],
@@ -24,6 +25,7 @@ func load_data():
 		innates = json.innates
 		scripts = json.scripts
 		symbols = json.symbols
+		layout = json.layout
 		items = json.items
 		file.close()
 	else:

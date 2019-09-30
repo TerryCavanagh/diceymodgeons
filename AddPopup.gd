@@ -11,6 +11,8 @@ onready var StatusLabel = find_node("StatusLabel")
 onready var OK = find_node("OK")
 onready var Cancel = find_node("Cancel")
 
+var add_func:FuncRef = null
+
 var valid := false
 
 func _ready():
@@ -55,7 +57,10 @@ func _on_NameEdit_text_entered(new_text):
 
 func _on_OK_pressed():
 	if not valid: return
-	Database.commit(table, Database.CREATE, NameEdit.text)
+	if add_func:
+		add_func.call_func(NameEdit.text)
+	else:
+		Database.commit(table, Database.CREATE, NameEdit.text)
 	hide()
 	
 func _on_Cancel_pressed():

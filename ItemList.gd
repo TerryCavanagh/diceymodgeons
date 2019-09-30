@@ -30,6 +30,9 @@ func _ready():
 	
 func start_load():
 	List.load_data()
+	
+func force_reload(select_key = null):
+	List.force_reload(select_key)
 
 func _set_search_placeholder(v):
 	search_placeholder = v

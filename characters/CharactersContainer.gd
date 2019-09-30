@@ -7,6 +7,8 @@ onready var Data = find_node("Data")
 onready var Graphics = find_node("Graphics")
 onready var Descriptions = find_node("Descriptions")
 
+onready var CharacterAddPopup = find_node("CharacterAddPopup")
+
 func _ready():
 	TabContainer.visible = false
 
@@ -22,4 +24,4 @@ func _on_CharacterList_item_selected(key):
 	Descriptions.set_data(data)
 
 func _on_CharacterList_add_button_pressed():
-	pass # Replace with function body.
+	CharacterAddPopup.popup_centered(Vector2(400, 120))
