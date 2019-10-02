@@ -3,7 +3,7 @@
 [ext_resource path="res://characters/EpisodesDataContainer.gd" type="Script" id=1]
 [ext_resource path="res://enemies/EquipmentContainer.tscn" type="PackedScene" id=2]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 8.0
 content_margin_right = 8.0
 content_margin_top = 8.0
@@ -31,7 +31,7 @@ margin_bottom = 713.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 margin_right = 1254.0
-margin_bottom = 913.0
+margin_bottom = 1410.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -97,23 +97,6 @@ min_value = 1.0
 value = 1.0
 allow_greater = true
 align = 2
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer3"]
-margin_left = 243.0
-margin_right = 413.0
-margin_bottom = 24.0
-
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer4"]
-margin_top = 5.0
-margin_right = 46.0
-margin_bottom = 19.0
-text = "Layout:"
-
-[node name="LayoutOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/HBoxContainer3/HBoxContainer4"]
-margin_left = 50.0
-margin_right = 170.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 120, 0 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 56.0
@@ -275,18 +258,17 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="EquipmentPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
-visible = false
 margin_top = 444.0
 margin_right = 1254.0
-margin_bottom = 913.0
+margin_bottom = 937.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 1246.0
-margin_bottom = 461.0
+margin_bottom = 485.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
 margin_right = 1238.0
@@ -294,28 +276,46 @@ margin_bottom = 14.0
 text = "Equipment"
 align = 1
 
+[node name="HBoxContainer4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1238.0
+margin_bottom = 38.0
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer/HBoxContainer4"]
+margin_top = 3.0
+margin_right = 46.0
+margin_bottom = 17.0
+text = "Layout:"
+
+[node name="LayoutOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer/HBoxContainer4"]
+margin_left = 50.0
+margin_right = 170.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 120, 0 )
+
 [node name="EquipmentContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 18.0
+margin_top = 42.0
 margin_right = 1238.0
-margin_bottom = 418.0
+margin_bottom = 442.0
+order_equipped = false
 
 [node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
-margin_top = 422.0
+margin_top = 446.0
 margin_right = 1238.0
-margin_bottom = 453.0
+margin_bottom = 477.0
 text = "To add equipment drag the equipment from Available to Equipped. 
 To Remove equipment drag the equipment from Equipped to Available."
 align = 1
 valign = 1
 
 [node name="SkillcardPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 444.0
+margin_top = 941.0
 margin_right = 1254.0
-margin_bottom = 913.0
+margin_bottom = 1410.0
 size_flags_horizontal = 3
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/SkillcardPanel"]
 margin_left = 8.0

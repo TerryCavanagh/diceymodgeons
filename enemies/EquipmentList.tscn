@@ -27,7 +27,8 @@ func get_drag_data(position):
 	print(\"drag data \", position)
 	var idx = get_item_at_position(position)
 	if idx < 0: return null
-	return {\"equipment\": get_item_metadata(idx), \"source\": self, \"idx\": idx}"
+	return {\"equipment\": get_item_metadata(idx), \"source\": self, \"idx\": idx}
+"
 
 [node name="EquipmentList" type="VBoxContainer"]
 margin_right = 424.0
@@ -58,11 +59,18 @@ caret_blink = true
 [node name="List" type="ItemList" parent="."]
 margin_top = 46.0
 margin_right = 424.0
-margin_bottom = 720.0
+margin_bottom = 692.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 allow_rmb_select = true
 script = SubResource( 1 )
+
+[node name="UpgradedCheck" type="CheckBox" parent="."]
+margin_top = 696.0
+margin_right = 424.0
+margin_bottom = 720.0
+text = "Show upgraded equipment"
 [connection signal="text_changed" from="Search" to="." method="_on_Search_text_changed"]
 [connection signal="item_selected" from="List" to="." method="_on_List_item_selected"]
 [connection signal="value_changed" from="List" to="." method="_on_List_value_changed"]
+[connection signal="pressed" from="UpgradedCheck" to="." method="_on_UpgradedCheck_pressed"]

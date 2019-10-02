@@ -22,6 +22,11 @@ onready var SkillcardContainer = find_node("SkillcardContainer")
 var data_id:String = ""
 var data:Dictionary = {}
 
+var selected_layout = Gamedata.layout.EQUIPMENT
+
+func _ready():
+	EquipmentContainer.filter_list_func = funcref(self, "_filter_equipment_list")
+
 func set_data(data):
 	data_id = Database.mixed_key(["Character", "Level"], data)
 	self.data = data
@@ -49,7 +54,7 @@ func set_data(data):
 	_setup(DescriptionEdit, "Description", "")
 	_setup(RulesDescriptionEdit, "Rules Description", "")
 	
-	#_setup(EquipmentContainer, "Equipment", [])
+	_setup(EquipmentContainer, "Equipment", [])
 	_setup(SkillcardContainer, "Skillcard", [])
 	
 
@@ -71,6 +76,15 @@ func _setup(node:Node, key, def):
 		node.set_data(data, key)
 		Utils.connect_signal(node, key, "value_changed", self, "_on_EquipmentContainer_value_changed")
 		
+func _filter_equipment_list(equipment):
+	if Utils.option_get_selected_key(LayoutOption) == Gamedata.layout.SPELLBOOK:
+		if equipment.get("Category", "").to_lower() == "magic":
+			return true
+		else:
+			return false
+			
+	return true
+		
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, key, value)
@@ -91,6 +105,29 @@ func _on_OptionButton_item_selected(id, node, key):
 	if not data_id: return
 	Utils.update_option_tooltip(node, id)
 	var value = Utils.option_get_selected_key(node)
+	if node == LayoutOption:
+		if value == Gamedata.layout.SPELLBOOK:
+			ConfirmPopup.popup_confirm("The equipped equipment that's not in the MAGIC category will be deleted!")
+			var result = yield(ConfirmPopup, "action_chosen")
+			match result:
+				ConfirmPopup.OKAY:
+					var equipment = data.get("Equipment", [])
+					var orig_size = equipment.size()
+					for e in equipment:
+						var category = Database.commit(Database.Table.EQUIPMENT, Database.READ, e, "Category")
+						if not category.to_lower() == "magic":
+							equipment.erase(e)
+					if orig_size != equipment.size():
+						Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, "Equipment", equipment)
+				ConfirmPopup.OTHER:
+					pass
+				ConfirmPopup.CANCEL:
+					Utils.option_select(LayoutOption, selected_layout)
+					return
+					
+	selected_layout = value
+	EquipmentContainer.force_reload()
+	
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, key, value)
 	
 func _on_EquipmentContainer_value_changed(equipment, value, node, key):
