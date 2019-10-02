@@ -93,6 +93,7 @@ func _on_InnateContainer_value_changed(innate, value, node, key):
 func _on_EquipmentContainer_value_changed(equipment, value, node, key):
 	if not data_id: return
 	var action = Database.CREATE if value else Database.DELETE
+	print('%s -- %s - %s' % [key, equipment, value])
 	Database.commit(Database.Table.FIGHTERS, action, data_id, key, equipment)
 	
 func _show_super_row(value):

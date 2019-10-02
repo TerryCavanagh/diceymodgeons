@@ -293,9 +293,17 @@ func _delete(data, key, field, value):
 			if obj:
 				var f = obj.get(field, null)
 				if typeof(f) == TYPE_ARRAY:
-					f.erase(value)
-					#f.sort()
-					return true
+					if typeof(value) == TYPE_DICTIONARY:
+						var s = str(value)
+						for v in f:
+							# TODO this is extremely slow and prone to errors, find a better way (hash doesn't work, they're not the same)
+							if str(v) == s:
+								f.erase(v)
+								return true
+						return false
+					else:
+						f.erase(value)
+						return true
 				else:
 					return obj.erase(field)
 			
@@ -555,8 +563,19 @@ class CSVData:
 					return []
 				else:
 					var a = Array(value.split("|"))
-					#a.sort()
 					return a
+			"equipment_list":
+				if value.strip_edges().empty():
+					return []
+				else:
+					var arr = Array(value.split("|"))
+					var result = []
+					for v in arr:
+						var o = {}
+						result.push_back(o)
+						o["prepared"] = v.begins_with("*")
+						o["equipment"] = v.lstrip("*")
+					return result
 			"bool":
 				if value.empty():
 					return false
@@ -612,6 +631,17 @@ class CSVData:
 			"list":
 				if value:
 					return PoolStringArray(value).join("|")
+				else:
+					return ""
+			"equipment_list":
+				if value:
+					var a = []
+					for o in value:
+						if o.get("prepared", false):
+							a.push_back('*%s' % o.get("equipment"))
+						else:
+							a.push_back(o.get("equipment"))
+					return PoolStringArray(a).join("|")
 				else:
 					return ""
 			"bool":

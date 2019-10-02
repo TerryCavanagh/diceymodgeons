@@ -106,15 +106,22 @@ func _on_OptionButton_item_selected(id, node, key):
 	Utils.update_option_tooltip(node, id)
 	var value = Utils.option_get_selected_key(node)
 	if node == LayoutOption:
-		if value == Gamedata.layout.SPELLBOOK:
+		EquipmentContainer.EquippedContainer.show_prepared = false
+		if value != Gamedata.layout.SPELLBOOK:
+			var equipment = data.get("Equipment", [])
+			for e in equipment:
+				e["prepared"] = false
+			Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, "Equipment", equipment)
+		else:
 			ConfirmPopup.popup_confirm("The equipped equipment that's not in the MAGIC category will be deleted!")
 			var result = yield(ConfirmPopup, "action_chosen")
 			match result:
 				ConfirmPopup.OKAY:
+					EquipmentContainer.EquippedContainer.show_prepared = true
 					var equipment = data.get("Equipment", [])
 					var orig_size = equipment.size()
 					for e in equipment:
-						var category = Database.commit(Database.Table.EQUIPMENT, Database.READ, e, "Category")
+						var category = Database.commit(Database.Table.EQUIPMENT, Database.READ, e.get("equipment"), "Category")
 						if not category.to_lower() == "magic":
 							equipment.erase(e)
 					if orig_size != equipment.size():

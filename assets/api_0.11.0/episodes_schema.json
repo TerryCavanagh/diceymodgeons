@@ -20,7 +20,7 @@
 		"default": ""
 	},
 	"Equipment": {
-		"type": "list",
+		"type": "equipment_list",
 		"default": ""
 	},
 	"Layout": {
@@ -28,7 +28,7 @@
 		"default": "EQUIPMENT"
 	},
 	"Skillcard": {
-		"type": "list",
+		"type": "equipment_list",
 		"default": ""
 	},
 	"Limit": {

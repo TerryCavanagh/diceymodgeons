@@ -40,11 +40,11 @@
 		"default": 1
 	},
 	"Equipment": {
-		"type": "list",
+		"type": "equipment_list",
 		"default": ""
 	},
 	"Super Equipment": {
-		"type": "list",
+		"type": "equipment_list",
 		"default": ""
 	},
 	"Super Dice": {

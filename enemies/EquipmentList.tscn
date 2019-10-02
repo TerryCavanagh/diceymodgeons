@@ -1,34 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://enemies/EquipmentList.gd" type="Script" id=1]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends ItemList
-
-signal value_changed(equipment, value)
-
-var can_add = true
-var can_remove = true
-
-func can_drop_data(position, data):
-	return data is Dictionary and data.has(\"equipment\") and not data.get(\"source\", null) == self
-
-func drop_data(position, data):
-	if can_add:
-		add_item(data.equipment)
-		set_item_metadata(get_item_count() - 1, data.equipment)
-		emit_signal(\"value_changed\", data.equipment, true)
-		
-	if data.source.can_remove:
-		data.source.remove_item(data.idx)
-		data.source.emit_signal(\"value_changed\", data.equipment, false)
-	
-func get_drag_data(position):
-	print(\"drag data \", position)
-	var idx = get_item_at_position(position)
-	if idx < 0: return null
-	return {\"equipment\": get_item_metadata(idx), \"source\": self, \"idx\": idx}
-"
+[ext_resource path="res://enemies/EquipTree.gd" type="Script" id=2]
 
 [node name="EquipmentList" type="VBoxContainer"]
 margin_right = 424.0
@@ -56,14 +29,17 @@ clear_button_enabled = true
 placeholder_text = "Search equipment"
 caret_blink = true
 
-[node name="List" type="ItemList" parent="."]
+[node name="EquipTree" type="Tree" parent="."]
 margin_top = 46.0
 margin_right = 424.0
 margin_bottom = 692.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-allow_rmb_select = true
-script = SubResource( 1 )
+columns = 2
+allow_reselect = true
+hide_folding = true
+hide_root = true
+script = ExtResource( 2 )
 
 [node name="UpgradedCheck" type="CheckBox" parent="."]
 margin_top = 696.0
@@ -71,6 +47,7 @@ margin_right = 424.0
 margin_bottom = 720.0
 text = "Show upgraded equipment"
 [connection signal="text_changed" from="Search" to="." method="_on_Search_text_changed"]
-[connection signal="item_selected" from="List" to="." method="_on_List_item_selected"]
-[connection signal="value_changed" from="List" to="." method="_on_List_value_changed"]
+[connection signal="cell_selected" from="EquipTree" to="EquipTree" method="_on_EquipTree_cell_selected"]
+[connection signal="equipment_selected" from="EquipTree" to="." method="_on_EquipTree_equipment_selected"]
+[connection signal="value_changed" from="EquipTree" to="." method="_on_EquipTree_value_changed"]
 [connection signal="pressed" from="UpgradedCheck" to="." method="_on_UpgradedCheck_pressed"]

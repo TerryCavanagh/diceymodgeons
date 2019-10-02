@@ -29,7 +29,7 @@ func _load_equipment_list():
 		if filter_list_func and not filter_list_func.call_func(e): 
 			continue
 			
-		_equipment.push_back(key)
+		_equipment.push_back({"prepared": false, "equipment": key})
 	
 	return true
 	
@@ -50,7 +50,9 @@ func set_data(data, key):
 	AvailableContainer.set_list(available)
 	EquippedContainer.set_list(equipped)
 	
-func _update_card(key):
+func _update_card(equipment):
+	if not equipment: return
+	var key = equipment.get("equipment", "")
 	var equip = Database.commit(Database.Table.EQUIPMENT, Database.READ, key)
 	if not equip:
 		EquipmentCard.visible = false
