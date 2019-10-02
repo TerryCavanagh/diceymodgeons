@@ -220,7 +220,7 @@ func _create(data, key, field, value):
 				var f = obj.get(field, null)
 				if typeof(f) == TYPE_ARRAY:
 					f.push_back(value)
-					f.sort()
+					#f.sort()
 				else:
 					obj[field] = value
 				return true
@@ -294,7 +294,7 @@ func _delete(data, key, field, value):
 				var f = obj.get(field, null)
 				if typeof(f) == TYPE_ARRAY:
 					f.erase(value)
-					f.sort()
+					#f.sort()
 					return true
 				else:
 					return obj.erase(field)
@@ -555,7 +555,7 @@ class CSVData:
 					return []
 				else:
 					var a = Array(value.split("|"))
-					a.sort()
+					#a.sort()
 					return a
 			"bool":
 				if value.empty():
