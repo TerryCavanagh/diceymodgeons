@@ -335,6 +335,8 @@ anchor_bottom = 0.0
 margin_top = 18.0
 margin_right = 1238.0
 margin_bottom = 418.0
+order_equipped = false
+show_only_special = true
 
 [node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/SkillcardPanel/VBoxContainer"]
 margin_top = 422.0

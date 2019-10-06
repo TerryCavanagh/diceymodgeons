@@ -9,20 +9,22 @@ export (bool) var can_remove = false setget _set_can_remove
 export (bool) var show_prepared = false setget _set_show_prepared
 export (bool) var order = true setget _set_order
 
+export (bool) var show_upgraded_check = true setget _set_show_upgraded_check
+
 onready var Title = find_node("Title")
 onready var EquipTree = find_node("EquipTree")
 onready var Search = find_node("Search")
 onready var UpgradedCheck = find_node("UpgradedCheck")
 
 var list:Array = []
-var show_upgraded = false
 var filter = null
 
 func _ready():
 	Title.text = title
 	EquipTree.can_add = can_add
 	EquipTree.can_remove = can_remove
-	EquipTree.show_prepared = show_prepared
+	_set_show_prepared(show_prepared)
+	UpgradedCheck.visible = show_upgraded_check
 
 func set_list(list, show_upgraded:bool = false, filter = null):
 	self.list = list
@@ -33,17 +35,19 @@ func set_list(list, show_upgraded:bool = false, filter = null):
 		filter = Search.text
 	self.filter = filter
 	
-	if UpgradedCheck.pressed:
+	if not show_upgraded_check or UpgradedCheck.pressed:
 		show_upgraded = true
-		
-	self.show_upgraded = show_upgraded
 	
 	var sublist:Array = []
 	for item in list:
 		var add = true
 		if show_upgraded:
-			if item.get("equipment", "").find("_upgraded") == -1:
-				add = false
+			if show_upgraded_check:
+				if item.get("equipment", "").find("_upgraded") == -1:
+					add = false
+			else:
+				if not (item.get("equipment", "").find("_") == -1 or item.get("equipment", "").find("_upgraded") > -1):
+					add = false
 		else:
 			if item.get("equipment", "").find("_") > -1:
 				add = false
@@ -66,14 +70,15 @@ func set_list(list, show_upgraded:bool = false, filter = null):
 		i += 1
 	
 func unselect_all():
-	#List.unselect_all()
-	pass
+	var selected = EquipTree.get_selected()
+	if selected:
+		selected.deselect(0)
 	
 func _sort_equipment(a, b):
-	return a.get("equipment", "").casecmp_to(b.get("equipment", "")) < 0
+	return a.get("equipment", "").nocasecmp_to(b.get("equipment", "")) < 0
 
 func _on_Search_text_changed(new_text):
-	set_list(list, show_upgraded, new_text)
+	set_list(list, UpgradedCheck.pressed, new_text)
 	
 func _on_EquipTree_equipment_selected(equipment):
 	emit_signal("item_selected", equipment)
@@ -82,8 +87,7 @@ func _on_EquipTree_value_changed(equipment, value):
 	emit_signal("value_changed", equipment, value)
 	
 func _on_UpgradedCheck_pressed():
-	show_upgraded = UpgradedCheck.pressed
-	set_list(list, show_upgraded, filter)
+	set_list(list, UpgradedCheck.pressed, filter)
 
 func _set_title(v):
 	title = v
@@ -103,9 +107,15 @@ func _set_can_remove(v):
 func _set_order(v):
 	order = v
 	if not EquipTree: return
-	set_list(list, show_upgraded, filter)
+	set_list(list, UpgradedCheck.pressed, filter)
 
 func _set_show_prepared(v):
 	show_prepared = v
 	if not EquipTree: return
 	EquipTree.show_prepared = v
+	set_list(list, UpgradedCheck.pressed, filter)
+
+func _set_show_upgraded_check(v):
+	show_upgraded_check = v
+	if not UpgradedCheck: return
+	UpgradedCheck.visible = v

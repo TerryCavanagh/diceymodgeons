@@ -75,3 +75,18 @@ func load_external_texture(path:String):
 		texture.create_from_image(img)
 	
 	return texture
+	
+func humanize_equipment_name(title):
+	title = title.replacen("_upgraded", "+")
+	title = title.replacen("_deckupgrade", "+")
+	title = title.replacen("_weakened", "-")
+	title = title.replacen("_downgraded", "-")
+	
+	return title
+	
+func to_csv_equipment_name(title):
+	if title.ends_with("+") or title.ends_with("-"):
+		title = title.replacen("+", "_upgraded")
+		title = title.replacen("-", "_weakened")
+	
+	return title

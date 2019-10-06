@@ -26,6 +26,7 @@ var selected_layout = Gamedata.layout.EQUIPMENT
 
 func _ready():
 	EquipmentContainer.filter_list_func = funcref(self, "_filter_equipment_list")
+	EquipmentContainer.append_equipment_func = funcref(self, "_append_equipment")
 
 func set_data(data):
 	data_id = Database.mixed_key(["Character", "Level"], data)
@@ -71,6 +72,9 @@ func _setup(node:Node, key, def):
 	elif node is OptionButton:
 		var s = str(data.get(key, def))
 		Utils.option_select(node, s)
+		if node == LayoutOption:
+			var show_prepared = Utils.option_get_selected_key(node) == Gamedata.layout.SPELLBOOK
+			EquipmentContainer.EquippedContainer.show_prepared = show_prepared
 		Utils.connect_signal(node, key, "item_selected", self, "_on_OptionButton_item_selected")
 	elif node == EquipmentContainer or node == SkillcardContainer:
 		node.set_data(data, key)
@@ -84,6 +88,10 @@ func _filter_equipment_list(equipment):
 			return false
 			
 	return true
+	
+func _append_equipment(equipment:Array):
+	if Utils.option_get_selected_key(LayoutOption) == Gamedata.layout.SPELLBOOK:
+		equipment.push_front({"prepared": false, "equipment": "empty"})
 		
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
@@ -113,7 +121,7 @@ func _on_OptionButton_item_selected(id, node, key):
 				e["prepared"] = false
 			Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, "Equipment", equipment)
 		else:
-			ConfirmPopup.popup_confirm("The equipped equipment that's not in the MAGIC category will be deleted!")
+			ConfirmPopup.popup_confirm("Some of your equipped equipment may not be compatible with the selected layout and will be removed.", "Warning")
 			var result = yield(ConfirmPopup, "action_chosen")
 			match result:
 				ConfirmPopup.OKAY:

@@ -29,7 +29,7 @@ func clear():
 func add_equipment(equipment):
 	if not equipment: return
 	var it = create_item(get_root())
-	it.set_text(NAME, equipment.get("equipment", "!!!"))
+	it.set_text(NAME, Utils.humanize_equipment_name(equipment.get("equipment", "!!!")))
 	it.set_metadata(NAME, equipment)
 	
 	if show_prepared:

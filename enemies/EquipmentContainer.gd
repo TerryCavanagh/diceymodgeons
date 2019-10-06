@@ -3,6 +3,7 @@ extends HBoxContainer
 signal value_changed(equipment, idx, value)
 
 export (bool) var order_equipped = true setget _set_order_equipped
+export (bool) var show_only_special = false setget _set_show_only_special
 
 onready var AvailableContainer = find_node("AvailableContainer")
 onready var EquippedContainer = find_node("EquippedContainer")
@@ -13,6 +14,7 @@ var data:Dictionary = {}
 var _equipment:Array = []
 
 var filter_list_func:FuncRef = null
+var append_equipment_func:FuncRef = null
 
 func _ready():
 	set_data({}, "")
@@ -24,12 +26,22 @@ func _load_equipment_list():
 	_equipment = []
 	for key in equipment.keys():
 		var e = equipment.get(key)
-		# don't show special equipment
-		if e.get("Special?", false): continue
+		var special = e.get("Special?", false)
+		if show_only_special:
+			if not special: 
+				continue
+		elif special:
+			continue
 		if filter_list_func and not filter_list_func.call_func(e): 
 			continue
 			
 		_equipment.push_back({"prepared": false, "equipment": key})
+		
+	if show_only_special:
+		_equipment.push_back({"prepared": false, "equipment": "Monstermode"})
+		
+	if append_equipment_func:
+		append_equipment_func.call_func(_equipment)
 	
 	return true
 	
@@ -46,6 +58,8 @@ func set_data(data, key):
 	
 	var available = _equipment
 	var equipped = data.get(self.key, [])
+	for equip in equipped:
+		equip["equipment"] = Utils.to_csv_equipment_name(equip["equipment"])
 	
 	AvailableContainer.set_list(available)
 	EquippedContainer.set_list(equipped)
@@ -79,3 +93,8 @@ func _set_order_equipped(v):
 	order_equipped = v
 	if not EquippedContainer: return
 	EquippedContainer.order = order_equipped
+	
+func _set_show_only_special(v):
+	show_only_special = v
+	if not EquippedContainer: return
+	set_data(data, key)

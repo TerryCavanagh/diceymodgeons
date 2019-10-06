@@ -24,6 +24,7 @@ margin_left = 490.0
 margin_right = 976.0
 title = "Equipped"
 can_remove = true
+show_upgraded_check = false
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 margin_left = 980.0

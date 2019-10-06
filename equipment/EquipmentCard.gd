@@ -39,10 +39,7 @@ func set_title(title:String):
 	self_modulate.a = 1.0
 	if title.findn("_weakened") > -1 or title.findn("_downgraded") > -1:
 		self_modulate.a = 0.5
-	title = title.replacen("_upgraded", "+")
-	title = title.replacen("_deckupgrade", "+")
-	title = title.replacen("_weakened", "-")
-	title = title.replacen("_downgraded", "-")
+	title = Utils.humanize_equipment_name(title)
 	Title.text = title.to_upper()
 	Title.rect_scale = Vector2(0.8, 0.8)
 	
