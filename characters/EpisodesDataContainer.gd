@@ -71,10 +71,19 @@ func _setup(node:Node, key, def):
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	elif node is OptionButton:
 		var s = str(data.get(key, def))
+		var save = false
+		if s.empty() and (node == LimitOption or node == WeakenedLimitOption):
+			s = def
+			save = true
 		Utils.option_select(node, s)
+		
+		if save:
+			_on_OptionButton_item_selected(node.selected, node, key)
+			
 		if node == LayoutOption:
 			var show_prepared = Utils.option_get_selected_key(node) == Gamedata.layout.SPELLBOOK
 			EquipmentContainer.EquippedContainer.show_prepared = show_prepared
+			
 		Utils.connect_signal(node, key, "item_selected", self, "_on_OptionButton_item_selected")
 	elif node == EquipmentContainer or node == SkillcardContainer:
 		node.set_data(data, key)
