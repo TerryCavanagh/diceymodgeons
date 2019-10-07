@@ -49,5 +49,6 @@ text = "Show upgraded equipment"
 [connection signal="text_changed" from="Search" to="." method="_on_Search_text_changed"]
 [connection signal="cell_selected" from="EquipTree" to="EquipTree" method="_on_EquipTree_cell_selected"]
 [connection signal="equipment_selected" from="EquipTree" to="." method="_on_EquipTree_equipment_selected"]
+[connection signal="list_updated" from="EquipTree" to="." method="_on_EquipTree_list_updated"]
 [connection signal="value_changed" from="EquipTree" to="." method="_on_EquipTree_value_changed"]
 [connection signal="pressed" from="UpgradedCheck" to="." method="_on_UpgradedCheck_pressed"]

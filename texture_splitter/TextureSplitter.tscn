@@ -39,7 +39,6 @@ margin_bottom = 24.0
 focus_mode = 0
 size_flags_horizontal = 3
 editable = false
-focus_mode = 0
 
 [node name="OpenButton" type="Button" parent="VBoxContainer/HBoxContainer3/HBoxContainer"]
 margin_left = 1090.0
@@ -117,7 +116,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "You can explore the PCK files and save its images (*.atf files) as a single PNG file or split its content into multiple PNG files to edit as much as you want.
 
-Once you have finished the editions you can then merge those PNG files by clicking on the Merge PNGs button. The PCK file needs to be loaded for this function to work."
+Once you have finished editing the files you can then merge those PNG files by clicking on the Merge PNGs button. The same PCK file you used to split the PNG files needs to be loaded for this function to work."
 
 [node name="MergePNGButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 658.0

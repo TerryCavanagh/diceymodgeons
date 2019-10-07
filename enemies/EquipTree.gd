@@ -2,6 +2,7 @@ extends Tree
 
 signal equipment_selected(equipment)
 signal value_changed(equipment, value)
+signal list_updated(list)
 
 enum {
 	NAME = 0,
@@ -26,9 +27,9 @@ func clear():
 	.clear()
 	create_item()
 	
-func add_equipment(equipment):
+func add_equipment(equipment, idx = -1):
 	if not equipment: return
-	var it = create_item(get_root())
+	var it = create_item(get_root(), idx)
 	it.set_text(NAME, Utils.humanize_equipment_name(equipment.get("equipment", "!!!")))
 	it.set_metadata(NAME, equipment)
 	
@@ -38,9 +39,36 @@ func add_equipment(equipment):
 	
 
 func can_drop_data(position, data):
-	return data is Dictionary and data.has("equipment") and not data.get("source", null) == self
+	var same_control = data.get("source", null) == self
+	return data is Dictionary and data.has("equipment") and (can_sort or not same_control)
 
 func drop_data(position, data):
+	drop_mode_flags = Tree.DROP_MODE_DISABLED
+	var same_control = data.get("source", null) == self
+	
+	# TODO FIX THIS
+	"""
+	if can_sort and same_control:
+		var item = get_item_at_position(position)
+		var drop_pos = get_drop_section_at_position(position)
+		var idx = -1
+		if item and not item == data.item:
+			idx = 0
+			var next = item.get_parent().get_children()
+			while next:
+				idx += 1
+				if next == item: break
+				next = next.get_next()
+			
+			idx += drop_pos
+			
+		add_equipment(data.equipment, idx)
+		
+		var root = data.source.get_root()
+		root.remove_child(data.item)
+		return
+	"""
+		
 	if can_add:
 		add_equipment(data.equipment)
 		emit_signal("value_changed", data.equipment, true)
@@ -54,6 +82,8 @@ func get_drag_data(position):
 	var item = get_item_at_position(position)
 	if not item: return null
 	print("drag data ", position, " ", item.get_metadata(NAME))
+	if can_sort:
+		drop_mode_flags = Tree.DROP_MODE_INBETWEEN
 	return {"equipment": item.get_metadata(NAME), "source": self, "item": item}
 
 func _on_EquipTree_cell_selected():

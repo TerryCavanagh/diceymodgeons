@@ -44,7 +44,6 @@ focus_mode = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 editable = false
-focus_mode = 0
 
 [node name="ChangeButton" type="Button" parent="CenterContainer/VBoxContainer/GamePathContainer"]
 margin_left = 582.0

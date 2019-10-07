@@ -6,6 +6,7 @@ signal item_selected(equipment)
 export (String) var title = "" setget _set_title
 export (bool) var can_add = true setget _set_can_add
 export (bool) var can_remove = false setget _set_can_remove
+export (bool) var can_sort = false setget _set_can_sort
 export (bool) var show_prepared = false setget _set_show_prepared
 export (bool) var order = true setget _set_order
 
@@ -25,6 +26,7 @@ func _ready():
 	EquipTree.can_remove = can_remove
 	_set_show_prepared(show_prepared)
 	UpgradedCheck.visible = show_upgraded_check
+	EquipTree.can_sort = can_sort
 
 func set_list(list, show_upgraded:bool = false, filter = null):
 	self.list = list
@@ -88,6 +90,9 @@ func _on_EquipTree_value_changed(equipment, value):
 	
 func _on_UpgradedCheck_pressed():
 	set_list(list, UpgradedCheck.pressed, filter)
+	
+func _on_EquipTree_list_updated(list):
+	pass # Replace with function body.
 
 func _set_title(v):
 	title = v
@@ -103,6 +108,11 @@ func _set_can_remove(v):
 	can_remove = v
 	if not EquipTree: return
 	EquipTree.can_remove = v
+	
+func _set_can_sort(v):
+	can_sort = v
+	if not EquipTree: return
+	EquipTree.can_sort = v
 	
 func _set_order(v):
 	order = v
