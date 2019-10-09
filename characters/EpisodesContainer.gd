@@ -4,6 +4,7 @@ onready var TabContainer = find_node("TabContainer")
 onready var EpisodeList = find_node("EpisodeList")
 
 onready var Data = find_node("Data")
+onready var Generator = find_node("Generator")
 onready var Scripts = find_node("Scripts")
 
 onready var EpisodeAddPopup = find_node("EpisodeAddPopup")
@@ -54,6 +55,7 @@ func _on_EpisodeList_item_selected(key):
 	var data = Database.commit(Database.Table.EPISODES, Database.READ, key)
 	Data.set_data(data)
 	Scripts.set_data(data)
+	Generator.set_data(data)
 
 func _on_EpisodeList_add_button_pressed():
 	EpisodeAddPopup.add_func = funcref(self, "_add_episode")

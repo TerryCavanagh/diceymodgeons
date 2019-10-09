@@ -34,6 +34,7 @@ Settings="*res://Settings.gd"
 Database="*res://Database.gd"
 Gamedata="*res://Gamedata.gd"
 Utils="*res://Utils.gd"
+ModFiles="*res://ModFiles.gd"
 ConfirmPopup="*res://ConfirmPopup.tscn"
 
 [debug]

@@ -71,6 +71,7 @@ func _input(event):
 func _set_text(value):
 	if not TextEdit: return
 	TextEdit.text = value
+	TextEdit.cursor_set_line(0)
 	
 func _get_text():
 	if not TextEdit: return ""

@@ -9,9 +9,6 @@ signal data_loaded()
 signal save_completed(table)
 signal all_tables_saved()
 
-var root_path:String = ""
-var mod_path:String = ""
-
 var _fighters:CSVData = null
 var _equipment:CSVData = null
 var _items:CSVData = null
@@ -43,8 +40,6 @@ enum Origin {
 #var undo_redo = UndoRedo.new()
 
 func _init():
-	root_path = "res://test"
-	mod_path = "mods/garfield"
 	_data_loaded = false
 	
 func _get_paths(table:int):
@@ -74,6 +69,8 @@ func _get_paths(table:int):
 	
 	result["schema"] = "res://assets/api_%s/%s" % [ProjectSettings.get_setting("application/config/mod_api_version"), schema]
 	
+	var root_path = ModFiles.game_root_path
+	var mod_path = ModFiles.mod_root_path
 	result[Origin.GAME] = "%s/data/text/%s" % [root_path, file]
 	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
 	result[Origin.MERGE] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
@@ -93,8 +90,8 @@ func data_needs_save():
 func load_data(root_path:String, metadata:Dictionary):
 	if not metadata.has("mod"): return
 	
-	self.root_path = root_path
-	self.mod_path = 'mods/%s' % metadata.get("mod")
+	ModFiles.game_root_path = root_path
+	ModFiles.mod_root_path = 'mods/%s' % metadata.get("mod")
 	
 	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "Name")
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
