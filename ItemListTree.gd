@@ -82,7 +82,7 @@ func load_data(filter = null, select_key = null):
 			var key = field.get("key")
 			tmp[key] = field.get("field")
 			if change_text_func:
-				tmp[key] = change_text_func.call_func(tmp[key])
+				tmp[key] = change_text_func.call_func(key)
 				
 		for key in tmp.keys():
 			if tmp.get(key).findn(filter) > -1:
@@ -221,6 +221,7 @@ func _on_List_nothing_selected():
 	emit_signal("element_selected", null)
 
 func _on_List_item_edited():
+	assert(false) # TODO fix it to point to the edited field
 	var item = get_selected()
 	var meta = item.get_metadata(Column.NAME)
 	var old_key = meta.get("key", "")
