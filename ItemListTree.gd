@@ -64,28 +64,28 @@ func load_data(filter = null, select_key = null):
 		data = process_data_func.call_func(data)
 	
 	var keys = data.keys()
+	var fields = []
+	for key in keys:
+		fields.push_back({"key": key, "field": data.get(key).get(show_field, "")})
 	if sort_items:
-		var t = []
-		for key in keys:
-			t.push_back({"key": key, "field": data.get(key).get(show_field, "")})
-			
-		t.sort_custom(self, "_sort_fields")
-		
+		fields.sort_custom(self, "_sort_fields")
 		keys.clear()
-		for o in t:
-			keys.push_back(o.get("key"))
+		for field in fields:
+			keys.push_back(field.get("key"))
 	
 	if filter:
 		filter = filter.to_lower()
 		var new_keys = []
 		
-		var items = {}
-		for key in keys:
-			items[key] = key
+		var tmp = {}
+		for field in fields:
+			var key = field.get("key")
+			tmp[key] = field.get("field")
 			if change_text_func:
-				items[key] = change_text_func.call_func(key)
-		for key in items.keys():
-			if items.get(key).findn(filter) > -1:
+				tmp[key] = change_text_func.call_func(tmp[key])
+				
+		for key in tmp.keys():
+			if tmp.get(key).findn(filter) > -1:
 				new_keys.push_back(key)
 		
 		keys = new_keys
@@ -176,11 +176,6 @@ func _on_entry_deleted(table, key):
 func _on_entry_updated(table, key, equals):
 	if not table == self.table: return
 	var child = root.get_children()
-	# TODO maybe move this
-	# If key contains an underscore then remove the rest of the string
-	if key.find("_") > -1:
-		key = key.left(key.find("_"))
-		
 	while child:
 		var metadata = child.get_metadata(Column.NAME)
 		var child_key = metadata.get("key", "")
