@@ -7,12 +7,12 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 func set_data(data):
-	data_id = data.get("Character", "")
+	data_id = data.get("ID", "")
 	self.data = data
 	
 	_setup(DifficultySpin, "Difficulty", 1)
 
-	EpisodesContainer.setup(data_id)
+	EpisodesContainer.setup(data.get("Character", ""))
 
 func _setup(node:Node, key, def):
 	if node is SpinBox:

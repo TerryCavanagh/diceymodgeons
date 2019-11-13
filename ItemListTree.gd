@@ -15,6 +15,8 @@ var root:TreeItem = null
 
 var sort_items:bool = true
 
+var show_field:String = ""
+
 var filter = null
 
 var table = null
@@ -63,7 +65,15 @@ func load_data(filter = null, select_key = null):
 	
 	var keys = data.keys()
 	if sort_items:
-		keys.sort()
+		var t = []
+		for key in keys:
+			t.push_back({"key": key, "field": data.get(key).get(show_field, "")})
+			
+		t.sort_custom(self, "_sort_fields")
+		
+		keys.clear()
+		for o in t:
+			keys.push_back(o.get("key"))
 	
 	if filter:
 		filter = filter.to_lower()
@@ -88,7 +98,7 @@ func load_data(filter = null, select_key = null):
 	for key in keys:
 		var entry = data[key]
 		var origin = entry.get("__origin", Database.Origin.GAME)
-		var metadata = {"key": key, "origin": origin, "is_in_game_data": t.is_in_game_data(key)}
+		var metadata = {"key": key, "field": data[key].get(show_field, ""), "origin": origin, "is_in_game_data": t.is_in_game_data(key)}
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
@@ -121,7 +131,7 @@ func _set_item_data(item:TreeItem, metadata):
 		item.set_text(Column.MODIFIED, "")
 		item.set_tooltip(Column.MODIFIED, "")
 	
-	var n = key
+	var n = metadata.get("field", "")
 	if change_text_func:
 		n = change_text_func.call_func(key)
 	
@@ -144,6 +154,8 @@ func _set_item_data(item:TreeItem, metadata):
 		item.add_button(Column.BUTTON, delete_texture, BUTTON_DELETE_ID, false)
 		item.set_tooltip(Column.BUTTON, "Delete")
 
+func _sort_fields(a:Dictionary, b:Dictionary):
+	return a.get("field").nocasecmp_to(b.get("field")) < 0
 	
 func _on_entry_created(table, key):
 	if not table == self.table: return

@@ -29,7 +29,7 @@ func _ready():
 	EquipmentContainer.append_equipment_func = funcref(self, "_append_equipment")
 
 func set_data(data):
-	data_id = Database.mixed_key(["Character", "Level"], data)
+	data_id = data.get("ID", "")
 	self.data = data
 
 	_setup(NameEdit, "Episode Name", "")

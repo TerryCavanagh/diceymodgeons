@@ -18,7 +18,7 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 func set_data(data):
-	data_id = data.get("Name", "")
+	data_id = data.get("ID", "")
 	self.data = data
 	
 	_setup(VoiceEdit, "Voice", "")

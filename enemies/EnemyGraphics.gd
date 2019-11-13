@@ -11,7 +11,7 @@ func _ready():
 
 func set_data(data):
 	self.data = data
-	self.data_id = data["Name"]
+	self.data_id = data.get("ID", "")
 	
 	var sprite_name = data.get("CombatAnimation", null)
 	var sprite_offset = data.get("CombatAnimationOffset", Vector2())

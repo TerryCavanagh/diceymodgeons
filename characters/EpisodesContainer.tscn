@@ -30,6 +30,7 @@ table = 6
 search_placeholder = "Search episode"
 button_label = "Add new episode"
 sort_items = false
+show_field = "Episode Name"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 224.0

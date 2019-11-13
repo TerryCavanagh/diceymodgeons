@@ -17,7 +17,7 @@ func _ready():
 	
 func set_data(data):
 	self.data = data
-	self.data_id = data["Name"]
+	self.data_id = data.get("ID", "")
 	
 	_setup(BeforeCombat, "Before Combat", "Script: Before Combat", "")
 	_setup(AfterCombat, "After Combat", "Script: After Combat", "")

@@ -28,6 +28,7 @@ table = 5
 search_placeholder = "Search character"
 button_label = "Add new character"
 sort_items = false
+show_field = "Character"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 204.0

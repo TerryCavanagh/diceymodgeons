@@ -27,6 +27,7 @@ mouse_filter = 2
 [node name="ItemList" parent="HBoxContainer" instance=ExtResource( 5 )]
 search_placeholder = "Search enemy"
 button_label = "Add a new enemy"
+show_field = "Name"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0

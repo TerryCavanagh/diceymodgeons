@@ -25,6 +25,7 @@ size_flags_vertical = 3
 table = 2
 search_placeholder = "Search equipment"
 button_label = "Add a new equipment"
+show_field = "Name"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0

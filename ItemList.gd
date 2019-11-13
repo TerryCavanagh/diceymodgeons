@@ -8,6 +8,7 @@ export (Database.Table) var table = Database.Table.FIGHTERS setget _set_table
 export (String) var search_placeholder = "" setget _set_search_placeholder
 export (String) var button_label = "" setget _set_button_label
 export (bool) var sort_items = true setget _set_sort_items
+export (String) var show_field = "" setget _set_show_field
 
 onready var Search = find_node("Search")
 onready var List = find_node("List")
@@ -22,6 +23,7 @@ func _ready():
 	List.table = table
 	AddButton.text = button_label
 	List.sort_items = sort_items
+	List.show_field = show_field
 	
 	List.process_data_func = process_data_func
 	List.modified_func = modified_func
@@ -53,6 +55,11 @@ func _set_sort_items(v):
 	sort_items = v
 	if not List: return
 	List.sort_items = v
+	
+func _set_show_field(v):
+	show_field = v
+	if not List: return
+	List.show_field = v
 
 func _on_List_element_selected(key):
 	emit_signal("item_selected", key)

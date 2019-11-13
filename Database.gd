@@ -93,12 +93,12 @@ func load_data(root_path:String, metadata:Dictionary):
 	ModFiles.game_root_path = root_path
 	ModFiles.mod_root_path = 'mods/%s' % metadata.get("mod")
 	
-	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "Name")
+	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "ID")
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
 	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
-	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "Character")
-	_episodes = CSVData.new(_get_paths(Table.EPISODES), "Character#Level")
+	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "ID")
+	_episodes = CSVData.new(_get_paths(Table.EPISODES), "ID")
 	
 	_data_loaded = true
 	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")))

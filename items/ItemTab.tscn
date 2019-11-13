@@ -23,6 +23,7 @@ margin_bottom = 713.0
 table = 3
 search_placeholder = "Search an item"
 button_label = "Add a new item"
+show_field = "Name"
 
 [node name="ItemContainer" type="ScrollContainer" parent="HBoxContainer"]
 margin_left = 304.0
