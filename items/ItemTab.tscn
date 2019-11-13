@@ -108,5 +108,6 @@ bad_name_message = "Item already exists."
 exception_message = "Underscore is not accepted."
 good_name_message = "Great name! you have a thing for names, don't you?"
 table = 3
+field = "Name"
 [connection signal="add_button_pressed" from="HBoxContainer/ItemList" to="." method="_on_ItemList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]

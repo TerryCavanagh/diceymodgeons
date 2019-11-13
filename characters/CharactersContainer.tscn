@@ -64,5 +64,6 @@ bad_name_message = "There's a character with that name already."
 exception_message = "Underscore is not accepted."
 good_name_message = "Good choice!"
 table = 5
+field = "Character"
 [connection signal="add_button_pressed" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_item_selected"]
