@@ -35,6 +35,7 @@ enum Origin {
 	GAME,
 	APPEND,
 	MERGE,
+	OVERWRITE,
 }
 
 #var undo_redo = UndoRedo.new()
@@ -74,6 +75,7 @@ func _get_paths(table:int):
 	result[Origin.GAME] = "%s/data/text/%s" % [root_path, file]
 	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
 	result[Origin.MERGE] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.OVERWRITE] = "%s/%s/data/text/%s" % [root_path, mod_path, file]
 	
 	return result
 	
@@ -145,6 +147,11 @@ func mixed_key(keys:Array, data):
 	
 	return PoolStringArray(result).join("#")
 	
+func get_data_id(data:Dictionary, key:String):
+	var data_id = data.get(key, "")
+	if data.get("__origin", Origin.GAME) == Origin.OVERWRITE:
+		data_id = 'overwrite__%s' % data_id
+	return data_id
 		
 func commit(table:int, action:int, key = null, field = null, value = null):
 	"""
@@ -316,6 +323,7 @@ class CSVData:
 	
 	var old_data:Dictionary = {}
 	var game_data:Dictionary = {}
+	var overwrite_data:Dictionary = {}
 	
 	var hashes:Dictionary = {}
 	
@@ -326,6 +334,8 @@ class CSVData:
 	
 	var force_needs_save:bool = false
 	
+	var overwrite_mode:bool = false
+	
 	func _init(paths:Dictionary, key:String):
 		self.paths = paths
 		KEY = key
@@ -333,6 +343,7 @@ class CSVData:
 		load_data(paths.get(Origin.GAME, ""), Origin.GAME)
 		load_data(paths.get(Origin.APPEND, ""), Origin.APPEND)
 		load_data(paths.get(Origin.MERGE, ""), Origin.MERGE)
+		load_data(paths.get(Origin.OVERWRITE, ""), Origin.OVERWRITE)
 		
 		old_data = data.duplicate(true)
 		
@@ -374,6 +385,8 @@ class CSVData:
 						key_ids.push_back(c[i])
 					
 			id = PoolStringArray(key_ids).join("#")
+			if source == Origin.OVERWRITE:
+				id = 'overwrite__%s' % id
 			data[id] = {}
 					
 			if data.get(id, null) == null:
@@ -390,10 +403,24 @@ class CSVData:
 			
 			if source == Origin.GAME:
 				game_data[id] = data[id].duplicate(true)
+			
+			if source == Origin.OVERWRITE:
+				overwrite_data[id] = data[id].duplicate(true)
 	
 	func save_data():
+		# TODO do this
+		if overwrite_mode:
+			# save append and merge as backups
+			# save overwrite as normal
+			pass
+		else:
+			# save overwrite as backup
+			# save append and merge as normal
+			pass
+			
 		_save(paths.get(Origin.APPEND, ""), [Origin.APPEND])
 		_save(paths.get(Origin.MERGE, ""), [Origin.MERGE, Origin.GAME])
+		_save(paths.get(Origin.OVERWRITE, ""), [Origin.OVERWRITE])
 		force_needs_save = false
 		
 	func _save(path, origins):

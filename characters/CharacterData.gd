@@ -7,7 +7,7 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 func set_data(data):
-	data_id = data.get("ID", "")
+	data_id = Database.get_data_id(data, "ID")
 	self.data = data
 	
 	_setup(DifficultySpin, "Difficulty", 1)

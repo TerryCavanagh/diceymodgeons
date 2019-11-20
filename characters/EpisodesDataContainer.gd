@@ -29,7 +29,7 @@ func _ready():
 	EquipmentContainer.append_equipment_func = funcref(self, "_append_equipment")
 
 func set_data(data):
-	data_id = data.get("ID", "")
+	data_id = Database.get_data_id(data, "ID")
 	self.data = data
 
 	_setup(NameEdit, "Episode Name", "")

@@ -10,7 +10,7 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 func set_data(data, filename):
-	data_id = data.get("ID", "")
+	data_id = Database.get_data_id(data, "ID")
 	self.data = data
 
 	if not filename.empty() and filename.is_valid_filename():

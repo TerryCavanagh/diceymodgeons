@@ -17,7 +17,7 @@ func _ready():
 	ItemContainer.visible = false
 
 func set_data(data):
-	data_id = data.get("Name", "")
+	data_id = Database.get_data_id(data, "Name")
 	self.data = data
 	
 	_setup(DescriptionEdit, "Description", "")

@@ -150,7 +150,7 @@ func _set_item_data(item:TreeItem, metadata):
 	if is_in_game and (modified or origin == Database.Origin.MERGE):
 		item.add_button(Column.BUTTON, return_texture, BUTTON_REVERT_ID, false)
 		item.set_tooltip(Column.BUTTON, "Revert to the game data")
-	elif origin == Database.Origin.APPEND:
+	elif (origin == Database.Origin.APPEND or origin == Database.Origin.OVERWRITE):
 		item.add_button(Column.BUTTON, delete_texture, BUTTON_DELETE_ID, false)
 		item.set_tooltip(Column.BUTTON, "Delete")
 

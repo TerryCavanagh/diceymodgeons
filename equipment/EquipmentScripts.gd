@@ -23,7 +23,7 @@ func _ready():
 	
 func set_data(data):
 	self.data = data
-	self.data_id = data.get("Name", "")
+	data_id = Database.get_data_id(data, "Name")
 	
 	_setup(OnExecute, "On Execute", "Script: On Execute", "")
 	_setup(BeforeExecute, "Before Execute", "Script: Before execute", "")

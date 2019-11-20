@@ -40,6 +40,9 @@ margin_top = 1214.04
 margin_right = 1617.48
 margin_bottom = 1454.04
 texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="EnemyOverworld" parent="Overworld" instance=ExtResource( 3 )]
 margin_left = 41.1543

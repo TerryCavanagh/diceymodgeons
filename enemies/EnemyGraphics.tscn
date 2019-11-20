@@ -15,7 +15,6 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-visible = false
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1273.0
@@ -50,6 +49,7 @@ margin_bottom = 1084.94
 rect_scale = Vector2( 0.24, 0.24 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
+visible = false
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 1273.0
