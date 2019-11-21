@@ -9,10 +9,12 @@ export (String) var search_placeholder = "" setget _set_search_placeholder
 export (String) var button_label = "" setget _set_button_label
 export (bool) var sort_items = true setget _set_sort_items
 export (String) var show_field = "" setget _set_show_field
+export (bool) var show_overwrite_mode = true setget _set_show_overwrite_mode
 
 onready var Search = find_node("Search")
 onready var List = find_node("List")
 onready var AddButton = find_node("AddButton")
+onready var OverwriteCheck = find_node("OverwriteCheck")
 
 var process_data_func:FuncRef = null setget _set_process_data_func
 var modified_func:FuncRef = null setget _set_modified_func
@@ -29,12 +31,23 @@ func _ready():
 	List.modified_func = modified_func
 	List.change_text_func = change_text_func
 	
+	OverwriteCheck.visible = show_overwrite_mode
+	
 	
 func start_load():
+	if Database.is_overwrite_mode(table):
+		OverwriteCheck.pressed = true
+		List.overwrite_mode = true
+	else:
+		OverwriteCheck.pressed = false
+		List.overwrite_mode = false
 	List.load_data()
 	
 func force_reload(select_key = null):
 	List.force_reload(select_key)
+	
+func force_overwrite_mode(value):
+	_on_OverwriteCheck_toggled(value)
 
 func _set_search_placeholder(v):
 	search_placeholder = v
@@ -67,6 +80,11 @@ func _on_List_element_selected(key):
 func _on_AddButton_pressed():
 	emit_signal("add_button_pressed")
 
+func _on_OverwriteCheck_toggled(button_pressed):
+	List.overwrite_mode = button_pressed
+	Database.set_overwrite_mode(table, button_pressed)
+	List.force_reload()
+	
 func _set_process_data_func(value):
 	process_data_func = value
 	if not List: return
@@ -81,3 +99,8 @@ func _set_change_text_func(value):
 	change_text_func = value
 	if not List: return
 	List.change_text_func = change_text_func
+	
+func _set_show_overwrite_mode(value):
+	show_overwrite_mode = value
+	if not OverwriteCheck: return
+	OverwriteCheck.visible = value

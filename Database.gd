@@ -33,9 +33,13 @@ enum Table {
 
 enum Origin {
 	GAME,
+	GAME_BACKUP,
 	APPEND,
+	APPEND_BACKUP,
 	MERGE,
+	MERGE_BACKUP,
 	OVERWRITE,
+	OVERWRITE_BACKUP,
 }
 
 #var undo_redo = UndoRedo.new()
@@ -73,9 +77,13 @@ func _get_paths(table:int):
 	var root_path = ModFiles.game_root_path
 	var mod_path = ModFiles.mod_root_path
 	result[Origin.GAME] = "%s/data/text/%s" % [root_path, file]
+	result[Origin.GAME_BACKUP] = "%s/data/text/%s.backup" % [root_path, file]
 	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.APPEND_BACKUP] = "%s/%s/_append/data/text/%s.backup" % [root_path, mod_path, file]
 	result[Origin.MERGE] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.MERGE_BACKUP] = "%s/%s/_merge/data/text/%s.backup" % [root_path, mod_path, file]
 	result[Origin.OVERWRITE] = "%s/%s/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.OVERWRITE_BACKUP] = "%s/%s/data/text/%s.backup" % [root_path, mod_path, file]
 	
 	return result
 	
@@ -152,6 +160,15 @@ func get_data_id(data:Dictionary, key:String):
 	if data.get("__origin", Origin.GAME) == Origin.OVERWRITE:
 		data_id = 'overwrite__%s' % data_id
 	return data_id
+	
+func is_overwrite_mode(table):
+	return get_table(table).overwrite_mode
+	
+func set_overwrite_mode(table, value):
+	var t = get_table(table)
+	t.overwrite_mode = value
+	t.force_needs_save = true
+	
 		
 func commit(table:int, action:int, key = null, field = null, value = null):
 	"""
@@ -342,8 +359,12 @@ class CSVData:
 		load_schema(paths.get("schema", ""))
 		load_data(paths.get(Origin.GAME, ""), Origin.GAME)
 		load_data(paths.get(Origin.APPEND, ""), Origin.APPEND)
+		load_data(paths.get(Origin.APPEND_BACKUP, ""), Origin.APPEND)
 		load_data(paths.get(Origin.MERGE, ""), Origin.MERGE)
+		load_data(paths.get(Origin.MERGE_BACKUP, ""), Origin.MERGE)
 		load_data(paths.get(Origin.OVERWRITE, ""), Origin.OVERWRITE)
+		overwrite_mode = not overwrite_data.empty()
+		load_data(paths.get(Origin.OVERWRITE_BACKUP, ""), Origin.OVERWRITE)
 		
 		old_data = data.duplicate(true)
 		
@@ -408,25 +429,27 @@ class CSVData:
 				overwrite_data[id] = data[id].duplicate(true)
 	
 	func save_data():
-		# TODO do this
 		if overwrite_mode:
-			# save append and merge as backups
-			# save overwrite as normal
-			pass
+			_save(paths.get(Origin.APPEND_BACKUP, ""), [Origin.APPEND], true)
+			_save(paths.get(Origin.MERGE_BACKUP, ""), [Origin.MERGE, Origin.GAME], true)
+			_save(paths.get(Origin.OVERWRITE, ""), [Origin.OVERWRITE])
+			_delete_file(paths.get(Origin.APPEND))
+			_delete_file(paths.get(Origin.MERGE))
+			_delete_file(paths.get(Origin.OVERWRITE_BACKUP))
 		else:
-			# save overwrite as backup
-			# save append and merge as normal
-			pass
+			_save(paths.get(Origin.APPEND, ""), [Origin.APPEND])
+			_save(paths.get(Origin.MERGE, ""), [Origin.MERGE, Origin.GAME])
+			_save(paths.get(Origin.OVERWRITE_BACKUP, ""), [Origin.OVERWRITE], true)
+			_delete_file(paths.get(Origin.OVERWRITE))
+			_delete_file(paths.get(Origin.APPEND_BACKUP))
+			_delete_file(paths.get(Origin.MERGE_BACKUP))
 			
-		_save(paths.get(Origin.APPEND, ""), [Origin.APPEND])
-		_save(paths.get(Origin.MERGE, ""), [Origin.MERGE, Origin.GAME])
-		_save(paths.get(Origin.OVERWRITE, ""), [Origin.OVERWRITE])
 		force_needs_save = false
 		
-	func _save(path, origins):
+	func _save(path, origins, all_data:bool = false):
 		var content = []
 		for origin in origins:
-			content += _data_to_content(origin)
+			content += _data_to_content(origin, all_data)
 		
 		if not content or content.empty(): 
 			var file = Directory.new()
@@ -457,7 +480,22 @@ class CSVData:
 			
 		return false
 		
-	func _data_to_content(source):
+	func _delete_file(path):
+		var dir = Directory.new()
+		if not dir.file_exists(path):
+			return
+			
+		var result = dir.remove(path)
+		match result:
+			OK:
+				print('File %s deleted correctly' % path)
+			FAILED:
+				print('Failed to delete file %s' % path)
+			_:
+				print('Error deleting the file %s : %s' % [path, result])
+		
+		
+	func _data_to_content(source, all_data:bool = false):
 		var subdata = []
 		for key in data.keys():
 			compare(key)

@@ -11,6 +11,11 @@ onready var CharacterAddPopup = find_node("CharacterAddPopup")
 
 func _ready():
 	TabContainer.visible = false
+	
+	"""
+	if Database.is_overwrite_mode(Database.Table.CHARACTERS):
+		Data.EpisodesContainer.EpisodeList.force_overwrite_mode(true)
+	"""
 
 func _on_CharacterList_item_selected(key):
 	if not TabContainer: return

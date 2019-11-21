@@ -54,4 +54,5 @@ text = "Add a new enemy"
 [connection signal="item_edited" from="List" to="List" method="_on_List_item_edited"]
 [connection signal="item_selected" from="List" to="List" method="_on_List_item_selected"]
 [connection signal="nothing_selected" from="List" to="List" method="_on_List_nothing_selected"]
+[connection signal="toggled" from="HBoxContainer/OverwriteCheck" to="." method="_on_OverwriteCheck_toggled"]
 [connection signal="pressed" from="HBoxContainer/AddButton" to="." method="_on_AddButton_pressed"]

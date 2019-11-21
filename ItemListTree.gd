@@ -21,6 +21,8 @@ var filter = null
 
 var table = null
 
+var overwrite_mode:bool = false
+
 enum Column {
 	MODIFIED = 0,
 	NAME = 1,
@@ -59,6 +61,18 @@ func load_data(filter = null, select_key = null):
 		select_meta = get_selected().get_metadata(Column.NAME)
 	
 	var data = Database.commit(table, Database.READ)
+	
+	var new_data = {}
+	for key in data.keys():
+		var d = data[key]
+		var origin = d.get("__origin", Database.Origin.GAME)
+		if overwrite_mode and origin == Database.Origin.OVERWRITE:
+			new_data[key] = d
+		elif not overwrite_mode and origin != Database.Origin.OVERWRITE:
+			new_data[key] = d
+			
+	data = new_data
+			
 	
 	if process_data_func:
 		data = process_data_func.call_func(data)
