@@ -67,3 +67,4 @@ table = 5
 field = "Character"
 [connection signal="add_button_pressed" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_item_selected"]
+[connection signal="overwrite_mode_changed" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_overwrite_mode_changed"]

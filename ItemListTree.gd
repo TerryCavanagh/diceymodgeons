@@ -235,6 +235,7 @@ func _on_List_nothing_selected():
 	emit_signal("element_selected", null)
 
 func _on_List_item_edited():
+	return
 	assert(false) # TODO fix it to point to the edited field
 	var item = get_selected()
 	var meta = item.get_metadata(Column.NAME)

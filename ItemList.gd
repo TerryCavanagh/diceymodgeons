@@ -2,6 +2,7 @@ extends VBoxContainer
 
 signal item_selected(key)
 signal add_button_pressed()
+signal overwrite_mode_changed(new_value)
 
 
 export (Database.Table) var table = Database.Table.FIGHTERS setget _set_table
@@ -82,6 +83,7 @@ func _on_AddButton_pressed():
 
 func _on_OverwriteCheck_toggled(button_pressed):
 	List.overwrite_mode = button_pressed
+	emit_signal("overwrite_mode_changed", button_pressed)
 	Database.set_overwrite_mode(table, button_pressed)
 	List.force_reload()
 	
