@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 signal item_selected(key)
-signal add_button_pressed()
+signal add_button_pressed(overwrite_mode)
 signal overwrite_mode_changed(new_value)
 
 
@@ -20,6 +20,8 @@ onready var OverwriteCheck = find_node("OverwriteCheck")
 var process_data_func:FuncRef = null setget _set_process_data_func
 var modified_func:FuncRef = null setget _set_modified_func
 var change_text_func:FuncRef = null setget _set_change_text_func
+
+var overwrite_mode:bool = false setget ,_is_overwrite_mode
 
 func _ready():
 	Search.placeholder_text = search_placeholder
@@ -74,12 +76,16 @@ func _set_show_field(v):
 	show_field = v
 	if not List: return
 	List.show_field = v
+	
+func _is_overwrite_mode():
+	if not List: return false
+	return List.overwrite_mode
 
 func _on_List_element_selected(key):
 	emit_signal("item_selected", key)
 
 func _on_AddButton_pressed():
-	emit_signal("add_button_pressed")
+	emit_signal("add_button_pressed", List.overwrite_mode)
 
 func _on_OverwriteCheck_toggled(button_pressed):
 	List.overwrite_mode = button_pressed

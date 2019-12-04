@@ -60,19 +60,7 @@ func load_data(filter = null, select_key = null):
 	if not select_key and get_selected():
 		select_meta = get_selected().get_metadata(Column.NAME)
 	
-	var data = Database.commit(table, Database.READ)
-	
-	var new_data = {}
-	for key in data.keys():
-		var d = data[key]
-		var origin = d.get("__origin", Database.Origin.GAME)
-		if overwrite_mode and origin == Database.Origin.OVERWRITE:
-			new_data[key] = d
-		elif not overwrite_mode and origin != Database.Origin.OVERWRITE:
-			new_data[key] = d
-			
-	data = new_data
-			
+	var data = Database.read(table, overwrite_mode)
 	
 	if process_data_func:
 		data = process_data_func.call_func(data)
@@ -150,7 +138,7 @@ func _set_item_data(item:TreeItem, metadata):
 		n = change_text_func.call_func(key)
 	
 	item.set_text(Column.NAME, n)
-	item.set_editable(Column.NAME, not is_in_game)
+	#item.set_editable(Column.NAME, not is_in_game)
 	item.set_tooltip(Column.NAME, n)
 	
 	item.set_metadata(Column.NAME, metadata)

@@ -49,5 +49,6 @@ func _on_ItemList_item_selected(key):
 	var data = Database.commit(Database.Table.ITEMS, Database.READ, key)
 	set_data(data)
 
-func _on_ItemList_add_button_pressed():
+func _on_ItemList_add_button_pressed(overwrite_mode):
+	AddNewItemPopup.overwrite_mode = overwrite_mode
 	AddNewItemPopup.popup_centered(Vector2(400, 120))

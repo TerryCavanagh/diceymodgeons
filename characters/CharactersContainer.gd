@@ -23,7 +23,8 @@ func _on_CharacterList_item_selected(key):
 	Data.set_data(data)
 	Descriptions.set_data(data)
 
-func _on_CharacterList_add_button_pressed():
+func _on_CharacterList_add_button_pressed(overwrite_mode):
+	CharacterAddPopup.overwrite_mode = overwrite_mode
 	CharacterAddPopup.popup_centered(Vector2(400, 120))
 
 

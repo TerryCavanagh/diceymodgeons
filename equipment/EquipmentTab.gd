@@ -54,5 +54,6 @@ func _on_ItemList_item_selected(key):
 	DeckUpgrade.set_key(key)
 
 
-func _on_ItemList_add_button_pressed():
+func _on_ItemList_add_button_pressed(overwrite_mode):
+	AddNewEquipmentPopup.overwrite_mode = overwrite_mode
 	AddNewEquipmentPopup.popup_centered(Vector2(400, 120))

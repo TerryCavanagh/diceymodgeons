@@ -25,5 +25,6 @@ func _on_TreeList_item_selected(key):
 	Scripts.set_data(data)
 	Chat.set_data(data)
 
-func _on_TreeList_add_button_pressed():
+func _on_TreeList_add_button_pressed(overwrite_mode):
+	AddNewEnemyPopup.overwrite_mode = overwrite_mode
 	AddNewEnemyPopup.popup_centered(Vector2(400, 120))

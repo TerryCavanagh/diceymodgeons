@@ -14,6 +14,7 @@ onready var Cancel = find_node("Cancel")
 
 var add_func:FuncRef = null
 
+var overwrite_mode:bool = false
 var valid := false
 
 func _ready():
@@ -33,7 +34,7 @@ func check_valid():
 			valid = false
 		
 	if valid:
-		var data = Database.commit(table, Database.READ)
+		var data = Database.read(table, overwrite_mode)
 		for k in data.keys():
 			var obj = data.get(k)
 			if n == obj.get(field):
@@ -62,7 +63,6 @@ func _on_NameEdit_text_entered(new_text):
 
 func _on_OK_pressed():
 	if not valid: return
-	assert(false) # TODO create the correct key and fill the correct field
 	if add_func:
 		add_func.call_func(NameEdit.text)
 	else:
@@ -71,7 +71,6 @@ func _on_OK_pressed():
 	
 func _on_Cancel_pressed():
 	hide()
-
 
 func _on_AddPopup_about_to_show():
 	NameEdit.clear()

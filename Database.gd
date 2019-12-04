@@ -169,6 +169,18 @@ func set_overwrite_mode(table, value):
 	t.force_needs_save = t.last_overwrite_mode_saved != value
 	t.overwrite_mode = value
 	
+func read(table:int, overwrite_mode:bool = false):
+	var data = Database.commit(table, Database.READ)
+	var new_data = {}
+	for key in data.keys():
+		var d = data[key]
+		var origin = d.get("__origin", Database.Origin.GAME)
+		if overwrite_mode and origin == Database.Origin.OVERWRITE:
+			new_data[key] = d
+		elif not overwrite_mode and origin != Database.Origin.OVERWRITE:
+			new_data[key] = d
+			
+	return new_data
 		
 func commit(table:int, action:int, key = null, field = null, value = null):
 	"""
@@ -381,7 +393,7 @@ class CSVData:
 	func load_data(path:String, origin:int):
 		var file = File.new()
 		if not file.file_exists(path):
-			printerr("File %s doesn't exist" % path)
+			#printerr("File %s doesn't exist" % path)
 			return
 			
 		if file.open(path, File.READ) == OK:
@@ -539,8 +551,12 @@ class CSVData:
 					data[key][h] = _convert_from_csv(h, "")
 				else:
 					data[key][h] = default
+		
+		if overwrite_mode:
+			data[key]["__origin"] = Origin.OVERWRITE
+		else:
+			data[key]["__origin"] = Origin.APPEND
 			
-		data[key]["__origin"] = Origin.APPEND
 		data[key]["__modified"] = true
 		hashes[key] = data[key].hash()
 		

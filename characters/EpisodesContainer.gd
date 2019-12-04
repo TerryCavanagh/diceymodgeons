@@ -36,10 +36,12 @@ func _change_episode_text(key):
 	return "%s. %s" % [data.get("Level", "?"), data.get("Episode Name", "???")]
 	
 func _add_episode(episode_name):
-	var levels = _process_data(Database.commit(Database.Table.EPISODES, Database.READ))
+	var levels = _process_data(Database.read(Database.Table.EPISODES, EpisodeList.overwrite_mode))
 	var level = levels.size() + 1
-	var key = '%s#%s' % [character, level]
+	var levelpack = "mod"
+	var key = '%s_%s_%s' % [levelpack.to_lower(), character.to_lower(), level]
 	Database.commit(Database.Table.EPISODES, Database.CREATE, key)
+	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Levelpack", levelpack)
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Character", character)
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Level", level)
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Episode Name", episode_name)
@@ -57,6 +59,7 @@ func _on_EpisodeList_item_selected(key):
 	Scripts.set_data(data)
 	Generator.set_data(data)
 
-func _on_EpisodeList_add_button_pressed():
+func _on_EpisodeList_add_button_pressed(overwrite_mode):
+	EpisodeAddPopup.overwrite_mode = overwrite_mode
 	EpisodeAddPopup.add_func = funcref(self, "_add_episode")
 	EpisodeAddPopup.popup_centered(Vector2(400, 120))
