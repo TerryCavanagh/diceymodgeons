@@ -157,7 +157,7 @@ func mixed_key(keys:Array, data):
 	
 func get_data_id(data:Dictionary, key:String):
 	var data_id = data.get(key, "")
-	if data.get("__origin", Origin.GAME) == Origin.OVERWRITE:
+	if data.get("__origin", Origin.GAME) == Origin.OVERWRITE and not data_id.begins_with("overwrite__"):
 		data_id = 'overwrite__%s' % data_id
 	return data_id
 	
@@ -420,7 +420,7 @@ class CSVData:
 						key_ids.push_back(c[i])
 					
 			id = PoolStringArray(key_ids).join("#")
-			if source == Origin.OVERWRITE:
+			if source == Origin.OVERWRITE and not id.begins_with("overwrite__"):
 				id = 'overwrite__%s' % id
 			data[id] = {}
 					
@@ -534,7 +534,10 @@ class CSVData:
 		for entry in subdata:
 			var csv = []
 			for header in headers:
-				csv.push_back(_convert_to_csv(header, entry[header]))
+				var value = _convert_to_csv(header, entry[header])
+				if header == KEY and value.begins_with("overwrite__"):
+					value = value.replace("overwrite__", "")
+				csv.push_back(value)
 			values.push_back(csv)
 		
 		return values
