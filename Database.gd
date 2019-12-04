@@ -166,8 +166,8 @@ func is_overwrite_mode(table):
 	
 func set_overwrite_mode(table, value):
 	var t = get_table(table)
+	t.force_needs_save = t.last_overwrite_mode_saved != value
 	t.overwrite_mode = value
-	t.force_needs_save = true
 	
 		
 func commit(table:int, action:int, key = null, field = null, value = null):
@@ -352,6 +352,7 @@ class CSVData:
 	var force_needs_save:bool = false
 	
 	var overwrite_mode:bool = false
+	var last_overwrite_mode_saved:bool = false
 	
 	func _init(paths:Dictionary, key:String):
 		self.paths = paths
@@ -364,6 +365,7 @@ class CSVData:
 		load_data(paths.get(Origin.MERGE_BACKUP, ""), Origin.MERGE)
 		load_data(paths.get(Origin.OVERWRITE, ""), Origin.OVERWRITE)
 		overwrite_mode = not overwrite_data.empty()
+		last_overwrite_mode_saved = overwrite_mode
 		load_data(paths.get(Origin.OVERWRITE_BACKUP, ""), Origin.OVERWRITE)
 		
 		old_data = data.duplicate(true)
@@ -445,6 +447,7 @@ class CSVData:
 			_delete_file(paths.get(Origin.MERGE_BACKUP))
 			
 		force_needs_save = false
+		last_overwrite_mode_saved = overwrite_mode
 		
 	func _save(path, origins, all_data:bool = false):
 		var content = []
