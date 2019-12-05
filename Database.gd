@@ -75,9 +75,12 @@ func _get_paths(table:int):
 	result["schema"] = "res://assets/api_%s/%s" % [ProjectSettings.get_setting("application/config/mod_api_version"), schema]
 	
 	var root_path = ModFiles.game_root_path
+	var extra_path = ""
+	if OS.get_name() == "OSX":
+		extra_path = "diceydungeons.app/Contents/Resources"
 	var mod_path = ModFiles.mod_root_path
-	result[Origin.GAME] = "%s/data/text/%s" % [root_path, file]
-	result[Origin.GAME_BACKUP] = "%s/data/text/%s.backup" % [root_path, file]
+	result[Origin.GAME] = "%s/%s/data/text/%s" % [root_path, extra_path, file]
+	result[Origin.GAME_BACKUP] = "%s/%s/data/text/%s.backup" % [root_path, extra_path, file]
 	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
 	result[Origin.APPEND_BACKUP] = "%s/%s/_append/data/text/%s.backup" % [root_path, mod_path, file]
 	result[Origin.MERGE] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]

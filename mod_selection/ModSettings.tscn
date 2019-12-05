@@ -204,8 +204,8 @@ window_title = "Select the game directory"
 mode_overrides_title = false
 mode = 2
 access = 2
-current_dir = "Z:/godot_projects/dicey_modgeons"
-current_path = "Z:/godot_projects/dicey_modgeons/"
+current_dir = "/Users/mrcdk/development/godot_projects/diceymodgeons"
+current_path = "/Users/mrcdk/development/godot_projects/diceymodgeons/"
 
 [node name="CreateModPopup" parent="Dialogs" instance=ExtResource( 3 )]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GamePathContainer/ChangeButton" to="." method="_on_ChangeButton_pressed"]

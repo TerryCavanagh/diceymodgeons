@@ -110,7 +110,12 @@ func _fill_mod_list():
 	
 func _check_valid_path():
 	var dir := Directory.new()
-	valid_path = dir.dir_exists(path) and dir.dir_exists(path + "/data") and dir.dir_exists(path + "/mods")
+	var data_path = path
+	if OS.get_name() == "OSX":
+		data_path = path + "/diceydungeons.app/Contents/Resources/data"
+	else:
+		data_path = path + "/data"
+	valid_path = dir.dir_exists(path) and dir.dir_exists(data_path) and dir.dir_exists(path + "/mods")
 	
 	if not valid_path:
 		ModList.clear()
@@ -203,16 +208,28 @@ func _on_LaunchButton_pressed():
 
 	var mod = current_mod_loaded
 	var exec = ""
+	var exists = false
 	match OS.get_name():
 		"Windows":
 			exec = path.plus_file("diceydungeons.exe")
+			var file = File.new()
+			exists = not exec.empty() and file.file_exists(exec)
 		"OSX":
-			pass
+			exec = path.plus_file("diceydungeons.app")
+			var dir = Directory.new()
+			exists = not exec.empty() and dir.dir_exists(exec)
 		"X11":
 			pass
 	var file = File.new()
-	if not exec.empty() and file.file_exists(exec):
-		var pid = OS.execute(exec, ["mod=%s" % mod], false)
+	if exists:
+		var pid = -1
+		match OS.get_name():
+			"Windows":
+				pid = OS.execute(exec, ["mod=%s" % mod], false)
+			"OSX":
+				pid = OS.execute("open", [exec, "--args", "mod=%s" % mod], false)
+			"X11":
+				pass
 		if pid == -1:
 			ConfirmPopup.popup_accept("Something went wrong when trying to launch the game!")
 		else:
