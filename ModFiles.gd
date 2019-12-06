@@ -25,8 +25,11 @@ func get_file_as_text(file_path:String):
 	return null
 	
 func _get_file(file_path:String):
+	var extra_path = ""
+	if OS.get_name() == "OSX":
+		extra_path = "diceydungeons.app/Contents/Resources"
 	var mod_path = '%s/%s/%s' % [game_root_path, mod_root_path, file_path]
-	var game_path = '%s/%s' % [game_root_path, file_path]
+	var game_path = '%s/%s/%s' % [game_root_path, extra_path, file_path]
 	
 	var file := File.new()
 	if file.open(mod_path, File.READ) == OK:
