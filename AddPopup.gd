@@ -66,7 +66,7 @@ func _on_OK_pressed():
 	if add_func:
 		add_func.call_func(NameEdit.text)
 	else:
-		Database.commit(table, Database.CREATE, NameEdit.text)
+		assert(false, "Needs an add func")
 	hide()
 	
 func _on_Cancel_pressed():

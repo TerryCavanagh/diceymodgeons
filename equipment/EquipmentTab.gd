@@ -17,6 +17,10 @@ func _ready():
 	
 	ItemList.process_data_func = funcref(self, "_process_data")
 	ItemList.modified_func = funcref(self, "_data_modified")
+	AddNewEquipmentPopup.add_func = funcref(self, "_add_equipment")
+	
+func _add_equipment(value):
+	Database.commit(Database.Table.EQUIPMENT, Database.CREATE, value)
 	
 func _data_modified(key):
 	var table = Database.get_table(Database.Table.EQUIPMENT)

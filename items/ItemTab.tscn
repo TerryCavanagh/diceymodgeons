@@ -102,6 +102,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="AddNewItemPopup" parent="." instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
 window_title = "Add a new item"
 empty_name_message = "The item needs a name."
 bad_name_message = "Item already exists."

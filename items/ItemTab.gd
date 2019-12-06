@@ -15,6 +15,10 @@ var data:Dictionary = {}
 
 func _ready():
 	ItemContainer.visible = false
+	AddNewItemPopup.add_func = funcref(self, "_add_item")
+	
+func _add_item(value):
+	Database.commit(Database.Table.ITEMS, Database.CREATE, value)
 
 func set_data(data):
 	data_id = Database.get_data_id(data, "Name")
