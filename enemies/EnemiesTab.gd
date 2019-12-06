@@ -13,7 +13,7 @@ func _ready():
 	TabContainer.visible = false
 	
 func _add_enemy(value):
-	var levelpack = "mod"
+	var levelpack = Database.loaded_mod
 	var key = '%s_%s' % [levelpack.to_lower(), value.to_lower()]
 	if TreeList.overwrite_mode:
 		key = "overwrite__%s" % key

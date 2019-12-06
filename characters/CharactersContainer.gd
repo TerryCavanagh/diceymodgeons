@@ -13,7 +13,7 @@ func _ready():
 	TabContainer.visible = false
 
 func _add_character(char_name):
-	var levelpack = "mod"
+	var levelpack = Database.loaded_mod
 	var key = '%s_%s' % [levelpack.to_lower(), char_name.to_lower()]
 	Database.commit(Database.Table.CHARACTERS, Database.CREATE, key)
 	Database.commit(Database.Table.CHARACTERS, Database.UPDATE, key, "Levelpack", levelpack)

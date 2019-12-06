@@ -54,7 +54,7 @@ func _notification(what):
 		else:
 			get_tree().quit()
 		
-func _on_Database_data_loaded(mod):
+func _on_Database_data_loaded(mod, id):
 	_set_window_title(mod)
 	TabContainer.set_tab_disabled(1, false)
 	TabContainer.set_tab_disabled(2, false)

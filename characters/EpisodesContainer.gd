@@ -38,7 +38,7 @@ func _change_episode_text(key):
 func _add_episode(episode_name):
 	var levels = _process_data(Database.read(Database.Table.EPISODES, EpisodeList.overwrite_mode))
 	var level = levels.size() + 1
-	var levelpack = "mod"
+	var levelpack = Database.loaded_mod
 	var key = '%s_%s_%s' % [levelpack.to_lower(), character.to_lower(), level]
 	Database.commit(Database.Table.EPISODES, Database.CREATE, key)
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Levelpack", levelpack)

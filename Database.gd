@@ -5,9 +5,11 @@ signal entry_key_changed(table, old_key, new_key)
 signal entry_updated(table, key, equals)
 signal entry_deleted(table, key)
 
-signal data_loaded()
+signal data_loaded(mod_name, mod_id)
 signal save_completed(table)
 signal all_tables_saved()
+
+var loaded_mod:String = ""
 
 var _fighters:CSVData = null
 var _equipment:CSVData = null
@@ -114,7 +116,8 @@ func load_data(root_path:String, metadata:Dictionary):
 	_episodes = CSVData.new(_get_paths(Table.EPISODES), "ID")
 	
 	_data_loaded = true
-	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")))
+	loaded_mod = metadata.get("mod")
+	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")), loaded_mod)
 	
 func save_data():
 	if not data_needs_save(): return
