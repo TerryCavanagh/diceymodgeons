@@ -29,7 +29,7 @@ func set_data(data):
 	_setup(ScriptContainer, "Script", "")
 	
 func _setup(node, key, def):
-	if node is TextEdit:
+	if node is TextEdit or node == DescriptionEdit:
 		node.text = data.get(key, def)
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	if node == ScriptContainer:

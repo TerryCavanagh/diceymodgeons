@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ItemList.tscn" type="PackedScene" id=1]
 [ext_resource path="res://items/ItemTab.gd" type="Script" id=2]
 [ext_resource path="res://ScriptContainer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://AddPopup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://DescriptionEdit.tscn" type="PackedScene" id=5]
 
 [node name="ItemTab" type="PanelContainer"]
 anchor_right = 1.0
@@ -48,7 +49,9 @@ margin_right = 962.0
 margin_bottom = 14.0
 text = "Description:"
 
-[node name="DescriptionEdit" type="TextEdit" parent="HBoxContainer/ItemContainer/VBoxContainer/VBoxContainer"]
+[node name="DescriptionEdit" parent="HBoxContainer/ItemContainer/VBoxContainer/VBoxContainer" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 18.0
 margin_right = 962.0
 margin_bottom = 200.0
