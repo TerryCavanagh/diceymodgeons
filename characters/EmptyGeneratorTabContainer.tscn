@@ -1,8 +1,11 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://characters/EmptyGeneratorTabContainer.gd" type="Script" id=1]
 
 [node name="EmptyGeneratorTabContainer" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -24,8 +27,9 @@ margin_right = 256.0
 margin_bottom = 14.0
 text = "Click on create to add another generator"
 
-[node name="Button" type="Button" parent="CenterContainer/VBoxContainer"]
+[node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 256.0
 margin_bottom = 38.0
 text = "Create"
+[connection signal="pressed" from="CenterContainer/VBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
