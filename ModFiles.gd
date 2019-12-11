@@ -11,9 +11,15 @@ var mod_root_path = ""
 func _init():
 	game_root_path = "res://test"
 	mod_root_path = "mods/garfield"
-
-func get_file_list():
-	pass
+	
+func get_mod_path(file_path:String = ""):
+	return '%s/%s/%s' % [game_root_path, mod_root_path, file_path]
+	
+func get_game_path(file_path:String = ""):
+	var extra_path = ""
+	if OS.get_name() == "OSX":
+		extra_path = "diceydungeons.app/Contents/Resources"
+	return '%s/%s/%s' % [game_root_path, extra_path, file_path]
 	
 func get_file_as_text(file_path:String):
 	var file = _get_file(file_path)
@@ -25,11 +31,8 @@ func get_file_as_text(file_path:String):
 	return null
 	
 func _get_file(file_path:String):
-	var extra_path = ""
-	if OS.get_name() == "OSX":
-		extra_path = "diceydungeons.app/Contents/Resources"
-	var mod_path = '%s/%s/%s' % [game_root_path, mod_root_path, file_path]
-	var game_path = '%s/%s/%s' % [game_root_path, extra_path, file_path]
+	var mod_path = get_mod_path(file_path)
+	var game_path = get_game_path(file_path)
 	
 	var file := File.new()
 	if file.open(mod_path, File.READ) == OK:

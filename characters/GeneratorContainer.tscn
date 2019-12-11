@@ -18,9 +18,14 @@ margin_bottom = 713.0
 tab_align = 0
 
 [node name="GeneratorFileDialog" type="FileDialog" parent="."]
-margin_right = 307.0
-margin_bottom = 130.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 507.0
+margin_bottom = 307.0
+rect_min_size = Vector2( 800, 400 )
 popup_exclusive = true
 access = 2
 current_dir = "Z:/godot_projects/dicey_modgeons"
 current_path = "Z:/godot_projects/dicey_modgeons/"
+[connection signal="tab_changed" from="FileTabContainer" to="." method="_on_FileTabContainer_tab_changed"]
+[connection signal="file_selected" from="GeneratorFileDialog" to="." method="_on_GeneratorFileDialog_file_selected"]
