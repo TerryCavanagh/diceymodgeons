@@ -11,6 +11,7 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 var file_name = ""
+var loaded_file:Dictionary = {}
 
 func set_data(data, filename):
 	data_id = Database.get_data_id(data, "ID")
@@ -20,6 +21,7 @@ func set_data(data, filename):
 		file_name = filename
 		var file = ModFiles.get_file_as_text('data/text/generators/%s' % filename)
 		if file:
+			loaded_file = file
 			ScriptContainer.text = file.text
 			FilePathEdit.text = file.path
 			if file.origin == ModFiles.Origin.GAME:
@@ -38,3 +40,6 @@ func _on_CreateButton_pressed():
 
 func _on_DeleteButton_pressed():
 	emit_signal("delete_pressed", file_name, self)
+
+func _on_ScriptContainer_text_changed(new_text):
+	loaded_file.changed_text = new_text

@@ -122,6 +122,8 @@ func load_data(root_path:String, metadata:Dictionary):
 func save_data():
 	if not data_needs_save(): return
 	
+	ModFiles.save_files()
+	
 	_fighters.save_data()
 	emit_signal("save_completed", Table.FIGHTERS)
 	_equipment.save_data()
@@ -579,6 +581,10 @@ class CSVData:
 		for id in data:
 			if not compare(id):
 				return true
+				
+		if ModFiles.files_need_save():
+			return true
+		
 		return false
 		
 	"""
