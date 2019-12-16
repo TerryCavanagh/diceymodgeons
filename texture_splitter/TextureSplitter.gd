@@ -133,12 +133,31 @@ func save_sprites(src_dir, dest_file):
 		
 	_save_viewport(viewport, dest_file, true)
 		
+func merge_pngs(src:String):
+	var target = src.plus_file("merged")
+	var dir = Directory.new()
+	if dir.open(src) == OK:
+		var files_missing = []
+		for sprite in sprites:
+			var f = "%s/%s.png" % [src, sprite.name]
+			if not dir.file_exists(f):
+				files_missing.push_back('%s.png' % sprite.name)
+				
+		if not files_missing.empty():
+			WarningPopup.window_title = "Files Missing!"
+			WarningPopup.dialog_text = "The following files are missing:\n%s" % PoolStringArray(files_missing).join("\n")
+			WarningPopup.popup_centered(Vector2(400, 100))
+		else:
+			save_sprites(src, target)
+			WarningPopup.window_title = "File saved correctly!"
+			WarningPopup.dialog_text = "File saved as 'merged.atf'"
+			WarningPopup.popup_centered(Vector2(400, 100))
+
 func _create_viewport(size):
 	var viewport = Viewport.new()
 	viewport.render_target_clear_mode = Viewport.CLEAR_MODE_ALWAYS
 	viewport.transparent_bg = true
 	viewport.disable_3d = true
-	viewport.render_target_v_flip = true
 	viewport.usage = Viewport.USAGE_2D
 	viewport.size = size
 	add_child(viewport)
@@ -150,10 +169,13 @@ func _save_viewport(viewport, target, compressed = false):
 	viewport.render_target_update_mode = Viewport.UPDATE_ONCE
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
-	var img = viewport.get_texture().get_data()
+	var img:Image = viewport.get_texture().get_data()
+	img.flip_y()
+	img.premultiply_alpha()
+	img.fix_alpha_edges()
 	if compressed:
 		img.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_GENERIC, 1.0)
-		print(img.get_format())
+		
 		var atf = AtfParser.new()
 		atf.save(img.get_data(), viewport.size.x, viewport.size.y, "%s.atf" % target)
 	else:
@@ -184,25 +206,10 @@ func _on_SaveSplitButton_pressed():
 	
 func _on_MergePNGButton_pressed():
 	if sprites.empty(): return
-	var src = "res://test/test_img"
-	var target = "res://test/test_img/__merged"
-	var dir = Directory.new()
-	if dir.open(src) == OK:
-		var files_missing = []
-		for sprite in sprites:
-			var f = "%s/%s.png" % [src, sprite.name]
-			if not dir.file_exists(f):
-				files_missing.push_back('%s.png' % sprite.name)
-				
-		if not files_missing.empty():
-			WarningPopup.window_title = "Files Missing!"
-			WarningPopup.dialog_text = "The following files are missing:\n%s" % PoolStringArray(files_missing).join("\n")
-			WarningPopup.popup_centered(Vector2(400, 100))
-		else:
-			save_sprites(src, target)
-			WarningPopup.window_title = "File saved correctly!"
-			WarningPopup.dialog_text = "File saved as %s" % target
-			WarningPopup.popup_centered(Vector2(400, 100))
+	SaveDialog.mode = FileDialog.MODE_OPEN_DIR
+	SaveDialog.filters = PoolStringArray()
+	dialog_mode = DialogMode.MergePNG
+	SaveDialog.popup_centered()
 
 func _on_SaveDialog_dir_selected(dir):
 	if not loaded_image: return
@@ -213,6 +220,8 @@ func _on_SaveDialog_dir_selected(dir):
 					save_sprite_rotated(sprite, dir)
 				else:
 					save_sprite(sprite, dir)
+		DialogMode.MergePNG:
+			merge_pngs(dir)
 
 func _on_SaveDialog_file_selected(path):
 	match dialog_mode:

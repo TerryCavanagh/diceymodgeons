@@ -52,7 +52,7 @@ func save(data:PoolByteArray, width:int, height:int, target:String):
 		# version
 		file.store_8(0x02)
 		# length TODO
-		file.store_32(0)
+		file.store_32(data.size() - 6)
 		# format
 		file.store_8(0x5)
 		# width
@@ -68,5 +68,13 @@ func save(data:PoolByteArray, width:int, height:int, target:String):
 		file.store_32(data.size() / 256)
 		# data
 		file.store_buffer(data)
+		
+		# I'm not really sure where this comes from
+		var tmp = PoolByteArray()
+		tmp.resize(0x81)
+		for i in 0x81:
+			tmp.set(i, 0x00)
+		
+		file.store_buffer(tmp)
 		
 		file.close()
