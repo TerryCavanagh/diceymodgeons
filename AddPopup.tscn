@@ -47,9 +47,9 @@ text = "Set the name of the new enemy"
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 46.0
+margin_top = 70.0
 margin_right = 1248.0
-margin_bottom = 66.0
+margin_bottom = 90.0
 custom_constants/separation = 64
 alignment = 1
 

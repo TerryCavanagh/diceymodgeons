@@ -25,7 +25,7 @@ func _ready():
 	SuperCheck.connect("toggled", self, "_show_super_row")
 	
 func set_data(data):
-	data_id = data.get("Name", "")
+	data_id = Database.get_data_id(data, "ID")
 	self.data = data
 	
 	_setup(LevelBox, "Level", 0)

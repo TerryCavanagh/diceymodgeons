@@ -73,6 +73,13 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
+[node name="On Countdown Reduce" parent="TabContainer" instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
 [node name="On Snap" parent="TabContainer" instance=ExtResource( 2 )]
 visible = false
 margin_left = 4.0

@@ -44,7 +44,7 @@ func _ready():
 	Utils.fill_options(WeakenOption, Gamedata.items.get("weaken_modifier", {}), false)
 	
 func set_data(data):
-	data_id = data.get("Name", "")
+	data_id = Database.get_data_id(data, "Name")
 	self.data = data
 	
 	var status = Database.commit(Database.Table.STATUS_EFFECTS, Database.READ, null, "Name")

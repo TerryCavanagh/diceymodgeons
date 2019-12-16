@@ -22,7 +22,7 @@ caret_blink = true
 [node name="List" type="Tree" parent="."]
 margin_top = 28.0
 margin_right = 300.0
-margin_bottom = 682.0
+margin_bottom = 662.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 3
@@ -31,10 +31,22 @@ hide_folding = true
 hide_root = true
 script = ExtResource( 1 )
 
-[node name="AddButton" type="Button" parent="."]
-margin_top = 686.0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 666.0
 margin_right = 300.0
 margin_bottom = 706.0
+
+[node name="OverwriteCheck" type="CheckButton" parent="HBoxContainer"]
+margin_right = 143.0
+margin_bottom = 40.0
+hint_tooltip = "Overwrites the whole list. The game won't have access to the game's enemies."
+text = "Overwrite"
+
+[node name="AddButton" type="Button" parent="HBoxContainer"]
+margin_left = 147.0
+margin_right = 300.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
 text = "Add a new enemy"
 [connection signal="text_changed" from="Search" to="List" method="_on_Search_text_changed"]
 [connection signal="button_pressed" from="List" to="List" method="_on_List_button_pressed"]
@@ -42,4 +54,5 @@ text = "Add a new enemy"
 [connection signal="item_edited" from="List" to="List" method="_on_List_item_edited"]
 [connection signal="item_selected" from="List" to="List" method="_on_List_item_selected"]
 [connection signal="nothing_selected" from="List" to="List" method="_on_List_nothing_selected"]
-[connection signal="pressed" from="AddButton" to="." method="_on_AddButton_pressed"]
+[connection signal="toggled" from="HBoxContainer/OverwriteCheck" to="." method="_on_OverwriteCheck_toggled"]
+[connection signal="pressed" from="HBoxContainer/AddButton" to="." method="_on_AddButton_pressed"]

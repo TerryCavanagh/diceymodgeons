@@ -110,7 +110,12 @@ func _fill_mod_list():
 	
 func _check_valid_path():
 	var dir := Directory.new()
-	valid_path = dir.dir_exists(path) and dir.dir_exists(path + "/data") and dir.dir_exists(path + "/mods")
+	var data_path = path
+	if OS.get_name() == "OSX":
+		data_path = path + "/diceydungeons.app/Contents/Resources/data"
+	else:
+		data_path = path + "/data"
+	valid_path = dir.dir_exists(path) and dir.dir_exists(data_path) and dir.dir_exists(path + "/mods")
 	
 	if not valid_path:
 		ModList.clear()
@@ -154,16 +159,19 @@ func _on_LoadButton_pressed():
 				pass
 		
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
+	var loaded = true
 	if meta and meta.has("mod"):
 		if not meta.get("polymod", {}).get("api_version", "") == ProjectSettings.get_setting("application/config/mod_api_version"):
-			ConfirmPopup.popup_accept("The mod API version differs from the supported API by the editor.\nYou can still edit it but issues may happen.\nAn automatic upgrade will happen in the future.")
+			ConfirmPopup.popup_accept("The mod's API version differs from the supported API by the editor.", "Error!")
 			yield(ConfirmPopup, "action_chosen")
+			loaded = false
 			
-		Database.load_data(path, meta)
-		current_mod_loaded = meta.get("mod")
-		_fill_mod_list()
-		LoadButton.release_focus()
-		LaunchButton.disabled = false
+		if loaded:
+			Database.load_data(path, meta)
+			current_mod_loaded = meta.get("mod")
+			_fill_mod_list()
+			LoadButton.release_focus()
+			LaunchButton.disabled = false
 
 func _on_FileDialogPopup_dir_selected(dir):
 	path = dir
@@ -203,16 +211,28 @@ func _on_LaunchButton_pressed():
 
 	var mod = current_mod_loaded
 	var exec = ""
+	var exists = false
 	match OS.get_name():
 		"Windows":
 			exec = path.plus_file("diceydungeons.exe")
+			var file = File.new()
+			exists = not exec.empty() and file.file_exists(exec)
 		"OSX":
-			pass
+			exec = path.plus_file("diceydungeons.app")
+			var dir = Directory.new()
+			exists = not exec.empty() and dir.dir_exists(exec)
 		"X11":
 			pass
 	var file = File.new()
-	if not exec.empty() and file.file_exists(exec):
-		var pid = OS.execute(exec, ["mod=%s" % mod], false)
+	if exists:
+		var pid = -1
+		match OS.get_name():
+			"Windows":
+				pid = OS.execute(exec, ["mod=%s" % mod], false)
+			"OSX":
+				pid = OS.execute("open", [exec, "--args", "mod=%s" % mod], false)
+			"X11":
+				pass
 		if pid == -1:
 			ConfirmPopup.popup_accept("Something went wrong when trying to launch the game!")
 		else:

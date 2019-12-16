@@ -5,9 +5,11 @@ signal entry_key_changed(table, old_key, new_key)
 signal entry_updated(table, key, equals)
 signal entry_deleted(table, key)
 
-signal data_loaded()
+signal data_loaded(mod_name, mod_id)
 signal save_completed(table)
 signal all_tables_saved()
+
+var loaded_mod:String = ""
 
 var _fighters:CSVData = null
 var _equipment:CSVData = null
@@ -33,8 +35,13 @@ enum Table {
 
 enum Origin {
 	GAME,
+	GAME_BACKUP,
 	APPEND,
+	APPEND_BACKUP,
 	MERGE,
+	MERGE_BACKUP,
+	OVERWRITE,
+	OVERWRITE_BACKUP,
 }
 
 #var undo_redo = UndoRedo.new()
@@ -70,10 +77,18 @@ func _get_paths(table:int):
 	result["schema"] = "res://assets/api_%s/%s" % [ProjectSettings.get_setting("application/config/mod_api_version"), schema]
 	
 	var root_path = ModFiles.game_root_path
+	var extra_path = ""
+	if OS.get_name() == "OSX":
+		extra_path = "diceydungeons.app/Contents/Resources"
 	var mod_path = ModFiles.mod_root_path
-	result[Origin.GAME] = "%s/data/text/%s" % [root_path, file]
+	result[Origin.GAME] = "%s/%s/data/text/%s" % [root_path, extra_path, file]
+	result[Origin.GAME_BACKUP] = "%s/%s/data/text/%s.backup" % [root_path, extra_path, file]
 	result[Origin.APPEND] = "%s/%s/_append/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.APPEND_BACKUP] = "%s/%s/_append/data/text/%s.backup" % [root_path, mod_path, file]
 	result[Origin.MERGE] = "%s/%s/_merge/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.MERGE_BACKUP] = "%s/%s/_merge/data/text/%s.backup" % [root_path, mod_path, file]
+	result[Origin.OVERWRITE] = "%s/%s/data/text/%s" % [root_path, mod_path, file]
+	result[Origin.OVERWRITE_BACKUP] = "%s/%s/data/text/%s.backup" % [root_path, mod_path, file]
 	
 	return result
 	
@@ -93,18 +108,21 @@ func load_data(root_path:String, metadata:Dictionary):
 	ModFiles.game_root_path = root_path
 	ModFiles.mod_root_path = 'mods/%s' % metadata.get("mod")
 	
-	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "Name")
+	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "ID")
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
 	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
-	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "Character")
-	_episodes = CSVData.new(_get_paths(Table.EPISODES), "Character#Level")
+	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "ID")
+	_episodes = CSVData.new(_get_paths(Table.EPISODES), "ID")
 	
 	_data_loaded = true
-	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")))
+	loaded_mod = metadata.get("mod")
+	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")), loaded_mod)
 	
 func save_data():
 	if not data_needs_save(): return
+	
+	ModFiles.save_files()
 	
 	_fighters.save_data()
 	emit_signal("save_completed", Table.FIGHTERS)
@@ -145,6 +163,32 @@ func mixed_key(keys:Array, data):
 	
 	return PoolStringArray(result).join("#")
 	
+func get_data_id(data:Dictionary, key:String):
+	var data_id = data.get(key, "")
+	if data.get("__origin", Origin.GAME) == Origin.OVERWRITE and not data_id.begins_with("overwrite__"):
+		data_id = 'overwrite__%s' % data_id
+	return data_id
+	
+func is_overwrite_mode(table):
+	return get_table(table).overwrite_mode
+	
+func set_overwrite_mode(table, value):
+	var t = get_table(table)
+	t.force_needs_save = t.last_overwrite_mode_saved != value
+	t.overwrite_mode = value
+	
+func read(table:int, overwrite_mode:bool = false):
+	var data = Database.commit(table, Database.READ)
+	var new_data = {}
+	for key in data.keys():
+		var d = data[key]
+		var origin = d.get("__origin", Database.Origin.GAME)
+		if overwrite_mode and origin == Database.Origin.OVERWRITE:
+			new_data[key] = d
+		elif not overwrite_mode and origin != Database.Origin.OVERWRITE:
+			new_data[key] = d
+			
+	return new_data
 		
 func commit(table:int, action:int, key = null, field = null, value = null):
 	"""
@@ -316,6 +360,7 @@ class CSVData:
 	
 	var old_data:Dictionary = {}
 	var game_data:Dictionary = {}
+	var overwrite_data:Dictionary = {}
 	
 	var hashes:Dictionary = {}
 	
@@ -326,13 +371,22 @@ class CSVData:
 	
 	var force_needs_save:bool = false
 	
+	var overwrite_mode:bool = false
+	var last_overwrite_mode_saved:bool = false
+	
 	func _init(paths:Dictionary, key:String):
 		self.paths = paths
 		KEY = key
 		load_schema(paths.get("schema", ""))
 		load_data(paths.get(Origin.GAME, ""), Origin.GAME)
 		load_data(paths.get(Origin.APPEND, ""), Origin.APPEND)
+		load_data(paths.get(Origin.APPEND_BACKUP, ""), Origin.APPEND)
 		load_data(paths.get(Origin.MERGE, ""), Origin.MERGE)
+		load_data(paths.get(Origin.MERGE_BACKUP, ""), Origin.MERGE)
+		load_data(paths.get(Origin.OVERWRITE, ""), Origin.OVERWRITE)
+		overwrite_mode = not overwrite_data.empty()
+		last_overwrite_mode_saved = overwrite_mode
+		load_data(paths.get(Origin.OVERWRITE_BACKUP, ""), Origin.OVERWRITE)
 		
 		old_data = data.duplicate(true)
 		
@@ -347,7 +401,7 @@ class CSVData:
 	func load_data(path:String, origin:int):
 		var file = File.new()
 		if not file.file_exists(path):
-			printerr("File %s doesn't exist" % path)
+			#printerr("File %s doesn't exist" % path)
 			return
 			
 		if file.open(path, File.READ) == OK:
@@ -374,6 +428,8 @@ class CSVData:
 						key_ids.push_back(c[i])
 					
 			id = PoolStringArray(key_ids).join("#")
+			if source == Origin.OVERWRITE and not id.begins_with("overwrite__"):
+				id = 'overwrite__%s' % id
 			data[id] = {}
 					
 			if data.get(id, null) == null:
@@ -390,16 +446,33 @@ class CSVData:
 			
 			if source == Origin.GAME:
 				game_data[id] = data[id].duplicate(true)
+			
+			if source == Origin.OVERWRITE:
+				overwrite_data[id] = data[id].duplicate(true)
 	
 	func save_data():
-		_save(paths.get(Origin.APPEND, ""), [Origin.APPEND])
-		_save(paths.get(Origin.MERGE, ""), [Origin.MERGE, Origin.GAME])
+		if overwrite_mode:
+			_save(paths.get(Origin.APPEND_BACKUP, ""), [Origin.APPEND], true)
+			_save(paths.get(Origin.MERGE_BACKUP, ""), [Origin.MERGE, Origin.GAME], true)
+			_save(paths.get(Origin.OVERWRITE, ""), [Origin.OVERWRITE])
+			_delete_file(paths.get(Origin.APPEND))
+			_delete_file(paths.get(Origin.MERGE))
+			_delete_file(paths.get(Origin.OVERWRITE_BACKUP))
+		else:
+			_save(paths.get(Origin.APPEND, ""), [Origin.APPEND])
+			_save(paths.get(Origin.MERGE, ""), [Origin.MERGE, Origin.GAME])
+			_save(paths.get(Origin.OVERWRITE_BACKUP, ""), [Origin.OVERWRITE], true)
+			_delete_file(paths.get(Origin.OVERWRITE))
+			_delete_file(paths.get(Origin.APPEND_BACKUP))
+			_delete_file(paths.get(Origin.MERGE_BACKUP))
+			
 		force_needs_save = false
+		last_overwrite_mode_saved = overwrite_mode
 		
-	func _save(path, origins):
+	func _save(path, origins, all_data:bool = false):
 		var content = []
 		for origin in origins:
-			content += _data_to_content(origin)
+			content += _data_to_content(origin, all_data)
 		
 		if not content or content.empty(): 
 			var file = Directory.new()
@@ -430,7 +503,22 @@ class CSVData:
 			
 		return false
 		
-	func _data_to_content(source):
+	func _delete_file(path):
+		var dir = Directory.new()
+		if not dir.file_exists(path):
+			return
+			
+		var result = dir.remove(path)
+		match result:
+			OK:
+				print('File %s deleted correctly' % path)
+			FAILED:
+				print('Failed to delete file %s' % path)
+			_:
+				print('Error deleting the file %s : %s' % [path, result])
+		
+		
+	func _data_to_content(source, all_data:bool = false):
 		var subdata = []
 		for key in data.keys():
 			compare(key)
@@ -454,7 +542,10 @@ class CSVData:
 		for entry in subdata:
 			var csv = []
 			for header in headers:
-				csv.push_back(_convert_to_csv(header, entry[header]))
+				var value = _convert_to_csv(header, entry[header])
+				if header == KEY and value.begins_with("overwrite__"):
+					value = value.replace("overwrite__", "")
+				csv.push_back(value)
 			values.push_back(csv)
 		
 		return values
@@ -471,8 +562,12 @@ class CSVData:
 					data[key][h] = _convert_from_csv(h, "")
 				else:
 					data[key][h] = default
+		
+		if overwrite_mode:
+			data[key]["__origin"] = Origin.OVERWRITE
+		else:
+			data[key]["__origin"] = Origin.APPEND
 			
-		data[key]["__origin"] = Origin.APPEND
 		data[key]["__modified"] = true
 		hashes[key] = data[key].hash()
 		
@@ -486,6 +581,10 @@ class CSVData:
 		for id in data:
 			if not compare(id):
 				return true
+				
+		if ModFiles.files_need_save():
+			return true
+		
 		return false
 		
 	"""

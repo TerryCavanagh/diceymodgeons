@@ -25,6 +25,7 @@ size_flags_vertical = 3
 table = 2
 search_placeholder = "Search equipment"
 button_label = "Add a new equipment"
+show_field = "Name"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0
@@ -64,5 +65,6 @@ bad_name_message = "The equipment already exists."
 exception_message = "Underscore is not accepted."
 good_name_message = "Great choice!"
 table = 2
+field = "Name"
 [connection signal="add_button_pressed" from="HBoxContainer/ItemList" to="." method="_on_ItemList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]

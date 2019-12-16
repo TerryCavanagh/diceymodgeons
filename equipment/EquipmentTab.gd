@@ -17,6 +17,10 @@ func _ready():
 	
 	ItemList.process_data_func = funcref(self, "_process_data")
 	ItemList.modified_func = funcref(self, "_data_modified")
+	AddNewEquipmentPopup.add_func = funcref(self, "_add_equipment")
+	
+func _add_equipment(value):
+	Database.commit(Database.Table.EQUIPMENT, Database.CREATE, value)
 	
 func _data_modified(key):
 	var table = Database.get_table(Database.Table.EQUIPMENT)
@@ -54,5 +58,6 @@ func _on_ItemList_item_selected(key):
 	DeckUpgrade.set_key(key)
 
 
-func _on_ItemList_add_button_pressed():
+func _on_ItemList_add_button_pressed(overwrite_mode):
+	AddNewEquipmentPopup.overwrite_mode = overwrite_mode
 	AddNewEquipmentPopup.popup_centered(Vector2(400, 120))

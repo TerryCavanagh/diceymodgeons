@@ -184,7 +184,7 @@ func _on_SaveButton_pressed():
 			_error("Couldn't create dir at %s" % path)
 			return
 	
-	# create json	
+	# create json
 	var json = File.new()
 	if json.open(path.plus_file("_polymod_meta.json"), File.WRITE) == OK:
 		json.store_string(to_json(data))

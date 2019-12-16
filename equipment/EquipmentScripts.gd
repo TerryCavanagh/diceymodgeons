@@ -13,6 +13,7 @@ onready var OnEndTurn = find_node("On End Turn")
 onready var OnAnyEquipmentUse = find_node("On Any Equipment Use")
 onready var OnSnap = find_node("On Snap")
 onready var OnFury = find_node("On Fury")
+onready var OnCountdownReduce = find_node("On Countdown Reduce")
 
 var data_id:String = ""
 var data:Dictionary = {}
@@ -22,7 +23,7 @@ func _ready():
 	
 func set_data(data):
 	self.data = data
-	self.data_id = data["Name"]
+	data_id = Database.get_data_id(data, "Name")
 	
 	_setup(OnExecute, "On Execute", "Script: On Execute", "")
 	_setup(BeforeExecute, "Before Execute", "Script: Before execute", "")
@@ -34,6 +35,7 @@ func set_data(data):
 	_setup(OnAnyEquipmentUse, "On Any Equipment Use", "Script: On any equipment use", "")
 	_setup(OnSnap, "On Snap", "Script: On Snap", "")
 	_setup(OnFury, "On Fury", "Script: On Fury", "")
+	_setup(OnCountdownReduce, "On Countdown Reduce", "Script: On any countdown reduce", "")
 	
 func _setup(node, node_name, key, def):
 	node.text = data.get(key, def)

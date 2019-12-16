@@ -22,15 +22,16 @@ margin_right = 1273.0
 margin_bottom = 713.0
 
 [node name="CharacterList" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_right = 200.0
+margin_right = 273.0
 rect_min_size = Vector2( 200, 0 )
 table = 5
 search_placeholder = "Search character"
 button_label = "Add new character"
 sort_items = false
+show_field = "Character"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
-margin_left = 204.0
+margin_left = 277.0
 margin_right = 1266.0
 margin_bottom = 706.0
 size_flags_horizontal = 3
@@ -63,5 +64,7 @@ bad_name_message = "There's a character with that name already."
 exception_message = "Underscore is not accepted."
 good_name_message = "Good choice!"
 table = 5
+field = "Character"
 [connection signal="add_button_pressed" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_item_selected"]
+[connection signal="overwrite_mode_changed" from="HBoxContainer/CharacterList" to="." method="_on_CharacterList_overwrite_mode_changed"]

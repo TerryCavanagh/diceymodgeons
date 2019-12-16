@@ -31,16 +31,23 @@ text = "Generator file:"
 
 [node name="FilePathEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
 margin_left = 96.0
-margin_right = 1190.0
+margin_right = 1193.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="CreateButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 1194.0
-margin_right = 1252.0
+visible = false
+margin_left = 1135.0
+margin_right = 1193.0
 margin_bottom = 24.0
 text = "Change"
+
+[node name="DeleteButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 1197.0
+margin_right = 1252.0
+margin_bottom = 24.0
+text = "Delete"
 
 [node name="ScriptContainer" parent="VBoxContainer" instance=ExtResource( 1 )]
 anchor_right = 0.0
@@ -51,3 +58,5 @@ margin_bottom = 692.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/DeleteButton" to="." method="_on_DeleteButton_pressed"]
+[connection signal="text_changed" from="VBoxContainer/ScriptContainer" to="." method="_on_ScriptContainer_text_changed"]

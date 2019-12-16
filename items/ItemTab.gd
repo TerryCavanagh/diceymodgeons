@@ -15,9 +15,13 @@ var data:Dictionary = {}
 
 func _ready():
 	ItemContainer.visible = false
+	AddNewItemPopup.add_func = funcref(self, "_add_item")
+	
+func _add_item(value):
+	Database.commit(Database.Table.ITEMS, Database.CREATE, value)
 
 func set_data(data):
-	data_id = data.get("Name", "")
+	data_id = Database.get_data_id(data, "Name")
 	self.data = data
 	
 	_setup(DescriptionEdit, "Description", "")
@@ -25,7 +29,7 @@ func set_data(data):
 	_setup(ScriptContainer, "Script", "")
 	
 func _setup(node, key, def):
-	if node is TextEdit:
+	if node is TextEdit or node == DescriptionEdit:
 		node.text = data.get(key, def)
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	if node == ScriptContainer:
@@ -49,5 +53,6 @@ func _on_ItemList_item_selected(key):
 	var data = Database.commit(Database.Table.ITEMS, Database.READ, key)
 	set_data(data)
 
-func _on_ItemList_add_button_pressed():
+func _on_ItemList_add_button_pressed(overwrite_mode):
+	AddNewItemPopup.overwrite_mode = overwrite_mode
 	AddNewItemPopup.popup_centered(Vector2(400, 120))

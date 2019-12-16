@@ -15,9 +15,13 @@ var root:TreeItem = null
 
 var sort_items:bool = true
 
+var show_field:String = ""
+
 var filter = null
 
 var table = null
+
+var overwrite_mode:bool = false
 
 enum Column {
 	MODIFIED = 0,
@@ -56,26 +60,34 @@ func load_data(filter = null, select_key = null):
 	if not select_key and get_selected():
 		select_meta = get_selected().get_metadata(Column.NAME)
 	
-	var data = Database.commit(table, Database.READ)
+	var data = Database.read(table, overwrite_mode)
 	
 	if process_data_func:
 		data = process_data_func.call_func(data)
 	
 	var keys = data.keys()
+	var fields = []
+	for key in keys:
+		fields.push_back({"key": key, "field": data.get(key).get(show_field, "")})
 	if sort_items:
-		keys.sort()
+		fields.sort_custom(self, "_sort_fields")
+		keys.clear()
+		for field in fields:
+			keys.push_back(field.get("key"))
 	
 	if filter:
 		filter = filter.to_lower()
 		var new_keys = []
 		
-		var items = {}
-		for key in keys:
-			items[key] = key
+		var tmp = {}
+		for field in fields:
+			var key = field.get("key")
+			tmp[key] = field.get("field")
 			if change_text_func:
-				items[key] = change_text_func.call_func(key)
-		for key in items.keys():
-			if items.get(key).findn(filter) > -1:
+				tmp[key] = change_text_func.call_func(key)
+				
+		for key in tmp.keys():
+			if tmp.get(key).findn(filter) > -1:
 				new_keys.push_back(key)
 		
 		keys = new_keys
@@ -88,7 +100,7 @@ func load_data(filter = null, select_key = null):
 	for key in keys:
 		var entry = data[key]
 		var origin = entry.get("__origin", Database.Origin.GAME)
-		var metadata = {"key": key, "origin": origin, "is_in_game_data": t.is_in_game_data(key)}
+		var metadata = {"key": key, "field": data[key].get(show_field, ""), "origin": origin, "is_in_game_data": t.is_in_game_data(key)}
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
@@ -121,12 +133,12 @@ func _set_item_data(item:TreeItem, metadata):
 		item.set_text(Column.MODIFIED, "")
 		item.set_tooltip(Column.MODIFIED, "")
 	
-	var n = key
+	var n = metadata.get("field", "")
 	if change_text_func:
 		n = change_text_func.call_func(key)
 	
 	item.set_text(Column.NAME, n)
-	item.set_editable(Column.NAME, not is_in_game)
+	#item.set_editable(Column.NAME, not is_in_game)
 	item.set_tooltip(Column.NAME, n)
 	
 	item.set_metadata(Column.NAME, metadata)
@@ -140,10 +152,12 @@ func _set_item_data(item:TreeItem, metadata):
 	if is_in_game and (modified or origin == Database.Origin.MERGE):
 		item.add_button(Column.BUTTON, return_texture, BUTTON_REVERT_ID, false)
 		item.set_tooltip(Column.BUTTON, "Revert to the game data")
-	elif origin == Database.Origin.APPEND:
+	elif (origin == Database.Origin.APPEND or origin == Database.Origin.OVERWRITE):
 		item.add_button(Column.BUTTON, delete_texture, BUTTON_DELETE_ID, false)
 		item.set_tooltip(Column.BUTTON, "Delete")
 
+func _sort_fields(a:Dictionary, b:Dictionary):
+	return a.get("field").nocasecmp_to(b.get("field")) < 0
 	
 func _on_entry_created(table, key):
 	if not table == self.table: return
@@ -164,11 +178,6 @@ func _on_entry_deleted(table, key):
 func _on_entry_updated(table, key, equals):
 	if not table == self.table: return
 	var child = root.get_children()
-	# TODO maybe move this
-	# If key contains an underscore then remove the rest of the string
-	if key.find("_") > -1:
-		key = key.left(key.find("_"))
-		
 	while child:
 		var metadata = child.get_metadata(Column.NAME)
 		var child_key = metadata.get("key", "")
@@ -194,13 +203,13 @@ func _on_List_button_pressed(item, column, id):
 	var meta = item.get_metadata(Column.NAME)
 	match id:
 		BUTTON_DELETE_ID:
-			ConfirmPopup.popup_confirm("Are you sure you want to delete '%s'?" % meta.key)
+			ConfirmPopup.popup_confirm("Are you sure you want to delete '%s'?" % meta.field)
 			var result = yield(ConfirmPopup, "action_chosen")
 			if result == ConfirmPopup.OKAY:
 				Database.commit(table, Database.DELETE, meta.key)
 				emit_signal("element_selected", null)
 		BUTTON_REVERT_ID:
-			ConfirmPopup.popup_confirm("Are you sure you want to revert '%s' to the original game data?" % meta.key)
+			ConfirmPopup.popup_confirm("Are you sure you want to revert '%s' to the original game data?" % meta.field)
 			var result = yield(ConfirmPopup, "action_chosen")
 			print(result)
 			if result == ConfirmPopup.OKAY:
@@ -214,6 +223,8 @@ func _on_List_nothing_selected():
 	emit_signal("element_selected", null)
 
 func _on_List_item_edited():
+	return
+	assert(false) # TODO fix it to point to the edited field
 	var item = get_selected()
 	var meta = item.get_metadata(Column.NAME)
 	var old_key = meta.get("key", "")

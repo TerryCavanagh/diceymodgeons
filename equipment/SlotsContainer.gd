@@ -29,7 +29,7 @@ func _ready():
 		SlotOptions.push_back(slot)
 	
 func set_data(data):
-	self.data_id = data.get("Name", "")
+	data_id = Database.get_data_id(data, "Name")
 	self.data = data
 	
 	slots = data.get("Slots", [])

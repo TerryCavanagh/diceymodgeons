@@ -27,6 +27,7 @@ mouse_filter = 2
 [node name="ItemList" parent="HBoxContainer" instance=ExtResource( 5 )]
 search_placeholder = "Search enemy"
 button_label = "Add a new enemy"
+show_field = "Name"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0
@@ -74,5 +75,6 @@ empty_name_message = "The enemy needs a name."
 bad_name_message = "The enemy already exists."
 exception_message = "Underscore is not accepted."
 good_name_message = "Great name! you have a thing for names, don't you?"
+field = "Name"
 [connection signal="add_button_pressed" from="HBoxContainer/ItemList" to="." method="_on_TreeList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/ItemList" to="." method="_on_TreeList_item_selected"]

@@ -24,15 +24,17 @@ margin_right = 1273.0
 margin_bottom = 713.0
 
 [node name="EpisodeList" parent="HBoxContainer" instance=ExtResource( 1 )]
-margin_right = 220.0
+margin_right = 273.0
 rect_min_size = Vector2( 220, 0 )
 table = 6
 search_placeholder = "Search episode"
 button_label = "Add new episode"
 sort_items = false
+show_field = "Episode Name"
+show_overwrite_mode = false
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
-margin_left = 224.0
+margin_left = 277.0
 margin_right = 1266.0
 margin_bottom = 706.0
 size_flags_horizontal = 3
