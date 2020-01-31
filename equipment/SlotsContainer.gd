@@ -33,9 +33,6 @@ func set_data(data):
 	self.data = data
 	
 	slots = data.get("Slots", [])
-	# if we are visible it means that the slots are used and we should have something inside them
-	if visible and slots.empty():
-		slots.push_back("NORMAL")
 	current_slots = slots.duplicate()
 	
 	for slot in SlotOptions:
