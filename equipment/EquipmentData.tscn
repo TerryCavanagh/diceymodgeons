@@ -30,7 +30,7 @@ margin_right = 1266.0
 margin_bottom = 20.0
 
 [node name="SizeContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_right = 83.0
+margin_right = 71.0
 margin_bottom = 20.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/SizeContainer"]
@@ -41,7 +41,7 @@ text = "Size:"
 
 [node name="SizeOption" type="OptionButton" parent="ScrollContainer/VBoxContainer/Row1/SizeContainer"]
 margin_left = 34.0
-margin_right = 83.0
+margin_right = 71.0
 margin_bottom = 20.0
 shortcut_in_tooltip = false
 text = "1"
@@ -50,8 +50,8 @@ items = [ "1", null, false, 0, null, "2", null, false, 1, null ]
 selected = 0
 
 [node name="CategoryContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 87.0
-margin_right = 330.0
+margin_left = 75.0
+margin_right = 318.0
 margin_bottom = 20.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/CategoryContainer"]
@@ -68,8 +68,8 @@ rect_min_size = Vector2( 180, 0 )
 clip_text = true
 
 [node name="ColorContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 334.0
-margin_right = 555.0
+margin_left = 322.0
+margin_right = 543.0
 margin_bottom = 20.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/ColorContainer"]
@@ -85,8 +85,8 @@ margin_bottom = 20.0
 rect_min_size = Vector2( 180, 0 )
 
 [node name="AlternateStatusContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 559.0
-margin_right = 849.0
+margin_left = 547.0
+margin_right = 837.0
 margin_bottom = 20.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/AlternateStatusContainer"]
@@ -149,18 +149,18 @@ align = 2
 
 [node name="SpellContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2"]
 margin_left = 118.0
-margin_right = 275.0
+margin_right = 272.0
 margin_bottom = 24.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2/SpellContainer"]
 margin_top = 5.0
-margin_right = 79.0
+margin_right = 76.0
 margin_bottom = 19.0
-text = "Which Spell:"
+text = "Witch Spell:"
 
 [node name="SpellSpin" type="SpinBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row2/SpellContainer"]
-margin_left = 83.0
-margin_right = 157.0
+margin_left = 80.0
+margin_right = 154.0
 margin_bottom = 24.0
 align = 2
 
