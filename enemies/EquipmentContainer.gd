@@ -35,7 +35,9 @@ func _load_equipment_list():
 		if filter_list_func and not filter_list_func.call_func(e): 
 			continue
 			
-		_equipment.push_back({"prepared": false, "equipment": key})
+		var category = e.get("Category", "ITEM")
+			
+		_equipment.push_back({"prepared": false, "equipment": key, "category": category})
 		
 	if show_only_special:
 		_equipment.push_back({"prepared": false, "equipment": "Monstermode"})

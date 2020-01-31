@@ -108,10 +108,10 @@ func load_data(root_path:String, metadata:Dictionary):
 	ModFiles.game_root_path = root_path
 	ModFiles.mod_root_path = 'mods/%s' % metadata.get("mod")
 	
-	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "ID")
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
 	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
+	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "ID")
 	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "ID")
 	_episodes = CSVData.new(_get_paths(Table.EPISODES), "ID")
 	
@@ -671,6 +671,10 @@ class CSVData:
 						result.push_back(o)
 						o["prepared"] = v.begins_with("*")
 						o["equipment"] = v.lstrip("*")
+						var e = Database.commit(Database.Table.EQUIPMENT, Database.READ, o["equipment"])
+						if e:
+							if e.has("Category"):
+								o["category"] = e.get("Category")
 					return result
 			"bool":
 				if value.empty():
