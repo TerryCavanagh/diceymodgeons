@@ -51,6 +51,10 @@ window/dpi/allow_hidpi=true
 
 convert_text_resources_to_binary_on_export=true
 
+[gui]
+
+theme/custom="res://editor.theme"
+
 [memory]
 
 limits/message_queue/max_size_kb=8192
