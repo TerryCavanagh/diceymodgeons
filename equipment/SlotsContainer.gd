@@ -96,20 +96,20 @@ func _check()->bool:
 		ExtraLabel.text = "Countdown:"
 		ExtraContainer.hint_tooltip = ""
 		
-	elif slots.size() == 2 and slots[0] == "NORMAL" and slots[1] == "NORMAL":
+	elif slots.size() > 1 and not (slots.has("COUNTDOWN") or slots.has("DOUBLES")):
 		ExtraContainer.visible = true
 		ExtraSpin.visible = true
 		ExtraSpin.min_value = 0
-		ExtraSpin.max_value = 12
+		ExtraSpin.max_value = 24
 		ExtraSpin.allow_greater = false
 		# force emitting the value_changed signal
 		ExtraSpin.value = ExtraSpin.value
 		ExtraLabel.text = "(Optional) Total value must equal:"
 		ExtraContainer.hint_tooltip = "(Optional) The total value of the dice must add up to the value. Set it to 0 to disable this behavior."
 		
-		if ExtraSpin.value == 1 or ExtraSpin.value > 12:
+		if ExtraSpin.value == 1 or ExtraSpin.value > 24:
 			result = false
-			error = "The value needs to be between 2 and 12"
+			error = "The value needs to be between 2 and 24"
 	
 	if slots.has("COUNTDOWN") and slots.size() > 1:
 		result = false
