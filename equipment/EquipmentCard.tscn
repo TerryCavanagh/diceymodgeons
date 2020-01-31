@@ -84,6 +84,9 @@ size_flags_vertical = 11
 [node name="Description" type="RichTextLabel" parent="VBoxContainer/DescriptionContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -300.0
+margin_right = 300.0
+margin_bottom = 300.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/focus = SubResource( 2 )

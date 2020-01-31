@@ -93,9 +93,9 @@ func change_size(s):
 
 func _update_description_position():
 	yield(get_tree(), "idle_frame")
-	Description.rect_position.y = (Description.get_line_count() - 1) * -42
+	Description.rect_position.y = (Description.get_line_count() - 1) * -64
 	if card_size == 2:
-		Description.rect_position.y += 150
+		Description.rect_position.y += 100
 	Description.rect_pivot_offset = Description.rect_size / 2.0
 	Description.rect_scale = Vector2(0.8, 0.8)
 
