@@ -32,6 +32,8 @@ var all_valid:bool = false
 var dir_name_regex = RegEx.new()
 var semver_regex = RegEx.new()
 
+var edit_mode = false
+
 func _ready():
 	dir_name_regex.compile("^[a-zA-Z0-9]+$")
 	# from https://regexr.com/39s32
@@ -56,6 +58,7 @@ func show_popup(mod:String = "", icon_path:String = "", data:Dictionary = {}):
 	current_mod = mod
 	self.data = data
 	if data.empty():
+		edit_mode = false
 		window_title = "Create a new mod"
 		SaveButton.text = "Create"
 		is_new_mod = true
@@ -65,6 +68,7 @@ func show_popup(mod:String = "", icon_path:String = "", data:Dictionary = {}):
 		data["license"] = "CC BY 4.0,MIT"
 		data["api_version"] = ProjectSettings.get_setting("application/config/mod_api_version")
 	else:
+		edit_mode = true
 		window_title = "Edit the mod"
 		SaveButton.text = "Edit"
 		is_new_mod = false
@@ -90,6 +94,7 @@ func _setup(node, key, def):
 		Utils.connect_signal(node, key, "text_changed", self, "_on_LineEdit_text_changed")
 	elif node is TextEdit:
 		node.text = data.get(key, def)
+		_check(node)
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 
 var dir_check = Directory.new()
@@ -103,7 +108,7 @@ func _check(node):
 			result = false
 		else:
 			result = true
-			if node == DirNameEdit:
+			if node == DirNameEdit and not edit_mode:
 				result = dir_name_regex.search(node.text) != null
 				if result:
 					var path = Settings.get_value(Settings.GAME_PATH).plus_file("mods").plus_file(node.text)
