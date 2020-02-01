@@ -4,7 +4,7 @@ Official mod tool for Dicey Dungeons.
 
 This project is work in progress. The game's mod API hasn't been finalised yet.
 
-Currently you need a master build from Godot to modify this project. You can use the unofficial builds here https://hugo.pro/projects/godot-builds/
+You can use [Godot 3.2](https://godotengine.org/download) to modify this project.
 
 ### Licenses
 Source code is MIT licenced. See LICENSE.md
