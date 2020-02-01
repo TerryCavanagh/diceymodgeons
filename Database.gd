@@ -777,6 +777,7 @@ class CSVData:
 		result = result.replace("\t", "") # remove tabs because it breaks the game
 		result = result.replace(",", "[;]")
 		result = result.replace('"', "~")
+		result = result.replace("||", '#')
 		result = result.strip_edges()
 		return result
 		
