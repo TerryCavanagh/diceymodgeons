@@ -29,7 +29,7 @@ func check_valid():
 		valid = false
 		
 	if valid:
-		if n.findn("_") > -1:
+		if n.findn("_") > -1 or n.findn("-") > -1:
 			msg = exception_message
 			valid = false
 		
