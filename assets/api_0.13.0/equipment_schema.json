@@ -30,7 +30,7 @@
 	},
 	"Category": {
 		"type": "string",
-		"default": ""
+		"default": "MAGIC"
 	},
 	"Colour": {
 		"type": "string",
