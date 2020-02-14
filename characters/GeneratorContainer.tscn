@@ -11,10 +11,10 @@ __meta__ = {
 }
 
 [node name="FileTabContainer" type="TabContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 tab_align = 0
 
 [node name="GeneratorFileDialog" type="FileDialog" parent="."]
@@ -26,7 +26,7 @@ rect_min_size = Vector2( 800, 400 )
 popup_exclusive = true
 access = 2
 filters = PoolStringArray( "*.hx" )
-current_dir = "/Users/mrcdk/development/godot_projects/diceymodgeons"
-current_path = "/Users/mrcdk/development/godot_projects/diceymodgeons/"
+current_dir = "Z:/godot_projects/dicey_modgeons"
+current_path = "Z:/godot_projects/dicey_modgeons/"
 [connection signal="tab_changed" from="FileTabContainer" to="." method="_on_FileTabContainer_tab_changed"]
 [connection signal="file_selected" from="GeneratorFileDialog" to="." method="_on_GeneratorFileDialog_file_selected"]

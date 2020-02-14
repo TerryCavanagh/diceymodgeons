@@ -16,21 +16,21 @@ __meta__ = {
 
 [node name="Title" type="Label" parent="."]
 margin_right = 424.0
-margin_bottom = 14.0
+margin_bottom = 22.0
 text = "Title"
 align = 1
 valign = 1
 
 [node name="Search" type="LineEdit" parent="."]
-margin_top = 18.0
+margin_top = 26.0
 margin_right = 424.0
-margin_bottom = 42.0
+margin_bottom = 48.0
 clear_button_enabled = true
 placeholder_text = "Search equipment"
 caret_blink = true
 
 [node name="EquipTree" type="Tree" parent="."]
-margin_top = 46.0
+margin_top = 52.0
 margin_right = 424.0
 margin_bottom = 692.0
 size_flags_horizontal = 3

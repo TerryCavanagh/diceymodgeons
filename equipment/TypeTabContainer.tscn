@@ -17,23 +17,23 @@ __meta__ = {
 }
 
 [node name="TabContainer" type="TabContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1265.0
-margin_bottom = 677.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1266.0
+margin_bottom = 680.0
 
 [node name="Data" parent="TabContainer" instance=ExtResource( 1 )]
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="Scripts" parent="TabContainer" instance=ExtResource( 2 )]
 visible = false
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="CreateContainer" type="CenterContainer" parent="."]
 visible = false
@@ -44,9 +44,9 @@ margin_bottom = 677.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CreateContainer"]
 margin_left = 602.0
-margin_top = 325.0
+margin_top = 324.0
 margin_right = 655.0
-margin_bottom = 345.0
+margin_bottom = 346.0
 
 [node name="CreateButton" type="Button" parent="CreateContainer/HBoxContainer"]
 margin_right = 53.0

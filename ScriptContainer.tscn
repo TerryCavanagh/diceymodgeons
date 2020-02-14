@@ -12,10 +12,10 @@ __meta__ = {
 }
 
 [node name="TextEdit" type="TextEdit" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 rect_min_size = Vector2( 0, 150 )
 custom_fonts/font = ExtResource( 2 )
 syntax_highlighting = true

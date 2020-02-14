@@ -34,79 +34,76 @@ __meta__ = {
 }
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 custom_styles/bg = SubResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 1246.0
-margin_bottom = 1144.0
+margin_right = 1248.0
+margin_bottom = 1180.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 16
 
 [node name="Row1" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_right = 1238.0
-margin_bottom = 24.0
+margin_right = 1240.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 
 [node name="LevelContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_right = 120.0
-margin_bottom = 24.0
+margin_right = 130.0
+margin_bottom = 22.0
 hint_tooltip = "Starting level. (Maximum 100)"
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/LevelContainer"]
-margin_top = 5.0
-margin_right = 42.0
-margin_bottom = 19.0
+margin_right = 50.0
+margin_bottom = 22.0
 text = "Level: "
 
 [node name="LevelBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/Row1/LevelContainer"]
-margin_left = 46.0
-margin_right = 120.0
-margin_bottom = 24.0
+margin_left = 54.0
+margin_right = 130.0
+margin_bottom = 22.0
 allow_greater = true
 align = 2
 
 [node name="HeathContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 124.0
-margin_right = 252.0
-margin_bottom = 24.0
+margin_left = 134.0
+margin_right = 272.0
+margin_bottom = 22.0
 hint_tooltip = "Starting health."
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/HeathContainer"]
-margin_top = 5.0
-margin_right = 50.0
-margin_bottom = 19.0
+margin_right = 58.0
+margin_bottom = 22.0
 text = "Health: "
 
 [node name="HealthBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/Row1/HeathContainer"]
-margin_left = 54.0
-margin_right = 128.0
-margin_bottom = 24.0
+margin_left = 62.0
+margin_right = 138.0
+margin_bottom = 22.0
 allow_greater = true
 align = 2
 
 [node name="DiceContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 256.0
-margin_right = 371.0
-margin_bottom = 24.0
+margin_left = 276.0
+margin_right = 401.0
+margin_bottom = 22.0
 hint_tooltip = "Starting dice."
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/DiceContainer"]
-margin_top = 5.0
-margin_right = 37.0
-margin_bottom = 19.0
+margin_right = 45.0
+margin_bottom = 22.0
 text = "Dice: "
 
 [node name="DiceBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/Row1/DiceContainer"]
-margin_left = 41.0
-margin_right = 115.0
-margin_bottom = 24.0
+margin_left = 49.0
+margin_right = 125.0
+margin_bottom = 22.0
 max_value = 10.0
 allow_greater = true
 align = 2
@@ -154,45 +151,45 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 200, 0 )
 
 [node name="EquipmentPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 40.0
-margin_right = 1238.0
-margin_bottom = 509.0
+margin_top = 38.0
+margin_right = 1240.0
+margin_bottom = 523.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 1230.0
-margin_bottom = 461.0
+margin_right = 1232.0
+margin_bottom = 477.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
-margin_right = 1222.0
-margin_bottom = 14.0
+margin_right = 1224.0
+margin_bottom = 22.0
 text = "Equipment"
 align = 1
 
 [node name="EquipmentContainer" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 18.0
-margin_right = 1222.0
-margin_bottom = 418.0
+margin_top = 26.0
+margin_right = 1224.0
+margin_bottom = 426.0
 order_equipped = false
 
 [node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/EquipmentPanel/VBoxContainer"]
-margin_top = 422.0
-margin_right = 1222.0
-margin_bottom = 453.0
+margin_top = 430.0
+margin_right = 1224.0
+margin_bottom = 469.0
 text = "To add equipment drag the equipment from Available to Equipped. 
 To Remove equipment drag the equipment from Equipped to Available."
 align = 1
 valign = 1
 
 [node name="Row4" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 525.0
-margin_right = 1238.0
-margin_bottom = 549.0
+margin_top = 539.0
+margin_right = 1240.0
+margin_bottom = 563.0
 size_flags_horizontal = 3
 
 [node name="SuperCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/Row4"]
@@ -213,63 +210,61 @@ margin_bottom = 24.0
 text = "Is boss?"
 
 [node name="SuperRow" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
-margin_top = 565.0
-margin_right = 1238.0
-margin_bottom = 1062.0
+margin_top = 579.0
+margin_right = 1240.0
+margin_bottom = 1090.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 1230.0
-margin_bottom = 489.0
+margin_right = 1232.0
+margin_bottom = 503.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer"]
-margin_right = 1222.0
-margin_bottom = 14.0
+margin_right = 1224.0
+margin_bottom = 22.0
 text = "Super data"
 align = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer"]
-margin_top = 18.0
-margin_right = 1222.0
-margin_bottom = 42.0
+margin_top = 26.0
+margin_right = 1224.0
+margin_bottom = 48.0
 
 [node name="SuperHealthContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer"]
-margin_right = 168.0
-margin_bottom = 24.0
+margin_right = 178.0
+margin_bottom = 22.0
 hint_tooltip = "Starting health."
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperHealthContainer"]
-margin_top = 5.0
-margin_right = 90.0
-margin_bottom = 19.0
+margin_right = 98.0
+margin_bottom = 22.0
 text = "Super Health: "
 
 [node name="SuperHealthBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperHealthContainer"]
-margin_left = 94.0
-margin_right = 168.0
-margin_bottom = 24.0
+margin_left = 102.0
+margin_right = 178.0
+margin_bottom = 22.0
 allow_greater = true
 align = 2
 
 [node name="SuperDiceContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer"]
-margin_left = 172.0
-margin_right = 327.0
-margin_bottom = 24.0
+margin_left = 182.0
+margin_right = 347.0
+margin_bottom = 22.0
 hint_tooltip = "Starting dice."
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperDiceContainer"]
-margin_top = 5.0
-margin_right = 77.0
-margin_bottom = 19.0
+margin_right = 85.0
+margin_bottom = 22.0
 text = "Super Dice: "
 
 [node name="SuperDiceBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer/HBoxContainer/SuperDiceContainer"]
-margin_left = 81.0
-margin_right = 155.0
-margin_bottom = 24.0
+margin_left = 89.0
+margin_right = 165.0
+margin_bottom = 22.0
 max_value = 10.0
 allow_greater = true
 align = 2
@@ -277,35 +272,35 @@ align = 2
 [node name="SuperEquipmentContainer" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 46.0
-margin_right = 1222.0
-margin_bottom = 446.0
+margin_top = 52.0
+margin_right = 1224.0
+margin_bottom = 452.0
 
 [node name="ExplainEquipment" type="Label" parent="ScrollContainer/VBoxContainer/SuperRow/VBoxContainer"]
-margin_top = 450.0
-margin_right = 1222.0
-margin_bottom = 481.0
+margin_top = 456.0
+margin_right = 1224.0
+margin_bottom = 495.0
 text = "To add equipment drag the equipment from Available to Equipped. 
 To Remove equipment drag the equipment from Equipped to Available."
 align = 1
 valign = 1
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1078.0
-margin_right = 1238.0
-margin_bottom = 1082.0
+margin_top = 1106.0
+margin_right = 1240.0
+margin_bottom = 1110.0
 
 [node name="InnateContainer" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 1098.0
-margin_right = 1238.0
-margin_bottom = 1116.0
+margin_top = 1126.0
+margin_right = 1240.0
+margin_bottom = 1152.0
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
-margin_top = 1132.0
-margin_right = 1238.0
-margin_bottom = 1136.0
+margin_top = 1168.0
+margin_right = 1240.0
+margin_bottom = 1172.0
 
 [node name="Row5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 visible = false

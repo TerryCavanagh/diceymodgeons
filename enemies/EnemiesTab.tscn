@@ -18,51 +18,52 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 mouse_filter = 2
 
 [node name="ItemList" parent="HBoxContainer" instance=ExtResource( 5 )]
+margin_bottom = 712.0
 search_placeholder = "Search enemy"
 button_label = "Add a new enemy"
 show_field = "Name"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0
-margin_right = 1266.0
-margin_bottom = 706.0
+margin_right = 1268.0
+margin_bottom = 712.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Data" parent="HBoxContainer/TabContainer" instance=ExtResource( 4 )]
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="Graphics" parent="HBoxContainer/TabContainer" instance=ExtResource( 2 )]
 visible = false
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="Scripts" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="Chat" parent="HBoxContainer/TabContainer" instance=ExtResource( 7 )]
 visible = false
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="AddNewEnemyPopup" parent="." instance=ExtResource( 6 )]
 anchor_right = 0.0

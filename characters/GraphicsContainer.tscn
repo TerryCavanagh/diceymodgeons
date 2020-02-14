@@ -8,16 +8,16 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 
 [node name="Label" type="Label" parent="CenterContainer"]
-margin_left = 567.0
-margin_top = 337.0
-margin_right = 698.0
-margin_bottom = 368.0
+margin_left = 564.0
+margin_top = 336.0
+margin_right = 703.0
+margin_bottom = 375.0
 text = "Nothing to see here.
 Work in progress."
 align = 1

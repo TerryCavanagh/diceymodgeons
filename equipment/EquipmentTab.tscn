@@ -14,14 +14,15 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ItemList" parent="HBoxContainer" instance=ExtResource( 1 )]
+margin_bottom = 712.0
 table = 2
 search_placeholder = "Search equipment"
 button_label = "Add a new equipment"
@@ -29,27 +30,47 @@ show_field = "Name"
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0
-margin_right = 1266.0
-margin_bottom = 706.0
+margin_right = 1268.0
+margin_bottom = 712.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Normal" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 
 [node name="Upgraded" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 type = 1
 
 [node name="Weakened" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 type = 2
 
 [node name="Downgraded" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 type = 3
 
 [node name="Deck Upgrade" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
 type = 4
 
 [node name="AddNewEquipmentPopup" parent="." instance=ExtResource( 4 )]

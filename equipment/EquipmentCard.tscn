@@ -47,7 +47,7 @@ custom_constants/separation = 0
 
 [node name="Title" type="Label" parent="VBoxContainer"]
 margin_right = 826.0
-margin_bottom = 106.0
+margin_bottom = 114.0
 rect_pivot_offset = Vector2( 413, 53 )
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -56,17 +56,17 @@ align = 1
 clip_text = true
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 106.0
+margin_top = 114.0
 margin_right = 826.0
-margin_bottom = 397.0
+margin_bottom = 401.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/CenterContainer"]
 margin_left = 271.0
-margin_top = 3.0
+margin_top = 1.0
 margin_right = 554.0
-margin_bottom = 288.0
+margin_bottom = 286.0
 columns = 2
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/CenterContainer/GridContainer"]
@@ -75,7 +75,7 @@ margin_bottom = 285.0
 texture = ExtResource( 4 )
 
 [node name="DescriptionContainer" type="Control" parent="VBoxContainer"]
-margin_top = 397.0
+margin_top = 401.0
 margin_right = 826.0
 margin_bottom = 688.0
 size_flags_horizontal = 3

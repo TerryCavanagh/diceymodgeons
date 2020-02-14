@@ -12,71 +12,70 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 1266.0
-margin_bottom = 24.0
+margin_right = 1268.0
+margin_bottom = 22.0
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
-margin_top = 5.0
-margin_right = 73.0
-margin_bottom = 19.0
+margin_right = 81.0
+margin_bottom = 22.0
 text = "Game data:"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3"]
-margin_left = 77.0
-margin_right = 1266.0
-margin_bottom = 24.0
+margin_left = 85.0
+margin_right = 1268.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 
 [node name="PCKLabel" type="LineEdit" parent="VBoxContainer/HBoxContainer3/HBoxContainer"]
-margin_right = 1086.0
-margin_bottom = 24.0
+margin_right = 1080.0
+margin_bottom = 22.0
 focus_mode = 0
 size_flags_horizontal = 3
 editable = false
 
 [node name="OpenButton" type="Button" parent="VBoxContainer/HBoxContainer3/HBoxContainer"]
-margin_left = 1090.0
-margin_right = 1189.0
-margin_bottom = 24.0
+margin_left = 1084.0
+margin_right = 1183.0
+margin_bottom = 22.0
 text = "Open PCK file"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 28.0
-margin_right = 1266.0
-margin_bottom = 706.0
+margin_top = 26.0
+margin_right = 1268.0
+margin_bottom = 712.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SpriteList" type="ItemList" parent="VBoxContainer/HBoxContainer"]
 margin_right = 300.0
-margin_bottom = 678.0
+margin_bottom = 686.0
 rect_min_size = Vector2( 300, 0 )
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 margin_left = 304.0
-margin_right = 962.0
-margin_bottom = 678.0
+margin_right = 964.0
+margin_bottom = 686.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="TexturePanel" type="PanelContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 658.0
-margin_bottom = 654.0
+margin_right = 660.0
+margin_bottom = 660.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SpriteTexture" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer/TexturePanel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 651.0
-margin_bottom = 647.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 654.0
+margin_bottom = 656.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 expand = true
@@ -84,33 +83,33 @@ stretch_mode = 6
 script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 658.0
-margin_right = 658.0
-margin_bottom = 678.0
+margin_top = 664.0
+margin_right = 660.0
+margin_bottom = 686.0
 alignment = 1
 
 [node name="SavePNGButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 185.0
-margin_right = 319.0
-margin_bottom = 20.0
+margin_left = 186.0
+margin_right = 320.0
+margin_bottom = 22.0
 disabled = true
 text = "Save image as PNG"
 
 [node name="SaveSplitButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 323.0
-margin_right = 472.0
-margin_bottom = 20.0
+margin_left = 324.0
+margin_right = 473.0
+margin_bottom = 22.0
 disabled = true
 text = "Save images to folder"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_left = 966.0
-margin_right = 1266.0
-margin_bottom = 678.0
+margin_left = 968.0
+margin_right = 1268.0
+margin_bottom = 686.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
 margin_right = 300.0
-margin_bottom = 654.0
+margin_bottom = 660.0
 rect_min_size = Vector2( 300, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -119,9 +118,9 @@ text = "You can explore the PCK files and save its images (*.atf files) as a sin
 Once you have finished editing the files you can then merge those PNG files by clicking on the Merge PNGs button. The same PCK file you used to split the PNG files needs to be loaded for this function to work."
 
 [node name="MergePNGButton" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 658.0
+margin_top = 664.0
 margin_right = 300.0
-margin_bottom = 678.0
+margin_bottom = 686.0
 disabled = true
 text = "Merge PNGs"
 __meta__ = {

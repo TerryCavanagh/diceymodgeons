@@ -13,33 +13,32 @@ __meta__ = {
 }
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 313.0
-margin_top = 53.0
-margin_right = 953.0
-margin_bottom = 653.0
+margin_left = 314.0
+margin_top = 56.0
+margin_right = 954.0
+margin_bottom = 656.0
 rect_min_size = Vector2( 640, 600 )
 custom_constants/separation = 32
 
 [node name="GamePathContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 margin_right = 640.0
-margin_bottom = 24.0
+margin_bottom = 22.0
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer/GamePathContainer"]
-margin_top = 5.0
-margin_right = 74.0
-margin_bottom = 19.0
+margin_right = 82.0
+margin_bottom = 22.0
 text = "Game path:"
 
 [node name="GamePathEdit" type="LineEdit" parent="CenterContainer/VBoxContainer/GamePathContainer"]
-margin_left = 78.0
+margin_left = 86.0
 margin_right = 578.0
-margin_bottom = 24.0
+margin_bottom = 22.0
 focus_mode = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
@@ -48,11 +47,11 @@ editable = false
 [node name="ChangeButton" type="Button" parent="CenterContainer/VBoxContainer/GamePathContainer"]
 margin_left = 582.0
 margin_right = 640.0
-margin_bottom = 24.0
+margin_bottom = 22.0
 text = "Change"
 
 [node name="ModsContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-margin_top = 56.0
+margin_top = 54.0
 margin_right = 640.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -60,15 +59,15 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_right = 640.0
-margin_bottom = 14.0
+margin_bottom = 22.0
 text = "MODS"
 align = 1
 valign = 1
 
 [node name="ModList" type="Tree" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 18.0
+margin_top = 26.0
 margin_right = 640.0
-margin_bottom = 344.0
+margin_bottom = 345.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
@@ -79,28 +78,28 @@ hide_root = true
 select_mode = 1
 
 [node name="ModDescription" type="RichTextLabel" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 348.0
+margin_top = 349.0
 margin_right = 640.0
-margin_bottom = 487.0
+margin_bottom = 485.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 491.0
+margin_top = 489.0
 margin_right = 640.0
 margin_bottom = 511.0
 
 [node name="EditButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer"]
 margin_right = 318.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 text = "Edit information"
 
 [node name="LoadButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer"]
 margin_left = 322.0
 margin_right = 640.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 text = "Load"
 
@@ -112,26 +111,26 @@ margin_bottom = 519.0
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_top = 523.0
 margin_right = 640.0
-margin_bottom = 543.0
+margin_bottom = 545.0
 
 [node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2"]
 margin_right = 318.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 text = "Create a new mod"
 
 [node name="LaunchButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2"]
 margin_left = 322.0
 margin_right = 640.0
-margin_bottom = 20.0
+margin_bottom = 22.0
 size_flags_horizontal = 3
 text = "Launch current loaded mod"
 
 [node name="Dialogs" type="Control" parent="."]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1273.0
-margin_bottom = 713.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
 mouse_filter = 2
 
 [node name="WarningPopup" type="WindowDialog" parent="Dialogs"]
