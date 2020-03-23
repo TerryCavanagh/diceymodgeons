@@ -64,6 +64,7 @@ margin_top = 29.0
 margin_right = -5.0
 margin_bottom = -5.0
 type = 3
+copy_from = 2
 
 [node name="Deck Upgrade" parent="HBoxContainer/TabContainer" instance=ExtResource( 3 )]
 visible = false
@@ -72,6 +73,7 @@ margin_top = 29.0
 margin_right = -5.0
 margin_bottom = -5.0
 type = 4
+copy_from = 1
 
 [node name="AddNewEquipmentPopup" parent="." instance=ExtResource( 4 )]
 anchor_right = 0.0

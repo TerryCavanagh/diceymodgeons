@@ -37,27 +37,27 @@ margin_bottom = -5.0
 
 [node name="CreateContainer" type="CenterContainer" parent="."]
 visible = false
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1265.0
-margin_bottom = 677.0
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1266.0
+margin_bottom = 680.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CreateContainer"]
-margin_left = 602.0
-margin_top = 324.0
-margin_right = 655.0
-margin_bottom = 346.0
+[node name="HBoxContainer" type="VBoxContainer" parent="CreateContainer"]
+margin_left = 567.0
+margin_top = 314.0
+margin_right = 693.0
+margin_bottom = 362.0
+custom_constants/separation = 16
 
 [node name="CreateButton" type="Button" parent="CreateContainer/HBoxContainer"]
-margin_right = 53.0
-margin_bottom = 20.0
+margin_right = 126.0
+margin_bottom = 22.0
 text = "Create"
 
 [node name="CopyButton" type="Button" parent="CreateContainer/HBoxContainer"]
-visible = false
-margin_left = 70.0
-margin_right = 196.0
-margin_bottom = 20.0
+margin_top = 26.0
+margin_right = 126.0
+margin_bottom = 48.0
 text = "Copy from normal"
 [connection signal="pressed" from="CreateContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
 [connection signal="pressed" from="CreateContainer/HBoxContainer/CopyButton" to="." method="_on_CopyButton_pressed"]

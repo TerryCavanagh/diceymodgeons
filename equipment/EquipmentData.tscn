@@ -97,14 +97,6 @@ margin_right = 298.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 180, 0 )
 
-[node name="DeleteButton" type="Button" parent="ScrollContainer/VBoxContainer/Row1"]
-visible = false
-margin_left = 1213.0
-margin_right = 1268.0
-margin_bottom = 22.0
-size_flags_horizontal = 10
-text = "Delete"
-
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 margin_top = 26.0
 margin_right = 1268.0
@@ -314,4 +306,25 @@ margin_bottom = 343.0
 rect_min_size = Vector2( 300, 0 )
 
 [node name="EquipmentCard" parent="ScrollContainer/VBoxContainer/HBoxContainer/CenterContainer/Control" instance=ExtResource( 4 )]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Row1/DeleteButton" to="." method="_on_DeleteButton_pressed"]
+
+[node name="Control" type="Control" parent="."]
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
+mouse_filter = 2
+
+[node name="DeleteButton" type="Button" parent="Control"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -55.0
+margin_top = -22.0
+size_flags_vertical = 8
+text = "Delete"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Control/DeleteButton" to="." method="_on_DeleteButton_pressed"]
