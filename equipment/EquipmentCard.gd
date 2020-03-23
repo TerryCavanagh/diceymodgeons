@@ -6,6 +6,7 @@ onready var Description = find_node("Description")
 
 const brackets_regex = "(\\[(.*?)\\])"
 const arrows_regex = "(<(.+)>)"
+const ICON_SIZE = 75
 
 var card_size = 1
 
@@ -56,14 +57,20 @@ func set_description(desc:String):
 		var s = m.get_string(2).strip_edges()
 		if Gamedata.symbols.has(s):
 			var n = Gamedata.symbols.get(s).get("image_name", s)
-			result += "[img]res://assets/symbols/%s.png[/img]" % n
+			result += "[img=%s]res://assets/symbols/%s.png[/img]" % [ICON_SIZE, n]
 		elif s.empty():
-			result += "[img]res://assets/symbols/d6.png[/img]"
+			result += "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE]
 		elif s == "gray":
 			pass
 	result += desc.substr(last, desc.length() - last)
 	
-	result = result.replace("<d6>", "[img]res://assets/symbols/d6.png[/img]")
+	result = result.replace("<d6>", "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
+	result = result.replace("<slotdoubles>", "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
+	result = result.replace("<double>", "2x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
+	result = result.replace("<triple>", "3x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
+	result = result.replace("<quadruple>", "4x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
+	result = result.replace("<quintuple>", "5x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
+	result = result.replace("<sextuple>", "6x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
 	
 	regex.compile(arrows_regex)
 	result = regex.sub(result, "[color=red]99[/color]", true)
