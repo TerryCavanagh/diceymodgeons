@@ -19,8 +19,14 @@ context_menu_enabled = false
 clear_button_enabled = true
 caret_blink = true
 
-[node name="List" type="Tree" parent="."]
+[node name="OnlyModifiedCheck" type="CheckBox" parent="."]
 margin_top = 26.0
+margin_right = 300.0
+margin_bottom = 50.0
+text = "Show only added and modified items"
+
+[node name="List" type="Tree" parent="."]
+margin_top = 54.0
 margin_right = 300.0
 margin_bottom = 668.0
 size_flags_horizontal = 3
@@ -49,6 +55,7 @@ margin_bottom = 34.0
 size_flags_horizontal = 3
 text = "Add a new enemy"
 [connection signal="text_changed" from="Search" to="List" method="_on_Search_text_changed"]
+[connection signal="pressed" from="OnlyModifiedCheck" to="." method="_on_OnlyModifiedCheck_pressed"]
 [connection signal="button_pressed" from="List" to="List" method="_on_List_button_pressed"]
 [connection signal="element_selected" from="List" to="." method="_on_List_element_selected"]
 [connection signal="item_edited" from="List" to="List" method="_on_List_item_edited"]

@@ -13,6 +13,7 @@ export (String) var show_field = "" setget _set_show_field
 export (bool) var show_overwrite_mode = true setget _set_show_overwrite_mode
 
 onready var Search = find_node("Search")
+onready var OnlyModifiedCheck = find_node("OnlyModifiedCheck")
 onready var List = find_node("List")
 onready var AddButton = find_node("AddButton")
 onready var OverwriteCheck = find_node("OverwriteCheck")
@@ -91,6 +92,10 @@ func _on_OverwriteCheck_toggled(button_pressed):
 	List.overwrite_mode = button_pressed
 	emit_signal("overwrite_mode_changed", button_pressed)
 	Database.set_overwrite_mode(table, button_pressed)
+	List.force_reload()
+	
+func _on_OnlyModifiedCheck_pressed():
+	List.only_modified = OnlyModifiedCheck.pressed
 	List.force_reload()
 	
 func _set_process_data_func(value):

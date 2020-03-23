@@ -99,9 +99,9 @@ rect_min_size = Vector2( 180, 0 )
 
 [node name="DeleteButton" type="Button" parent="ScrollContainer/VBoxContainer/Row1"]
 visible = false
-margin_left = 1211.0
-margin_right = 1266.0
-margin_bottom = 20.0
+margin_left = 1213.0
+margin_right = 1268.0
+margin_bottom = 22.0
 size_flags_horizontal = 10
 text = "Delete"
 

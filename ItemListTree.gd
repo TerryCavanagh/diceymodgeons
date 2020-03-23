@@ -18,6 +18,7 @@ var sort_items:bool = true
 var show_field:String = ""
 
 var filter = null
+var only_modified = false
 
 var table = null
 
@@ -96,11 +97,13 @@ func load_data(filter = null, select_key = null):
 	root = create_item()
 	
 	var still_selected = false
-	var t = Database.get_table(table)
+	var db_table = Database.get_table(table)
 	for key in keys:
 		var entry = data[key]
 		var origin = entry.get("__origin", Database.Origin.GAME)
-		var metadata = {"key": key, "field": data[key].get(show_field, ""), "origin": origin, "is_in_game_data": t.is_in_game_data(key)}
+		var metadata = {"key": key, "field": data[key].get(show_field, ""), "origin": origin, "is_in_game_data": db_table.is_in_game_data(key)}
+		if only_modified && origin == Database.Origin.GAME:
+			continue
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
