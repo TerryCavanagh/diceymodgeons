@@ -28,8 +28,11 @@ var loaded_image:Image = null
 
 var dialog_mode = DialogMode.OpenPCK
 
+var premul_alpha_material = CanvasItemMaterial.new()
+
 func _ready():
 	SaveDialog.current_dir = "%s/data" % Settings.get_value(Settings.GAME_PATH)
+	premul_alpha_material.blend_mode = CanvasItemMaterial.BLEND_MODE_PREMULT_ALPHA
 	print(sprites)
 	#parse_pck("res://assets/test/pack_1080.pck")
 	#decode_image("res://assets/test/pack_1080.atf")
@@ -94,6 +97,7 @@ func save_sprite(sprite, dir):
 	img.create(sprite.rect.size.x, sprite.rect.size.y, false, loaded_image.get_format())
 	img.blit_rect(loaded_image, sprite.rect, Vector2())
 	var target = '%s/%s.png' % [dir, sprite.name]
+	_make_dir(target.get_base_dir())
 	print('%s => %s' % [sprite, target])
 	img.save_png(target)
 	
@@ -107,6 +111,7 @@ func save_sprite_rotated(sprite, dir):
 	s.region_rect = sprite.rect
 	s.rotation_degrees = 270
 	s.position = Vector2(sprite.rect.size.y / 2.0, sprite.rect.size.x / 2.0)
+	s.material = premul_alpha_material
 	viewport.add_child(s)
 	
 	var target = '%s/%s' % [dir, sprite.name]
@@ -129,9 +134,12 @@ func save_sprites(src_dir, dest_file):
 			s.rotation_degrees = 270
 			s.flip_v = true
 			s.flip_h = true
+		
+		s.material = premul_alpha_material
+		
 		viewport.add_child(s)
 		
-	_save_viewport(viewport, dest_file, true)
+	_save_viewport(viewport, dest_file, false)
 		
 func merge_pngs(src:String):
 	var target = src.plus_file("merged")
@@ -160,6 +168,13 @@ func _create_viewport(size):
 	viewport.disable_3d = true
 	viewport.usage = Viewport.USAGE_2D
 	viewport.size = size
+	
+	viewport.own_world = true
+	viewport.world = World.new()
+	viewport.world.environment = Environment.new()
+	viewport.world.environment.background_mode = Environment.BG_COLOR
+	viewport.world.environment.background_color = Color(1, 1, 1, 0)
+	
 	add_child(viewport)
 	return viewport
 	
@@ -171,8 +186,10 @@ func _save_viewport(viewport, target, compressed = false):
 	yield(get_tree(), "idle_frame")
 	var img:Image = viewport.get_texture().get_data()
 	img.flip_y()
-	img.premultiply_alpha()
-	img.fix_alpha_edges()
+	#img.fix_alpha_edges()
+	
+	_make_dir(target.get_base_dir())
+	
 	if compressed:
 		img.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_GENERIC, 1.0)
 		
@@ -183,6 +200,10 @@ func _save_viewport(viewport, target, compressed = false):
 	
 	viewport.queue_free()
 	remove_child(viewport)
+	
+func _make_dir(dir:String):
+	var d = Directory.new()
+	d.make_dir_recursive(dir)
 	
 func _on_OpenButton_pressed():
 	SaveDialog.mode = FileDialog.MODE_OPEN_FILE
