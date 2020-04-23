@@ -139,7 +139,7 @@ func save_sprites(src_dir, dest_file):
 		
 		viewport.add_child(s)
 		
-	_save_viewport(viewport, dest_file, false)
+	_save_viewport(viewport, dest_file, true)
 		
 func merge_pngs(src:String):
 	var target = src.plus_file("merged")
@@ -166,6 +166,7 @@ func _create_viewport(size):
 	viewport.render_target_clear_mode = Viewport.CLEAR_MODE_ALWAYS
 	viewport.transparent_bg = true
 	viewport.disable_3d = true
+	viewport.hdr = false
 	viewport.usage = Viewport.USAGE_2D
 	viewport.size = size
 	
