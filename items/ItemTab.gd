@@ -18,7 +18,7 @@ func _ready():
 	AddNewItemPopup.add_func = funcref(self, "_add_item")
 	
 func _add_item(value):
-	Database.commit(Database.Table.ITEMS, Database.CREATE, value)
+	Database.commit(Database.Table.SKILLS, Database.CREATE, value)
 
 func set_data(data):
 	data_id = Database.get_data_id(data, "Name")
@@ -38,11 +38,11 @@ func _setup(node, key, def):
 		
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
-	Database.commit(Database.Table.ITEMS, Database.UPDATE, data_id, key, node.text)
+	Database.commit(Database.Table.SKILLS, Database.UPDATE, data_id, key, node.text)
 	
 func _on_ScriptContainer_text_changed(text, node, key):
 	if not data_id: return
-	Database.commit(Database.Table.ITEMS, Database.UPDATE, data_id, key, text)
+	Database.commit(Database.Table.SKILLS, Database.UPDATE, data_id, key, text)
 
 func _on_ItemList_item_selected(key):
 	if key == null or key.empty():
@@ -50,7 +50,7 @@ func _on_ItemList_item_selected(key):
 		return
 		
 	ItemContainer.visible = true
-	var data = Database.commit(Database.Table.ITEMS, Database.READ, key)
+	var data = Database.commit(Database.Table.SKILLS, Database.READ, key)
 	set_data(data)
 
 func _on_ItemList_add_button_pressed(overwrite_mode):

@@ -38,7 +38,7 @@ func set_data(data):
 	
 	Utils.fill_options(LayoutOption, Gamedata.layout, true)
 	
-	var items = Database.commit(Database.Table.ITEMS, Database.READ, null, "Name")
+	var items = Database.commit(Database.Table.SKILLS, Database.READ, null, "Name")
 	
 	Utils.fill_options(LimitOption, items, false)
 	Utils.fill_options(WeakenedLimitOption, items, false)

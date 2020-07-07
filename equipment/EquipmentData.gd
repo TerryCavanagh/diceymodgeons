@@ -94,7 +94,7 @@ func set_data(data):
 	
 	EquipmentCard.change_color(data.get("Colour", ""), data.get("Category", ""), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
 	
-	var items = Database.commit(Database.Table.ITEMS, Database.READ)
+	var items = Database.commit(Database.Table.SKILLS, Database.READ)
 	var values = {}
 	values["None"] = "No gadget"
 	for item in items.keys():

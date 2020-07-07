@@ -4,7 +4,7 @@ onready var TabContainer = find_node("TabContainer")
 onready var ModSettings = find_node("Mod Settings")
 onready var Enemies = find_node("Enemies")
 onready var Equipment = find_node("Equipment")
-onready var Items = find_node("Items")
+onready var Items = find_node("Skills")
 onready var Characters = find_node("Characters")
 
 onready var ModifiedDataContainer = find_node("ModifiedDataContainer")

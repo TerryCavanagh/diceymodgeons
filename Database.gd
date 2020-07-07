@@ -26,7 +26,7 @@ enum Table {
 	NONE,
 	FIGHTERS,
 	EQUIPMENT,
-	ITEMS,
+	SKILLS,
 	STATUS_EFFECTS,
 	CHARACTERS,
 	EPISODES,
@@ -59,9 +59,9 @@ func _get_paths(table:int):
 		Table.EQUIPMENT:
 			file = "equipment.csv"
 			schema = "equipment_schema.json"
-		Table.ITEMS:
-			file = "items.csv"
-			schema = "items_schema.json"
+		Table.SKILLS:
+			file = "skills.csv"
+			schema = "skills_schema.json"
 		Table.STATUS_EFFECTS:
 			file = "statuseffects.csv"
 			schema = "statuseffects_schema.json"
@@ -109,7 +109,7 @@ func load_data(root_path:String, metadata:Dictionary):
 	ModFiles.mod_root_path = 'mods/%s' % metadata.get("mod")
 	
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
-	_items = CSVData.new(_get_paths(Table.ITEMS), "Name")
+	_items = CSVData.new(_get_paths(Table.SKILLS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
 	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "ID")
 	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "ID")
@@ -129,7 +129,7 @@ func save_data():
 	_equipment.save_data()
 	emit_signal("save_completed", Table.EQUIPMENT)
 	_items.save_data()
-	emit_signal("save_completed", Table.ITEMS)
+	emit_signal("save_completed", Table.SKILLS)
 	_status_effects.save_data()
 	emit_signal("save_completed", Table.STATUS_EFFECTS)
 	_characters.save_data()
@@ -145,7 +145,7 @@ func get_table(table):
 			return _fighters
 		Table.EQUIPMENT:
 			return _equipment
-		Table.ITEMS:
+		Table.SKILLS:
 			return _items
 		Table.STATUS_EFFECTS:
 			return _status_effects
