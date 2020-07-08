@@ -66,22 +66,6 @@
 		"type": "bool",
 		"default": false
 	},
-	"Special?": {
-		"type": "bool",
-		"default": false
-	},
-	"Error Immune": {
-		"type": "bool",
-		"default": false
-	},
-	"Show Gold": {
-		"type": "bool",
-		"default": false
-	},
-	"Appears For Parts": {
-		"type": "bool",
-		"default": false
-	},
 	"Witch Spell": {
 		"type": "number",
 		"default": 0,
@@ -127,13 +111,9 @@
 		"type": "script",
 		"default": ""
 	},
-	"Parallel Universe": {
-		"type": "bool",
-		"default": false
-	},
-	"Hide Reuseable": {
-		"type": "bool",
-		"default": false
+	"Tags": {
+		"type": "list",
+		"default": ""
 	}
 	
 }

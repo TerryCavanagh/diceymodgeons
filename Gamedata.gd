@@ -11,7 +11,8 @@ var items:Dictionary = {
 	"cast_backwards": [],
 	"slots": {},
 	"upgrade_modifier": {},
-	"weaken_modified": {}
+	"weaken_modified": {},
+	"default_tags": {}
 	}
 
 func _init():

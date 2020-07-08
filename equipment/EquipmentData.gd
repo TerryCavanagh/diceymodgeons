@@ -14,13 +14,9 @@ onready var SpellSpin = find_node("SpellSpin")
 
 onready var CastBackwardsCheck = find_node("CastBackwardsCheck")
 onready var SingleUseCheck = find_node("SingleUseCheck")
-onready var SpecialCheck = find_node("SpecialCheck")
-onready var ErrorImmuneCheck = find_node("ErrorImmuneCheck")
-onready var ShowGoldCheck = find_node("ShowGoldCheck")
-onready var AppearForPartsCheck = find_node("AppearForPartsCheck")
 onready var SFXCheck = find_node("SFXCheck")
-onready var ParallelUniverseCheck = find_node("ParallelUniverseCheck")
-onready var HideReusableCheck = find_node("HideReusableCheck")
+
+onready var EquipmentTags = find_node("EquipmentTags")
 
 onready var SlotsContainer = find_node("SlotsContainer")
 
@@ -66,16 +62,11 @@ func set_data(data):
 	_setup(UsesSpin, "Uses?", 0)
 	_setup(SpellSpin, "Witch Spell", 0)
 	
-	# TODO
-	#_setup(CastBackwardsCheck, "Cast Backwards?", false)
+	_setup(CastBackwardsCheck, "Cast Backwards?", false)
 	_setup(SingleUseCheck, "Single use?", false)
-	_setup(SpecialCheck, "Special?", false)
-	_setup(ErrorImmuneCheck, "Error Immune", false)
-	_setup(ShowGoldCheck, "Show Gold", false)
-	_setup(AppearForPartsCheck, "Appears For Parts", false)
 	_setup(SFXCheck, "SFX", false)
-	_setup(ParallelUniverseCheck, "Parallel Universe", false)
-	_setup(HideReusableCheck, "Hide Reusable", false)
+	
+	_setup(EquipmentTags, "Tags", [])
 	
 	_setup(SlotsContainer, "Slots", [])
 	
@@ -129,6 +120,8 @@ func _setup(node, key, def):
 		node.set_data(data)
 		Utils.connect_signal(node, "Slots", "slots_changed", self, "_on_SlotsContainer_slots_changed")
 		Utils.connect_signal(node, "NEED TOTAL?", "total_changed", self, "_on_SlotsContainer_total_changed")
+	elif node == EquipmentTags:
+		node.set_data(data)
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
 	

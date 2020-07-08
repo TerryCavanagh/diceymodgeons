@@ -301,6 +301,22 @@
 			"changetotal11": "If a card has two slots that need a total value, change that total to 11.",
 			"changetotal12": "If a card has two slots that need a total value, change that total to 12.",
 			"burnsparedice": "Used for the spare dice card. The spare dice on the card will be burning."
+		},
+		"default_tags": {
+			"skillcard": "This equipment is a skillcard",
+			"cannotsteal": "This equipment cannot be stolen",
+			"excludefromrandomlists": "This equipment won't be randomly selected with skills like Slot Machine",
+			"robotonly": "Only useable by the Robot (or custom characters with CPU)",
+			"witchonly": "Only useable by the Witch (or custom characters with a Spellbook)",
+			"finale": "Finale card for Jester",
+			"shockimmune": "Immune to Shock",
+			"weakenimmune": "Immune to Weaken",
+			"altpoisonimmune": "Immune to Alternate Poison",
+			"shockavoid": "Do not consider this equipment for Shock",
+			"weakenavoid": "Do not consider this equipment for Weaken",
+			"altpoisonavoid": "Do not consider this equipment for Alternate Poison",
+			"curseavoid": "This equipment never triggers curse even if the odds are set to 100%",
+			"curseattract": "This equipment always triggers curse if inflicted even if the odds are set to 0%"
 		}
 	}
 }
