@@ -312,11 +312,15 @@
 			"shockimmune": "Immune to Shock",
 			"weakenimmune": "Immune to Weaken",
 			"altpoisonimmune": "Immune to Alternate Poison",
+			"errorimmune": "Immune to error",
 			"shockavoid": "Do not consider this equipment for Shock",
 			"weakenavoid": "Do not consider this equipment for Weaken",
 			"altpoisonavoid": "Do not consider this equipment for Alternate Poison",
 			"curseavoid": "This equipment never triggers curse even if the odds are set to 100%",
-			"curseattract": "This equipment always triggers curse if inflicted even if the odds are set to 0%"
+			"curseattract": "This equipment always triggers curse if inflicted even if the odds are set to 0%",
+			"showgold": "Shows the player's gold",
+			"appearsforparts": "***appearsforparts***",
+			"hidereusable": "***hidereusable***"
 		}
 	}
 }
