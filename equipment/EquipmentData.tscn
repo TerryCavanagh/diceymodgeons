@@ -180,19 +180,19 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 54.0
 margin_right = 959.0
-margin_bottom = 118.0
+margin_bottom = 136.0
 
 [node name="SlotsContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 122.0
+margin_top = 140.0
 margin_right = 959.0
-margin_bottom = 230.0
+margin_bottom = 248.0
 
 [node name="Row5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 234.0
+margin_top = 252.0
 margin_right = 959.0
-margin_bottom = 282.0
+margin_bottom = 300.0
 
 [node name="GadgetContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5"]
 margin_right = 180.0
@@ -242,9 +242,9 @@ margin_bottom = 48.0
 rect_min_size = Vector2( 180, 0 )
 
 [node name="Row6" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 286.0
+margin_top = 304.0
 margin_right = 959.0
-margin_bottom = 462.0
+margin_bottom = 480.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row6"]
 margin_right = 959.0

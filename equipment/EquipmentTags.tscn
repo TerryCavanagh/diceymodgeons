@@ -2,7 +2,7 @@
 
 [ext_resource path="res://equipment/EquipmentTags.gd" type="Script" id=1]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 4.0
 content_margin_right = 4.0
 content_margin_top = 4.0
@@ -14,7 +14,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.141176, 0.141176, 0.141176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.172549, 0.172549, 0.172549, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -29,7 +29,7 @@ corner_radius_bottom_left = 2
 [node name="EquipmentTags" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -75,7 +75,7 @@ margin_right = 1123.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 
 [node name="TagsContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/PanelContainer"]
 margin_left = 1.0

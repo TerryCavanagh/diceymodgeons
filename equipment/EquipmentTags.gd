@@ -71,13 +71,15 @@ func add_tag(new_tag, to_db):
 	ErrorTimer.stop()
 	ErrorLabel.visible = false
 	
+	var tags = data.get("Tags", [])
+	
 	if new_tag.empty():
 		ErrorTimer.start()
 		ErrorLabel.visible = true
 		ErrorLabel.text = invalid_data_text
 		return ERR_INVALID_DATA
 		
-	if new_tag in data.get("Tags", []):
+	if to_db and new_tag in tags:
 		ErrorTimer.start()
 		ErrorLabel.visible = true
 		ErrorLabel.text = already_exists_text
@@ -113,7 +115,6 @@ func add_tag(new_tag, to_db):
 	container.add_child(tag_container)
 	
 	if to_db:
-		var tags = data.get("Tags", [])
 		tags.push_back(new_tag)
 		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Tags", tags)
 	
