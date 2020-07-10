@@ -1,16 +1,32 @@
-extends HBoxContainer
+extends PanelContainer
 
 const TagContainerScene = preload("res://equipment/TagContainer.tscn")
+
+export (String) var already_exists_text = "The tag already exists"
+export (String) var invalid_data_text = "This tag is invalid, only alpha-numeric, _ and - are accepted."
 
 onready var TagsContainer = find_node("TagsContainer")
 onready var TagsButton = find_node("TagsButton")
 onready var TmpControl = find_node("TmpControl")
 
+onready var CustomTagEdit = find_node("CustomTagEdit")
+onready var CustomTagButton = find_node("CustomTagButton")
+
+onready var ErrorLabel = find_node("ErrorLabel")
+onready var ErrorTimer = find_node("ErrorTimer")
+
+
+
 var data_id:String = ""
 var data:Dictionary = {}
 
+var tag_regex = "^[a-z_\\-0-9]+$"
+var tag_regex_obj = RegEx.new()
+
 func _ready():
-	
+	tag_regex_obj.compile(tag_regex)
+	print(tag_regex_obj.is_valid())
+	ErrorLabel.visible = false
 	var popup:PopupMenu = TagsButton.get_popup()
 	var idx = 0
 	for tag in Gamedata.items.get("default_tags", {}):
@@ -50,6 +66,29 @@ func load_tags():
 		add_tag(tag, false)
 
 func add_tag(new_tag, to_db):
+	new_tag = new_tag.strip_edges().to_lower()
+	
+	ErrorTimer.stop()
+	ErrorLabel.visible = false
+	
+	if new_tag.empty():
+		ErrorTimer.start()
+		ErrorLabel.visible = true
+		ErrorLabel.text = invalid_data_text
+		return ERR_INVALID_DATA
+		
+	if new_tag in data.get("Tags", []):
+		ErrorTimer.start()
+		ErrorLabel.visible = true
+		ErrorLabel.text = already_exists_text
+		return ERR_ALREADY_EXISTS
+		
+	if not tag_regex_obj.search(new_tag):
+		ErrorTimer.start()
+		ErrorLabel.visible = true
+		ErrorLabel.text = invalid_data_text
+		return ERR_INVALID_DATA
+		
 	var tag_container = TagContainerScene.instance()
 	tag_container.connect("delete_requested", self, "remove_tag", [new_tag, true])
 	tag_container.set_meta("tag", new_tag)
@@ -74,9 +113,11 @@ func add_tag(new_tag, to_db):
 	container.add_child(tag_container)
 	
 	if to_db:
-		var tags = data.get("Tags")
+		var tags = data.get("Tags", [])
 		tags.push_back(new_tag)
 		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Tags", tags)
+	
+	return OK
 	
 func remove_tag(tag, to_db):
 	for container in TagsContainer.get_children():
@@ -92,7 +133,7 @@ func remove_tag(tag, to_db):
 						popup.set_item_checked(idx, false)
 				
 				if to_db:
-					var tags = data.get("Tags")
+					var tags = data.get("Tags", [])
 					tags.erase(tag)
 					Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Tags", tags)
 				
@@ -108,3 +149,16 @@ func _on_TagsButton_popup_id_pressed(idx, node, key):
 		add_tag(value, true)
 	else:
 		remove_tag(value, true)
+
+
+func _on_CustomTagEdit_text_entered(new_text):
+	add_tag(new_text, true)
+	CustomTagEdit.clear()
+
+
+func _on_CustomTagButton_pressed():
+	add_tag(CustomTagEdit.text, true)
+	CustomTagEdit.clear()
+
+func _on_ErrorTimer_timeout():
+	ErrorLabel.visible = false
