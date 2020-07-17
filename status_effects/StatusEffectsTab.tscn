@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://status_effects/StatusEffectsTab.gd" type="Script" id=1]
 [ext_resource path="res://ItemList.tscn" type="PackedScene" id=2]
 [ext_resource path="res://status_effects/StatusEffectContainer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://AddPopup.tscn" type="PackedScene" id=4]
 
 [node name="StatusEffectTab" type="PanelContainer"]
 anchor_right = 1.0
@@ -32,4 +33,14 @@ anchor_bottom = 0.0
 margin_left = 304.0
 margin_right = 1268.0
 margin_bottom = 712.0
+
+[node name="AddNewStatusEffectPopup" parent="." instance=ExtResource( 4 )]
+window_title = "Add a new status effect"
+empty_name_message = "The status effect needs an id"
+bad_name_message = "This status effect already exists."
+exception_message = "The characters - and _ are not accepted."
+good_name_message = "All correct!"
+table = 4
+field = "Name"
+[connection signal="add_button_pressed" from="HBoxContainer/StatusList" to="." method="_on_StatusList_add_button_pressed"]
 [connection signal="item_selected" from="HBoxContainer/StatusList" to="." method="_on_StatusList_item_selected"]

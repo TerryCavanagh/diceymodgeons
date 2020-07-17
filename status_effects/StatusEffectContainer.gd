@@ -64,9 +64,7 @@ func _on_CheckBox_toggled(value, node, key):
 	
 func _on_LineEdit_text_changed(value, node, key):
 	if not data_id: return
-	# TODO Check input first
-	print("New display as: %s" % value)
-	#Database.commit(Database.Table.STATUS_EFFECTS, Database.UPDATE, data_id, key, value)
+	Database.commit(Database.Table.STATUS_EFFECTS, Database.UPDATE, data_id, key, value)
 	
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
