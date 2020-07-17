@@ -17,22 +17,26 @@
 	},
 	"External Scripts?": {
 		"type": "bool",
-		"default": ""
+		"default": false
 	},
 	"Stacks?": {
 		"type": "bool",
-		"default": ""
+		"default": false
 	},
 	"Remove at End Turn?": {
 		"type": "bool",
-		"default": ""
+		"default": false
 	},
 	"Remove at Start Turn?": {
 		"type": "bool",
-		"default": ""
+		"default": false
 	},
 	"Invisible?": {
 		"type": "bool",
-		"default": ""
+		"default": false
+	},
+	"Blocked by Reduce?": {
+		"type": "bool",
+		"default": false
 	}
 }

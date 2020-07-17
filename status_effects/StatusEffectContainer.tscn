@@ -1,0 +1,124 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://status_effects/StatusEffectContainer.gd" type="Script" id=1]
+[ext_resource path="res://DescriptionEdit.tscn" type="PackedScene" id=2]
+
+[node name="StatusEffectContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1268.0
+margin_bottom = 22.0
+custom_constants/separation = 16
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 91.0
+margin_bottom = 22.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_right = 59.0
+margin_bottom = 22.0
+text = "Symbol:"
+
+[node name="SymbolsOption" type="OptionButton" parent="VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_left = 63.0
+margin_right = 91.0
+margin_bottom = 22.0
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_left = 107.0
+margin_right = 338.0
+margin_bottom = 22.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/HBoxContainer"]
+margin_right = 77.0
+margin_bottom = 22.0
+text = "Display as:"
+
+[node name="DisplayAsEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer/HBoxContainer"]
+margin_left = 81.0
+margin_right = 231.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 26.0
+margin_right = 1268.0
+margin_bottom = 202.0
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer"]
+margin_right = 1268.0
+margin_bottom = 22.0
+text = "Description:"
+
+[node name="DescriptionEdit" parent="VBoxContainer/VBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 26.0
+margin_right = 1268.0
+margin_bottom = 176.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 206.0
+margin_right = 1268.0
+margin_bottom = 356.0
+rect_min_size = Vector2( 0, 150 )
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CenterContainer"]
+margin_left = 409.0
+margin_top = 35.0
+margin_right = 858.0
+margin_bottom = 115.0
+size_flags_horizontal = 4
+columns = 2
+
+[node name="RemoveStartTurnCheck" type="CheckBox" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_right = 225.0
+margin_bottom = 24.0
+text = "Remove at the start of the turn"
+
+[node name="RemoveEndTurnCheck" type="CheckBox" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_left = 229.0
+margin_right = 449.0
+margin_bottom = 24.0
+text = "Remove at the end of the turn"
+
+[node name="StacksCheck" type="CheckBox" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_top = 28.0
+margin_right = 225.0
+margin_bottom = 52.0
+text = "Stacks"
+
+[node name="InvisibleCheck" type="CheckBox" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_left = 229.0
+margin_top = 28.0
+margin_right = 449.0
+margin_bottom = 52.0
+text = "Invisible"
+
+[node name="BlockedByReduceCheck" type="CheckBox" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_top = 56.0
+margin_right = 225.0
+margin_bottom = 80.0
+text = "Blocked by reduce"
+
+[node name="ExternalScriptCheck" type="CheckBox" parent="VBoxContainer/CenterContainer/GridContainer"]
+margin_left = 229.0
+margin_top = 56.0
+margin_right = 449.0
+margin_bottom = 80.0
+text = "Has external script"

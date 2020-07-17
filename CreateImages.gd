@@ -31,3 +31,14 @@ func _prepare_images():
 		var idx = data.get("tile", 0)
 		var name = data.get("image_name", symbol)
 		symbols_array[idx].save_png("res://assets/symbols/%s.png" % name)
+		
+	for symbol in Gamedata.symbols.keys():
+		var data = Gamedata.symbols[symbol]
+		var idx = data.get("tile", 0)
+		var name = data.get("image_name", symbol)
+		var small = Image.new()
+		small.create(sym_size, sym_size, false, symbols_array[idx].get_format())
+		small.blit_rect(symbols_array[idx], Rect2(0, 0, sym_size, sym_size), Vector2())
+		small.resize(24, 24, Image.INTERPOLATE_LANCZOS)
+		small.save_png("res://assets/symbols/small/%s.png" % name)
+	
