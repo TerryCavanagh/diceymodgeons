@@ -39,6 +39,10 @@
 		"type": "point",
 		"default": ""
 	},
+	"BossScreenPosition": {
+		"type": "point",
+		"default": ""
+	},
 	"Dice": {
 		"type": "number",
 		"default": 1
