@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://characters/GeneratorContainer.gd" type="Script" id=2]
+[ext_resource path="res://scripts/ScriptsContainer.gd" type="Script" id=1]
 
-[node name="GeneratorContainer" type="PanelContainer"]
+[node name="ScriptsContainer" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -16,8 +16,9 @@ margin_top = 4.0
 margin_right = 1274.0
 margin_bottom = 716.0
 tab_align = 0
+drag_to_rearrange_enabled = true
 
-[node name="GeneratorFileDialog" type="FileDialog" parent="."]
+[node name="ScriptsFileDialog" type="FileDialog" parent="."]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 807.0
@@ -25,8 +26,7 @@ margin_bottom = 407.0
 rect_min_size = Vector2( 800, 400 )
 popup_exclusive = true
 access = 2
-filters = PoolStringArray( "*.hx" )
+filters = PoolStringArray( "*.hx", "*.txt", "*.csv" )
 current_dir = "/Users/mrcdk/development/godot_projects/diceymodgeons"
 current_path = "/Users/mrcdk/development/godot_projects/diceymodgeons/"
-[connection signal="tab_changed" from="FileTabContainer" to="." method="_on_FileTabContainer_tab_changed"]
-[connection signal="file_selected" from="GeneratorFileDialog" to="." method="_on_GeneratorFileDialog_file_selected"]
+[connection signal="file_selected" from="ScriptsFileDialog" to="." method="_on_ScriptsFileDialog_file_selected"]

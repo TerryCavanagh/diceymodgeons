@@ -7,40 +7,35 @@ onready var ScriptContainer = find_node("ScriptContainer")
 onready var FilePathEdit = find_node("FilePathEdit")
 onready var CreateButton = find_node("CreateButton")
 
-var data_id:String = ""
-var data:Dictionary = {}
-
+var path = ""
 var file_name = ""
 var loaded_file:Dictionary = {}
 
-func set_data(data, filename):
-	data_id = Database.get_data_id(data, "ID")
-	self.data = data
-	
+func set_data(path, filename):
 	if not filename.empty() and filename.is_valid_filename():
 		file_name = filename
-		var file = ModFiles.get_file_as_text('data/text/generators/%s' % filename)
+		self.path = path
+		var file = ModFiles.get_file_as_text('data/text/scripts/%s' % filename)
 		if file:
 			loaded_file = file
 			ScriptContainer.text = file.text
 			FilePathEdit.text = file.path
 			FilePathEdit.caret_position = FilePathEdit.text.length()
-			if file.origin == ModFiles.Origin.GAME:
-				CreateButton.text = "Overwrite"
-			else:
-				CreateButton.text = "Change"
 		else:
 			FilePathEdit.clear()
 			ScriptContainer.text = ""
-			CreateButton.text = "Create"
-
+			
+func needs_save():
+	return ModFiles.file_needs_save(path)
 
 func _on_CreateButton_pressed():
 	pass # Replace with function body.
 
 
 func _on_DeleteButton_pressed():
-	emit_signal("delete_pressed", file_name, self)
+	emit_signal("delete_pressed", path, self)
 
 func _on_ScriptContainer_text_changed(new_text):
 	loaded_file.changed_text = new_text
+	emit_signal("text_changed", new_text)
+

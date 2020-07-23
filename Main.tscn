@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://editor.theme" type="Theme" id=1]
 [ext_resource path="res://FileMenu.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://enemies/EnemiesTab.tscn" type="PackedScene" id=8]
 [ext_resource path="res://items/ItemTab.tscn" type="PackedScene" id=9]
 [ext_resource path="res://status_effects/StatusEffectsTab.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scripts/ScriptsTab.tscn" type="PackedScene" id=11]
 
 [node name="Main" type="PanelContainer"]
 anchor_right = 1.0
@@ -20,6 +21,7 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+disable_tabs = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 6.0
@@ -102,6 +104,13 @@ margin_right = -5.0
 margin_bottom = -5.0
 
 [node name="Characters" parent="VBoxContainer/TabContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 35.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="Custom Scripts" parent="VBoxContainer/TabContainer" instance=ExtResource( 11 )]
 visible = false
 margin_left = 5.0
 margin_top = 35.0

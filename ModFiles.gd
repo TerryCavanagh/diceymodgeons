@@ -23,6 +23,9 @@ func get_game_path(file_path:String = ""):
 		extra_path = "diceydungeons.app/Contents/Resources"
 	return '%s/%s/%s' % [game_root_path, extra_path, file_path]
 	
+func is_file_opened(path:String):
+	return path in loaded_files
+	
 func get_file_as_text(file_path:String):
 	var file = _get_file(file_path)
 	if file:
@@ -33,6 +36,12 @@ func get_file_as_text(file_path:String):
 		return r
 	
 	return null
+	
+func file_needs_save(path:String):
+	var file = loaded_files.get(path, null)
+	if file:
+		return _file_needs_save(file)
+	return false
 	
 func files_need_save():
 	for key in loaded_files:

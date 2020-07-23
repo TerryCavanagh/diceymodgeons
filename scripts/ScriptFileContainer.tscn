@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ScriptContainer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/ScriptFileContainer.gd" type="Script" id=2]
+
+[node name="ScriptFileContainer" type="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1273.0
+margin_bottom = 713.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1260.0
+margin_bottom = 702.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 22.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_right = 72.0
+margin_bottom = 22.0
+text = "Script file:"
+
+[node name="FilePathEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+margin_left = 76.0
+margin_right = 1195.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="CreateButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+margin_left = 1135.0
+margin_right = 1193.0
+margin_bottom = 24.0
+text = "Change"
+
+[node name="DeleteButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 1199.0
+margin_right = 1254.0
+margin_bottom = 22.0
+text = "Delete"
+
+[node name="ScriptContainer" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 26.0
+margin_right = 1254.0
+margin_bottom = 698.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/DeleteButton" to="." method="_on_DeleteButton_pressed"]
+[connection signal="text_changed" from="VBoxContainer/ScriptContainer" to="." method="_on_ScriptContainer_text_changed"]
