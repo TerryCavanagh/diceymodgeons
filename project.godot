@@ -30,6 +30,7 @@ config/app_version="0.1.9"
 
 [autoload]
 
+PopupBackgroundHelper="*res://PopupBackgroundHelper.gd"
 Settings="*res://Settings.gd"
 Database="*res://Database.gd"
 Gamedata="*res://Gamedata.gd"

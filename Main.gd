@@ -10,6 +10,8 @@ onready var Items = find_node("Skills")
 onready var StatusEffects = find_node("Status Effects")
 onready var Characters = find_node("Characters")
 
+onready var PopupBackground = find_node("PopupBackground")
+
 onready var ModifiedDataContainer = find_node("ModifiedDataContainer")
 
 func _ready():
@@ -22,9 +24,7 @@ func _ready():
 	Database.connect("data_loaded", self, "_on_Database_data_loaded")
 
 func _process(delta):
-	var modal = get_viewport().get_modal_stack_top()
-	var show_background = modal != null and modal is WindowDialog
-	$PopupBackground.visible = show_background
+	PopupBackground.visible = PopupBackgroundHelper.windows_shown_count > 0
 
 	# TODO make this better
 	ModifiedDataContainer.visible = Database.data_needs_save()
