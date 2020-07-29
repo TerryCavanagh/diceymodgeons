@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/FilePathContainer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/CsvFileContainer.gd" type="Script" id=2]
+
+[node name="CsvFileContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
+
+[node name="FilePathContainer" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 1268.0
+
+[node name="CsvTree" type="Tree" parent="VBoxContainer"]
+margin_top = 26.0
+margin_right = 1268.0
+margin_bottom = 712.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 8
+custom_constants/draw_guides = 1
+custom_constants/hseparation = 8
+custom_constants/draw_relationship_lines = 0
+hide_folding = true
+hide_root = true
+
+[node name="Separators" type="Control" parent="VBoxContainer/CsvTree"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="column_title_pressed" from="VBoxContainer/CsvTree" to="." method="_on_CsvTree_column_title_pressed"]
+[connection signal="item_activated" from="VBoxContainer/CsvTree" to="." method="_on_CsvTree_item_activated"]
+[connection signal="resized" from="VBoxContainer/CsvTree" to="." method="_on_CsvTree_resized"]

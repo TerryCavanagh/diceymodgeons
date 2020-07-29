@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/FilePathContainer.gd" type="Script" id=1]
+
+[node name="FilePathContainer" type="HBoxContainer"]
+margin_right = 1254.0
+margin_bottom = 22.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileLabel" type="Label" parent="."]
+margin_right = 72.0
+margin_bottom = 22.0
+text = "Script file:"
+
+[node name="FilePathEdit" type="LineEdit" parent="."]
+margin_left = 76.0
+margin_right = 1195.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="DeleteButton" type="Button" parent="."]
+margin_left = 1199.0
+margin_right = 1254.0
+margin_bottom = 22.0
+text = "Delete"
+[connection signal="pressed" from="DeleteButton" to="." method="_on_DeleteButton_pressed"]

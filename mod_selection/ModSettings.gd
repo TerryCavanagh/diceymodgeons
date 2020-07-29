@@ -28,18 +28,18 @@ enum Column {
 func _ready():
 	if not Settings.get_value(Settings.DONT_SHOW_WARNINGS, false):
 		WarningPopup.popup_centered()
-		
+
 	path = Settings.get_value(Settings.GAME_PATH)
-	
+
 	if not path:
 		path = OS.get_executable_path()
-		
+
 	if _check_valid_path():
 		GamePathEdit.text = path
 		_fill_mod_list()
-	
+
 	FileDialogPopup.current_dir = path
-	
+
 	ModList.columns = Column.size()
 	ModList.set_column_titles_visible(true)
 	ModList.set_column_title(Column.NAME, "Name")
@@ -47,15 +47,15 @@ func _ready():
 	ModList.set_column_title(Column.MOD_VERSION, "Version")
 	ModList.set_column_title(Column.API_VERSION, "API")
 	ModList.set_column_title(Column.LICENSE, "Licenses")
-	
+
 	ModList.set_column_title(Column.EDIT, "")
 	ModList.set_column_expand(Column.EDIT, false)
 	ModList.set_column_min_width(Column.EDIT, 32)
-	
+
 func _fill_mod_list():
 	if get_focus_owner():
 		get_focus_owner().release_focus()
-		
+
 	ModList.clear()
 	var filled = true
 	var root = ModList.create_item()
@@ -70,7 +70,7 @@ func _fill_mod_list():
 				break
 			if not dir.current_is_dir():
 				continue
-			
+
 			if file.open("%s/%s/_polymod_meta.json" % [path, current], File.READ) == OK:
 				var json = parse_json(file.get_as_text())
 				var item = ModList.create_item(root)
@@ -83,31 +83,31 @@ func _fill_mod_list():
 				item.set_text(Column.API_VERSION, json.get("api_version", "?"))
 				item.set_text(Column.LICENSE, json.get("license", "?"))
 				item.set_metadata(Column.NAME, {"mod": current, "polymod": json.duplicate(true)})
-				
+
 				item.set_cell_mode(Column.EDIT, TreeItem.CELL_MODE_STRING)
 				item.set_editable(Column.EDIT, false)
 				if current_mod_loaded == current:
 					item.set_cell_mode(Column.EDIT, TreeItem.CELL_MODE_CHECK)
 					item.set_checked(Column.EDIT, true)
-				
-				
+
+
 				file.close()
-				
+
 		dir.list_dir_end()
-		
+
 		if root.get_children():
 			filled = true
 		else:
 			filled = false
 	else:
 		filled = false
-		
+
 	if not filled or not ModList.get_selected():
 		EditButton.disabled = true
 		LoadButton.disabled = true
 		LaunchButton.disabled = true
 		ModDescription.text = ""
-	
+
 func _check_valid_path():
 	var dir := Directory.new()
 	var data_path = path
@@ -116,7 +116,7 @@ func _check_valid_path():
 	else:
 		data_path = path + "/data"
 	valid_path = dir.dir_exists(path) and dir.dir_exists(data_path) and dir.dir_exists(path + "/mods")
-	
+
 	if not valid_path:
 		ModList.clear()
 		CreateButton.disabled = true
@@ -129,7 +129,7 @@ func _check_valid_path():
 	else:
 		CreateButton.focus_mode = Control.FOCUS_ALL
 		CreateButton.disabled = false
-		
+
 	return valid_path
 
 func _on_ChangeButton_pressed():
@@ -139,7 +139,7 @@ func _on_CreateButton_pressed():
 	CreateModPopup.show_popup()
 
 func _on_EditButton_pressed():
-	# TODO send the path too so it can actually save the data 
+	# TODO send the path too so it can actually save the data
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
 	var icon_path = "%s/mods/%s/_polymod_icon.png" % [path, meta.get("mod", "")]
 	CreateModPopup.show_popup(meta.get("mod", ""), icon_path, meta.get("polymod", {}))
@@ -157,7 +157,7 @@ func _on_LoadButton_pressed():
 			ConfirmPopup.OTHER:
 				# Don't save and load the other mod
 				pass
-		
+
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
 	var loaded = true
 	if meta and meta.has("mod"):
@@ -165,7 +165,7 @@ func _on_LoadButton_pressed():
 			ConfirmPopup.popup_accept("The mod's API version differs from the supported API by the editor.", "Error!")
 			yield(ConfirmPopup, "action_chosen")
 			loaded = false
-			
+
 		if loaded:
 			Database.load_data(path, meta)
 			current_mod_loaded = meta.get("mod")
@@ -196,7 +196,7 @@ func _on_CreateModPopup_popup_hide():
 
 func _on_LaunchButton_pressed():
 	if not current_mod_loaded or current_mod_loaded.empty(): return
-	
+
 	if Database.data_needs_save():
 		ConfirmPopup.popup_save("The data needs to be saved before launching the game.")
 		var result = yield(ConfirmPopup, "action_chosen")

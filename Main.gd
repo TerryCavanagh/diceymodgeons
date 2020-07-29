@@ -20,25 +20,25 @@ func _ready():
 	for i in disable_tabs:
 		TabContainer.set_tab_disabled(i+1, true)
 	Database.connect("data_loaded", self, "_on_Database_data_loaded")
-	
+
 func _process(delta):
 	var modal = get_viewport().get_modal_stack_top()
 	var show_background = modal != null and modal is WindowDialog
 	$PopupBackground.visible = show_background
-	
+
 	# TODO make this better
 	ModifiedDataContainer.visible = Database.data_needs_save()
-	
+
 func _set_window_title(mod = null):
 	var current_mod = "No mod loaded"
 	if mod:
 		current_mod = "Loaded mod: %s" % mod
-	
+
 	var title = ProjectSettings.get_setting("application/config/name")
 	var api = ProjectSettings.get_setting("application/config/mod_api_version")
 	# setup some window information
 	OS.set_window_title("%s - %s - Mod API %s" % [title, current_mod, api])
-	
+
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
 		if Database.data_needs_save():
@@ -54,16 +54,16 @@ func _notification(what):
 					pass
 		else:
 			get_tree().quit()
-		
+
 func _on_Database_data_loaded(mod, id):
 	_set_window_title(mod)
 	for i in disable_tabs:
 		TabContainer.set_tab_disabled(i+1, false)
-	
+
 	Enemies.TreeList.start_load()
 	Equipment.ItemList.start_load()
 	Items.ItemList.start_load()
 	Characters.CharacterList.start_load()
 	StatusEffects.StatusList.start_load()
-	
+
 	TabContainer.current_tab += 1

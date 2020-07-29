@@ -27,6 +27,6 @@ rect_min_size = Vector2( 800, 400 )
 popup_exclusive = true
 access = 2
 filters = PoolStringArray( "*.hx", "*.txt", "*.csv" )
-current_dir = "/Users/mrcdk/development/godot_projects/diceymodgeons"
-current_path = "/Users/mrcdk/development/godot_projects/diceymodgeons/"
+current_dir = "/projects/godot_projects/diceymodgeons"
+current_path = "/projects/godot_projects/diceymodgeons/"
 [connection signal="file_selected" from="ScriptsFileDialog" to="." method="_on_ScriptsFileDialog_file_selected"]

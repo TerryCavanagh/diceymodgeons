@@ -1,6 +1,7 @@
 extends PanelContainer
 
 const ScriptFileScene = preload("res://scripts/ScriptFileContainer.tscn")
+const CsvFileScene = preload("res://scripts/CsvFileContainer.tscn")
 const EmptyTabScene = preload("res://scripts/EmptyTab.tscn")
 
 export (String) var mod_path = "data/text/scripts/"
@@ -18,34 +19,40 @@ func _ready():
 func set_data(data):
 	data_id = Database.get_data_id(data, "ID")
 	self.data = data
-	
+
 	for child in FileTabContainer.get_children():
 		FileTabContainer.remove_child(child)
 		child.queue_free()
-	
+
 	var generators = data.get("Generator", [])
 	for generator in generators:
 		add_script_tab(generator)
-	
+
 	# load the text into somewhere that we can check if it's changed or not	(database?)
 	# when saving we need to save the edited text coming from GAME to the mod folder!
-	
+
 	add_empty_tab()
 """
 
 func add_script_tab(path, fname, idx = -1):
-	var script_container = ScriptFileScene.instance()
+	var script_container = null
+
+	if fname.get_extension() == "csv":
+		script_container = CsvFileScene.instance()
+	else:
+		script_container = ScriptFileScene.instance()
+
 	script_container.connect("delete_pressed", self, "_on_delete_pressed")
 	FileTabContainer.add_child(script_container)
 	if idx > -1:
 		FileTabContainer.move_child(script_container, idx)
 	else:
 		idx = FileTabContainer.get_child_count()-1
-	
+
 	FileTabContainer.set_tab_title(idx, fname)
-		
+
 	script_container.connect("text_changed", self, "_on_script_text_changed")
-		
+
 	script_container.set_data(path, fname)
 
 func add_empty_tab():
@@ -105,7 +112,7 @@ func _on_ScriptsFileDialog_file_selected(path:String):
 		#Database.commit(Database.Table.EPISODES, Database.CREATE, data_id, "Generator", fname)
 	else:
 		print("Can't open file to write at %s" % path)
-		
+
 func _on_delete_pressed(path, node):
 	ConfirmPopup.popup_confirm("Are you sure that you want to delete the file %s?" % path, "Are you sure?")
 	var result = yield(ConfirmPopup, "action_chosen")
@@ -124,7 +131,7 @@ func _on_delete_pressed(path, node):
 			pass
 		ConfirmPopup.CANCEL:
 			print("Delete Cancelled")
-			
+
 func _on_script_text_changed(new_text):
 	_update_save_state()
 
