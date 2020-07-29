@@ -6,6 +6,8 @@ signal delete_pressed(file_name, node)
 onready var FilePathContainer = find_node("FilePathContainer")
 onready var CsvTree = find_node("CsvTree")
 onready var Separators = find_node("Separators")
+onready var EditColumnsDialog = find_node("EditColumnsDialog")
+onready var CsvEditColumnsContainer = find_node("CsvEditColumnsContainer")
 
 var path = ""
 var file_name = ""
@@ -51,6 +53,8 @@ func setup_csv(file:File):
 					CsvTree.set_column_title(i, titles[i])
 					CsvTree.set_column_expand(i, true)
 					CsvTree.set_column_min_width(i, 150)
+
+				CsvEditColumnsContainer.set_columns(titles)
 
 				is_titles = false
 
@@ -121,6 +125,9 @@ func _on_CsvTree_resized():
 func _on_CsvTree_HScroll_value_changed(new_value):
 	call_deferred("_update_separators")
 
+func _on_EditColumnsButton_pressed():
+	EditColumnsDialog.popup_centered_minsize(Vector2(800, 400))
+
 func _on_vseparator_gui_input(event:InputEvent, separator:VSeparator, column:int):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
@@ -129,7 +136,7 @@ func _on_vseparator_gui_input(event:InputEvent, separator:VSeparator, column:int
 
 	if event is InputEventMouseMotion:
 		event = event as InputEventMouseMotion
-		if separator.get_meta("pressed"):
+		if separator.has_meta("pressed") and separator.get_meta("pressed"):
 			var width = CsvTree.get_column_width(column)
 			width += event.relative.x
 			if width < 20:

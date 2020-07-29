@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/CsvEditColumnsContainer.gd" type="Script" id=1]
+
+[node name="CsvEditColumnsContainer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1274.0
+margin_bottom = 716.0
+
+[node name="ColumnsContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 1268.0
+margin_bottom = 712.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColumnsTree" type="Tree" parent="HBoxContainer/ColumnsContainer"]
+margin_right = 1268.0
+margin_bottom = 686.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/draw_guides = 1
+hide_folding = true
+hide_root = true
+select_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ColumnsContainer"]
+margin_top = 690.0
+margin_right = 1268.0
+margin_bottom = 712.0
+
+[node name="RemoveColumnButton" type="Button" parent="HBoxContainer/ColumnsContainer/HBoxContainer"]
+margin_right = 632.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+text = "-"
+
+[node name="AddColumnButton" type="Button" parent="HBoxContainer/ColumnsContainer/HBoxContainer"]
+margin_left = 636.0
+margin_right = 1268.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+text = "+"
+
+[node name="DataContainer" type="VBoxContainer" parent="HBoxContainer"]
+visible = false
+margin_left = 154.0
+margin_right = 1268.0
+margin_bottom = 712.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+[connection signal="pressed" from="HBoxContainer/ColumnsContainer/HBoxContainer/RemoveColumnButton" to="." method="_on_RemoveColumnButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/ColumnsContainer/HBoxContainer/AddColumnButton" to="." method="_on_AddColumnButton_pressed"]

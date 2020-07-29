@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/FilePathContainer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/CsvFileContainer.gd" type="Script" id=2]
+[ext_resource path="res://scripts/CsvEditColumnsContainer.tscn" type="PackedScene" id=3]
 
 [node name="CsvFileContainer" type="PanelContainer"]
 anchor_right = 1.0
@@ -20,8 +21,20 @@ margin_bottom = 716.0
 [node name="FilePathContainer" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_right = 1268.0
 
-[node name="CsvTree" type="Tree" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 26.0
+margin_right = 1268.0
+margin_bottom = 48.0
+alignment = 2
+
+[node name="EditColumnsButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 1161.0
+margin_right = 1268.0
+margin_bottom = 22.0
+text = "Edit columns..."
+
+[node name="CsvTree" type="Tree" parent="VBoxContainer"]
+margin_top = 52.0
 margin_right = 1268.0
 margin_bottom = 712.0
 size_flags_horizontal = 3
@@ -40,6 +53,16 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="EditColumnsDialog" type="WindowDialog" parent="."]
+margin_right = 48.0
+margin_bottom = 40.0
+popup_exclusive = true
+window_title = "Edit columns..."
+resizable = true
+
+[node name="CsvEditColumnsContainer" parent="EditColumnsDialog" instance=ExtResource( 3 )]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/EditColumnsButton" to="." method="_on_EditColumnsButton_pressed"]
 [connection signal="column_title_pressed" from="VBoxContainer/CsvTree" to="." method="_on_CsvTree_column_title_pressed"]
 [connection signal="item_activated" from="VBoxContainer/CsvTree" to="." method="_on_CsvTree_item_activated"]
 [connection signal="resized" from="VBoxContainer/CsvTree" to="." method="_on_CsvTree_resized"]
