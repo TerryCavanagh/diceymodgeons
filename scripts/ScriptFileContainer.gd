@@ -2,6 +2,7 @@ extends PanelContainer
 
 signal text_changed(value)
 signal delete_pressed(file_name, node)
+signal close_pressed(file_name, node)
 
 onready var ScriptContainer = find_node("ScriptContainer")
 onready var FilePathContainer = find_node("FilePathContainer")
@@ -37,3 +38,6 @@ func _on_ScriptContainer_text_changed(new_text):
 
 func _on_FilePathContainer_delete_pressed():
 	emit_signal("delete_pressed", path, self)
+
+func _on_FilePathContainer_close_pressed():
+	emit_signal("close_pressed", path, self)

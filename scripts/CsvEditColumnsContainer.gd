@@ -17,6 +17,7 @@ func set_columns(columns):
 	for column in columns:
 		var row = ColumnsTree.create_item(root)
 		row.set_editable(0, true)
+		row.set_selectable(0, true)
 		row.set_cell_mode(0, TreeItem.CELL_MODE_STRING)
 		row.set_text(0, column)
 
@@ -32,6 +33,7 @@ func _on_RemoveColumnButton_pressed():
 func _on_AddColumnButton_pressed():
 	var row = ColumnsTree.create_item(root)
 	row.set_editable(0, true)
+	row.set_selectable(0, true)
 	row.set_cell_mode(0, TreeItem.CELL_MODE_STRING)
 	row.select(0)
 	ColumnsTree.ensure_cursor_is_visible()

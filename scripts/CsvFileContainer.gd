@@ -2,6 +2,7 @@ extends PanelContainer
 
 signal text_changed(value)
 signal delete_pressed(file_name, node)
+signal close_pressed(file_name, node)
 
 onready var FilePathContainer = find_node("FilePathContainer")
 onready var CsvTree = find_node("CsvTree")
@@ -65,14 +66,14 @@ func setup_csv(file:File):
 			for i in values.size():
 				row.set_cell_mode(i, TreeItem.CELL_MODE_STRING)
 				row.set_text(i, values[i])
-				row.set_editable(i, false)
+				row.set_editable(i, true)
 
 		for j in 100:
 			var row = CsvTree.create_item(root)
 			for i in columns:
 				row.set_cell_mode(i, TreeItem.CELL_MODE_STRING)
 				row.set_text(i, "")
-				row.set_editable(i, false)
+				row.set_editable(i, true)
 
 		file.close()
 
@@ -125,9 +126,6 @@ func _on_CsvTree_resized():
 func _on_CsvTree_HScroll_value_changed(new_value):
 	call_deferred("_update_separators")
 
-func _on_EditColumnsButton_pressed():
-	EditColumnsDialog.popup_centered_minsize(Vector2(800, 400))
-
 func _on_vseparator_gui_input(event:InputEvent, separator:VSeparator, column:int):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
@@ -146,3 +144,14 @@ func _on_vseparator_gui_input(event:InputEvent, separator:VSeparator, column:int
 
 			CsvTree.set_column_min_width(column, width)
 			call_deferred("_update_separators")
+
+
+func _on_CsvTree_item_edited():
+	var current = CsvTree.get_selected()
+	print('Item has been edited %s' % current.get_text(CsvTree.get_selected_column()))
+
+func _on_FilePathContainer_close_pressed():
+	emit_signal("close_pressed", path, self)
+
+func _on_FilePathContainer_delete_pressed():
+	emit_signal("delete_pressed", path, self)

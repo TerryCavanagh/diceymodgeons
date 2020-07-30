@@ -17,14 +17,21 @@ text = "Script file:"
 
 [node name="FilePathEdit" type="LineEdit" parent="."]
 margin_left = 76.0
-margin_right = 1195.0
+margin_right = 1144.0
 margin_bottom = 22.0
 size_flags_horizontal = 3
 editable = false
 
 [node name="DeleteButton" type="Button" parent="."]
-margin_left = 1199.0
-margin_right = 1254.0
+margin_left = 1148.0
+margin_right = 1203.0
 margin_bottom = 22.0
 text = "Delete"
+
+[node name="CloseButton" type="Button" parent="."]
+margin_left = 1207.0
+margin_right = 1254.0
+margin_bottom = 22.0
+text = "Close"
 [connection signal="pressed" from="DeleteButton" to="." method="_on_DeleteButton_pressed"]
+[connection signal="pressed" from="CloseButton" to="." method="_on_CloseButton_pressed"]

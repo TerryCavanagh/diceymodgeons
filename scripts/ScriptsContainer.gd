@@ -15,25 +15,6 @@ func _ready():
 	add_empty_tab()
 	Database.connect("all_tables_saved", self, "_on_database_save_completed")
 
-"""
-func set_data(data):
-	data_id = Database.get_data_id(data, "ID")
-	self.data = data
-
-	for child in FileTabContainer.get_children():
-		FileTabContainer.remove_child(child)
-		child.queue_free()
-
-	var generators = data.get("Generator", [])
-	for generator in generators:
-		add_script_tab(generator)
-
-	# load the text into somewhere that we can check if it's changed or not	(database?)
-	# when saving we need to save the edited text coming from GAME to the mod folder!
-
-	add_empty_tab()
-"""
-
 func add_script_tab(path, fname, idx = -1):
 	var script_container = null
 
@@ -43,6 +24,9 @@ func add_script_tab(path, fname, idx = -1):
 		script_container = ScriptFileScene.instance()
 
 	script_container.connect("delete_pressed", self, "_on_delete_pressed")
+	script_container.connect("close_pressed", self, "_on_close_pressed")
+	script_container.connect("text_changed", self, "_on_script_text_changed")
+
 	FileTabContainer.add_child(script_container)
 	if idx > -1:
 		FileTabContainer.move_child(script_container, idx)
@@ -50,8 +34,6 @@ func add_script_tab(path, fname, idx = -1):
 		idx = FileTabContainer.get_child_count()-1
 
 	FileTabContainer.set_tab_title(idx, fname)
-
-	script_container.connect("text_changed", self, "_on_script_text_changed")
 
 	script_container.set_data(path, fname)
 
@@ -69,14 +51,16 @@ func open_file_dialog(mode):
 	if not dir.dir_exists(path):
 		dir.make_dir_recursive(path)
 	ScriptsFileDialog.current_path = path
+	ScriptsFileDialog.current_file = ""
 	ScriptsFileDialog.mode = mode
 	ScriptsFileDialog.popup_centered_minsize(ScriptsFileDialog.rect_min_size)
+	ScriptsFileDialog.deselect_items()
 
-"""
-func _on_FileTabContainer_tab_changed(tab):
-	if tab == new_tab_idx:
-		open_file_dialog()
-"""
+func close_tab(node:Node, path:String = ""):
+	if not path.empty(): ModFiles.close_file(path)
+	FileTabContainer.remove_child(node)
+	node.queue_free()
+	new_tab_idx -= 1
 
 func _update_save_state():
 	for idx in FileTabContainer.get_tab_count():
@@ -91,15 +75,12 @@ func _on_ScriptsFileDialog_file_selected(path:String):
 	if ModFiles.is_file_opened(path):
 		for idx in FileTabContainer.get_tab_count():
 			var control = FileTabContainer.get_tab_control(idx)
-			if control.path == path:
+			if control and control.path == path:
 				FileTabContainer.current_tab = idx
 				break
 		return
+
 	var fname = path.get_file()
-	#var current = Database.commit(Database.Table.EPISODES, Database.READ, data_id, "Generator")
-	#if current.has(fname):
-	#	ConfirmPopup.popup_accept("The selected file is already in use.", "Warning")
-	#	return
 	var file = File.new()
 	var mode = File.WRITE
 	if file.file_exists(path):
@@ -109,7 +90,6 @@ func _on_ScriptsFileDialog_file_selected(path:String):
 		add_script_tab(path, fname, new_tab_idx)
 		FileTabContainer.current_tab = new_tab_idx
 		new_tab_idx += 1
-		#Database.commit(Database.Table.EPISODES, Database.CREATE, data_id, "Generator", fname)
 	else:
 		print("Can't open file to write at %s" % path)
 
@@ -122,8 +102,8 @@ func _on_delete_pressed(path, node):
 			var op = dir.remove(path)
 			if op == OK:
 				print('Delete correctly')
-				FileTabContainer.remove_child(node)
-				node.queue_free()
+				close_tab(node, path)
+
 				#Database.commit(Database.Table.EPISODES, Database.DELETE, data_id, "Generator", file_name.get_basename())
 			else:
 				print('Could not delete it D: %s' % path)
@@ -131,6 +111,23 @@ func _on_delete_pressed(path, node):
 			pass
 		ConfirmPopup.CANCEL:
 			print("Delete Cancelled")
+
+func _on_close_pressed(path, node):
+	var close = true
+
+	if node.has_method("needs_save") and node.needs_save():
+		ConfirmPopup.popup_save("The file needs to be saved first. Do you want to save it before closing it?", "Are you sure?")
+		var result = yield(ConfirmPopup, "action_chosen")
+		match result:
+			ConfirmPopup.OKAY:
+				ModFiles.save_file(path)
+			ConfirmPopup.OTHER:
+				pass
+			ConfirmPopup.CANCEL:
+				close = false
+
+	if close:
+		close_tab(node, path)
 
 func _on_script_text_changed(new_text):
 	_update_save_state()

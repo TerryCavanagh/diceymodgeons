@@ -31,5 +31,6 @@ margin_right = 1254.0
 margin_bottom = 698.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+[connection signal="close_pressed" from="VBoxContainer/FilePathContainer" to="." method="_on_FilePathContainer_close_pressed"]
 [connection signal="delete_pressed" from="VBoxContainer/FilePathContainer" to="." method="_on_FilePathContainer_delete_pressed"]
 [connection signal="text_changed" from="VBoxContainer/ScriptContainer" to="." method="_on_ScriptContainer_text_changed"]

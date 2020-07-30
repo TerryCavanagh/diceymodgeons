@@ -10,11 +10,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FileTabContainer" type="TabContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 6.0
 margin_top = 4.0
 margin_right = 1274.0
 margin_bottom = 716.0
+custom_constants/separation = 0
+
+[node name="FileTabContainer" type="TabContainer" parent="VBoxContainer"]
+margin_right = 1268.0
+margin_bottom = 712.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 tab_align = 0
 drag_to_rearrange_enabled = true
 

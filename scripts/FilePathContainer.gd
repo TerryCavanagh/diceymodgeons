@@ -1,6 +1,7 @@
 extends HBoxContainer
 
 signal delete_pressed()
+signal close_pressed()
 
 
 export (String) var label_text = ""
@@ -27,3 +28,6 @@ func _get_text():
 
 func _on_DeleteButton_pressed() -> void:
 	emit_signal("delete_pressed")
+
+func _on_CloseButton_pressed():
+	emit_signal("close_pressed")

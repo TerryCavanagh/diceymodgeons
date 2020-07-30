@@ -26,6 +26,15 @@ func get_game_path(file_path:String = ""):
 func is_file_opened(path:String):
 	return path in loaded_files
 
+func close_file(path:String):
+	if path in loaded_files:
+		var obj = loaded_files[path]
+		var file = obj.get("file", null)
+		if file and file is File and file.is_open():
+			file.close()
+
+		loaded_files.erase(path)
+
 func get_file_as_text(file_path:String):
 	var file = _get_file(file_path)
 	if file:
@@ -62,19 +71,25 @@ func files_need_save():
 
 func save_files():
 	for key in loaded_files:
-		var obj = loaded_files[key]
-		if not _file_needs_save(obj): continue
-		var path = obj.path
-		if obj.origin == Origin.GAME:
-			var fname = path.get_file()
-			path = get_mod_path("data/text/generators/%s" % fname)
+		save_file(key)
 
-		var file = File.new()
-		if file.open(path, File.WRITE) == OK:
-			file.store_string(obj.changed_text)
-			file.close()
-			obj.text = obj.changed_text
+func save_file(file_path):
+	if not file_path in loaded_files: return
 
+	var obj = loaded_files[file_path]
+
+	if not _file_needs_save(obj): return
+
+	var path = obj.path
+	if obj.origin == Origin.GAME:
+		var fname = path.get_file()
+		path = get_mod_path("data/text/generators/%s" % fname)
+
+	var file = File.new()
+	if file.open(path, File.WRITE) == OK:
+		file.store_string(obj.changed_text)
+		file.close()
+		obj.text = obj.changed_text
 
 func _file_needs_save(file):
 	return file.text.hash() != file.changed_text.hash()

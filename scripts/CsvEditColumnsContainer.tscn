@@ -19,16 +19,25 @@ margin_bottom = 716.0
 [node name="ColumnsContainer" type="VBoxContainer" parent="HBoxContainer"]
 margin_right = 1268.0
 margin_bottom = 712.0
-rect_min_size = Vector2( 150, 0 )
+rect_min_size = Vector2( 200, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Label" type="Label" parent="HBoxContainer/ColumnsContainer"]
+margin_right = 1268.0
+margin_bottom = 22.0
+text = "Edit columns"
+align = 1
+valign = 1
+
 [node name="ColumnsTree" type="Tree" parent="HBoxContainer/ColumnsContainer"]
+margin_top = 26.0
 margin_right = 1268.0
 margin_bottom = 686.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/draw_guides = 1
+allow_reselect = true
 hide_folding = true
 hide_root = true
 select_mode = 1
