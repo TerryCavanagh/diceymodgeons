@@ -12,7 +12,8 @@ onready var CsvEditColumnsContainer = find_node("CsvEditColumnsContainer")
 
 var path = ""
 var file_name = ""
-var loaded_file:Dictionary = {}
+var loaded_file:ModFiles.CsvFile = null
+var columns = 0
 
 func _ready():
 	# Hacky way of getting the hscroll from the csvtree control
@@ -24,60 +25,59 @@ func set_data(path, filename):
 	if not filename.empty() and filename.is_valid_filename():
 		file_name = filename
 		self.path = path
-		var file = ModFiles.get_file('data/text/scripts/%s' % filename)
+		var file = ModFiles.get_file_csv('data/text/scripts/%s' % filename)
 
 		if file:
 			loaded_file = file
-			setup_csv(file.file)
+			setup_csv(file)
 			FilePathContainer.text = file.path
 		else:
 			clear_csv()
 			FilePathContainer.clear()
 
-func setup_csv(file:File):
+func setup_csv(file):
 	clear_csv()
 
 	CsvTree.set_column_titles_visible(true)
 
 	var root = CsvTree.create_item()
-	if file.get_as_text().empty():
-		print("Show wizard")
+
+	if file.csv.empty():
+		print("file is empty")
 	else:
-		var is_titles = true
-		var columns = -1
-		while not file.eof_reached():
-			if is_titles:
-				var titles = file.get_csv_line(",")
-				columns = titles.size()
-				CsvTree.columns = columns
-				for i in titles.size():
-					CsvTree.set_column_title(i, titles[i])
-					CsvTree.set_column_expand(i, true)
-					CsvTree.set_column_min_width(i, 150)
+		var titles = file.headers
+		columns = titles.size()
+		CsvTree.columns = columns
+		for i in titles.size():
+			CsvTree.set_column_title(i, titles[i])
+			CsvTree.set_column_expand(i, true)
+			CsvTree.set_column_min_width(i, 150)
 
-				CsvEditColumnsContainer.set_columns(titles)
+		CsvEditColumnsContainer.set_columns(titles)
 
-				is_titles = false
+		var total_lines = file.csv.size()
 
-				continue
-
-			var values = file.get_csv_line(",")
+		for j in total_lines:
+			var values = file.csv[j]
 			var row = CsvTree.create_item(root)
-			for i in values.size():
+			row.set_metadata(0, {"index": j})
+			for i in columns:
+				var value = values[i]
+				if not value:
+					value = ""
 				row.set_cell_mode(i, TreeItem.CELL_MODE_STRING)
-				row.set_text(i, values[i])
+				row.set_text(i, value)
 				row.set_editable(i, true)
 
 		for j in 100:
 			var row = CsvTree.create_item(root)
+			row.set_metadata(0, {"index": total_lines + j})
 			for i in columns:
 				row.set_cell_mode(i, TreeItem.CELL_MODE_STRING)
 				row.set_text(i, "")
 				row.set_editable(i, true)
 
-		file.close()
-
-		call_deferred("_update_separators")
+	call_deferred("_update_separators")
 
 func clear_csv():
 	CsvTree.clear()
@@ -103,6 +103,16 @@ func _update_separators():
 		vseparator.mouse_default_cursor_shape = Control.CURSOR_HSIZE
 		width += CsvTree.get_column_width(i)
 		vseparator.rect_position.x = -CsvTree.get_scroll().x + width
+
+func _ensure_size(rows:int):
+	var current = loaded_file.csv.size()
+	if current < rows:
+		loaded_file.csv.resize(rows+1)
+		for i in range(current, rows+1):
+			loaded_file.csv[i] = []
+			loaded_file.csv[i].resize(columns)
+			for col in columns:
+				loaded_file.csv[i][col] = ""
 
 
 func _on_CsvTree_item_activated():
@@ -148,7 +158,19 @@ func _on_vseparator_gui_input(event:InputEvent, separator:VSeparator, column:int
 
 func _on_CsvTree_item_edited():
 	var current = CsvTree.get_selected()
-	print('Item has been edited %s' % current.get_text(CsvTree.get_selected_column()))
+	if not current.get_metadata(0):
+		print("This edited item has no metadata D:")
+		return
+
+	var row = current.get_metadata(0).get("index", 0)
+	var col = CsvTree.get_selected_column()
+	var text = current.get_text(col)
+	_ensure_size(row)
+	var old = loaded_file.csv[row][col]
+	print('Item (row=%s col=%s) old %s text %s' % [row, col, old, text])
+	loaded_file.csv[row][col] = text
+	print(loaded_file.csv[row])
+	emit_signal("text_changed", text)
 
 func _on_FilePathContainer_close_pressed():
 	emit_signal("close_pressed", path, self)

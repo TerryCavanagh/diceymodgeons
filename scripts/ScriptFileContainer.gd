@@ -9,7 +9,7 @@ onready var FilePathContainer = find_node("FilePathContainer")
 
 var path = ""
 var file_name = ""
-var loaded_file:Dictionary = {}
+var loaded_file:ModFiles.ScriptFile = null
 
 func set_data(path, filename):
 	if not filename.empty() and filename.is_valid_filename():

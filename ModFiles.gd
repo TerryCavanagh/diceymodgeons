@@ -28,31 +28,43 @@ func is_file_opened(path:String):
 
 func close_file(path:String):
 	if path in loaded_files:
-		var obj = loaded_files[path]
-		var file = obj.get("file", null)
-		if file and file is File and file.is_open():
-			file.close()
-
 		loaded_files.erase(path)
 
-func get_file_as_text(file_path:String):
+func get_file_as_text(file_path:String)->ScriptFile:
 	var file = _get_file(file_path)
 	if file:
 		var result = file.file.get_as_text()
 		file.file.close()
-		var r = {"text": result, "path": file.path, "origin": file.origin, "changed_text": result}
+		var r = ScriptFile.new()
+		r.text = result
+		r.changed_text = result
+		r.path = file.path
+		r.origin = file.origin
 		loaded_files[file.path] = r
 		return r
 
 	return null
 
-func get_file(file_path:String):
+func get_file_csv(file_path:String)->CsvFile:
 	var file = _get_file(file_path)
 	if file:
-		var result = file.file.get_as_text()
-		var r = {"text": result, "path": file.path, "origin": file.origin, "file": file.file, "changed_text": result}
-		loaded_files[file.path] = r
-		return r
+			var headers = Array(file.file.get_csv_line())
+			var content = []
+			while not file.file.eof_reached():
+				var values = Array(file.file.get_csv_line())
+				values.resize(headers.size())
+				content.push_back(values)
+
+			file.file.close()
+
+			var r = CsvFile.new()
+			r.headers = headers
+			r.csv = content
+			r.original_hash = content.hash()
+			r.path = file.path
+			r.origin = file.origin
+			loaded_files[file.path] = r
+			return r
 
 	return null
 
@@ -85,14 +97,27 @@ func save_file(file_path):
 		var fname = path.get_file()
 		path = get_mod_path("data/text/generators/%s" % fname)
 
-	var file = File.new()
-	if file.open(path, File.WRITE) == OK:
-		file.store_string(obj.changed_text)
+	if obj is CsvFile:
+		var file = File.new()
+		if file.open(path, File.WRITE) == OK:
+			file.store_csv_line(obj.headers)
+		for line in obj.csv:
+			file.store_csv_line(line)
+
 		file.close()
-		obj.text = obj.changed_text
+		obj.original_hash = file.csv.hash()
+	elif obj is ScriptFile:
+		var file = File.new()
+		if file.open(path, File.WRITE) == OK:
+			file.store_string(obj.changed_text)
+			file.close()
+			obj.text = obj.changed_text
 
 func _file_needs_save(file):
-	return file.text.hash() != file.changed_text.hash()
+	if file is CsvFile:
+		return file.csv.hash() != file.original_hash
+	elif file is ScriptFile:
+		return file.text.hash() != file.changed_text.hash()
 
 func _get_file(file_path:String):
 	var mod_path = get_mod_path(file_path)
@@ -105,3 +130,17 @@ func _get_file(file_path:String):
 		return {"file": file, "path": game_path, "origin": Origin.GAME}
 
 	return null
+
+
+class ScriptFile extends Resource:
+	var text:String = ""
+	var changed_text:String = ""
+	var path:String = ""
+	var origin = Origin.MOD
+
+class CsvFile extends Resource:
+	var headers:Array = []
+	var csv:Array = []
+	var original_hash:int = -1
+	var path:String = ""
+	var origin = Origin.MOD
