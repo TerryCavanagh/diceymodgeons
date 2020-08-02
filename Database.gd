@@ -100,6 +100,10 @@ func data_needs_save():
 		if table == Table.NONE: continue
 		if get_table(table).data_needs_save():
 			return true
+
+	if ModFiles.files_need_save():
+		return true
+
 	return false
 
 func load_data(root_path:String, metadata:Dictionary):
@@ -581,9 +585,6 @@ class CSVData:
 		for id in data:
 			if not compare(id):
 				return true
-
-		if ModFiles.files_need_save():
-			return true
 
 		return false
 
