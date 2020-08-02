@@ -101,11 +101,20 @@ func save_file(file_path):
 		var file = File.new()
 		if file.open(path, File.WRITE) == OK:
 			file.store_csv_line(obj.headers)
+
+		var headers_size = obj.headers.size()
 		for line in obj.csv:
-			file.store_csv_line(line)
+			var empty = 0
+			for i in headers_size:
+				var c = line[i]
+				if not c or c.empty():
+					empty += 1
+
+			if empty < headers_size:
+				file.store_csv_line(line)
 
 		file.close()
-		obj.original_hash = file.csv.hash()
+		obj.original_hash = obj.csv.hash()
 	elif obj is ScriptFile:
 		var file = File.new()
 		if file.open(path, File.WRITE) == OK:

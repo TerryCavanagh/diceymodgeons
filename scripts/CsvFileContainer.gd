@@ -106,7 +106,7 @@ func _update_separators():
 
 func _ensure_size(rows:int):
 	var current = loaded_file.csv.size()
-	if current < rows:
+	if current < rows+1:
 		loaded_file.csv.resize(rows+1)
 		for i in range(current, rows+1):
 			loaded_file.csv[i] = []
