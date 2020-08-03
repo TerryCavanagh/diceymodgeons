@@ -12,21 +12,21 @@ func _ready():
 func set_data(data):
 	self.data = data
 	data_id = Database.get_data_id(data, "ID")
-	
+
 	var sprite_name = data.get("CombatAnimation", null)
 	var sprite_offset = data.get("CombatAnimationOffset", Vector2())
 	var overworld_name = data.get("OverworldAnimation", null)
 	var overworld_offset = data.get("OverworldAnimationOffset", Vector2())
-	
+
 	CombatScreen.reset()
-	
+
 	if sprite_name:
 		print(sprite_name)
 		# TODO
 		var texture = null
 		var hd = false
 		CombatScreen.set_sprite(texture, sprite_offset, hd)
-		
+
 	if overworld_name:
 		print(overworld_name)
 		# TODO

@@ -17,7 +17,7 @@ var items:Dictionary = {
 
 func _init():
 	load_data()
-	
+
 func load_data():
 	var file = File.new()
 	var path = "res://assets/api_%s/gamedata.json" % [ProjectSettings.get_setting("application/config/mod_api_version")]

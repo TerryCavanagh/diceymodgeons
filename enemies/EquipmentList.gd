@@ -30,16 +30,16 @@ func _ready():
 
 func set_list(list, show_upgraded:bool = false, filter = null):
 	self.list = list
-	
+
 	EquipTree.clear()
-	
+
 	if not filter and not Search.text.empty():
 		filter = Search.text
 	self.filter = filter
-	
+
 	if not show_upgraded_check or UpgradedCheck.pressed:
 		show_upgraded = true
-	
+
 	var sublist:Array = []
 	for item in list:
 		var add = true
@@ -53,44 +53,44 @@ func set_list(list, show_upgraded:bool = false, filter = null):
 		else:
 			if item.get("equipment", "").find("_") > -1:
 				add = false
-		
+
 		if not add: continue
-		
+
 		if filter:
 			if item.get("equipment", "").findn(filter) > -1:
 				sublist.push_back(item)
 		else:
 			sublist.push_back(item)
-	
+
 	if order:
 		sublist.sort_custom(self, "_sort_equipment")
-	
+
 	var i = 0
 	for item in sublist:
 		var key = item.get("equipment", "")
 		EquipTree.add_equipment(item)
 		i += 1
-	
+
 func unselect_all():
 	var selected = EquipTree.get_selected()
 	if selected:
 		selected.deselect(0)
-	
+
 func _sort_equipment(a, b):
 	return a.get("equipment", "").nocasecmp_to(b.get("equipment", "")) < 0
 
 func _on_Search_text_changed(new_text):
 	set_list(list, UpgradedCheck.pressed, new_text)
-	
+
 func _on_EquipTree_equipment_selected(equipment):
 	emit_signal("item_selected", equipment)
-	
+
 func _on_EquipTree_value_changed(equipment, value):
 	emit_signal("value_changed", equipment, value)
-	
+
 func _on_UpgradedCheck_pressed():
 	set_list(list, UpgradedCheck.pressed, filter)
-	
+
 func _on_EquipTree_list_updated(list):
 	pass # Replace with function body.
 
@@ -98,22 +98,22 @@ func _set_title(v):
 	title = v
 	if not Title: return
 	Title.text = v
-	
+
 func _set_can_add(v):
 	can_add = v
 	if not EquipTree: return
 	EquipTree.can_add = v
-	
+
 func _set_can_remove(v):
 	can_remove = v
 	if not EquipTree: return
 	EquipTree.can_remove = v
-	
+
 func _set_can_sort(v):
 	can_sort = v
 	if not EquipTree: return
 	EquipTree.can_sort = v
-	
+
 func _set_order(v):
 	order = v
 	if not EquipTree: return

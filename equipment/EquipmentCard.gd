@@ -12,12 +12,12 @@ var card_size = 1
 
 func _ready():
 	change_size(1)
-	
+
 func change_color(color:String, category:String, upgraded:bool = false):
 	if color.empty():
 		# get the category color
 		color = Gamedata.items.get("categories", {}).get(category, {}).get("color", "GRAY")
-		
+
 	match color:
 		"GRAY":
 			color = "grey"
@@ -29,7 +29,7 @@ func change_color(color:String, category:String, upgraded:bool = false):
 			color = "blue"
 		"BLACK":
 			color = "silence"
-			
+
 	var upgraded_name = "usmall" if upgraded else "small"
 	var texture = "res://assets/panels/%s_%s.png" % [upgraded_name, color.to_lower()]
 	var stylebox = get_stylebox("panel").duplicate()
@@ -43,7 +43,7 @@ func set_title(title:String):
 	title = Utils.humanize_equipment_name(title)
 	Title.text = title.to_upper()
 	Title.rect_scale = Vector2(0.8, 0.8)
-	
+
 func set_description(desc:String):
 	var regex = RegEx.new()
 	regex.compile(brackets_regex)
@@ -63,7 +63,7 @@ func set_description(desc:String):
 		elif s == "gray":
 			pass
 	result += desc.substr(last, desc.length() - last)
-	
+
 	result = result.replace("<d6>", "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
 	result = result.replace("<slotdoubles>", "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
 	result = result.replace("<double>", "2x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
@@ -71,12 +71,12 @@ func set_description(desc:String):
 	result = result.replace("<quadruple>", "4x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
 	result = result.replace("<quintuple>", "5x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
 	result = result.replace("<sextuple>", "6x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
-	
+
 	regex.compile(arrows_regex)
 	result = regex.sub(result, "[color=red]99[/color]", true)
 	Description.clear()
 	Description.bbcode_text = "[center]%s[/center]" % result
-	
+
 	_update_description_position()
 
 func change_size(s):
@@ -95,7 +95,7 @@ func change_size(s):
 		margin_right = rect_pivot_offset.x
 		margin_top = -rect_pivot_offset.y
 		margin_bottom = rect_pivot_offset.y
-		
+
 	_update_description_position()
 
 func _update_description_position():

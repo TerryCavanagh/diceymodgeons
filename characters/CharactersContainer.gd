@@ -18,15 +18,15 @@ func _add_character(char_name):
 	Database.commit(Database.Table.CHARACTERS, Database.CREATE, key)
 	Database.commit(Database.Table.CHARACTERS, Database.UPDATE, key, "Levelpack", levelpack)
 	Database.commit(Database.Table.CHARACTERS, Database.UPDATE, key, "Character", char_name)
-	
+
 	CharacterList.force_reload(key)
 
 func _on_CharacterList_item_selected(key):
 	if not TabContainer: return
-	if key == null or key.empty(): 
+	if key == null or key.empty():
 		TabContainer.visible = false
 		return
-		
+
 	var data = Database.commit(Database.Table.CHARACTERS, Database.READ, key)
 	TabContainer.visible = true
 	Data.set_data(data)

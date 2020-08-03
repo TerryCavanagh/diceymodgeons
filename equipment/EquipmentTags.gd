@@ -39,20 +39,20 @@ func _ready():
 func set_data(data):
 	data_id = Database.get_data_id(data, "Name")
 	self.data = data
-	
+
 	_setup(TagsButton, "Tags", [])
-	
+
 func _setup(node, key, def):
 	if node == TagsButton:
 		var popup:PopupMenu = TagsButton.get_popup()
 		Utils.connect_signal(popup, key, "id_pressed", self, "_on_TagsButton_popup_id_pressed")
 		load_tags()
-			
+
 func clear_tags():
 	for child in TagsContainer.get_children():
 		TagsContainer.remove_child(child)
 		child.queue_free()
-		
+
 func load_tags():
 	if not data: return
 	print("loading tags")
@@ -67,30 +67,30 @@ func load_tags():
 
 func add_tag(new_tag, update_database):
 	new_tag = new_tag.strip_edges().to_lower()
-	
+
 	ErrorTimer.stop()
 	ErrorLabel.visible = false
-	
+
 	var tags = data.get("Tags", [])
-	
+
 	if new_tag.empty():
 		ErrorTimer.start()
 		ErrorLabel.visible = true
 		ErrorLabel.text = invalid_data_text
 		return ERR_INVALID_DATA
-		
+
 	if update_database and new_tag in tags:
 		ErrorTimer.start()
 		ErrorLabel.visible = true
 		ErrorLabel.text = already_exists_text
 		return ERR_ALREADY_EXISTS
-		
+
 	if not tag_regex_obj.search(new_tag):
 		ErrorTimer.start()
 		ErrorLabel.visible = true
 		ErrorLabel.text = invalid_data_text
 		return ERR_INVALID_DATA
-		
+
 	var tag_container = TagContainerScene.instance()
 	tag_container.connect("delete_requested", self, "remove_tag", [new_tag, true])
 	tag_container.set_meta("tag", new_tag)
@@ -101,7 +101,7 @@ func add_tag(new_tag, update_database):
 	# Ideally we would make a custom container to calculate this but for this case
 	# it should be enough.
 	TmpControl.add_child(tag_container)
-	
+
 	var container:HBoxContainer = null
 	if TagsContainer.get_child_count() > 0:
 		container = TagsContainer.get_child(TagsContainer.get_child_count() - 1)
@@ -110,39 +110,39 @@ func add_tag(new_tag, update_database):
 		container = HBoxContainer.new()
 		container.size_flags_horizontal = 0
 		TagsContainer.add_child(container)
-	
+
 	TmpControl.remove_child(tag_container)
 	container.add_child(tag_container)
-	
+
 	if update_database:
 		tags.push_back(new_tag)
 		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Tags", tags)
-		
+
 		var popup:PopupMenu = TagsButton.get_popup()
 		for idx in popup.get_item_count():
 			var meta = popup.get_item_metadata(idx)
 			popup.set_item_checked(idx, meta in tags)
-	
+
 	return OK
-	
+
 func remove_tag(tag, update_database):
 	for container in TagsContainer.get_children():
 		for child in container.get_children():
 			if child.has_meta("tag") and child.get_meta("tag") == tag:
 				container.remove_child(child)
 				child.queue_free()
-				
+
 				var popup:PopupMenu = TagsButton.get_popup()
 				for idx in popup.get_item_count():
 					var meta = popup.get_item_metadata(idx)
 					if meta == tag:
 						popup.set_item_checked(idx, false)
-				
+
 				if update_database:
 					var tags = data.get("Tags", [])
 					tags.erase(tag)
 					Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Tags", tags)
-				
+
 				break
 		if container.get_child_count() == 0:
 			TagsContainer.remove_child(container)

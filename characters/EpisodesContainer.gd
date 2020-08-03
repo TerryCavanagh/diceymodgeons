@@ -20,21 +20,21 @@ func _ready():
 func setup(character):
 	self.character = character
 	EpisodeList.start_load()
-	
+
 func _process_data(data):
 	var result = {}
 	for key in data.keys():
 		if data.get(key).get("Character", "") != character:
 			continue
-			
+
 		result[key] = data[key]
-	
+
 	return result
-	
+
 func _change_episode_text(key):
 	var data = Database.commit(Database.Table.EPISODES, Database.READ, key)
 	return "%s. %s" % [data.get("Level", "?"), data.get("Episode Name", "???")]
-	
+
 func _add_episode(episode_name):
 	var levels = _process_data(Database.read(Database.Table.EPISODES, EpisodeList.overwrite_mode))
 	var level = levels.size() + 1
@@ -45,14 +45,14 @@ func _add_episode(episode_name):
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Character", character)
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Level", level)
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, key, "Episode Name", episode_name)
-	
+
 	EpisodeList.force_reload(key)
 
 func _on_EpisodeList_item_selected(key):
 	if not key:
 		TabContainer.visible = false
 		return
-	
+
 	TabContainer.visible = true
 	var data = Database.commit(Database.Table.EPISODES, Database.READ, key)
 	Data.set_data(data)

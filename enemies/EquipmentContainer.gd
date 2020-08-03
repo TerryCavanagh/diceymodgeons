@@ -19,7 +19,7 @@ var append_equipment_func:FuncRef = null
 func _ready():
 	set_data({}, "")
 	EquippedContainer.order = order_equipped
-	
+
 func _load_equipment_list():
 	var equipment = Database.commit(Database.Table.EQUIPMENT, Database.READ)
 	if not equipment: return false
@@ -28,44 +28,44 @@ func _load_equipment_list():
 		var e = equipment.get(key)
 		var special = e.get("Special?", false)
 		if show_only_special:
-			if not special: 
+			if not special:
 				continue
 		elif special:
 			continue
-		if filter_list_func and not filter_list_func.call_func(e): 
+		if filter_list_func and not filter_list_func.call_func(e):
 			continue
-			
+
 		var category = e.get("Category", "ITEM")
-			
+
 		_equipment.push_back({"prepared": false, "equipment": key, "category": category})
-		
+
 	if show_only_special:
 		_equipment.push_back({"prepared": false, "equipment": "Monstermode"})
-		
+
 	if append_equipment_func:
 		append_equipment_func.call_func(_equipment)
-	
+
 	return true
-	
+
 func force_reload():
 	set_data(data, key)
-	
+
 func set_data(data, key):
 	self.key = key
 	self.data = data
-	
+
 	EquipmentCard.visible = false
-	
+
 	if not _load_equipment_list(): return
-	
+
 	var available = _equipment
 	var equipped = data.get(self.key, [])
 	for equip in equipped:
 		equip["equipment"] = Utils.to_csv_equipment_name(equip["equipment"])
-	
+
 	AvailableContainer.set_list(available)
 	EquippedContainer.set_list(equipped)
-	
+
 func _update_card(equipment):
 	if not equipment: return
 	var key = equipment.get("equipment", "")
@@ -73,7 +73,7 @@ func _update_card(equipment):
 	if not equip:
 		EquipmentCard.visible = false
 		return
-		
+
 	EquipmentCard.visible = true
 	EquipmentCard.set_title(equip.get("Name", "Title"))
 	EquipmentCard.change_size(equip.get("Size", 1))
@@ -90,12 +90,12 @@ func _on_EquippedContainer_item_selected(equipment):
 
 func _on_EquippedContainer_value_changed(equipment, value):
 	emit_signal("value_changed", equipment, value)
-	
+
 func _set_order_equipped(v):
 	order_equipped = v
 	if not EquippedContainer: return
 	EquippedContainer.order = order_equipped
-	
+
 func _set_show_only_special(v):
 	show_only_special = v
 	if not EquippedContainer: return

@@ -14,14 +14,14 @@ onready var AddNewEquipmentPopup = find_node("AddNewEquipmentPopup")
 
 func _ready():
 	TabContainer.visible = false
-	
+
 	ItemList.process_data_func = funcref(self, "_process_data")
 	ItemList.modified_func = funcref(self, "_data_modified")
 	AddNewEquipmentPopup.add_func = funcref(self, "_add_equipment")
-	
+
 func _add_equipment(value):
 	Database.commit(Database.Table.EQUIPMENT, Database.CREATE, value)
-	
+
 func _data_modified(key):
 	var table = Database.get_table(Database.Table.EQUIPMENT)
 	var modified = false
@@ -31,25 +31,25 @@ func _data_modified(key):
 			modified = not table.compare(k)
 		if modified:
 			return true
-			
+
 	return false
-	
+
 func _process_data(data):
 	var result = {}
 	for key in data.keys():
 		if key.ends_with("_upgraded") or key.ends_with("_downgraded") or key.ends_with("_weakened") or key.ends_with("_deckupgrade"):
 			continue
-			
+
 		result[key] = data[key]
-	
+
 	return result
-	
+
 func _on_ItemList_item_selected(key):
 	if not TabContainer: return
-	if key == null or key.empty(): 
+	if key == null or key.empty():
 		TabContainer.visible = false
 		return
-	
+
 	TabContainer.visible = true
 	Normal.set_key(key)
 	Upgraded.set_key(key)

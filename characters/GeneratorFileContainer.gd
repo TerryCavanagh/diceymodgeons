@@ -16,7 +16,7 @@ var loaded_file:Dictionary = {}
 func set_data(data, filename):
 	data_id = Database.get_data_id(data, "ID")
 	self.data = data
-	
+
 	if not filename.empty() and filename.is_valid_filename():
 		file_name = filename
 		var file = ModFiles.get_file_as_text('data/text/generators/%s' % filename)

@@ -8,7 +8,7 @@ onready var Symbols = find_node("Symbols")
 var text = "" setget _set_text, _get_text
 
 func _ready():
-	
+
 	for symbol in Gamedata.symbols.keys():
 		var data = Gamedata.symbols[symbol]
 		var button = TextureButton.new()
@@ -22,14 +22,14 @@ func _ready():
 		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		button.connect("pressed", self, "_on_TextureButton_pressed", [symbol])
 		Symbols.add_child(button)
-		
+
 	TextEdit.text = text
 
 func _set_text(value):
 	text = value
 	if not TextEdit: return
 	TextEdit.text = value
-	
+
 func _get_text():
 	if not TextEdit: return text
 	return TextEdit.text

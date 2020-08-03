@@ -21,7 +21,7 @@ func _ready():
 func _create_item(popup:PopupMenu, label:String, scancode:int, meta, ctrl:bool = false, alt:bool = false, shift:bool = false):
 	var ev = InputEventKey.new()
 	ev.scancode = scancode
-	ev.meta = false	
+	ev.meta = false
 	if OS.get_name() == "OSX":
 		ev.command = ctrl
 	else:

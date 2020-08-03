@@ -33,67 +33,67 @@ var data:Dictionary = {}
 
 func _ready():
 	SizeOption.set_meta("list", ["1", "2"])
-	
+
 	Utils.fill_options(CategoryOption, Gamedata.items.get("categories", {}), true)
 	Utils.fill_options(ColorOption, Gamedata.items.get("colors", []), true)
 	Utils.fill_options(UpgradeOption, Gamedata.items.get("upgrade_modifier", {}), false)
 	Utils.fill_options(WeakenOption, Gamedata.items.get("weaken_modifier", {}), false)
-	
+
 func set_data(data):
 	data_id = Database.get_data_id(data, "Name")
 	self.data = data
-	
+
 	var status = Database.commit(Database.Table.STATUS_EFFECTS, Database.READ, null, "Name")
 	status.push_front('NONE')
 	var filtered = []
 	for s in status:
 		if s.begins_with("alternate_"):
 			continue
-		
+
 		filtered.push_back(s)
-		
+
 	Utils.fill_options(AlternateStatusOption, filtered, true)
-	
+
 	_setup(SizeOption, "Size", 1)
 	_setup(CategoryOption, "Category", "")
 	_setup(ColorOption, "Colour", "")
 	_setup(AlternateStatusOption, "Alternate Status Trigger", "")
-	
+
 	_setup(UsesSpin, "Uses?", 0)
 	_setup(SpellSpin, "Witch Spell", 0)
-	
+
 	_setup(CastBackwardsCheck, "Cast Backwards?", false)
 	_setup(SingleUseCheck, "Single use?", false)
 	_setup(SFXCheck, "SFX", false)
-	
+
 	_setup(EquipmentTags, "Tags", [])
-	
+
 	_setup(SlotsContainer, "Slots", [])
-	
+
 	_setup(UpgradeOption, "Upgrade", "")
 	_setup(WeakenOption, "Weaken", "")
-	
+
 	_setup(DescriptionEdit, "Description", "")
-	
+
 	if data_id.find("_") > -1:
 		var table = Database.get_table(Database.Table.EQUIPMENT)
 		DeleteButton.visible = not table.is_in_game_data(data_id)
-	
+
 	EquipmentCard.set_title(data_id)
 	EquipmentCard.change_size(data.get("Size", 1))
 	EquipmentCard.set_description(data.get("Description", ""))
-	
+
 	EquipmentCard.change_color(data.get("Colour", ""), data.get("Category", ""), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
-	
+
 	var items = Database.commit(Database.Table.SKILLS, Database.READ)
 	var values = {}
 	values["None"] = "No gadget"
 	for item in items.keys():
 		values[item] = items[item].get("Description", "")
 	Utils.fill_options(GadgetOption, values, false)
-	
+
 	_setup(GadgetOption, "Gadget", "")
-	
+
 func _setup(node, key, def):
 	if node is SpinBox:
 		node.value = data.get(key, def)
@@ -124,7 +124,7 @@ func _setup(node, key, def):
 		node.set_data(data)
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
-	
+
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
@@ -132,19 +132,19 @@ func _on_SpinBox_value_changed(value, node, key):
 func _on_LineEdit_text_changed(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
-	
+
 func _on_CheckBox_toggled(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
-	
+
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
-	
+
 	if node == DescriptionEdit:
 		EquipmentCard.set_description(node.text)
-		
+
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, node.text)
-	
+
 func _on_OptionButton_item_selected(id, node, key):
 	if not data_id: return
 	Utils.update_option_tooltip(node, id)
@@ -156,21 +156,21 @@ func _on_OptionButton_item_selected(id, node, key):
 	if node == CategoryOption:
 		if ColorOption.selected == 0:
 			EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
-			
+
 		var category = Utils.option_get_selected_key(CategoryOption)
 		SlotsContainer.visible = not (category == "BACKUP" or category == "SKILLCARD")
-		
+
 	var value = Utils.option_get_selected_key(node)
-	
+
 	if (node == ColorOption or node == UpgradeOption or node == WeakenOption or node == AlternateStatusOption) and node.selected == 0:
 		value = ""
-		
+
 	if node == SizeOption:
 		value = node.selected + 1
 		EquipmentCard.change_size(value)
-		
+
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, value)
-		
+
 func _on_SlotsContainer_slots_changed(slots, node, key):
 	if not data_id: return
 	if node.visible:

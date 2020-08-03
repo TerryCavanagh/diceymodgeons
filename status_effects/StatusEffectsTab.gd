@@ -12,7 +12,7 @@ func _add_status_effect(value):
 	Database.commit(Database.Table.STATUS_EFFECTS, Database.CREATE, value)
 
 func _on_StatusList_item_selected(key):
-	if key == null or key.empty(): 
+	if key == null or key.empty():
 		return
 
 	var data = Database.commit(Database.Table.STATUS_EFFECTS, Database.READ, key)

@@ -23,11 +23,11 @@ var data:Dictionary = {}
 
 func _ready():
 	SuperCheck.connect("toggled", self, "_show_super_row")
-	
+
 func set_data(data):
 	data_id = Database.get_data_id(data, "ID")
 	self.data = data
-	
+
 	_setup(LevelBox, "Level", 0)
 	_setup(HealthBox, "Health", 0)
 	_setup(DiceBox, "Dice", 0)
@@ -40,13 +40,13 @@ func set_data(data):
 	_setup(SuperDiceBox, "Super Dice", 0)
 	_setup(FirstWordsEdit, "First Words", "")
 	_setup(LastWordsEdit, "Last Words", "")
-	
+
 	_setup(InnateContainer, "Innate", [])
 	_setup(EquipmentContainer, "Equipment", [])
 	_setup(SuperEquipmentContainer, "Super Equipment", [])
-	
+
 	_show_super_row(SuperCheck.pressed)
-	
+
 func _setup(node, key, def):
 	if node is SpinBox:
 		node.value = data.get(key, def)
@@ -68,33 +68,33 @@ func _setup(node, key, def):
 		Utils.connect_signal(node, key, "value_changed", self, "_on_EquipmentContainer_value_changed")
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
-	
+
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, data_id, key, value)
-	
+
 func _on_LineEdit_text_changed(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, data_id, key, value)
-	
+
 func _on_CheckBox_toggled(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, data_id, key, value)
-	
+
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, data_id, key, node.text)
-	
+
 func _on_InnateContainer_value_changed(innate, value, node, key):
 	if not data_id: return
 	var action = Database.CREATE if value else Database.DELETE
 	Database.commit(Database.Table.FIGHTERS, action, data_id, key, innate)
-	
+
 func _on_EquipmentContainer_value_changed(equipment, value, node, key):
 	if not data_id: return
 	var action = Database.CREATE if value else Database.DELETE
 	print('%s -- %s - %s' % [key, equipment, value])
 	Database.commit(Database.Table.FIGHTERS, action, data_id, key, equipment)
-	
+
 func _show_super_row(value):
 	SuperRow.visible = value
