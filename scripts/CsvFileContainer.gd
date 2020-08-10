@@ -21,6 +21,10 @@ func _ready():
 		if child is HScrollBar:
 			child.connect("value_changed", self, "_on_CsvTree_HScroll_value_changed")
 
+	CsvEditColumnsContainer.connect("column_added", self, "_on_column_added")
+	CsvEditColumnsContainer.connect("column_edited", self, "_on_column_edited")
+	CsvEditColumnsContainer.connect("column_removed", self, "_on_column_removed")
+
 func set_data(path, filename):
 	if not filename.empty() and filename.is_valid_filename():
 		file_name = filename
@@ -42,7 +46,7 @@ func setup_csv(file):
 
 	var root = CsvTree.create_item()
 
-	if file.csv.empty():
+	if file.headers.empty():
 		print("file is empty")
 	else:
 		var titles = file.headers
@@ -104,6 +108,12 @@ func _update_separators():
 		width += CsvTree.get_column_width(i)
 		vseparator.rect_position.x = -CsvTree.get_scroll().x + width
 
+	if Separators.get_child_count() > CsvTree.columns:
+		for i in range(CsvTree.columns, Separators.get_child_count()):
+			var child = Separators.get_child(i)
+			Separators.remove_child(child)
+			child.queue_free()
+
 func _ensure_size(rows:int):
 	var current = loaded_file.csv.size()
 	if current < rows+1:
@@ -114,6 +124,31 @@ func _ensure_size(rows:int):
 			for col in columns:
 				loaded_file.csv[i][col] = ""
 
+func _on_column_added(column_name):
+	CsvTree.columns += 1
+
+	CsvTree.set_column_title(CsvTree.columns, column_name)
+	CsvTree.set_column_expand(CsvTree.columns, true)
+	CsvTree.set_column_min_width(CsvTree.columns, 150)
+
+	emit_signal("text_changed", "")
+	call_deferred("_update_separators")
+
+
+func _on_column_removed(column_name):
+	pass
+
+func _on_column_edited(old_column_name, new_column_name):
+	for i in CsvTree.columns:
+		if CsvTree.get_column_title(i) == old_column_name:
+			CsvTree.set_column_title(i, new_column_name)
+
+	var idx = loaded_file.headers.find(old_column_name)
+	if idx > -1:
+		loaded_file.headers[idx] = new_column_name
+
+	emit_signal("text_changed", "")
+	call_deferred("_update_separators")
 
 func _on_CsvTree_item_activated():
 	var selected = CsvTree.get_selected()

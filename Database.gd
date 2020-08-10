@@ -182,6 +182,7 @@ func set_overwrite_mode(table, value):
 	t.overwrite_mode = value
 
 func read(table:int, overwrite_mode:bool = false):
+	if table == Table.NONE: return {}
 	var data = Database.commit(table, Database.READ)
 	var new_data = {}
 	for key in data.keys():

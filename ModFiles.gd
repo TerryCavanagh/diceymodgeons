@@ -61,6 +61,7 @@ func get_file_csv(file_path:String)->CsvFile:
 			r.headers = headers
 			r.csv = content
 			r.original_hash = content.hash()
+			r.headers_hash = headers.hash()
 			r.path = file.path
 			r.origin = file.origin
 			loaded_files[file.path] = r
@@ -124,7 +125,7 @@ func save_file(file_path):
 
 func _file_needs_save(file):
 	if file is CsvFile:
-		return file.csv.hash() != file.original_hash
+		return file.csv.hash() != file.original_hash or file.headers.hash() != file.headers_hash
 	elif file is ScriptFile:
 		return file.text.hash() != file.changed_text.hash()
 
@@ -151,5 +152,6 @@ class CsvFile extends Resource:
 	var headers:Array = []
 	var csv:Array = []
 	var original_hash:int = -1
+	var headers_hash:int = -1
 	var path:String = ""
 	var origin = Origin.MOD
