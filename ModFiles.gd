@@ -49,6 +49,10 @@ func get_file_csv(file_path:String)->CsvFile:
 	var file = _get_file(file_path)
 	if file:
 			var headers = Array(file.file.get_csv_line())
+			# new created files start with a empty header of one empty column, let's clear it
+			if headers.size() == 1 and headers[0].empty():
+				headers.clear()
+
 			var content = []
 			while not file.file.eof_reached():
 				var values = Array(file.file.get_csv_line())
@@ -106,6 +110,10 @@ func save_file(file_path):
 		var headers_size = obj.headers.size()
 		for line in obj.csv:
 			var empty = 0
+			if line.size() < headers_size:
+				line.resize(headers_size)
+				for i in range(line.size()-1, headers_size):
+					line[i] = ""
 			for i in headers_size:
 				var c = line[i]
 				if not c or c.empty():
@@ -115,7 +123,10 @@ func save_file(file_path):
 				file.store_csv_line(line)
 
 		file.close()
+
 		obj.original_hash = obj.csv.hash()
+		obj.headers_hash = obj.headers.hash()
+
 	elif obj is ScriptFile:
 		var file = File.new()
 		if file.open(path, File.WRITE) == OK:

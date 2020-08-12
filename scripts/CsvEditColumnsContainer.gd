@@ -11,12 +11,13 @@ var columns = []
 var root = null
 
 func _ready():
+	root = ColumnsTree.create_item()
 	AddPopup.add_func = funcref(self, "_add_column")
 	AddPopup.check_valid_func = funcref(self, "_check_valid")
-	root = ColumnsTree.create_item()
 
 func set_columns(columns):
 	ColumnsTree.clear()
+	root = ColumnsTree.create_item()
 	self.columns = columns
 	for column in columns:
 		var row = ColumnsTree.create_item(root)
@@ -36,6 +37,8 @@ func _add_column(text):
 	row.set_text(0, text)
 	row.select(0)
 	ColumnsTree.ensure_cursor_is_visible()
+
+	emit_signal("column_added", text)
 
 func _check_valid(value):
 	for column in columns:
@@ -62,5 +65,6 @@ func _on_ColumnsTree_item_edited():
 	var meta = selected.get_metadata(0)
 	var old = meta.get("original", "")
 	var new = selected.get_text(0)
-	emit_signal("column_edited", old, new)
 	selected.set_metadata(0, {"original": new})
+	emit_signal("column_edited", old, new)
+

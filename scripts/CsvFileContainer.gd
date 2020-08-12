@@ -46,8 +46,12 @@ func setup_csv(file):
 
 	var root = CsvTree.create_item()
 
+	var total_lines = 0
+
 	if file.headers.empty():
 		print("file is empty")
+		CsvTree.columns = 0
+		total_lines = 0
 	else:
 		var titles = file.headers
 		columns = titles.size()
@@ -57,15 +61,18 @@ func setup_csv(file):
 			CsvTree.set_column_expand(i, true)
 			CsvTree.set_column_min_width(i, 150)
 
-		CsvEditColumnsContainer.set_columns(titles)
+		CsvEditColumnsContainer.set_columns(titles.duplicate())
 
-		var total_lines = file.csv.size()
+		total_lines = file.csv.size()
 
 		for j in total_lines:
 			var values = file.csv[j]
 			var row = CsvTree.create_item(root)
 			row.set_metadata(0, {"index": j})
 			for i in columns:
+				if i >= values.size():
+					print("What the fuck")
+					continue
 				var value = values[i]
 				if not value:
 					value = ""
@@ -73,13 +80,13 @@ func setup_csv(file):
 				row.set_text(i, value)
 				row.set_editable(i, true)
 
-		for j in 100:
-			var row = CsvTree.create_item(root)
-			row.set_metadata(0, {"index": total_lines + j})
-			for i in columns:
-				row.set_cell_mode(i, TreeItem.CELL_MODE_STRING)
-				row.set_text(i, "")
-				row.set_editable(i, true)
+	for j in 100:
+		var row = CsvTree.create_item(root)
+		row.set_metadata(0, {"index": total_lines + j})
+		for i in columns:
+			row.set_cell_mode(i, TreeItem.CELL_MODE_STRING)
+			row.set_text(i, "")
+			row.set_editable(i, true)
 
 	call_deferred("_update_separators")
 
@@ -125,27 +132,42 @@ func _ensure_size(rows:int):
 				loaded_file.csv[i][col] = ""
 
 func _on_column_added(column_name):
-	CsvTree.columns += 1
 
-	CsvTree.set_column_title(CsvTree.columns, column_name)
-	CsvTree.set_column_expand(CsvTree.columns, true)
-	CsvTree.set_column_min_width(CsvTree.columns, 150)
+	loaded_file.headers.push_back(column_name)
+
+	for i in loaded_file.csv.size():
+		var values = loaded_file.csv[i]
+		if values.size() < CsvTree.columns + 1:
+			for j in range(values.size(), CsvTree.columns + 1):
+				values.push_back("")
+
+	setup_csv(loaded_file)
 
 	emit_signal("text_changed", "")
 	call_deferred("_update_separators")
 
-
 func _on_column_removed(column_name):
-	pass
+
+	var idx = loaded_file.headers.find(column_name)
+
+	if idx > -1:
+		loaded_file.headers.remove(idx)
+		for i in loaded_file.csv.size():
+			var values = loaded_file.csv[i]
+			values.remove(idx)
+
+	setup_csv(loaded_file)
+
+	emit_signal("text_changed", "")
+	call_deferred("_update_separators")
 
 func _on_column_edited(old_column_name, new_column_name):
-	for i in CsvTree.columns:
-		if CsvTree.get_column_title(i) == old_column_name:
-			CsvTree.set_column_title(i, new_column_name)
 
 	var idx = loaded_file.headers.find(old_column_name)
 	if idx > -1:
 		loaded_file.headers[idx] = new_column_name
+
+	setup_csv(loaded_file)
 
 	emit_signal("text_changed", "")
 	call_deferred("_update_separators")
