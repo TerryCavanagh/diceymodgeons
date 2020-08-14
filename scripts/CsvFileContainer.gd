@@ -105,6 +105,7 @@ func _update_separators():
 		else:
 			vseparator = VSeparator.new()
 			Separators.add_child(vseparator)
+			vseparator.show_behind_parent = true
 			vseparator.connect("gui_input", self, "_on_vseparator_gui_input", [vseparator, i])
 
 		vseparator["custom_constants/separation"] = 10

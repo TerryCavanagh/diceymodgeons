@@ -6,6 +6,7 @@ signal column_edited(old_column_name, new_column_name)
 
 onready var ColumnsTree = find_node("ColumnsTree")
 onready var AddPopup = find_node("AddPopup")
+onready var ConfirmPopup = find_node("ConfirmPopup")
 
 var columns = []
 var root = null
@@ -50,15 +51,18 @@ func _check_valid(value):
 func _on_RemoveColumnButton_pressed():
 	var row = ColumnsTree.get_selected()
 	if row:
-		root.remove_child(row)
 		var meta = row.get_metadata(0)
-		emit_signal("column_removed", meta.get("original", ""))
-		row.free()
-		root.select(0)
+		var col = meta.get("original", "")
+		ConfirmPopup.popup_confirm("Are you sure that you want to delete the column \"%s\"?\n(This action cannot be undone)" % col)
+		var result = yield(ConfirmPopup, "action_chosen")
+		match result:
+			ConfirmPopup.OKAY:
+				emit_signal("column_removed", col)
+				root.remove_child(row)
+				root.select(0)
 
 func _on_AddColumnButton_pressed():
 	AddPopup.popup_centered(Vector2(400, 120))
-	return
 
 func _on_ColumnsTree_item_edited():
 	var selected = ColumnsTree.get_selected()

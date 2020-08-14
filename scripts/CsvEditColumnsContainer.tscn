@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/CsvEditColumnsContainer.gd" type="Script" id=1]
 [ext_resource path="res://AddPopup.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ConfirmPopup.tscn" type="PackedScene" id=3]
 
 [node name="CsvEditColumnsContainer" type="PanelContainer"]
 anchor_right = 1.0
@@ -38,6 +39,7 @@ margin_bottom = 686.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/draw_guides = 1
+custom_constants/draw_relationship_lines = 0
 allow_reselect = true
 hide_folding = true
 hide_root = true
@@ -62,10 +64,13 @@ size_flags_horizontal = 3
 text = "+"
 
 [node name="AddPopup" parent="." instance=ExtResource( 2 )]
+window_title = "Add a new column"
 empty_name_message = "Add a name for the column"
 bad_name_message = "The column already exists!"
 good_name_message = "All correct."
 table = 0
+
+[node name="ConfirmPopup" parent="." instance=ExtResource( 3 )]
 [connection signal="item_edited" from="HBoxContainer/ColumnsContainer/ColumnsTree" to="." method="_on_ColumnsTree_item_edited"]
 [connection signal="pressed" from="HBoxContainer/ColumnsContainer/HBoxContainer/RemoveColumnButton" to="." method="_on_RemoveColumnButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/ColumnsContainer/HBoxContainer/AddColumnButton" to="." method="_on_AddColumnButton_pressed"]
