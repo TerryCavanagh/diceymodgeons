@@ -135,6 +135,7 @@ func _update_SlotsContainer_visibility(tags):
 	for hide_it_for_tag in Gamedata.items.get("hide_slots_for_tags", []):
 		if hide_it_for_tag in tags:
 			SlotsContainer.visible = false
+			# TODO update database here
 			return
 
 	SlotsContainer.visible = true

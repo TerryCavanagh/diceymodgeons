@@ -4,6 +4,8 @@ signal text_changed(new_text)
 
 onready var TextEdit = find_node("TextEdit")
 
+export (String) var database_key = ""
+
 export (String, MULTILINE) var text setget _set_text, _get_text
 export (bool) var enable_highlighting = true setget _set_enable_highlighting
 

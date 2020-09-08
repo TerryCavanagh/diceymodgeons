@@ -8,7 +8,8 @@ onready var RemoveEndTurnCheck = find_node("RemoveEndTurnCheck")
 onready var StacksCheck = find_node("StacksCheck")
 onready var InvisibleCheck = find_node("InvisibleCheck")
 onready var BlockedByReduceCheck = find_node("BlockedByReduceCheck")
-onready var ExternalScriptCheck = find_node("ExternalScriptCheck")
+
+onready var ScriptsContainer = find_node("ScriptsContainer")
 
 var data:Dictionary = {}
 var data_id:String = ""
@@ -31,12 +32,16 @@ func set_data(data):
 	_setup(SymbolsOption, "Symbol", "ice")
 	_setup(DisplayAsEdit, "Displayed As", data_id)
 	_setup(DescriptionEdit, "Description", "")
-	_setup(ExternalScriptCheck, "External Scripts?", false)
 	_setup(StacksCheck, "Stacks?", false)
 	_setup(RemoveEndTurnCheck, "Remove at End Turn?", false)
 	_setup(RemoveStartTurnCheck, "Remove at Start Turn?", false)
 	_setup(InvisibleCheck, "Invisible?", false)
 	_setup(BlockedByReduceCheck, "Blocked By Reduce?", false)
+
+	for child in ScriptsContainer.get_children():
+		_setup_script(child, child.name, child.database_key, "")
+
+
 
 func _setup(node, key, def):
 	if node is CheckBox:
@@ -57,6 +62,24 @@ func _setup(node, key, def):
 				break
 
 		Utils.connect_signal(node, key, "item_selected", self, "_on_SymbolsOption_item_selected")
+
+func _setup_script(node:Node, node_name, key, def):
+	node.text = data.get(key, def)
+	if not node.has_meta("original_name"):
+		node.set_meta("original_name", node_name)
+	_change_script_name(node, node.text.empty())
+	Utils.connect_signal(node, key, "text_changed", self, "_on_StatusEffectScript_text_changed")
+
+func _change_script_name(node, empty_text):
+	if empty_text:
+		node.name = node.get_meta("original_name")
+	else:
+		node.name = "[%s]" % node.get_meta("original_name")
+
+func _on_StatusEffectScript_text_changed(text, node, key):
+	if not data_id: return
+	_change_script_name(node, text.empty())
+	Database.commit(Database.Table.STATUS_EFFECTS, Database.UPDATE, data_id, key, text)
 
 func _on_CheckBox_toggled(value, node, key):
 	if not data_id: return

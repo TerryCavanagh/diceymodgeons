@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://status_effects/StatusEffectContainer.gd" type="Script" id=1]
 [ext_resource path="res://DescriptionEdit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ScriptContainer.tscn" type="PackedScene" id=3]
 
 [node name="StatusEffectContainer" type="PanelContainer"]
 anchor_right = 1.0
@@ -116,9 +117,96 @@ margin_right = 225.0
 margin_bottom = 80.0
 text = "Blocked by reduce"
 
-[node name="ExternalScriptCheck" type="CheckBox" parent="VBoxContainer/CenterContainer/GridContainer"]
-margin_left = 229.0
-margin_top = 56.0
-margin_right = 449.0
-margin_bottom = 80.0
-text = "Has external script"
+[node name="ScriptsContainer" type="TabContainer" parent="VBoxContainer"]
+margin_top = 360.0
+margin_right = 1268.0
+margin_bottom = 712.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="When inflicted" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: When inflicted"
+
+[node name="On any status infliction" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: On any status infliction"
+
+[node name="Before start turn" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: Before Start Turn"
+
+[node name="On start turn" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: On Start Turn"
+
+[node name="On any equipment use" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: On any equipment use"
+
+[node name="On any countdown reduce" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: On any countdown reduce"
+
+[node name="End turn" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: End Turn"
+
+[node name="After combat" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: After Combat"
+
+[node name="On damage inflicted" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: On damage inflicted"
+
+[node name="On damage taken" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: On damage taken"
+
+[node name="On status remove" parent="VBoxContainer/ScriptsContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 29.0
+margin_right = -5.0
+margin_bottom = -5.0
+database_key = "Script: On status remove"
