@@ -50,6 +50,7 @@ items = [ "1", null, false, 0, null, "2", null, false, 1, null ]
 selected = 0
 
 [node name="CategoryContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
+visible = false
 margin_left = 82.0
 margin_right = 333.0
 margin_bottom = 22.0
@@ -67,8 +68,8 @@ rect_min_size = Vector2( 180, 0 )
 clip_text = true
 
 [node name="ColorContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 337.0
-margin_right = 566.0
+margin_left = 82.0
+margin_right = 311.0
 margin_bottom = 22.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/ColorContainer"]
@@ -83,8 +84,8 @@ margin_bottom = 22.0
 rect_min_size = Vector2( 180, 0 )
 
 [node name="AlternateStatusContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 570.0
-margin_right = 868.0
+margin_left = 315.0
+margin_right = 613.0
 margin_bottom = 22.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/AlternateStatusContainer"]

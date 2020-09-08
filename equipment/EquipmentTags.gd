@@ -1,5 +1,8 @@
 extends PanelContainer
 
+signal tag_added(tag)
+signal tag_removed(tag)
+
 const TagContainerScene = preload("res://equipment/TagContainer.tscn")
 
 export (String) var already_exists_text = "The tag already exists"
@@ -115,8 +118,7 @@ func add_tag(new_tag, update_database):
 	container.add_child(tag_container)
 
 	if update_database:
-		tags.push_back(new_tag)
-		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Tags", tags)
+		emit_signal("tag_added", new_tag)
 
 		var popup:PopupMenu = TagsButton.get_popup()
 		for idx in popup.get_item_count():
@@ -139,9 +141,7 @@ func remove_tag(tag, update_database):
 						popup.set_item_checked(idx, false)
 
 				if update_database:
-					var tags = data.get("Tags", [])
-					tags.erase(tag)
-					Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Tags", tags)
+					emit_signal("tag_removed", tag)
 
 				break
 		if container.get_child_count() == 0:

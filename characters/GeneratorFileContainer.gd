@@ -11,7 +11,7 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 var file_name = ""
-var loaded_file:Dictionary = {}
+var loaded_file:ModFiles.ScriptFile = null
 
 func set_data(data, filename):
 	data_id = Database.get_data_id(data, "ID")

@@ -12,7 +12,8 @@ var items:Dictionary = {
 	"slots": {},
 	"upgrade_modifier": {},
 	"weaken_modified": {},
-	"default_tags": {}
+	"default_tags": {},
+	"hide_slots_for_tags": []
 	}
 
 func _init():

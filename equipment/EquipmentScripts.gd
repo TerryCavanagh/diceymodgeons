@@ -13,6 +13,7 @@ onready var OnEndTurn = find_node("On End Turn")
 onready var OnAnyEquipmentUse = find_node("On Any Equipment Use")
 onready var OnSnap = find_node("On Snap")
 onready var OnFury = find_node("On Fury")
+onready var OnDodge = find_node("On Dodge")
 onready var OnCountdownReduce = find_node("On Countdown Reduce")
 
 var data_id:String = ""
@@ -35,6 +36,7 @@ func set_data(data):
 	_setup(OnAnyEquipmentUse, "On Any Equipment Use", "Script: On any equipment use", "")
 	_setup(OnSnap, "On Snap", "Script: On Snap", "")
 	_setup(OnFury, "On Fury", "Script: On Fury", "")
+	_setup(OnDodge, "On Dodge", "Script: On Dodge", "")
 	_setup(OnCountdownReduce, "On Countdown Reduce", "Script: On any countdown reduce", "")
 
 func _setup(node, node_name, key, def):

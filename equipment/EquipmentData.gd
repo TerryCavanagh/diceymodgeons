@@ -3,7 +3,7 @@ extends PanelContainer
 signal equipment_deleted(key)
 
 onready var SizeOption = find_node("SizeOption")
-onready var CategoryOption = find_node("CategoryOption")
+#onready var CategoryOption = find_node("CategoryOption")
 onready var ColorOption = find_node("ColorOption")
 onready var AlternateStatusOption = find_node("AlternateStatusOption")
 
@@ -34,7 +34,7 @@ var data:Dictionary = {}
 func _ready():
 	SizeOption.set_meta("list", ["1", "2"])
 
-	Utils.fill_options(CategoryOption, Gamedata.items.get("categories", {}), true)
+#	Utils.fill_options(CategoryOption, Gamedata.items.get("categories", {}), true)
 	Utils.fill_options(ColorOption, Gamedata.items.get("colors", []), true)
 	Utils.fill_options(UpgradeOption, Gamedata.items.get("upgrade_modifier", {}), false)
 	Utils.fill_options(WeakenOption, Gamedata.items.get("weaken_modifier", {}), false)
@@ -55,7 +55,7 @@ func set_data(data):
 	Utils.fill_options(AlternateStatusOption, filtered, true)
 
 	_setup(SizeOption, "Size", 1)
-	_setup(CategoryOption, "Category", "")
+#	_setup(CategoryOption, "Category", "")
 	_setup(ColorOption, "Colour", "")
 	_setup(AlternateStatusOption, "Alternate Status Trigger", "")
 
@@ -115,15 +115,29 @@ func _setup(node, key, def):
 		node.text = data.get(key, def)
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	elif node == SlotsContainer:
-		var category = data.get("Category", "")
-		node.visible = not (category == "BACKUP" or category == "SKILLCARD")
+		var tags = data.get("Tags", [])
+		_update_SlotsContainer_visibility(tags)
 		node.set_data(data)
 		Utils.connect_signal(node, "Slots", "slots_changed", self, "_on_SlotsContainer_slots_changed")
 		Utils.connect_signal(node, "NEED TOTAL?", "total_changed", self, "_on_SlotsContainer_total_changed")
 	elif node == EquipmentTags:
 		node.set_data(data)
+
+		var tags = data.get(key, [])
+		_update_SlotsContainer_visibility(tags)
+
+		Utils.connect_signal(node, "Tags", "tag_added", self, "_on_EquipmentTags_tag_added")
+		Utils.connect_signal(node, "Tags", "tag_removed", self, "_on_EquipmentTags_tag_removed")
 	else:
 		printerr("Node %s couldn't be setup" % node.name)
+
+func _update_SlotsContainer_visibility(tags):
+	for hide_it_for_tag in Gamedata.items.get("hide_slots_for_tags", []):
+		if hide_it_for_tag in tags:
+			SlotsContainer.visible = false
+			return
+
+	SlotsContainer.visible = true
 
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
@@ -150,19 +164,20 @@ func _on_OptionButton_item_selected(id, node, key):
 	Utils.update_option_tooltip(node, id)
 	if node == ColorOption:
 		var color = node.get_item_text(node.selected).to_upper()
-		if node.selected == 0:
-			color = ""
-		EquipmentCard.change_color(color, Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
-	if node == CategoryOption:
-		if ColorOption.selected == 0:
-			EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
+#		EquipmentCard.change_color(color, Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
+		EquipmentCard.change_color(color, "GRAY", data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
 
-		var category = Utils.option_get_selected_key(CategoryOption)
-		SlotsContainer.visible = not (category == "BACKUP" or category == "SKILLCARD")
+#	if node == CategoryOption:
+#		if ColorOption.selected == 0:
+#			EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
+#
+#		var category = Utils.option_get_selected_key(CategoryOption)
+#		SlotsContainer.visible = not (category == "BACKUP" or category == "SKILLCARD")
+
 
 	var value = Utils.option_get_selected_key(node)
 
-	if (node == ColorOption or node == UpgradeOption or node == WeakenOption or node == AlternateStatusOption) and node.selected == 0:
+	if (node == UpgradeOption or node == WeakenOption or node == AlternateStatusOption) and node.selected == 0:
 		value = ""
 
 	if node == SizeOption:
@@ -181,6 +196,18 @@ func _on_SlotsContainer_slots_changed(slots, node, key):
 func _on_SlotsContainer_total_changed(new_total, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, new_total)
+
+func _on_EquipmentTags_tag_added(value, node, key):
+	var tags = data.get(key, [])
+	tags.push_back(value)
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, tags)
+	_update_SlotsContainer_visibility(tags)
+
+func _on_EquipmentTags_tag_removed(value, node, key):
+	var tags = data.get(key, [])
+	tags.erase(value)
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, tags)
+	_update_SlotsContainer_visibility(tags)
 
 func _on_DeleteButton_pressed():
 	if not data_id: return

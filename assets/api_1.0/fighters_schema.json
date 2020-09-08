@@ -3,10 +3,6 @@
 		"type": "string",
 		"default": ""
 	},
-	"Levelpack": {
-		"type": "string",
-		"default": ""
-	},
 	"Name": {
 		"type": "string",
 		"default": ""
@@ -97,10 +93,6 @@
 	},
 	"Script: End Turn": {
 		"type": "script",
-		"default": ""
-	},
-	"Elemental Type": {
-		"type": "string",
 		"default": ""
 	},
 	"Innate": {

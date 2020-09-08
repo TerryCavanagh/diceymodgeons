@@ -180,37 +180,7 @@
 		}
 	},
 	"items": {
-		"categories": {
-			"MAGIC": {
-				"description": "Magic equipment",
-				"color": "YELLOW"
-			},
-			"WEAPON": {
-				"description": "Weapon equipment",
-				"color": "RED"
-			},
-			"SHIELD": {
-				"description": "Shield equipment",
-				"color": "ORANGE"
-			},
-			"ITEM": {
-				"description": "An item",
-				"color": "GREEN"
-			},
-			"SKILLCARD": {
-				"description": "Skillcard",
-				"color": "WHITE"
-			},
-			"FINAL": {
-				"description": "Final",
-				"color": "ORANGE"
-			},
-			"BACKUP": {
-				"description": "Backup",
-				"color": "GRAY"
-			}
-		},
-		"colors": ["Use category's color", "GRAY", "BLUE", "RED", "GREEN", "YELLOW", "PURPLE", "CYAN", "WHITE", "BRIGHTCYAN", "ORANGE", "BLACK", "PINK"],
+		"colors": ["GRAY", "BLUE", "RED", "GREEN", "YELLOW", "PURPLE", "CYAN", "WHITE", "BRIGHTCYAN", "ORANGE", "BLACK", "PINK"],
 		"cast_backwards": ["YES", "NO", "PARTICLEACCELERATOR", "BOXINGGLOVES", "SPIKEDSHIELD"],
 		"slots": {
 			"NORMAL": "A normal number",
@@ -304,6 +274,8 @@
 		},
 		"default_tags": {
 			"skillcard": "This equipment is a skillcard",
+			"powercard": "This equipment has special abilities",
+			"monstercard": "Only shows in the final episode",
 			"cannotsteal": "This equipment cannot be stolen",
 			"excludefromrandomlists": "This equipment won't be randomly selected with skills like Slot Machine",
 			"robotonly": "Only useable by the Robot (or custom characters with CPU)",
@@ -321,6 +293,11 @@
 			"showgold": "Shows the player's gold",
 			"appearsforparts": "Appears as a scrap option for Inventor",
 			"hidereusable": "Don't show that this equipment is reusable"
-		}
+		},
+		"hide_slots_for_tags": [
+			"skillcard",
+			"monstercard",
+			"powercard"
+		]
 	}
 }
