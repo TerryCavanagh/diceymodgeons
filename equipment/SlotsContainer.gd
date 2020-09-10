@@ -74,11 +74,6 @@ func _check()->bool:
 		if not slot.empty():
 			slots.push_back(slot)
 
-	ExtraContainer.visible = false
-	ExtraContainer.hint_tooltip = ""
-	ExtraSpin.visible = false
-	ExtraSpin.min_value = 0
-
 	var result = true
 	var error = ""
 
@@ -107,6 +102,13 @@ func _check()->bool:
 		if ExtraSpin.value == 1 or ExtraSpin.value > 24:
 			result = false
 			error = "The value needs to be between 2 and 24"
+	else:
+		# force emitting the value_changed signal
+		ExtraSpin.min_value = 0
+		ExtraSpin.value = 0
+		ExtraContainer.visible = false
+		ExtraContainer.hint_tooltip = ""
+		ExtraSpin.visible = false
 
 	if slots.has("COUNTDOWN") and slots.size() > 1:
 		result = false
