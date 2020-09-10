@@ -389,7 +389,12 @@ class CSVData:
 	var overwrite_mode:bool = false
 	var last_overwrite_mode_saved:bool = false
 
+	var comments_regex_pattern = "// *(?'comment'.+\\S)"
+	var comments_regex = RegEx.new()
+
 	func _init(paths:Dictionary, key:String):
+		comments_regex.compile(comments_regex_pattern)
+
 		self.paths = paths
 		KEY = key
 		load_schema(paths.get("schema", ""))
@@ -785,6 +790,8 @@ class CSVData:
 
 	func _convert_to_script(value:String):
 		var result = value
+		if not result.empty() and result.find("//") > -1:
+			result = comments_regex.sub(result, "/* $comment */", true)
 		result = result.replace("\n", " ")
 		result = result.replace("\t", "") # remove tabs because it breaks the game
 		result = result.replace(",", "[;]")
@@ -841,6 +848,10 @@ class CSVData:
 				";":
 					json = json.insert(char_position + 1, "\n")
 					char_position += 1
+				"/":
+					if json[char_position - 1] == "*":
+						json = json.insert(char_position + 1, "\n")
+						char_position += 1
 
 			char_position += 1
 
