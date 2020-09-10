@@ -15,15 +15,7 @@ var data:Dictionary = {}
 var data_id:String = ""
 
 func _ready():
-	var idx = 0
-	for symbol in Gamedata.symbols.keys():
-		var data = Gamedata.symbols[symbol]
-		var n = Gamedata.symbols.get(symbol).get("image_name", symbol)
-		var texture = load("res://assets/symbols/small/%s.png" % n)
-		SymbolsOption.add_icon_item(texture, symbol)
-		SymbolsOption.set_item_metadata(idx, symbol)
-		idx += 1
-
+	GenerateSymbols.connect("symbols_loaded", self, "_on_symbols_loaded")
 
 func set_data(data):
 	data_id = Database.get_data_id(data, "Name")
@@ -97,3 +89,14 @@ func _on_SymbolsOption_item_selected(idx, node, key):
 	if not data_id: return
 	var meta = SymbolsOption.get_item_metadata(idx)
 	Database.commit(Database.Table.STATUS_EFFECTS, Database.UPDATE, data_id, key, meta)
+
+func _on_symbols_loaded():
+	SymbolsOption.clear()
+	var idx = 0
+	for symbol in Gamedata.symbols.keys():
+		var data = Gamedata.symbols[symbol]
+		var path = Gamedata.symbols.get(symbol).get("path_small", null)
+		var texture = load(path)
+		SymbolsOption.add_icon_item(texture, symbol)
+		SymbolsOption.set_item_metadata(idx, symbol)
+		idx += 1

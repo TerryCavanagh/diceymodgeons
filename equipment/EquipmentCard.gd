@@ -51,26 +51,32 @@ func set_description(desc:String):
 	var matches = regex.search_all(desc)
 	var result = ""
 	var last = 0
+
+	var d6 = Gamedata.symbols.get("d6", null)
+	var d6path = "res://assets/symbols/d6.png"
+	if d6:
+		d6path = d6.get("path", d6path)
+
 	for m in matches:
 		result += desc.substr(last, m.get_start() - last)
 		last  = m.get_end()
 		var s = m.get_string(2).strip_edges()
 		if Gamedata.symbols.has(s):
-			var n = Gamedata.symbols.get(s).get("image_name", s)
-			result += "[img=%s]res://assets/symbols/%s.png[/img]" % [ICON_SIZE, n]
+			var path = Gamedata.symbols.get(s).get("path", "")
+			result += "[img=%s]%s[/img]" % [ICON_SIZE, path]
 		elif s.empty():
-			result += "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE]
+			result += "[img=%s]%s[/img]" % [ICON_SIZE, d6path]
 		elif s == "gray":
 			pass
 	result += desc.substr(last, desc.length() - last)
 
-	result = result.replace("<d6>", "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
-	result = result.replace("<slotdoubles>", "[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
-	result = result.replace("<double>", "2x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
-	result = result.replace("<triple>", "3x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
-	result = result.replace("<quadruple>", "4x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
-	result = result.replace("<quintuple>", "5x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
-	result = result.replace("<sextuple>", "6x[img=%s]res://assets/symbols/d6.png[/img]" % [ICON_SIZE])
+	result = result.replace("<d6>", "[img=%s]%s[/img]" % [ICON_SIZE, d6path])
+	result = result.replace("<slotdoubles>", "[img=%s]%s[/img]" % [ICON_SIZE, d6path])
+	result = result.replace("<double>", "2x[img=%s]%s[/img]" % [ICON_SIZE, d6path])
+	result = result.replace("<triple>", "3x[img=%s]%s[/img]" % [ICON_SIZE, d6path])
+	result = result.replace("<quadruple>", "4x[img=%s]%s[/img]" % [ICON_SIZE, d6path])
+	result = result.replace("<quintuple>", "5x[img=%s]%s[/img]" % [ICON_SIZE, d6path])
+	result = result.replace("<sextuple>", "6x[img=%s]%s[/img]" % [ICON_SIZE, d6path])
 
 	regex.compile(arrows_regex)
 	result = regex.sub(result, "[color=red]99[/color]", true)

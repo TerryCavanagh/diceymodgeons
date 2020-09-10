@@ -17,6 +17,7 @@ var _items:CSVData = null
 var _status_effects:CSVData = null
 var _characters:CSVData = null
 var _episodes:CSVData = null
+var _symbols:CSVData = null
 
 var _data_loaded = false
 
@@ -31,6 +32,7 @@ enum Table {
 	CHARACTERS,
 	EPISODES,
 	#REMIX,
+	SYMBOLS,
 }
 
 enum Origin {
@@ -71,6 +73,9 @@ func _get_paths(table:int):
 		Table.EPISODES:
 			file = "episodes.csv"
 			schema = "episodes_schema.json"
+		Table.SYMBOLS:
+			file = "symbols.csv"
+			schema = "symbols_schema.json"
 
 	var result = {}
 
@@ -118,6 +123,7 @@ func load_data(root_path:String, metadata:Dictionary):
 	_fighters = CSVData.new(_get_paths(Table.FIGHTERS), "ID")
 	_characters = CSVData.new(_get_paths(Table.CHARACTERS), "ID")
 	_episodes = CSVData.new(_get_paths(Table.EPISODES), "ID")
+	_symbols = CSVData.new(_get_paths(Table.SYMBOLS), "Name")
 
 	_data_loaded = true
 	loaded_mod = metadata.get("mod")
@@ -140,6 +146,8 @@ func save_data():
 	emit_signal("save_completed", Table.CHARACTERS)
 	_episodes.save_data()
 	emit_signal("save_completed", Table.EPISODES)
+	_symbols.save_data()
+	emit_signal("save_completed", Table.SYMBOLS)
 
 	emit_signal("all_tables_saved")
 
@@ -157,6 +165,8 @@ func get_table(table):
 			return _characters
 		Table.EPISODES:
 			return _episodes
+		Table.SYMBOLS:
+			return _symbols
 		_:
 			return null
 

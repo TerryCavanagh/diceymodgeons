@@ -37,6 +37,7 @@ Gamedata="*res://Gamedata.gd"
 Utils="*res://Utils.gd"
 ModFiles="*res://ModFiles.gd"
 ConfirmPopup="*res://ConfirmPopup.tscn"
+GenerateSymbols="*res://GenerateSymbols.gd"
 
 [debug]
 

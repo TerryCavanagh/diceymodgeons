@@ -172,6 +172,7 @@ func _on_LoadButton_pressed():
 			_fill_mod_list()
 			LoadButton.release_focus()
 			LaunchButton.disabled = false
+			GenerateSymbols.generate(current_mod_loaded)
 
 func _on_FileDialogPopup_dir_selected(dir):
 	path = dir

@@ -1,0 +1,18 @@
+{
+	"Name": {
+		"type": "string",
+		"default": ""
+	},
+	"Value": {
+		"type": "string",
+		"default": ""
+	},
+	"Color": {
+		"type": "string",
+		"default": ""
+	},
+	"Type": {
+		"type": "string",
+		"default": ""
+	}
+}

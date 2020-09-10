@@ -30,11 +30,20 @@ func close_file(path:String):
 	if path in loaded_files:
 		loaded_files.erase(path)
 
+func get_file(file_path:String)->BaseFile:
+	var file = _get_file(file_path)
+	if file:
+		file._file.close()
+		loaded_files[file.path] = file
+		return file
+
+	return null
+
 func get_file_as_text(file_path:String)->ScriptFile:
 	var file = _get_file(file_path)
 	if file:
-		var result = file.file.get_as_text()
-		file.file.close()
+		var result = file._file.get_as_text()
+		file._file.close()
 		var r = ScriptFile.new()
 		r.text = result
 		r.changed_text = result
@@ -48,18 +57,18 @@ func get_file_as_text(file_path:String)->ScriptFile:
 func get_file_csv(file_path:String)->CsvFile:
 	var file = _get_file(file_path)
 	if file:
-			var headers = Array(file.file.get_csv_line())
+			var headers = Array(file._file.get_csv_line())
 			# new created files start with a empty header of one empty column, let's clear it
 			if headers.size() == 1 and headers[0].empty():
 				headers.clear()
 
 			var content = []
-			while not file.file.eof_reached():
-				var values = Array(file.file.get_csv_line())
+			while not file._file.eof_reached():
+				var values = Array(file._file.get_csv_line())
 				values.resize(headers.size())
 				content.push_back(values)
 
-			file.file.close()
+			file._file.close()
 
 			var r = CsvFile.new()
 			r.headers = headers
@@ -140,29 +149,36 @@ func _file_needs_save(file):
 	elif file is ScriptFile:
 		return file.text.hash() != file.changed_text.hash()
 
-func _get_file(file_path:String):
+func _get_file(file_path:String) -> BaseFile:
 	var mod_path = get_mod_path(file_path)
 	var game_path = get_game_path(file_path)
 
 	var file := File.new()
+	var base = BaseFile.new()
+	base._file = file
 	if file.open(mod_path, File.READ) == OK:
-		return {"file": file, "path": mod_path, "origin": Origin.MOD}
+		base.path = mod_path
+		base.origin = Origin.MOD
+		return base
 	elif file.open(game_path, File.READ) == OK:
-		return {"file": file, "path": game_path, "origin": Origin.GAME}
+		base.path = game_path
+		base.origin = Origin.GAME
+		return base
 
 	return null
 
 
-class ScriptFile extends Resource:
-	var text:String = ""
-	var changed_text:String = ""
+class BaseFile extends Resource:
+	var _file:File = null
 	var path:String = ""
 	var origin = Origin.MOD
 
-class CsvFile extends Resource:
+class ScriptFile extends BaseFile:
+	var text:String = ""
+	var changed_text:String = ""
+
+class CsvFile extends BaseFile:
 	var headers:Array = []
 	var csv:Array = []
 	var original_hash:int = -1
 	var headers_hash:int = -1
-	var path:String = ""
-	var origin = Origin.MOD

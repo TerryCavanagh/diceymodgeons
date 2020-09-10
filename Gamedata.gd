@@ -26,7 +26,6 @@ func load_data():
 		var json = parse_json(file.get_as_text())
 		innates = json.innates
 		scripts = json.scripts
-		symbols = json.symbols
 		layout = json.layout
 		items = json.items
 		file.close()
