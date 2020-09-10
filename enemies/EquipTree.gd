@@ -31,8 +31,8 @@ func add_equipment(equipment, idx = -1):
 	if not equipment: return
 	var it = create_item(get_root(), idx)
 	var n = Utils.humanize_equipment_name(equipment.get("equipment", "!!!"))
-	if equipment.has("category"):
-		n += " [%s]" % equipment.get("category")
+#	if equipment.has("category"):
+#		n += " [%s]" % equipment.get("category")
 
 	it.set_text(NAME, n)
 	it.set_metadata(NAME, equipment)
