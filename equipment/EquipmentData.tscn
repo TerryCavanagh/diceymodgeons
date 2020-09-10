@@ -161,7 +161,6 @@ columns = 4
 [node name="CastBackwardsCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
 margin_right = 131.0
 margin_bottom = 24.0
-hint_tooltip = "Work in progress."
 text = "Cast backwards?"
 
 [node name="SingleUseCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]

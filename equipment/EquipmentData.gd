@@ -3,7 +3,6 @@ extends PanelContainer
 signal equipment_deleted(key)
 
 onready var SizeOption = find_node("SizeOption")
-#onready var CategoryOption = find_node("CategoryOption")
 onready var ColorOption = find_node("ColorOption")
 onready var AlternateStatusOption = find_node("AlternateStatusOption")
 
@@ -34,7 +33,6 @@ var data:Dictionary = {}
 func _ready():
 	SizeOption.set_meta("list", ["1", "2"])
 
-#	Utils.fill_options(CategoryOption, Gamedata.items.get("categories", {}), true)
 	Utils.fill_options(ColorOption, Gamedata.items.get("colors", []), true)
 	Utils.fill_options(UpgradeOption, Gamedata.items.get("upgrade_modifier", {}), false)
 	Utils.fill_options(WeakenOption, Gamedata.items.get("weaken_modifier", {}), false)
@@ -55,7 +53,6 @@ func set_data(data):
 	Utils.fill_options(AlternateStatusOption, filtered, true)
 
 	_setup(SizeOption, "Size", 1)
-#	_setup(CategoryOption, "Category", "")
 	_setup(ColorOption, "Colour", "")
 	_setup(AlternateStatusOption, "Alternate Status Trigger", "")
 
@@ -132,13 +129,19 @@ func _setup(node, key, def):
 		printerr("Node %s couldn't be setup" % node.name)
 
 func _update_SlotsContainer_visibility(tags):
+	var hide_it = false
 	for hide_it_for_tag in Gamedata.items.get("hide_slots_for_tags", []):
 		if hide_it_for_tag in tags:
-			SlotsContainer.visible = false
-			# TODO update database here
-			return
+			hide_it = true
+			break
 
-	SlotsContainer.visible = true
+	if hide_it:
+		SlotsContainer.visible = false
+		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Slots", [])
+		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "NEED TOTAL?", 0)
+		SlotsContainer.set_data(data)
+	else:
+		SlotsContainer.visible = true
 
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
@@ -165,15 +168,7 @@ func _on_OptionButton_item_selected(id, node, key):
 	Utils.update_option_tooltip(node, id)
 	if node == ColorOption:
 		var color = node.get_item_text(node.selected).to_upper()
-#		EquipmentCard.change_color(color, Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
 		EquipmentCard.change_color(color, "GRAY", data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
-
-#	if node == CategoryOption:
-#		if ColorOption.selected == 0:
-#			EquipmentCard.change_color("", Utils.option_get_selected_key(CategoryOption), data_id.ends_with("_upgraded") or data_id.ends_with("_deckupgrade"))
-#
-#		var category = Utils.option_get_selected_key(CategoryOption)
-#		SlotsContainer.visible = not (category == "BACKUP" or category == "SKILLCARD")
 
 
 	var value = Utils.option_get_selected_key(node)
@@ -189,10 +184,7 @@ func _on_OptionButton_item_selected(id, node, key):
 
 func _on_SlotsContainer_slots_changed(slots, node, key):
 	if not data_id: return
-	if node.visible:
-		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, slots)
-	else:
-		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, [])
+	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, slots)
 
 func _on_SlotsContainer_total_changed(new_total, node, key):
 	if not data_id: return
