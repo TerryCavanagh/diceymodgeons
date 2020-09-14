@@ -26,9 +26,6 @@ func _ready():
 func _process(delta):
 	PopupBackground.visible = PopupBackgroundHelper.windows_shown_count > 0
 
-	# TODO make this better
-	ModifiedDataContainer.visible = Database.data_needs_save()
-
 func _set_window_title(mod = null):
 	var current_mod = "No mod loaded"
 	if mod:
@@ -67,3 +64,6 @@ func _on_Database_data_loaded(mod, id):
 	StatusEffects.StatusList.start_load()
 
 	TabContainer.current_tab += 1
+
+func _on_SaveCheckTimer_timeout():
+	ModifiedDataContainer.visible = Database.data_needs_save()
