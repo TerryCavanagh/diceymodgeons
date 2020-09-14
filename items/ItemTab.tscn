@@ -59,30 +59,6 @@ margin_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ItemContainer/VBoxContainer"]
-visible = false
-margin_top = 204.0
-margin_right = 962.0
-margin_bottom = 228.0
-
-[node name="Label" type="Label" parent="HBoxContainer/ItemContainer/VBoxContainer/HBoxContainer"]
-margin_top = 5.0
-margin_right = 94.0
-margin_bottom = 19.0
-text = "Requirements:"
-
-[node name="RequirementOption" type="OptionButton" parent="HBoxContainer/ItemContainer/VBoxContainer/HBoxContainer"]
-margin_left = 98.0
-margin_right = 218.0
-margin_bottom = 24.0
-rect_min_size = Vector2( 120, 0 )
-
-[node name="RequirementValueSpin" type="SpinBox" parent="HBoxContainer/ItemContainer/VBoxContainer/HBoxContainer"]
-margin_left = 222.0
-margin_right = 296.0
-margin_bottom = 24.0
-align = 2
-
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/ItemContainer/VBoxContainer"]
 margin_top = 204.0
 margin_right = 964.0

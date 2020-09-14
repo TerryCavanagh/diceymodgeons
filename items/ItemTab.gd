@@ -2,8 +2,6 @@ extends PanelContainer
 
 onready var ItemList = find_node("ItemList")
 onready var DescriptionEdit = find_node("DescriptionEdit")
-onready var RequirementOption = find_node("RequirementOption")
-onready var RequirementValueOption = find_node("RequirementValueOption")
 onready var ScriptContainer = find_node("ScriptContainer")
 
 onready var ItemContainer = find_node("ItemContainer")
@@ -25,7 +23,6 @@ func set_data(data):
 	self.data = data
 
 	_setup(DescriptionEdit, "Description", "")
-	# TODO Requirements
 	_setup(ScriptContainer, "Script", "")
 
 func _setup(node, key, def):

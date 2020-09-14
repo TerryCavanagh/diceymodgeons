@@ -3,7 +3,6 @@ extends Node
 signal symbols_loaded()
 
 func generate(mod_id:String):
-	# TODO
 	# load symbols.png and symbols.csv from mod or game
 	# if any of the hashes don't match:
 	#   generate mod folder in user data and generate symbols from the values in the csv and png
