@@ -22,6 +22,7 @@ func _ready():
 	for i in disable_tabs:
 		TabContainer.set_tab_disabled(i+1, true)
 	Database.connect("data_loaded", self, "_on_Database_data_loaded")
+	Database.connect("data_failed_loading", self, "_on_Database_data_failed_loading")
 
 func _process(delta):
 	PopupBackground.visible = PopupBackgroundHelper.windows_shown_count > 0
@@ -64,6 +65,10 @@ func _on_Database_data_loaded(mod, id):
 	StatusEffects.StatusList.start_load()
 
 	TabContainer.current_tab += 1
+
+func _on_Database_data_failed_loading(errors:Array):
+	var error_str = PoolStringArray(errors).join("\n")
+	ConfirmPopup.popup_accept("Some files couldn't be loaded:\n%s" % error_str, "Errors opening the mod files!", Vector2(1000, 600))
 
 func _on_SaveCheckTimer_timeout():
 	ModifiedDataContainer.visible = Database.data_needs_save()

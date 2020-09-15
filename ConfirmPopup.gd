@@ -31,13 +31,13 @@ func _ready():
 	var label = get_label()
 	label.align = Label.ALIGN_CENTER
 
-func _popup(text:String, title:String):
+func _popup(text:String, title:String, size:Vector2 = Vector2.ZERO):
 	window_title = title
 	dialog_text = text
-	rect_size = rect_min_size
+	rect_size = rect_min_size if size == Vector2.ZERO else size
 	call_deferred("popup_centered_minsize", rect_min_size)
 
-func popup_confirm(text:String, title:String = ""):
+func popup_confirm(text:String, title:String = "", size:Vector2 = Vector2.ZERO):
 	if title.empty():
 			title = "Please confirm..."
 
@@ -47,9 +47,9 @@ func popup_confirm(text:String, title:String = ""):
 	other_button.visible = false
 	ok_button.text = "OK"
 
-	_popup(text, title)
+	_popup(text, title, size)
 
-func popup_save(text:String, title:String = ""):
+func popup_save(text:String, title:String = "", size:Vector2 = Vector2.ZERO):
 	if title.empty():
 			title = "Confirm save..."
 
@@ -59,9 +59,9 @@ func popup_save(text:String, title:String = ""):
 	ok_button.text = "Save"
 	other_button.text = "Don't save"
 
-	_popup(text, title)
+	_popup(text, title, size)
 
-func popup_accept(text:String, title:String = ""):
+func popup_accept(text:String, title:String = "", size:Vector2 = Vector2.ZERO):
 	if title.empty():
 			title = "Warning!"
 
@@ -70,7 +70,7 @@ func popup_accept(text:String, title:String = ""):
 	other_button.visible = false
 	ok_button.text = "OK"
 
-	_popup(text, title)
+	_popup(text, title, size)
 
 func _on_button_pressed(result):
 	emit_signal("action_chosen", result)

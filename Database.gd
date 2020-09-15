@@ -6,6 +6,7 @@ signal entry_updated(table, key, equals)
 signal entry_deleted(table, key)
 
 signal data_loaded(mod_name, mod_id)
+signal data_failed_loading(errors)
 signal save_completed(table)
 signal all_tables_saved()
 
@@ -20,6 +21,8 @@ var _episodes:CSVData = null
 var _symbols:CSVData = null
 
 var _data_loaded = false
+
+var _load_errors = []
 
 enum {CREATE,READ,UPDATE,DELETE}
 
@@ -117,6 +120,8 @@ func load_data(root_path:String, metadata:Dictionary):
 	ModFiles.game_root_path = root_path
 	ModFiles.mod_root_path = 'mods/%s' % metadata.get("mod")
 
+	_load_errors = []
+
 	_equipment = CSVData.new(_get_paths(Table.EQUIPMENT), "Name")
 	_items = CSVData.new(_get_paths(Table.SKILLS), "Name")
 	_status_effects = CSVData.new(_get_paths(Table.STATUS_EFFECTS), "Name")
@@ -125,9 +130,12 @@ func load_data(root_path:String, metadata:Dictionary):
 	_episodes = CSVData.new(_get_paths(Table.EPISODES), "ID")
 	_symbols = CSVData.new(_get_paths(Table.SYMBOLS), "Name")
 
-	_data_loaded = true
-	loaded_mod = metadata.get("mod")
-	emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")), loaded_mod)
+	if _load_errors.size() > 0:
+		emit_signal("data_failed_loading", _load_errors)
+	else:
+		_data_loaded = true
+		loaded_mod = metadata.get("mod")
+		emit_signal("data_loaded", metadata.get("polymod", {}).get("title", metadata.get("mod")), loaded_mod)
 
 func save_data():
 	if not data_needs_save(): return
@@ -416,12 +424,13 @@ class CSVData:
 			schema = parse_json(file.get_as_text())
 			file.close()
 		else:
-			printerr("No schema loaded!!!")
+			Database._load_errors.push_back("Schema: %s could not be loaded" % path)
 
 	func load_data(path:String, origin:int):
 		var file = File.new()
 		if not file.file_exists(path):
-			#printerr("File %s doesn't exist" % path)
+			if origin == Origin.GAME:
+				Database._load_errors.push_back("File: %s is in use, locked or can't be read" % path)
 			return
 
 		if file.open(path, File.READ) == OK:
@@ -433,7 +442,7 @@ class CSVData:
 			_content_to_data(content, origin)
 			file.close()
 		else:
-			printerr("File %s can't be opened" % path)
+			Database._load_errors.push_back("File: %s is in use, locked or can't be read" % path)
 
 	func _content_to_data(content, source):
 		for c in content:
