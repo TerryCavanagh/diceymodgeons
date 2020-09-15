@@ -13,7 +13,7 @@
 	},
 	"Voice": {
 		"type": "string",
-		"default": ""
+		"default": "voiceovers/frog"
 	},
 	"CombatAnimation": {
 		"type": "string",
@@ -21,7 +21,7 @@
 	},
 	"CombatAnimationOffset": {
 		"type": "point",
-		"default": ""
+		"default": "-110|-80"
 	},
 	"OverworldAnimation": {
 		"type": "string",
@@ -29,15 +29,15 @@
 	},
 	"OverworldAnimationOffset": {
 		"type": "point",
-		"default": ""
+		"default": "-80|-40"
 	},
 	"VfxOffset": {
 		"type": "point",
-		"default": ""
+		"default": "-40|0"
 	},
 	"BossScreenPosition": {
 		"type": "point",
-		"default": ""
+		"default": "959|675"
 	},
 	"Dice": {
 		"type": "number",

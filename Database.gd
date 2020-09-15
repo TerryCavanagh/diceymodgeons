@@ -578,8 +578,8 @@ class CSVData:
 				data[key][h] = key
 			else:
 				var default = schema[h].get("default", "")
-				if default is String and default == "":
-					data[key][h] = _convert_from_csv(h, "")
+				if default is String:
+					data[key][h] = _convert_from_csv(h, default)
 				else:
 					data[key][h] = default
 
