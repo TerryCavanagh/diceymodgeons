@@ -14,6 +14,8 @@ onready var LastWords3Edit = find_node("LastWords3Edit")
 onready var LastWordsIfTheyWinEdit = find_node("LastWordsIfTheyWinEdit")
 onready var LastWordsEndgameEdit = find_node("LastWordsEndgameEdit")
 
+onready var VoiceFileDialog = find_node("VoiceFileDialog")
+
 var data_id:String = ""
 var data:Dictionary = {}
 
@@ -57,3 +59,30 @@ func _on_CheckBox_toggled(value, node, key):
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, data_id, key, node.text)
+
+
+func _on_VoiceGameButton_pressed():
+	var path = ModFiles.game_root_path + "/soundstuff"
+	VoiceFileDialog.current_dir = path
+
+	VoiceFileDialog.popup_centered_minsize(VoiceFileDialog.rect_min_size)
+
+
+func _on_VoiceModButton_pressed():
+	var path = ModFiles.game_root_path + "/" + ModFiles.mod_root_path + "/soundstuff"
+	VoiceFileDialog.current_dir = path
+
+	VoiceFileDialog.popup_centered_minsize(VoiceFileDialog.rect_min_size)
+
+func _on_VoiceFileDialog_dir_selected(dir:String):
+	var idx = dir.find_last("/soundstuff")
+
+	if idx > -1:
+		idx = clamp(idx + "/soundstuff/".length(), 0, dir.length())
+		var path = ""
+		if idx < dir.length():
+			path = dir.right(idx)
+			VoiceEdit.text = path
+			VoiceEdit.emit_signal("text_changed", path)
+		else:
+			ConfirmPopup.popup_accept("The selected directory is empty!", "Oh...")
