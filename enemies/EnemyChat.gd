@@ -70,6 +70,11 @@ func _on_VoiceGameButton_pressed():
 
 func _on_VoiceModButton_pressed():
 	var path = ModFiles.game_root_path + "/" + ModFiles.mod_root_path + "/soundstuff"
+
+	var dir = Directory.new()
+	if not dir.dir_exists(path):
+		path = ModFiles.game_root_path + "/soundstuff"
+
 	VoiceFileDialog.current_dir = path
 
 	VoiceFileDialog.popup_centered_minsize(VoiceFileDialog.rect_min_size)
