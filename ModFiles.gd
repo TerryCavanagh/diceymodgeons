@@ -23,6 +23,22 @@ func get_game_path(file_path:String = ""):
 		extra_path = "diceydungeons.app/Contents/Resources"
 	return '%s/%s/%s' % [game_root_path, extra_path, file_path]
 
+func strip_game_and_mod_path(file_path:String = ""):
+	var result = file_path
+	result = result.replace("\\", "/")
+	result = result.replace("//", "/")
+
+	var game_idx = result.find(game_root_path)
+	if game_idx > -1:
+		result = result.right(game_idx + game_root_path.length())
+
+	var mod_idx = result.find(mod_root_path)
+	if mod_idx > -1:
+		result = result.right(mod_idx + mod_root_path.length())
+
+	return result
+
+
 func is_file_opened(path:String):
 	return path in loaded_files
 
@@ -150,6 +166,7 @@ func _file_needs_save(file):
 		return file.text.hash() != file.changed_text.hash()
 
 func _get_file(file_path:String) -> BaseFile:
+	file_path = strip_game_and_mod_path(file_path)
 	var mod_path = get_mod_path(file_path)
 	var game_path = get_game_path(file_path)
 
@@ -157,11 +174,11 @@ func _get_file(file_path:String) -> BaseFile:
 	var base = BaseFile.new()
 	base._file = file
 	if file.open(mod_path, File.READ) == OK:
-		base.path = mod_path
+		base.path = mod_path.replace("//", "/")
 		base.origin = Origin.MOD
 		return base
 	elif file.open(game_path, File.READ) == OK:
-		base.path = game_path
+		base.path = game_path.replace("//", "/")
 		base.origin = Origin.GAME
 		return base
 

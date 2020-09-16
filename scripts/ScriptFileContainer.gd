@@ -15,7 +15,7 @@ func set_data(path, filename):
 	if not filename.empty() and filename.is_valid_filename():
 		file_name = filename
 		self.path = path
-		var file = ModFiles.get_file_as_text('data/text/scripts/%s' % filename)
+		var file = ModFiles.get_file_as_text(path)
 
 		if file:
 			loaded_file = file

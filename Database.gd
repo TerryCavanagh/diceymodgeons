@@ -507,7 +507,6 @@ class CSVData:
 			var file = Directory.new()
 			if file.file_exists(path):
 				file.remove(path)
-			print("No content for %s" % path)
 			return false
 
 		var dir = Directory.new()

@@ -29,7 +29,7 @@ func set_data(path, filename):
 	if not filename.empty() and filename.is_valid_filename():
 		file_name = filename
 		self.path = path
-		var file = ModFiles.get_file_csv('data/text/scripts/%s' % filename)
+		var file = ModFiles.get_file_csv(path)
 
 		if file:
 			loaded_file = file
@@ -71,7 +71,7 @@ func setup_csv(file):
 			row.set_metadata(0, {"index": j})
 			for i in columns:
 				if i >= values.size():
-					print("What the fuck")
+					print("Something went wrong")
 					continue
 				var value = values[i]
 				if not value:
