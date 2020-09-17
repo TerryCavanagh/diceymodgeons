@@ -44,9 +44,9 @@ margin_bottom = 680.0
 
 [node name="HBoxContainer" type="VBoxContainer" parent="CreateContainer"]
 margin_left = 567.0
-margin_top = 314.0
+margin_top = 308.0
 margin_right = 693.0
-margin_bottom = 362.0
+margin_bottom = 368.0
 custom_constants/separation = 16
 
 [node name="CreateButton" type="Button" parent="CreateContainer/HBoxContainer"]

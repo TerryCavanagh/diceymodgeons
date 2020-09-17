@@ -13,47 +13,54 @@ onready var OK = find_node("OK")
 onready var Cancel = find_node("Cancel")
 
 var add_func:FuncRef = null
+var check_valid_func:FuncRef = null
 
 var overwrite_mode:bool = false
 var valid := false
 
 func _ready():
 	pass
-	
+
 func check_valid():
 	var n = NameEdit.text
-	
+
+	var using_check_func = not check_valid_func == null
+
 	valid = true
 	var msg = empty_name_message
 	if n.empty():
 		valid = false
-		
-	if valid:
+
+	if valid and not using_check_func:
 		if n.findn("_") > -1 or n.findn("-") > -1:
 			msg = exception_message
 			valid = false
-		
+
 	if valid:
-		var data = Database.read(table, overwrite_mode)
-		for k in data.keys():
-			var obj = data.get(k)
-			if n == obj.get(field):
-				valid = false
-				break
+		if using_check_func:
+			valid = check_valid_func.call_func(n)
+		else:
+			var data = Database.read(table, overwrite_mode)
+			for k in data.keys():
+				var obj = data.get(k)
+				if n == obj.get(field):
+					valid = false
+					break
+
 		if not valid:
 			msg = bad_name_message
-		
+
 	if valid:
 		StatusLabel.modulate = Color.green
 		StatusLabel.text = good_name_message
 	else:
 		StatusLabel.modulate = Color.red
 		StatusLabel.text = msg
-		
-	
+
+
 	OK.disabled = not valid
-		
-	
+
+
 func _on_NameEdit_text_changed(new_text):
 	check_valid()
 
@@ -68,7 +75,7 @@ func _on_OK_pressed():
 	else:
 		assert(false, "Needs an add func")
 	hide()
-	
+
 func _on_Cancel_pressed():
 	hide()
 

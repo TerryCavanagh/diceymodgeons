@@ -13,13 +13,13 @@ func parse(file:File):
 	if not signature.get_string_from_ascii() == "ATF":
 		print('File is not an ATF file')
 		return null
-	
+
 	# reserved
 	file.get_32()
-	
+
 	version = file.get_8()
 	length = file.get_32()
-	
+
 	format = file.get_8()
 	var is_cubemap = format >> 7 == 1
 	if is_cubemap:
@@ -29,19 +29,19 @@ func parse(file:File):
 	if not format == 5:
 		print('Format not supported')
 		return null
-		
+
 	width = 1 << file.get_8()
 	height = 1 << file.get_8()
 	count = file.get_8()
-	
+
 	print('Read texture format %s count %s size %sx%s length %s' % [format, count, width, height, length])
 	var l = file.get_32()
 	var data = file.get_buffer(l * 256)
 	var img = Image.new()
 	img.create_from_data(width, height, false, Image.FORMAT_DXT5, data)
-	
+
 	return img
-	
+
 func save(data:PoolByteArray, width:int, height:int, target:String):
 	var file = File.new()
 	if file.open(target, File.WRITE) == OK:
@@ -63,18 +63,18 @@ func save(data:PoolByteArray, width:int, height:int, target:String):
 		file.store_8(h)
 		# count
 		file.store_8(0xB)
-		
+
 		# data len TODO
 		file.store_32(data.size() / 256)
 		# data
 		file.store_buffer(data)
-		
+
 		# I'm not really sure where this comes from
 		var tmp = PoolByteArray()
 		tmp.resize(0x81)
 		for i in 0x81:
 			tmp.set(i, 0x00)
-		
+
 		file.store_buffer(tmp)
-		
+
 		file.close()

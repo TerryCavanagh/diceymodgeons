@@ -1,0 +1,18 @@
+{
+	"Name": {
+		"type": "string",
+		"default": ""
+	},
+	"Description": {
+		"type": "text",
+		"default": ""
+	},
+	"Requirements": {
+		"type": "list",
+		"default": ""
+	},
+	"Script": {
+		"type": "script",
+		"default": ""
+	}
+}

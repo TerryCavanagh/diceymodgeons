@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://equipment/EquipmentData.gd" type="Script" id=1]
 [ext_resource path="res://DescriptionEdit.tscn" type="PackedScene" id=2]
 [ext_resource path="res://equipment/SlotsContainer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://equipment/EquipmentCard.tscn" type="PackedScene" id=4]
+[ext_resource path="res://equipment/EquipmentTags.tscn" type="PackedScene" id=5]
 
 [node name="EquipmentData" type="PanelContainer"]
 anchor_right = 1.0
@@ -49,6 +50,7 @@ items = [ "1", null, false, 0, null, "2", null, false, 1, null ]
 selected = 0
 
 [node name="CategoryContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
+visible = false
 margin_left = 82.0
 margin_right = 333.0
 margin_bottom = 22.0
@@ -66,8 +68,8 @@ rect_min_size = Vector2( 180, 0 )
 clip_text = true
 
 [node name="ColorContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 337.0
-margin_right = 566.0
+margin_left = 82.0
+margin_right = 311.0
 margin_bottom = 22.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/ColorContainer"]
@@ -82,8 +84,8 @@ margin_bottom = 22.0
 rect_min_size = Vector2( 180, 0 )
 
 [node name="AlternateStatusContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/Row1"]
-margin_left = 570.0
-margin_right = 868.0
+margin_left = 315.0
+margin_right = 613.0
 margin_bottom = 22.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Row1/AlternateStatusContainer"]
@@ -153,78 +155,44 @@ align = 2
 [node name="Row3" type="GridContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_top = 26.0
 margin_right = 959.0
-margin_bottom = 78.0
+margin_bottom = 50.0
 columns = 4
 
 [node name="CastBackwardsCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-visible = false
 margin_right = 131.0
 margin_bottom = 24.0
-hint_tooltip = "Work in progress."
-disabled = true
 text = "Cast backwards?"
 
 [node name="SingleUseCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_right = 183.0
+margin_left = 135.0
+margin_right = 285.0
 margin_bottom = 24.0
 text = "Single use in battle"
 
-[node name="SpecialCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_left = 187.0
-margin_right = 289.0
-margin_bottom = 24.0
-text = "Is special?"
-
-[node name="ErrorImmuneCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_left = 293.0
-margin_right = 429.0
-margin_bottom = 24.0
-text = "Immune to error"
-
-[node name="ShowGoldCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_left = 433.0
-margin_right = 553.0
-margin_bottom = 24.0
-text = "Shows gold"
-
-[node name="AppearForPartsCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_top = 28.0
-margin_right = 183.0
-margin_bottom = 52.0
-text = "Always appears for parts"
-
 [node name="SFXCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_left = 187.0
-margin_top = 28.0
-margin_right = 289.0
-margin_bottom = 52.0
+margin_left = 289.0
+margin_right = 391.0
+margin_bottom = 24.0
 text = "Disable SFX"
 
-[node name="ParallelUniverseCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_left = 293.0
-margin_top = 28.0
-margin_right = 429.0
-margin_bottom = 52.0
-text = "Parallel Universe"
-
-[node name="HideReusableCheck" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row3"]
-margin_left = 433.0
-margin_top = 28.0
-margin_right = 553.0
-margin_bottom = 52.0
-text = "Hide Reusable"
+[node name="EquipmentTags" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource( 5 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 54.0
+margin_right = 959.0
+margin_bottom = 136.0
 
 [node name="SlotsContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 82.0
+margin_top = 140.0
 margin_right = 959.0
-margin_bottom = 190.0
+margin_bottom = 248.0
 
 [node name="Row5" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 194.0
+margin_top = 252.0
 margin_right = 959.0
-margin_bottom = 242.0
+margin_bottom = 300.0
 
 [node name="GadgetContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row5"]
 margin_right = 180.0
@@ -274,9 +242,9 @@ margin_bottom = 48.0
 rect_min_size = Vector2( 180, 0 )
 
 [node name="Row6" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 246.0
+margin_top = 304.0
 margin_right = 959.0
-margin_bottom = 422.0
+margin_bottom = 480.0
 
 [node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/Row6"]
 margin_right = 959.0

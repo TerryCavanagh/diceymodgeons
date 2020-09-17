@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://editor.theme" type="Theme" id=1]
 [ext_resource path="res://FileMenu.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://texture_splitter/TextureSplitter.tscn" type="PackedScene" id=7]
 [ext_resource path="res://enemies/EnemiesTab.tscn" type="PackedScene" id=8]
 [ext_resource path="res://items/ItemTab.tscn" type="PackedScene" id=9]
+[ext_resource path="res://status_effects/StatusEffectsTab.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scripts/ScriptsTab.tscn" type="PackedScene" id=11]
 
 [node name="Main" type="PanelContainer"]
 anchor_right = 1.0
@@ -19,6 +21,7 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+disable_tabs = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 6.0
@@ -86,7 +89,14 @@ margin_top = 35.0
 margin_right = -5.0
 margin_bottom = -5.0
 
-[node name="Items" parent="VBoxContainer/TabContainer" instance=ExtResource( 9 )]
+[node name="Skills" parent="VBoxContainer/TabContainer" instance=ExtResource( 9 )]
+visible = false
+margin_left = 5.0
+margin_top = 35.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="Status Effects" parent="VBoxContainer/TabContainer" instance=ExtResource( 10 )]
 visible = false
 margin_left = 5.0
 margin_top = 35.0
@@ -94,6 +104,13 @@ margin_right = -5.0
 margin_bottom = -5.0
 
 [node name="Characters" parent="VBoxContainer/TabContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 5.0
+margin_top = 35.0
+margin_right = -5.0
+margin_bottom = -5.0
+
+[node name="Custom Scripts" parent="VBoxContainer/TabContainer" instance=ExtResource( 11 )]
 visible = false
 margin_left = 5.0
 margin_top = 35.0
@@ -133,3 +150,7 @@ margin_top = 4.0
 margin_right = 1274.0
 margin_bottom = 716.0
 color = Color( 0.129412, 0.129412, 0.129412, 0.501961 )
+
+[node name="SaveCheckTimer" type="Timer" parent="."]
+autostart = true
+[connection signal="timeout" from="SaveCheckTimer" to="." method="_on_SaveCheckTimer_timeout"]

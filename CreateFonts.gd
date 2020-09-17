@@ -8,7 +8,7 @@ func _run():
 	"pangolin_72",
 	"pangolin_90"
 	]
-	
+
 	for font in fonts:
 		var fnt = _parse_font("res://assets/game_fonts/%s.xml" % font)
 		if fnt:
@@ -16,10 +16,10 @@ func _run():
 
 func _parse_font(path:String):
 	var xml = XMLParser.new()
-	if xml.open(path) != OK: 
+	if xml.open(path) != OK:
 		print("Couldn't open the xml " + path)
 		return null
-	
+
 	var font = BitmapFont.new()
 	var i = 0
 	while xml.read() == OK:
@@ -32,7 +32,7 @@ func _parse_font(path:String):
 					"page":
 						var tex_path = xml.get_named_attribute_value("file")
 						tex_path = path.get_base_dir() + "/" + tex_path
-						
+
 						font.add_texture(load(tex_path))
 					"char":
 						var id = xml.get_named_attribute_value("id").to_int()
@@ -44,13 +44,13 @@ func _parse_font(path:String):
 						var yo = xml.get_named_attribute_value("yoffset").to_int()
 						var adv = xml.get_named_attribute_value("xadvance").to_int()
 						var tex = xml.get_named_attribute_value("page").to_int()
-						
+
 						font.add_char(id, tex, Rect2(x, y, w, h), Vector2(xo, yo), adv)
 					"kerning":
 						var f = xml.get_named_attribute_value("first").to_int()
 						var s = xml.get_named_attribute_value("second").to_int()
 						var a = xml.get_named_attribute_value("amount").to_int()
-						
+
 						font.add_kerning_pair(f, s, a)
-						
+
 	return font

@@ -1,0 +1,82 @@
+{
+	"Name": {
+		"type": "string",
+		"default": ""
+	},
+	"Displayed As": {
+		"type": "string",
+		"default": ""
+	},
+	"Symbol": {
+		"type": "string",
+		"default": ""
+	},
+	"Description": {
+		"type": "text",
+		"default": ""
+	},
+	"Stacks?": {
+		"type": "bool",
+		"default": false
+	},
+	"Remove at End Turn?": {
+		"type": "bool",
+		"default": false
+	},
+	"Remove at Start Turn?": {
+		"type": "bool",
+		"default": false
+	},
+	"Invisible?": {
+		"type": "bool",
+		"default": false
+	},
+	"Blocked by Reduce?": {
+		"type": "bool",
+		"default": false
+	},
+	"Script: When inflicted": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On any status infliction": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: Before Start Turn": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On Start Turn": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On any equipment use": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On any countdown reduce": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: End Turn": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: After Combat": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On damage inflicted": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On damage taken": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: On status remove": {
+		"type": "script",
+		"default": ""
+	}
+}

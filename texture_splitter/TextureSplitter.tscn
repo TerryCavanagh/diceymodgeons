@@ -134,8 +134,8 @@ rect_min_size = Vector2( 1000, 600 )
 window_title = "Open a Directory"
 mode = 2
 access = 2
-current_dir = "Z:/godot_projects/dicey_modgeons"
-current_path = "Z:/godot_projects/dicey_modgeons/"
+current_dir = "/projects/godot_projects/diceymodgeons"
+current_path = "/projects/godot_projects/diceymodgeons/"
 
 [node name="WarningPopup" type="AcceptDialog" parent="."]
 margin_right = 83.0

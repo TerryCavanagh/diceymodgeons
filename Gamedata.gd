@@ -11,12 +11,14 @@ var items:Dictionary = {
 	"cast_backwards": [],
 	"slots": {},
 	"upgrade_modifier": {},
-	"weaken_modified": {}
+	"weaken_modified": {},
+	"default_tags": {},
+	"hide_slots_for_tags": []
 	}
 
 func _init():
 	load_data()
-	
+
 func load_data():
 	var file = File.new()
 	var path = "res://assets/api_%s/gamedata.json" % [ProjectSettings.get_setting("application/config/mod_api_version")]
@@ -24,7 +26,6 @@ func load_data():
 		var json = parse_json(file.get_as_text())
 		innates = json.innates
 		scripts = json.scripts
-		symbols = json.symbols
 		layout = json.layout
 		items = json.items
 		file.close()

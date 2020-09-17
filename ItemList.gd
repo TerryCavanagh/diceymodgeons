@@ -30,14 +30,14 @@ func _ready():
 	AddButton.text = button_label
 	List.sort_items = sort_items
 	List.show_field = show_field
-	
+
 	List.process_data_func = process_data_func
 	List.modified_func = modified_func
 	List.change_text_func = change_text_func
-	
+
 	OverwriteCheck.visible = show_overwrite_mode
-	
-	
+
+
 func start_load():
 	if Database.is_overwrite_mode(table):
 		OverwriteCheck.pressed = true
@@ -46,10 +46,10 @@ func start_load():
 		OverwriteCheck.pressed = false
 		List.overwrite_mode = false
 	List.load_data()
-	
+
 func force_reload(select_key = null):
 	List.force_reload(select_key)
-	
+
 func force_overwrite_mode(value):
 	_on_OverwriteCheck_toggled(value)
 
@@ -57,27 +57,27 @@ func _set_search_placeholder(v):
 	search_placeholder = v
 	if not Search: return
 	Search.placeholder_text = v
-	
+
 func _set_table(v):
 	table = v
 	if not List: return
 	List.table = v
-	
+
 func _set_button_label(v):
 	button_label = v
 	if not AddButton: return
 	AddButton.text = v
-	
+
 func _set_sort_items(v):
 	sort_items = v
 	if not List: return
 	List.sort_items = v
-	
+
 func _set_show_field(v):
 	show_field = v
 	if not List: return
 	List.show_field = v
-	
+
 func _is_overwrite_mode():
 	if not List: return false
 	return List.overwrite_mode
@@ -93,26 +93,26 @@ func _on_OverwriteCheck_toggled(button_pressed):
 	emit_signal("overwrite_mode_changed", button_pressed)
 	Database.set_overwrite_mode(table, button_pressed)
 	List.force_reload()
-	
+
 func _on_OnlyModifiedCheck_pressed():
 	List.only_modified = OnlyModifiedCheck.pressed
 	List.force_reload()
-	
+
 func _set_process_data_func(value):
 	process_data_func = value
 	if not List: return
 	List.process_data_func = process_data_func
-	
+
 func _set_modified_func(value):
 	modified_func = value
 	if not List: return
 	List.modified_func = modified_func
-	
+
 func _set_change_text_func(value):
 	change_text_func = value
 	if not List: return
 	List.change_text_func = change_text_func
-	
+
 func _set_show_overwrite_mode(value):
 	show_overwrite_mode = value
 	if not OverwriteCheck: return

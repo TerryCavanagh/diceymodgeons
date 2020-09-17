@@ -3,7 +3,7 @@
 [ext_resource path="res://ScriptContainer.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Hack_16.tres" type="DynamicFont" id=2]
 
-[node name="BeforeCombatContainer" type="PanelContainer"]
+[node name="ScriptContainer" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )

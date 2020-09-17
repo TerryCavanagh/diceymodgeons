@@ -11,7 +11,7 @@ func disconnect_signal(node:Node, _signal:String, _target:Node, _func:String)->v
 func connect_signal(node:Node, key:String, _signal:String, _target:Node, _func:String)->void:
 	disconnect_signal(node, _signal, _target, _func)
 	node.connect(_signal, _target, _func, [node, key])
-	
+
 func fill_options(node:OptionButton, data, capitalize:bool = false)->void:
 	node.clear()
 	if data is Array:
@@ -27,17 +27,17 @@ func fill_options(node:OptionButton, data, capitalize:bool = false)->void:
 			var v = key.capitalize() if capitalize else key
 			node.add_item(v)
 			var idx = node.get_item_count() - 1
-			
+
 			var tooltip = data.get(key, "")
 			if tooltip is Dictionary:
 				tooltip = tooltip.get("description", "")
-			
+
 			node.set_item_metadata(idx, {"tooltip": tooltip, "key": key})
-			
+
 			if not tooltip.empty():
 				popup.set_item_tooltip(idx, tooltip)
 		node.set_meta("dict", data)
-		
+
 	Utils.update_option_tooltip(node, 0)
 
 func update_option_tooltip(node:Node, idx:int)->void:
@@ -48,12 +48,12 @@ func update_option_tooltip(node:Node, idx:int)->void:
 		node.hint_tooltip = ""
 	else:
 		node.hint_tooltip = tooltip
-		
+
 func option_get_selected_key(node:OptionButton):
 	var meta = node.get_item_metadata(node.selected)
 	if not meta: return ""
 	return meta.get("key", "")
-		
+
 func option_select(node:OptionButton, value):
 	if value.empty():
 		node.select(0)
@@ -64,29 +64,29 @@ func option_select(node:OptionButton, value):
 		elif node.has_meta("dict"):
 			var dict = node.get_meta("dict")
 			node.select(dict.keys().find(value))
-			
+
 	update_option_tooltip(node, node.selected)
-	
+
 func load_external_texture(path:String):
 	var texture = null
 	var img = Image.new()
 	if img.load(path) == OK:
 		texture = ImageTexture.new()
 		texture.create_from_image(img)
-	
+
 	return texture
-	
+
 func humanize_equipment_name(title):
 	title = title.replacen("_upgraded", "+")
 	title = title.replacen("_deckupgrade", "+")
 	title = title.replacen("_weakened", "-")
 	title = title.replacen("_downgraded", "-")
-	
+
 	return title
-	
+
 func to_csv_equipment_name(title):
 	if title.ends_with("+") or title.ends_with("-"):
 		title = title.replacen("+", "_upgraded")
 		title = title.replacen("-", "_weakened")
-	
+
 	return title

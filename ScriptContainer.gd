@@ -4,7 +4,10 @@ signal text_changed(new_text)
 
 onready var TextEdit = find_node("TextEdit")
 
+export (String) var database_key = ""
+
 export (String, MULTILINE) var text setget _set_text, _get_text
+export (bool) var enable_highlighting = true setget _set_enable_highlighting
 
 var completion_shortcut = ShortCut.new()
 
@@ -48,34 +51,41 @@ func _ready():
 		TextEdit.add_color_override(key, Color(theme_color[key]))
 	for keyword in haxe_keywords:
 		TextEdit.add_keyword_color(keyword, Color(theme_color["keyword_color"]))
-		
+
+	TextEdit.syntax_highlighting = enable_highlighting
+
 	"""
 	for constant in Gamedata.scripts.constants:
 		TextEdit.add_member_keyword(constant, Color(theme_color["string_color"]))
-		
+
 	TextEdit.set_completion(true, PoolStringArray([".", ",", "(", "="]))
 	"""
-		
+
 	var key = InputEventKey.new()
 	key.scancode = KEY_SPACE
 	key.control = true
 	completion_shortcut.shortcut = key
-		
+
 func _input(event):
 	if not visible or not TextEdit.has_focus(): return
 	if completion_shortcut.is_shortcut(event) and event.is_pressed() and not event.is_echo():
 		print("query completion")
 		#TextEdit.emit_signal("completion_requested")
 		get_tree().set_input_as_handled()
-	
+
 func _set_text(value):
 	if not TextEdit: return
 	TextEdit.text = value
 	TextEdit.cursor_set_line(0)
-	
+
 func _get_text():
 	if not TextEdit: return ""
 	return TextEdit.text
+
+func _set_enable_highlighting(value):
+	enable_highlighting = value
+	if TextEdit:
+		TextEdit.syntax_highlighting = enable_highlighting
 
 func _on_TextEdit_text_changed():
 	emit_signal("text_changed", TextEdit.text)
@@ -83,4 +93,4 @@ func _on_TextEdit_text_changed():
 func _on_TextEdit_completion_requested():
 	print("completion requested")
 	#TextEdit.code_complete(PoolStringArray(Gamedata.scripts.constants), true)
-	
+

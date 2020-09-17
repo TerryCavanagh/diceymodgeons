@@ -1,11 +1,16 @@
 extends PanelContainer
 
+export (int) var disable_tabs = 0
+
 onready var TabContainer = find_node("TabContainer")
 onready var ModSettings = find_node("Mod Settings")
 onready var Enemies = find_node("Enemies")
 onready var Equipment = find_node("Equipment")
-onready var Items = find_node("Items")
+onready var Items = find_node("Skills")
+onready var StatusEffects = find_node("Status Effects")
 onready var Characters = find_node("Characters")
+
+onready var PopupBackground = find_node("PopupBackground")
 
 onready var ModifiedDataContainer = find_node("ModifiedDataContainer")
 
@@ -14,30 +19,24 @@ func _ready():
 	# Disable auto accept quit to be able to ask for saving before quitting
 	get_tree().set_auto_accept_quit(false)
 	# Disable tabs
-	TabContainer.set_tab_disabled(1, true)
-	TabContainer.set_tab_disabled(2, true)
-	TabContainer.set_tab_disabled(3, true)
-	TabContainer.set_tab_disabled(4, true)
+	for i in disable_tabs:
+		TabContainer.set_tab_disabled(i+1, true)
 	Database.connect("data_loaded", self, "_on_Database_data_loaded")
-	
+	Database.connect("data_failed_loading", self, "_on_Database_data_failed_loading")
+
 func _process(delta):
-	var modal = get_viewport().get_modal_stack_top()
-	var show_background = modal != null and modal is WindowDialog
-	$PopupBackground.visible = show_background
-	
-	# TODO make this better
-	ModifiedDataContainer.visible = Database.data_needs_save()
-	
+	PopupBackground.visible = PopupBackgroundHelper.windows_shown_count > 0
+
 func _set_window_title(mod = null):
 	var current_mod = "No mod loaded"
 	if mod:
 		current_mod = "Loaded mod: %s" % mod
-	
+
 	var title = ProjectSettings.get_setting("application/config/name")
 	var api = ProjectSettings.get_setting("application/config/mod_api_version")
 	# setup some window information
 	OS.set_window_title("%s - %s - Mod API %s" % [title, current_mod, api])
-	
+
 func _notification(what):
 	if what == NOTIFICATION_WM_QUIT_REQUEST:
 		if Database.data_needs_save():
@@ -53,17 +52,23 @@ func _notification(what):
 					pass
 		else:
 			get_tree().quit()
-		
+
 func _on_Database_data_loaded(mod, id):
 	_set_window_title(mod)
-	TabContainer.set_tab_disabled(1, false)
-	TabContainer.set_tab_disabled(2, false)
-	TabContainer.set_tab_disabled(3, false)
-	TabContainer.set_tab_disabled(4, false)
-	
+	for i in disable_tabs:
+		TabContainer.set_tab_disabled(i+1, false)
+
 	Enemies.TreeList.start_load()
 	Equipment.ItemList.start_load()
 	Items.ItemList.start_load()
 	Characters.CharacterList.start_load()
-	
+	StatusEffects.StatusList.start_load()
+
 	TabContainer.current_tab += 1
+
+func _on_Database_data_failed_loading(errors:Array):
+	var error_str = PoolStringArray(errors).join("\n")
+	ConfirmPopup.popup_accept("Some files couldn't be loaded:\n%s" % error_str, "Errors opening the mod files!", Vector2(1000, 600))
+
+func _on_SaveCheckTimer_timeout():
+	ModifiedDataContainer.visible = Database.data_needs_save()

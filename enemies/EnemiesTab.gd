@@ -11,7 +11,7 @@ onready var AddNewEnemyPopup = find_node("AddNewEnemyPopup")
 
 func _ready():
 	TabContainer.visible = false
-	
+
 func _add_enemy(value):
 	var levelpack = Database.loaded_mod
 	var key = '%s_%s' % [levelpack.to_lower(), value.to_lower()]
@@ -20,15 +20,15 @@ func _add_enemy(value):
 	Database.commit(Database.Table.FIGHTERS, Database.CREATE, key)
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, key, "Levelpack", levelpack)
 	Database.commit(Database.Table.FIGHTERS, Database.UPDATE, key, "Name", value)
-	
+
 	TreeList.force_reload(key)
 
 func _on_TreeList_item_selected(key):
 	if not TabContainer: return
-	if key == null or key.empty(): 
+	if key == null or key.empty():
 		TabContainer.visible = false
 		return
-	
+
 	var data = Database.commit(Database.Table.FIGHTERS, Database.READ, key)
 	TabContainer.visible = true
 	Data.set_data(data)

@@ -19,28 +19,28 @@ func _ready():
 	set_column_expand(NAME, true)
 	set_column_expand(PREPARED, false)
 	_set_show_prepared(show_prepared)
-	
+
 	clear()
-	
-	
+
+
 func clear():
 	.clear()
 	create_item()
-	
+
 func add_equipment(equipment, idx = -1):
 	if not equipment: return
 	var it = create_item(get_root(), idx)
 	var n = Utils.humanize_equipment_name(equipment.get("equipment", "!!!"))
-	if equipment.has("category"):
-		n += " [%s]" % equipment.get("category")
-	
+#	if equipment.has("category"):
+#		n += " [%s]" % equipment.get("category")
+
 	it.set_text(NAME, n)
 	it.set_metadata(NAME, equipment)
-	
+
 	if show_prepared:
 		it.set_cell_mode(PREPARED, TreeItem.CELL_MODE_CHECK)
 		it.set_checked(PREPARED, equipment.get("prepared", false))
-	
+
 
 func can_drop_data(position, data):
 	var same_control = data.get("source", null) == self
@@ -49,7 +49,7 @@ func can_drop_data(position, data):
 func drop_data(position, data):
 	drop_mode_flags = Tree.DROP_MODE_DISABLED
 	var same_control = data.get("source", null) == self
-	
+
 	# TODO FIX THIS
 	"""
 	if can_sort and same_control:
@@ -63,25 +63,25 @@ func drop_data(position, data):
 				idx += 1
 				if next == item: break
 				next = next.get_next()
-			
+
 			idx += drop_pos
-			
+
 		add_equipment(data.equipment, idx)
-		
+
 		var root = data.source.get_root()
 		root.remove_child(data.item)
 		return
 	"""
-		
+
 	if can_add:
 		add_equipment(data.equipment)
 		emit_signal("value_changed", data.equipment, true)
-		
+
 	if data.source.can_remove:
 		var root = data.source.get_root()
 		root.remove_child(data.item)
 		data.source.emit_signal("value_changed", data.equipment, false)
-	
+
 func get_drag_data(position):
 	var item = get_item_at_position(position)
 	if not item: return null
@@ -100,9 +100,9 @@ func _on_EquipTree_cell_selected():
 		meta["prepared"] = not c
 		it.set_metadata(NAME, meta)
 		it.select(NAME)
-		
+
 	emit_signal("equipment_selected", it.get_metadata(NAME))
-	
+
 func _set_show_prepared(v):
 	show_prepared = v
 	if show_prepared:

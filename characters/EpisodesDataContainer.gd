@@ -35,29 +35,29 @@ func set_data(data):
 	_setup(NameEdit, "Episode Name", "")
 	_setup(DiceSpin, "Dice", 0)
 	_setup(HealthSpin, "Health", 1)
-	
+
 	Utils.fill_options(LayoutOption, Gamedata.layout, true)
-	
-	var items = Database.commit(Database.Table.ITEMS, Database.READ, null, "Name")
-	
+
+	var items = Database.commit(Database.Table.SKILLS, Database.READ, null, "Name")
+
 	Utils.fill_options(LimitOption, items, false)
 	Utils.fill_options(WeakenedLimitOption, items, false)
-	
+
 	_setup(LayoutOption, "Layout", "EQUIPMENT")
 	_setup(LimitOption, "Limit", "Fury")
 	_setup(WeakenedLimitOption, "Weakened Limit", "Tantrum")
-	
+
 	_setup(SuperEnemy2Spin, "Super Level 2", 0)
 	_setup(SuperEnemy3Spin, "Super Level 3", 0)
 	_setup(SuperEnemy4Spin, "Super Level 4", 0)
 	_setup(SuperEnemy5Spin, "Super Level 5", 0)
-	
+
 	_setup(DescriptionEdit, "Description", "")
 	_setup(RulesDescriptionEdit, "Rules Description", "")
-	
+
 	_setup(EquipmentContainer, "Equipment", [])
 	_setup(SkillcardContainer, "Skillcard", [])
-	
+
 
 func _setup(node:Node, key, def):
 	if node is SpinBox:
@@ -76,32 +76,32 @@ func _setup(node:Node, key, def):
 			s = def
 			save = true
 		Utils.option_select(node, s)
-		
+
 		if save:
 			_on_OptionButton_item_selected(node.selected, node, key)
-			
+
 		if node == LayoutOption:
 			var show_prepared = Utils.option_get_selected_key(node) == Gamedata.layout.SPELLBOOK
 			EquipmentContainer.EquippedContainer.show_prepared = show_prepared
-			
+
 		Utils.connect_signal(node, key, "item_selected", self, "_on_OptionButton_item_selected")
 	elif node == EquipmentContainer or node == SkillcardContainer:
 		node.set_data(data, key)
 		Utils.connect_signal(node, key, "value_changed", self, "_on_EquipmentContainer_value_changed")
-		
+
 func _filter_equipment_list(equipment):
 	if Utils.option_get_selected_key(LayoutOption) == Gamedata.layout.SPELLBOOK:
 		if equipment.get("Category", "").to_lower() == "magic":
 			return true
 		else:
 			return false
-			
+
 	return true
-	
+
 func _append_equipment(equipment:Array):
 	if Utils.option_get_selected_key(LayoutOption) == Gamedata.layout.SPELLBOOK:
 		equipment.push_front({"prepared": false, "equipment": "empty"})
-		
+
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, key, value)
@@ -109,15 +109,15 @@ func _on_SpinBox_value_changed(value, node, key):
 func _on_LineEdit_text_changed(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, key, value)
-	
+
 func _on_CheckBox_toggled(value, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, key, value)
-	
+
 func _on_TextEdit_text_changed(node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, key, node.text)
-	
+
 func _on_OptionButton_item_selected(id, node, key):
 	if not data_id: return
 	Utils.update_option_tooltip(node, id)
@@ -148,12 +148,12 @@ func _on_OptionButton_item_selected(id, node, key):
 				ConfirmPopup.CANCEL:
 					Utils.option_select(LayoutOption, selected_layout)
 					return
-					
+
 	selected_layout = value
 	EquipmentContainer.force_reload()
-	
+
 	Database.commit(Database.Table.EPISODES, Database.UPDATE, data_id, key, value)
-	
+
 func _on_EquipmentContainer_value_changed(equipment, value, node, key):
 	if not data_id: return
 	var action = Database.CREATE if value else Database.DELETE

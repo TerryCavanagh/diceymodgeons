@@ -48,13 +48,13 @@ func _process(delta):
 		if not v:
 			all_valid = false
 			break
-	
+
 	SaveButton.disabled = not all_valid
-	
-	
+
+
 func show_popup(mod:String = "", icon_path:String = "", data:Dictionary = {}):
 	popup_centered_minsize(rect_min_size)
-	
+
 	current_mod = mod
 	self.data = data
 	if data.empty():
@@ -74,16 +74,16 @@ func show_popup(mod:String = "", icon_path:String = "", data:Dictionary = {}):
 		is_new_mod = false
 		DirNameEdit.editable = false
 		DirNameMessage.visible = false
-		
+
 	_set_icon(icon_path)
-	
+
 	_setup(DirNameEdit, "dir", mod)
 	_setup(TitleEdit, "title", "")
 	_setup(AuthorEdit, "author", "")
 	_setup(ModVersionEdit, "mod_version", "0.0.1")
 	_setup(LicenseEdit, "license", "CC BY 4.0,MIT")
 	_setup(DescriptionEdit, "description", "")
-	
+
 func _setup(node, key, def):
 	if node is LineEdit:
 		if key == "dir":
@@ -100,7 +100,7 @@ func _setup(node, key, def):
 var dir_check = Directory.new()
 func _check(node):
 	if not node: return false
-	
+
 	var result = false
 	var dir_already_exists = false
 	if node is LineEdit:
@@ -116,7 +116,7 @@ func _check(node):
 					dir_already_exists = dir_check.dir_exists(path)
 			elif node == ModVersionEdit:
 				result = semver_regex.search(node.text) != null
-			
+
 		if result:
 			node.add_stylebox_override("normal", okay_style)
 			if node == DirNameEdit:
@@ -132,44 +132,44 @@ func _check(node):
 					DirNameMessage.text = "Can only contain alphanumeric characters."
 			elif node == ModVersionEdit:
 				ModVersionMessage.bbcode_text = "The mod version follows the SemVer Specification. [url=https://semver.org/]Read more here[/url]"
-				
+
 		if node == ModVersionEdit:
 			var f = ModVersionMessage.get_font("normal_font")
 			var h = f.get_wordwrap_string_size(ModVersionMessage.text, ModVersionMessage.rect_size.x).y
 			ModVersionMessage.get_parent().rect_min_size.y = h + 8
-			
+
 	elif node is TextEdit:
 		result = true
-		
+
 	valid_nodes[node] = result
-	
+
 	return result
-	
+
 func _set_icon(icon_path):
 	var icon = null
 	if not icon_path.empty():
 		icon = Utils.load_external_texture(icon_path)
-		
+
 	if icon:
 		mod_icon_path = icon_path
 	else:
 		mod_icon_path = Settings.get_value(Settings.GAME_PATH).plus_file(default_mod_icon_path)
 		icon = Utils.load_external_texture(mod_icon_path)
-		
+
 	IconTexture.texture_normal = icon
-	
+
 func _error(text:String):
 	ConfirmPopup.popup_accept(text, "Error!")
 	#yield(ConfirmPopup, "action_chosen")
 	#hide()
-	
+
 func _on_LineEdit_text_changed(value, node, key):
 	if _check(node):
 		if key == "dir":
 			current_mod = node.text
 		else:
 			data[key] = node.text
-	
+
 func _on_TextEdit_text_changed(node, key):
 	if _check(node):
 		data[key] = node.text
@@ -178,7 +178,7 @@ func _on_SaveButton_pressed():
 	var mods_path = Settings.get_value(Settings.GAME_PATH).plus_file("mods")
 	print(current_mod)
 	var path = mods_path.plus_file(current_mod)
-	
+
 	if is_new_mod:
 		# create dir
 		var dir := Directory.new()
@@ -188,7 +188,7 @@ func _on_SaveButton_pressed():
 		elif dir.make_dir_recursive(path) != OK:
 			_error("Couldn't create dir at %s" % path)
 			return
-	
+
 	# create json
 	var json = File.new()
 	if json.open(path.plus_file("_polymod_meta.json"), File.WRITE) == OK:
@@ -197,7 +197,7 @@ func _on_SaveButton_pressed():
 	else:
 		_error("Couldn't create _polymod_meta.json")
 		return
-	
+
 	# create icon
 	var icon_img = Image.new()
 	if icon_img.load(mod_icon_path) == OK:
@@ -207,7 +207,7 @@ func _on_SaveButton_pressed():
 	else:
 		_error("Couldn't create _polymod_icon.png")
 		return
-		
+
 	hide()
 
 func _on_CancelButton_pressed():

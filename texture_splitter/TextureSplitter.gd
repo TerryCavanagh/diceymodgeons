@@ -37,7 +37,7 @@ func _ready():
 	#parse_pck("res://assets/test/pack_1080.pck")
 	#decode_image("res://assets/test/pack_1080.atf")
 	#SpriteTexture.set_sprites(sprites)
-	
+
 func parse_pck(path):
 	sprites = []
 	image_filename = null
@@ -68,7 +68,7 @@ func parse_pck(path):
 		# TODO show warning
 		self.pck_opened = false
 		return
-		
+
 	SpriteList.clear()
 	self.pck_opened = not sprites.empty() and image_filename != null
 	if pck_opened:
@@ -76,7 +76,7 @@ func parse_pck(path):
 		PCKLabel.text = path
 		for sprite in sprites:
 			SpriteList.add_item(sprite.get("name", "Unknown"))
-	
+
 func decode_image(path):
 	var file = File.new()
 	if file.open(path, File.READ) == OK:
@@ -91,7 +91,7 @@ func decode_image(path):
 		file.close()
 	else:
 		print('Cannot open file')
-		
+
 func save_sprite(sprite, dir):
 	var img = Image.new()
 	img.create(sprite.rect.size.x, sprite.rect.size.y, false, loaded_image.get_format())
@@ -100,10 +100,10 @@ func save_sprite(sprite, dir):
 	_make_dir(target.get_base_dir())
 	print('%s => %s' % [sprite, target])
 	img.save_png(target)
-	
+
 func save_sprite_rotated(sprite, dir):
 	var viewport = _create_viewport(Vector2(sprite.rect.size.y, sprite.rect.size.x))
-	
+
 	var s = Sprite.new()
 	s.centered = true
 	s.texture = SpriteTexture.texture
@@ -113,20 +113,20 @@ func save_sprite_rotated(sprite, dir):
 	s.position = Vector2(sprite.rect.size.y / 2.0, sprite.rect.size.x / 2.0)
 	s.material = premul_alpha_material
 	viewport.add_child(s)
-	
+
 	var target = '%s/%s' % [dir, sprite.name]
 	print('%s => %s' % [sprite, target])
 	_save_viewport(viewport, target)
 
 func save_sprites(src_dir, dest_file):
 	var viewport = _create_viewport(pck_size)
-	
+
 	for sprite in sprites:
 		var img = Image.new()
 		img.load('%s/%s.png' % [src_dir, sprite.name])
 		var tex = ImageTexture.new()
 		tex.create_from_image(img)
-		
+
 		var s = Sprite.new()
 		s.texture = tex
 		s.position = sprite.rect.position + sprite.rect.size / 2.0
@@ -134,13 +134,13 @@ func save_sprites(src_dir, dest_file):
 			s.rotation_degrees = 270
 			s.flip_v = true
 			s.flip_h = true
-		
+
 		s.material = premul_alpha_material
-		
+
 		viewport.add_child(s)
-		
+
 	_save_viewport(viewport, dest_file, true)
-		
+
 func merge_pngs(src:String):
 	var target = src.plus_file("merged")
 	var dir = Directory.new()
@@ -150,7 +150,7 @@ func merge_pngs(src:String):
 			var f = "%s/%s.png" % [src, sprite.name]
 			if not dir.file_exists(f):
 				files_missing.push_back('%s.png' % sprite.name)
-				
+
 		if not files_missing.empty():
 			WarningPopup.window_title = "Files Missing!"
 			WarningPopup.dialog_text = "The following files are missing:\n%s" % PoolStringArray(files_missing).join("\n")
@@ -169,16 +169,16 @@ func _create_viewport(size):
 	viewport.hdr = false
 	viewport.usage = Viewport.USAGE_2D
 	viewport.size = size
-	
+
 	viewport.own_world = true
 	viewport.world = World.new()
 	viewport.world.environment = Environment.new()
 	viewport.world.environment.background_mode = Environment.BG_COLOR
 	viewport.world.environment.background_color = Color(1, 1, 1, 0)
-	
+
 	add_child(viewport)
 	return viewport
-	
+
 func _save_viewport(viewport, target, compressed = false):
 	yield(get_tree(), "idle_frame")
 	yield(get_tree(), "idle_frame")
@@ -188,30 +188,30 @@ func _save_viewport(viewport, target, compressed = false):
 	var img:Image = viewport.get_texture().get_data()
 	img.flip_y()
 	#img.fix_alpha_edges()
-	
+
 	_make_dir(target.get_base_dir())
-	
+
 	if compressed:
 		img.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_GENERIC, 1.0)
-		
+
 		var atf = AtfParser.new()
 		atf.save(img.get_data(), viewport.size.x, viewport.size.y, "%s.atf" % target)
 	else:
 		img.save_png("%s.png" % target)
-	
+
 	viewport.queue_free()
 	remove_child(viewport)
-	
+
 func _make_dir(dir:String):
 	var d = Directory.new()
 	d.make_dir_recursive(dir)
-	
+
 func _on_OpenButton_pressed():
 	SaveDialog.mode = FileDialog.MODE_OPEN_FILE
 	SaveDialog.filters = PoolStringArray(["*.pck"])
 	dialog_mode = DialogMode.OpenPCK
 	SaveDialog.popup_centered()
-	
+
 func _on_SavePNGButton_pressed():
 	if not pck_opened: return
 	SaveDialog.mode = FileDialog.MODE_SAVE_FILE
@@ -225,7 +225,7 @@ func _on_SaveSplitButton_pressed():
 	SaveDialog.filters = PoolStringArray()
 	dialog_mode = DialogMode.SaveSplit
 	SaveDialog.popup_centered()
-	
+
 func _on_MergePNGButton_pressed():
 	if sprites.empty(): return
 	SaveDialog.mode = FileDialog.MODE_OPEN_DIR

@@ -25,17 +25,19 @@ run/main_scene="res://Main.tscn"
 run/low_processor_mode=true
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
-config/mod_api_version="0.13.0"
-config/app_version="0.1.7"
+config/mod_api_version="1.0"
+config/app_version="0.1.9"
 
 [autoload]
 
+PopupBackgroundHelper="*res://PopupBackgroundHelper.gd"
 Settings="*res://Settings.gd"
 Database="*res://Database.gd"
 Gamedata="*res://Gamedata.gd"
 Utils="*res://Utils.gd"
 ModFiles="*res://ModFiles.gd"
 ConfirmPopup="*res://ConfirmPopup.tscn"
+GenerateSymbols="*res://GenerateSymbols.gd"
 
 [debug]
 
