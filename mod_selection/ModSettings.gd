@@ -161,7 +161,9 @@ func _on_LoadButton_pressed():
 	var meta = ModList.get_selected().get_metadata(Column.NAME)
 	var loaded = true
 	if meta and meta.has("mod"):
-		if not meta.get("polymod", {}).get("api_version", "") == ProjectSettings.get_setting("application/config/mod_api_version"):
+		var mod_api = meta.get("polymod", {}).get("api_version", "")
+		var app_api = ProjectSettings.get_setting("application/config/mod_api_version")
+		if not SemVerChecker.compare(mod_api, app_api):
 			ConfirmPopup.popup_accept("The mod's API version differs from the supported API by the editor.", "Error!")
 			yield(ConfirmPopup, "action_chosen")
 			loaded = false

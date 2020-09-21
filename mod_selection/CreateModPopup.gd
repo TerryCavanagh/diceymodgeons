@@ -30,14 +30,11 @@ var valid_nodes := {}
 var all_valid:bool = false
 
 var dir_name_regex = RegEx.new()
-var semver_regex = RegEx.new()
 
 var edit_mode = false
 
 func _ready():
 	dir_name_regex.compile("^[a-zA-Z0-9]+$")
-	# from https://regexr.com/39s32
-	semver_regex.compile("^((([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?)(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?)$")
 	SaveButton.disabled = true
 	okay_style.border_color = Color.green.darkened(0.5)
 	wrong_style.border_color = Color.red.darkened(0.5)
@@ -115,7 +112,7 @@ func _check(node):
 					result = not dir_check.dir_exists(path)
 					dir_already_exists = dir_check.dir_exists(path)
 			elif node == ModVersionEdit:
-				result = semver_regex.search(node.text) != null
+				result = SemVerChecker.check(node.text)
 
 		if result:
 			node.add_stylebox_override("normal", okay_style)
