@@ -695,7 +695,7 @@ class CSVData:
 						var o = {}
 						result.push_back(o)
 						o["prepared"] = v.begins_with("*")
-						o["equipment"] = v.lstrip("*")
+						o["equipment"] = _convert_from_text(v.lstrip("*"))
 						var e = Database.commit(Database.Table.EQUIPMENT, Database.READ, o["equipment"])
 						if e:
 							if e.has("Category"):
@@ -713,7 +713,7 @@ class CSVData:
 					return value.to_lower() == schema[header].get("on_true", "none")
 			"script":
 				return _convert_from_script(value)
-			"text":
+			"text", "string":
 				return _convert_from_text(value)
 			_:
 				return value
@@ -762,10 +762,11 @@ class CSVData:
 				if value:
 					var a = []
 					for o in value:
+						var e = _convert_to_text(o.get("equipment"))
 						if o.get("prepared", false):
-							a.push_back('*%s' % o.get("equipment"))
+							a.push_back('*%s' % e)
 						else:
-							a.push_back(o.get("equipment"))
+							a.push_back(e)
 					return PoolStringArray(a).join("|")
 				else:
 					return ""
@@ -783,7 +784,7 @@ class CSVData:
 					return on_false
 			"script":
 				return _convert_to_script(value)
-			"text":
+			"text", "string":
 				return _convert_to_text(value)
 			_:
 				return value
