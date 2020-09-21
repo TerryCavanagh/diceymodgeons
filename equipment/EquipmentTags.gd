@@ -33,7 +33,7 @@ func _ready():
 	var popup:PopupMenu = TagsButton.get_popup()
 	var idx = 0
 	for tag in Gamedata.items.get("default_tags", {}):
-		popup.add_check_item(Gamedata.items.default_tags.get(tag), idx)
+		popup.add_check_item("%s [%s]" % [Gamedata.items.default_tags.get(tag), tag], idx)
 		popup.set_item_as_checkable(idx, true)
 		popup.set_item_tooltip(idx, tag)
 		popup.set_item_metadata(idx, tag)
