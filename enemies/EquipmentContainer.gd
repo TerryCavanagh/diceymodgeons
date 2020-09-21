@@ -16,6 +16,8 @@ var _equipment:Array = []
 var filter_list_func:FuncRef = null
 var append_equipment_func:FuncRef = null
 
+var _special_tag = "skillcard"
+
 func _ready():
 	set_data({}, "")
 	EquippedContainer.order = order_equipped
@@ -26,7 +28,7 @@ func _load_equipment_list():
 	_equipment = []
 	for key in equipment.keys():
 		var e = equipment.get(key)
-		var special = e.get("Special?", false)
+		var special = _special_tag in e.get("Tags", [])
 		if show_only_special:
 			if not special:
 				continue

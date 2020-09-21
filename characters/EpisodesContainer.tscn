@@ -24,7 +24,7 @@ margin_right = 1274.0
 margin_bottom = 716.0
 
 [node name="EpisodeList" parent="HBoxContainer" instance=ExtResource( 1 )]
-margin_right = 251.0
+margin_right = 264.0
 margin_bottom = 712.0
 rect_min_size = Vector2( 220, 0 )
 table = 6
@@ -35,7 +35,7 @@ show_field = "Episode Name"
 show_overwrite_mode = false
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
-margin_left = 255.0
+margin_left = 268.0
 margin_right = 1268.0
 margin_bottom = 712.0
 size_flags_horizontal = 3
