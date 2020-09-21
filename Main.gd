@@ -68,7 +68,7 @@ func _on_Database_data_loaded(mod, id):
 
 func _on_Database_data_failed_loading(errors:Array):
 	var error_str = PoolStringArray(errors).join("\n")
-	ConfirmPopup.popup_accept("Some files couldn't be loaded:\n%s" % error_str, "Errors opening the mod files!", Vector2(1000, 600))
+	ConfirmPopup.popup_accept("Some files couldn't be loaded:\n\n%s" % error_str, "Errors opening the mod files!", Vector2(1000, 300))
 
 func _on_SaveCheckTimer_timeout():
 	ModifiedDataContainer.visible = Database.data_needs_save()

@@ -62,6 +62,8 @@ func _fill_mod_list():
 	var dir := Directory.new()
 	var file := File.new()
 	var path = self.path + "/mods"
+
+	var errors = []
 	if dir.dir_exists(path) and dir.open(path) == OK:
 		dir.list_dir_begin(true, true)
 		while true:
@@ -72,7 +74,11 @@ func _fill_mod_list():
 				continue
 
 			if file.open("%s/%s/_polymod_meta.json" % [path, current], File.READ) == OK:
-				var json = parse_json(file.get_as_text())
+				var json = JSON.parse(file.get_as_text())
+				if not json.error == OK:
+					errors.push_back("\t- Mod %s has a _polymod_meta.json file but it is not a JSON valid file: (Line: %s) %s" % [current, json.error_line, json.error_string])
+					continue
+				json = json.result
 				var item = ModList.create_item(root)
 				var title = json.get("title", "")
 				if title.empty():
@@ -107,6 +113,10 @@ func _fill_mod_list():
 		LoadButton.disabled = true
 		LaunchButton.disabled = true
 		ModDescription.text = ""
+
+	if not errors.empty():
+		var err_string  = PoolStringArray(errors).join("\n")
+		ConfirmPopup.popup_accept("There were some errors filling the mod list:\n\n%s" % err_string, "Errors parsing mod's polymod metadata!", Vector2(1000, 300))
 
 func _check_valid_path():
 	var dir := Directory.new()

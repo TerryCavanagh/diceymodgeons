@@ -130,7 +130,7 @@ func load_data(root_path:String, metadata:Dictionary):
 	_episodes = CSVData.new(_get_paths(Table.EPISODES), "ID")
 	_symbols = CSVData.new(_get_paths(Table.SYMBOLS), "Name")
 
-	if _load_errors.size() > 0:
+	if not _load_errors.empty():
 		emit_signal("data_failed_loading", _load_errors)
 	else:
 		_data_loaded = true
@@ -424,13 +424,13 @@ class CSVData:
 			schema = parse_json(file.get_as_text())
 			file.close()
 		else:
-			Database._load_errors.push_back("Schema: %s could not be loaded" % path)
+			Database._load_errors.push_back("\t- Schema: %s could not be loaded" % path)
 
 	func load_data(path:String, origin:int):
 		var file = File.new()
 		if not file.file_exists(path):
 			if origin == Origin.GAME:
-				Database._load_errors.push_back("File: %s is in use, locked or can't be read" % path)
+				Database._load_errors.push_back("\t- File: %s is in use, locked or can't be read" % path)
 			return
 
 		if file.open(path, File.READ) == OK:
@@ -442,7 +442,7 @@ class CSVData:
 			_content_to_data(content, origin)
 			file.close()
 		else:
-			Database._load_errors.push_back("File: %s is in use, locked or can't be read" % path)
+			Database._load_errors.push_back("\t- File: %s is in use, locked or can't be read" % path)
 
 	func _content_to_data(content, source):
 		for c in content:
