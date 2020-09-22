@@ -41,12 +41,17 @@ func add_empty_tab():
 	var empty = EmptyTabScene.instance()
 	empty.name = "+"
 	empty.connect("create_pressed", self, "open_file_dialog", [FileDialog.MODE_SAVE_FILE])
-	empty.connect("open_pressed", self, "open_file_dialog", [FileDialog.MODE_OPEN_FILE])
+	empty.connect("open_pressed", self, "open_file_dialog", [FileDialog.MODE_OPEN_FILE, false])
+	empty.connect("copy_pressed", self, "open_file_dialog", [FileDialog.MODE_OPEN_FILE, true])
 	FileTabContainer.add_child(empty)
 	new_tab_idx = empty.get_index()
 
-func open_file_dialog(mode):
-	var path = ModFiles.get_mod_path(mod_path)
+func open_file_dialog(mode, from_game:bool = false):
+	var path = ""
+	if from_game:
+		path = ModFiles.get_game_path(mod_path)
+	else:
+		path = ModFiles.get_mod_path(mod_path)
 	var dir = Directory.new()
 	if not dir.dir_exists(path):
 		dir.make_dir_recursive(path)
@@ -72,6 +77,24 @@ func _update_save_state():
 			FileTabContainer.set_tab_title(idx, "%s" % control.file_name)
 
 func _on_ScriptsFileDialog_file_selected(path:String):
+
+	# Let's copy it to the mod folder if its origin was GAME
+	var orig_file = ModFiles.get_file(path, false)
+	if orig_file.origin == ModFiles.Origin.GAME:
+		ConfirmPopup.popup_confirm("Looks like you are trying to load a file from the game's folder. Do you want to copy it to the mod folder?", "Copy file to the mod folder")
+		var result = yield(ConfirmPopup, "action_chosen")
+		match result:
+			ConfirmPopup.OKAY:
+				pass
+			ConfirmPopup.OTHER:
+				pass
+			ConfirmPopup.CANCEL:
+				return
+
+	var mod_file = ModFiles.copy_to_mod(orig_file)
+	if mod_file:
+		path = mod_file.path
+
 	if ModFiles.is_file_opened(path):
 		for idx in FileTabContainer.get_tab_count():
 			var control = FileTabContainer.get_tab_control(idx)

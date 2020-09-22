@@ -54,7 +54,7 @@ func generate(mod_id:String):
 	var filepaths = {}
 	var hashes = {}
 	for key in files_to_load:
-		var file = ModFiles.get_file(files_to_load[key])
+		var file = ModFiles.get_file(files_to_load[key], false)
 		if file:
 			filepaths[key] = file.path
 			hashes[key] = File.new().get_sha256(file.path)

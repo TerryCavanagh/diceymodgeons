@@ -46,16 +46,32 @@ func close_file(path:String):
 	if path in loaded_files:
 		loaded_files.erase(path)
 
-func get_file(file_path:String)->BaseFile:
+func copy_to_mod(basefile:BaseFile):
+	if basefile.origin == Origin.GAME:
+		var original_path = basefile.path
+		var file_path = strip_game_and_mod_path(basefile.path)
+		var mod_path = get_mod_path(file_path)
+
+		var dir = Directory.new()
+		dir.make_dir_recursive(mod_path.get_base_dir())
+		if dir.copy(original_path, mod_path) == OK:
+			return get_file(mod_path, false)
+	else:
+		return basefile
+
+	return null
+
+func get_file(file_path:String, keep_loaded:bool = true)->BaseFile:
 	var file = _get_file(file_path)
 	if file:
 		file._file.close()
-		loaded_files[file.path] = file
+		if keep_loaded:
+			loaded_files[file.path] = file
 		return file
 
 	return null
 
-func get_file_as_text(file_path:String)->ScriptFile:
+func get_file_as_text(file_path:String, keep_loaded:bool = true)->ScriptFile:
 	var file = _get_file(file_path)
 	if file:
 		var result = file._file.get_as_text()
@@ -65,12 +81,13 @@ func get_file_as_text(file_path:String)->ScriptFile:
 		r.changed_text = result
 		r.path = file.path
 		r.origin = file.origin
-		loaded_files[file.path] = r
+		if keep_loaded:
+			loaded_files[file.path] = r
 		return r
 
 	return null
 
-func get_file_csv(file_path:String)->CsvFile:
+func get_file_csv(file_path:String, keep_loaded:bool = true)->CsvFile:
 	var file = _get_file(file_path)
 	if file:
 			var headers = Array(file._file.get_csv_line())
@@ -93,7 +110,8 @@ func get_file_csv(file_path:String)->CsvFile:
 			r.headers_hash = headers.hash()
 			r.path = file.path
 			r.origin = file.origin
-			loaded_files[file.path] = r
+			if keep_loaded:
+				loaded_files[file.path] = r
 			return r
 
 	return null
@@ -124,8 +142,13 @@ func save_file(file_path):
 
 	var path = obj.path
 	if obj.origin == Origin.GAME:
-		var fname = path.get_file()
-		path = get_mod_path("data/text/generators/%s" % fname)
+		path = strip_game_and_mod_path(path)
+		path = get_mod_path(path)
+
+	var dir_path = path.get_base_dir()
+	var dir = Directory.new()
+	if not dir.dir_exists(dir_path):
+		dir.make_dir_recursive(dir_path)
 
 	if obj is CsvFile:
 		var file = File.new()
