@@ -25,4 +25,4 @@ func set_symbols_hash(mod_id:String, value):
 	settings_file.save(PATH)
 
 func get_symbols_hash(mod_id:String):
-	return settings_file.get_value(mod_id, SYMBOLS_HASH, "")
+	return settings_file.get_value(mod_id, SYMBOLS_HASH, {})
