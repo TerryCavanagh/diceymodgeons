@@ -101,14 +101,7 @@
 			"add5": "Adds a FREE5 slot to the card.",
 			"add6": "Adds a FREE6 slot to the card.",
 			"reducesize": "Reduces a size 2 card to size 1.",
-			"change_power": "Change this card to the one defined in the upgraded tab. Upgrade text will read: makes it more powerful",
-			"change_poison": "Change this card to the one defined in the upgraded tab. Upgrade text will read: increases its poison damage",
-			"change_requirements": "Change this card to the one defined in the upgraded tab. Upgrade text will read: change_requirements",
-			"change_description": "Change this card to the one defined in the upgraded tab. Upgrade text will read: gives a clue to how it works",
-			"change_boomerang": "Change this card to the one defined in the upgraded tab. Upgrade text will read: changes its return damage to a constant [sword]3",
-			"change_countdown": "Change this card to the one defined in the upgraded tab. Upgrade text will read: converts it into a countdown",
-			"change_backfire": "Change this card to the one defined in the upgraded tab. Upgrade text will read: reduces its power",
-			"change_towershield": "Change this card to the one defined in the upgraded tab. Upgrade text will read: makes it completely game breaking"
+			"change_power": "Change this card to the one defined in the upgraded tab."
 		},
 		"weaken_modifier": {
 			"No modifier": "No modifier",
@@ -117,7 +110,7 @@
 			"complicate": "Generally makes a card much harder to play. NORMAL -> MAX3, EVEN -> REQUIRE6, ODD -> REQUIRE5.",
 			"decreaserange": "Makes a card slightly harder to play. MAX4 -> MAX3.",
 			"doublerequirements": "Adds a copy of the first slot to the card. REQUIRE6 -> two REQUIRE6 slots.",
-			"noeffect": "Chanes to do nothing when used.",
+			"noeffect": "Changes to do nothing when used.",
 			"removereusable": "If a card is reusable or multi use, change to be only usable once this turn.",
 			"changetotal9": "If a card has two slots that need a total value, change that total to 9.",
 			"changetotal10": "If a card has two slots that need a total value, change that total to 10.",

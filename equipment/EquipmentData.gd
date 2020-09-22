@@ -106,6 +106,9 @@ func _setup(node, key, def):
 		Utils.connect_signal(node, key, "text_changed", self, "_on_TextEdit_text_changed")
 	elif node is OptionButton:
 		var s = str(data.get(key, def))
+		# Upgrade modifier doesn't need all those extra change_*. All of those are change_power now.
+		if node == UpgradeOption and s.begins_with("change_"):
+			s = "change_power"
 		Utils.option_select(node, s)
 		Utils.connect_signal(node, key, "item_selected", self, "_on_OptionButton_item_selected")
 	elif node == DescriptionEdit:
