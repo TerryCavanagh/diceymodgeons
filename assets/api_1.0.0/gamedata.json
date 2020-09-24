@@ -138,7 +138,7 @@
 			"curseattract": "This equipment always triggers curse if inflicted even if the odds are set to 0%",
 			"showgold": "Shows the player's gold",
 			"appearsforparts": "Appears as a scrap option for Inventor",
-			"hidereusable": "Don't show that this equipment is reusable",
+			"hidereuseable": "Don't show that this equipment is reuseable",
 			"cannotreuse": "This equipment cannot be reused"
 		},
 		"hide_slots_for_tags": [
