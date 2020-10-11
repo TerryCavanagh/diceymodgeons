@@ -52,6 +52,11 @@ func _ready():
 	for keyword in haxe_keywords:
 		TextEdit.add_keyword_color(keyword, Color(theme_color["keyword_color"]))
 
+	TextEdit.add_color_region("//", "", theme_color["comment_color"], true)
+	TextEdit.add_color_region("/*", "*/", theme_color["comment_color"])
+	TextEdit.add_color_region('"', '"', theme_color["string_color"])
+	TextEdit.add_color_region("'", "'", theme_color["string_color"])
+
 	TextEdit.syntax_highlighting = enable_highlighting
 
 	"""
