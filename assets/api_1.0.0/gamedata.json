@@ -22,6 +22,7 @@
 		"shockcurse": "is shocked every turn",
 		"burncurse": "is burnt every turn",
 		"immunestatus": "is immune to lock and freeze"
+		"altvampire": "revives to full health when defeated (once)"
 	},
 	"layout": {"EQUIPMENT" : "EQUIPMENT", "SPELLBOOK": "SPELLBOOK", "DECK": "DECK"},
 	"scripts": {
