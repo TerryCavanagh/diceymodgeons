@@ -157,6 +157,22 @@
 			"halloweenspecial": "This equipment is from the Halloween Special"
 			"reunion": "This equipment is from the Reunion DLC"
 			"guestitem": "This equipment is a guest item"
+			"credits_unsuspiciousperson": "Guest Item Credits - unsuspiciousperson"
+			"credits_notmario": "Guest Item Credits - not mario"
+			"credits_blobby": "Guest Item Credits - StereotypicalBlobby"
+			"credits_levelworld": "Guest Item Credits - LevelWorld"
+			"credits_onetruepurple": "Guest Item Credits - onetruepurple"
+			"credits_titku_and_diane_of_wibi": "Guest Item Credits - Titku & Diane, of Wibi"
+			"credits_xenonzed": "Guest Item Credits - XenonZed"
+			"credits_themysticsword": "Guest Item Credits - TheMysticSword"
+			"credits_xangelmoonx": "Guest Item Credits - XAngelMoonX"
+			"credits_matt101": "Guest Item Credits - Matt101"
+			"credits_neypah_tit": "Guest Item Credits - Neypah_Tit"
+			"credits_dee": "Guest Item Credits - Dee"
+			"credits_kirb": "Guest Item Credits - Kirb"
+			"credits_dummy": "Guest Item Credits - Dummy"
+			"credits_matzie": "Guest Item Credits - Matzie"
+			"credits_polly": "Guest Item Credits - Polly"
 		},
 		"hide_slots_for_tags": [
 			"skillcard",
