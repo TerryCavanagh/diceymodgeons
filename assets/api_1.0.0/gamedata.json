@@ -148,6 +148,15 @@
 			"hidereuseable": "Don't show that this equipment is reuseable",
 			"cannotreuse": "This equipment cannot be reused"
 			"alternateversion": "This equipment is a Parallel Universe version of another"
+			"keepcountdown": "Paper Sword - Keep Countdown cost(?)"
+			"collateral": "Collateral - Protection from bust(?)"
+			"workout": "This equipment is a Workout card"
+			"destroy": "Destroyed when used (note that some workout cards don't have this)"
+			"erroronreroll": "Errors if dice rerolled (Robot)"
+			"reusableifcursed": "Reusable only when cursed"
+			"halloweenspecial": "This equipment is from the Halloween Special"
+			"reunion": "This equipment is from the Reunion DLC"
+			"guestitem": "This equipment is a guest item"
 		},
 		"hide_slots_for_tags": [
 			"skillcard",
