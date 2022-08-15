@@ -103,7 +103,7 @@
 			"add6": "Adds a FREE6 slot to the card.",
 			"reducesize": "Reduces a size 2 card to size 1.",
 			"change_power": "Change this card to the one defined in the upgraded tab."
-			"change_backfire": "Works like change_power, but says it reduces a card's power instead of increasing it."
+			"change_backfire": "Works like change_power, but while upgrading the ingame text says it reduces a card's power instead of increasing it."
 			"change_boomerang": "Likely works the same as change_power, but as a legacy version for Boomerang."
 			"change_countdown": "Likely works the same as change_power, but as a legacy version for Countdowns."
 			"change_description": "Likely works the same as change_power, but as a legacy version for \"Description\"."
