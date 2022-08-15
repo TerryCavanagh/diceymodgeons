@@ -141,6 +141,7 @@
 			"appearsforparts": "Appears as a scrap option for Inventor",
 			"hidereuseable": "Don't show that this equipment is reuseable",
 			"cannotreuse": "This equipment cannot be reused"
+			"alternateversion": "This equipment is a Parallel Universe version of another"
 		},
 		"hide_slots_for_tags": [
 			"skillcard",
