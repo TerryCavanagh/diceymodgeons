@@ -102,13 +102,14 @@
 			"add5": "Adds a FREE5 slot to the card.",
 			"add6": "Adds a FREE6 slot to the card.",
 			"reducesize": "Reduces a size 2 card to size 1.",
-			"change_power": "Change this card to the one defined in the upgraded tab."
-			"change_backfire": "Works like change_power, but while upgrading the ingame text says it reduces a card's power instead of increasing it."
-			"change_boomerang": "Likely works the same as change_power, but as a legacy version for Boomerang."
-			"change_countdown": "Likely works the same as change_power, but as a legacy version for Countdowns."
-			"change_description": "Likely works the same as change_power, but as a legacy version for \"Description\"."
-			"change_poison": "Likely works the same as change_power, but as a legacy version for Poison."
-			"change_requirements": "Likely works the same as change_power, but as a legacy version for Requirements."
+			"change_power": "Change this card to the one defined in the upgraded tab.",
+			"change_poison": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: increases its poison damage",
+			"change_requirements": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: change_requirements",
+			"change_description": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: gives a clue to how it works",
+			"change_boomerang": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: changes its return damage to a constant [sword]3",
+			"change_countdown": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: converts it into a countdown",
+			"change_backfire": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: reduces its power",
+			"change_towershield": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: makes it completely game breaking"
 		},
 		"weaken_modifier": {
 			"No modifier": "No modifier",
@@ -146,32 +147,32 @@
 			"showgold": "Shows the player's gold",
 			"appearsforparts": "Appears as a scrap option for Inventor",
 			"hidereuseable": "Don't show that this equipment is reuseable",
-			"cannotreuse": "This equipment cannot be reused"
-			"alternateversion": "This equipment is a Parallel Universe version of another"
-			"keepcountdown": "Paper Sword - Keep Countdown cost(?)"
-			"collateral": "Collateral - Protection from bust(?)"
-			"workout": "This equipment is a Workout card"
-			"destroy": "Destroyed when used (note that some workout cards don't have this)"
-			"erroronreroll": "Errors if dice rerolled (Robot)"
-			"reusableifcursed": "Reusable only when cursed"
-			"halloweenspecial": "This equipment is from the Halloween Special"
-			"reunion": "This equipment is from the Reunion DLC"
-			"guestitem": "This equipment is a guest item"
-			"credits_unsuspiciousperson": "Guest Item Credits - unsuspiciousperson"
-			"credits_notmario": "Guest Item Credits - not mario"
-			"credits_blobby": "Guest Item Credits - StereotypicalBlobby"
-			"credits_levelworld": "Guest Item Credits - LevelWorld"
-			"credits_onetruepurple": "Guest Item Credits - onetruepurple"
-			"credits_titku_and_diane_of_wibi": "Guest Item Credits - Titku & Diane, of Wibi"
-			"credits_xenonzed": "Guest Item Credits - XenonZed"
-			"credits_themysticsword": "Guest Item Credits - TheMysticSword"
-			"credits_xangelmoonx": "Guest Item Credits - XAngelMoonX"
-			"credits_matt101": "Guest Item Credits - Matt101"
-			"credits_neypah_tit": "Guest Item Credits - Neypah_Tit"
-			"credits_dee": "Guest Item Credits - Dee"
-			"credits_kirb": "Guest Item Credits - Kirb"
-			"credits_dummy": "Guest Item Credits - Dummy"
-			"credits_matzie": "Guest Item Credits - Matzie"
+			"cannotreuse": "This equipment cannot be reused",
+			"alternateversion": "This equipment is a Parallel Universe version of another",
+			"keepcountdown": "Paper Sword - Keep Countdown cost when weakened",
+			"collateral": "Collateral - Protection from bust(?)",
+			"workout": "This equipment is a Workout card",
+			"destroy": "Destroyed on use, mostly used by workout cards",
+			"erroronreroll": "Errors if dice rerolled (Robot)",
+			"reusableifcursed": "Reusable only when cursed",
+			"halloweenspecial": "This equipment is from the Halloween Special",
+			"reunion": "This equipment is from Reunion",
+			"guestitem": "This equipment is a guest item",
+			"credits_unsuspiciousperson": "Guest Item Credits - unsuspiciousperson",
+			"credits_notmario": "Guest Item Credits - not mario",
+			"credits_blobby": "Guest Item Credits - StereotypicalBlobby",
+			"credits_levelworld": "Guest Item Credits - LevelWorld",
+			"credits_onetruepurple": "Guest Item Credits - onetruepurple",
+			"credits_titku_and_diane_of_wibi": "Guest Item Credits - Titku & Diane, of Wibi",
+			"credits_xenonzed": "Guest Item Credits - XenonZed",
+			"credits_themysticsword": "Guest Item Credits - TheMysticSword",
+			"credits_xangelmoonx": "Guest Item Credits - XAngelMoonX",
+			"credits_matt101": "Guest Item Credits - Matt101",
+			"credits_neypah_tit": "Guest Item Credits - Neypah_Tit",
+			"credits_dee": "Guest Item Credits - Dee",
+			"credits_kirb": "Guest Item Credits - Kirb",
+			"credits_dummy": "Guest Item Credits - Dummy",
+			"credits_matzie": "Guest Item Credits - Matzie",
 			"credits_polly": "Guest Item Credits - Polly"
 		},
 		"hide_slots_for_tags": [
