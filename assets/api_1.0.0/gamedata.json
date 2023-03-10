@@ -11,6 +11,7 @@
 		"strongpoison": "is strong against poison",
 		"strongshock": "is strong against shock",
 		"strongfire": "is strong against fire",
+		"strongice": "is strong against ice",
 		"absorbshock": "absorbs shock",
 		"absorbfire": "absorbs fire",
 		"absorbpoison": "absorbs poison",
@@ -23,6 +24,7 @@
 		"burncurse": "is burnt every turn",
 		"immunestatus": "is immune to lock and freeze"
 		"altvampire": "revives to full health when defeated (once)"
+		"isladyluck": "is very upset with you all"
 	},
 	"layout": {"EQUIPMENT" : "EQUIPMENT", "SPELLBOOK": "SPELLBOOK", "DECK": "DECK"},
 	"scripts": {
@@ -104,7 +106,7 @@
 			"reducesize": "Reduces a size 2 card to size 1.",
 			"change_power": "Change this card to the one defined in the upgraded tab.",
 			"change_poison": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: increases its poison damage",
-			"change_requirements": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: change_requirements",
+			"change_requirements": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: lowers its cost to play",
 			"change_description": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: gives a clue to how it works",
 			"change_boomerang": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: changes its return damage to a constant [sword]3",
 			"change_countdown": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: converts it into a countdown",
@@ -157,23 +159,7 @@
 			"destroy": "Destroyed on use",
 			"halloweenspecial": "This equipment is from the Halloween Special",
 			"reunion": "This equipment is from Reunion",
-			"guestitem": "This equipment is a guest item",
-			"credits_unsuspiciousperson": "Guest Item Credits - unsuspiciousperson",
-			"credits_notmario": "Guest Item Credits - not mario",
-			"credits_blobby": "Guest Item Credits - StereotypicalBlobby",
-			"credits_levelworld": "Guest Item Credits - LevelWorld",
-			"credits_onetruepurple": "Guest Item Credits - onetruepurple",
-			"credits_titku_and_diane_of_wibi": "Guest Item Credits - Titku & Diane, of Wibi",
-			"credits_xenonzed": "Guest Item Credits - XenonZed",
-			"credits_themysticsword": "Guest Item Credits - TheMysticSword",
-			"credits_xangelmoonx": "Guest Item Credits - XAngelMoonX",
-			"credits_matt101": "Guest Item Credits - Matt101",
-			"credits_neypah_tit": "Guest Item Credits - Neypah_Tit",
-			"credits_dee": "Guest Item Credits - Dee",
-			"credits_kirb": "Guest Item Credits - Kirb",
-			"credits_dummy": "Guest Item Credits - Dummy",
-			"credits_matzie": "Guest Item Credits - Matzie",
-			"credits_polly": "Guest Item Credits - Polly"
+			"guestitem": "This equipment is a guest item (Reunion only)"
 		},
 		"hide_slots_for_tags": [
 			"skillcard",
