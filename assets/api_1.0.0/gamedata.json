@@ -22,9 +22,10 @@
 		"vampire": "can only be killed with a wooden stake",
 		"shockcurse": "is shocked every turn",
 		"burncurse": "is burnt every turn",
-		"immunestatus": "is immune to lock and freeze"
-		"altvampire": "revives to full health when defeated (once)"
-		"isladyluck": "is very upset with you all"
+		"immunestatus": "is immune to lock and freeze",
+		"altvampire": "revives to full health when defeated (once)",
+		"isladyluck": "is very upset with you all",
+		"randomequipmentladyluck": "changes equipment every turn (Lady Luck)"
 	},
 	"layout": {"EQUIPMENT" : "EQUIPMENT", "SPELLBOOK": "SPELLBOOK", "DECK": "DECK"},
 	"scripts": {
