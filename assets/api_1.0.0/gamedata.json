@@ -20,10 +20,10 @@
 		"weakfire": "is weak to fire",
 		"weakice": "is weak to ice",
 		"vampire": "can only be killed with a wooden stake",
+		"altvampire": "revives to full health when defeated (once)",
 		"shockcurse": "is shocked every turn",
 		"burncurse": "is burnt every turn",
 		"immunestatus": "is immune to lock and freeze",
-		"altvampire": "revives to full health when defeated (once)",
 		"isladyluck": "is very upset with you all",
 		"randomequipmentladyluck": "changes equipment every turn (Lady Luck)"
 	},
@@ -105,14 +105,7 @@
 			"add5": "Adds a FREE5 slot to the card.",
 			"add6": "Adds a FREE6 slot to the card.",
 			"reducesize": "Reduces a size 2 card to size 1.",
-			"change_power": "Change this card to the one defined in the upgraded tab.",
-			"change_poison": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: increases its poison damage",
-			"change_requirements": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: lowers its cost to play",
-			"change_description": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: gives a clue to how it works",
-			"change_boomerang": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: changes its return damage to a constant [sword]3",
-			"change_countdown": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: converts it into a countdown",
-			"change_backfire": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: reduces its power",
-			"change_towershield": "Legacy - Change this card to the one defined in the upgraded tab. Upgrade text will read: makes it completely game breaking"
+			"change_power": "Change this card to the one defined in the upgraded tab."
 		},
 		"weaken_modifier": {
 			"No modifier": "No modifier",
@@ -159,10 +152,7 @@
 			"reuseableifcursed": "Echoing Laughter - Reusable only when cursed",
 			"erroronreroll": "Roundhouse Kick - Errors if dice rerolled (Reunion Warrior)",
 			"workout": "This equipment is a Workout card",
-			"destroy": "Destroyed on use",
-			"halloweenspecial": "This equipment is from the Halloween Special",
-			"reunion": "This equipment is from Reunion",
-			"guestitem": "This equipment is a guest item (Reunion only)"
+			"destroy": "Destroyed on use"
 		},
 		"hide_slots_for_tags": [
 			"skillcard",
