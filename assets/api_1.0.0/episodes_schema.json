@@ -110,6 +110,15 @@
 	"Script: After Combat": {
 		"type": "script",
 		"default": ""
+	},
+	"Script: Get Intro Cutscene": {
+		"type": "script",
+		"default": ""
+	},
+	"Script: Get Outro Cutscene": {
+		"type": "script",
+		"default": ""
 	}
+	
 	
 }
