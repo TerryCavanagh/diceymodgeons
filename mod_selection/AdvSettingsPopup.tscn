@@ -1,0 +1,243 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://mod_selection/AdvSettingsPopup.gd" type="Script" id=1]
+
+[node name="AdvSettingsPopup" type="WindowDialog"]
+visible = true
+anchor_right = 0.890625
+anchor_bottom = 0.676389
+margin_right = -498.0
+margin_bottom = -204.0
+rect_min_size = Vector2( 642, 232 )
+popup_exclusive = true
+window_title = "Launch Arguments"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -100.0
+margin_bottom = 49.0
+custom_constants/margin_right = 16
+custom_constants/margin_top = 16
+custom_constants/margin_left = 16
+custom_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 616.0
+margin_bottom = 316.0
+rect_min_size = Vector2( 600, 300 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 220.0
+custom_constants/separation = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 600.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CharContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 28.0
+
+[node name="CharNameContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharContainer"]
+margin_right = 600.0
+margin_bottom = 28.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharContainer/CharNameContainer"]
+margin_right = 120.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 120, 0 )
+text = "Character:"
+
+[node name="CharNameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharContainer/CharNameContainer"]
+margin_left = 124.0
+margin_right = 600.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="EnemyContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 32.0
+margin_right = 600.0
+margin_bottom = 60.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/EnemyContainer"]
+margin_right = 120.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 120, 0 )
+text = "Enemy:"
+
+[node name="EnemyEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/EnemyContainer"]
+margin_left = 124.0
+margin_right = 600.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="EqContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 600.0
+margin_bottom = 92.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/EqContainer"]
+margin_right = 120.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 120, 0 )
+text = "Equipment:"
+
+[node name="EqEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/EqContainer"]
+margin_left = 124.0
+margin_right = 600.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="BossContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 600.0
+margin_bottom = 124.0
+
+[node name="BossNameContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/BossContainer"]
+margin_right = 600.0
+margin_bottom = 28.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/BossContainer/BossNameContainer"]
+margin_right = 120.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 120, 0 )
+text = "Boss:"
+
+[node name="BossNameEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/BossContainer/BossNameContainer"]
+margin_left = 124.0
+margin_right = 600.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="RemixContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 128.0
+margin_right = 600.0
+margin_bottom = 156.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/RemixContainer"]
+margin_right = 120.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 120, 0 )
+text = "Remix:"
+
+[node name="RemixEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/RemixContainer"]
+margin_left = 124.0
+margin_right = 600.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="AllEnemiesContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 160.0
+margin_right = 600.0
+margin_bottom = 188.0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AllEnemiesContainer"]
+margin_right = 120.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 120, 0 )
+text = "All Enemies:"
+
+[node name="AllEnemiesEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AllEnemiesContainer"]
+margin_left = 124.0
+margin_right = 600.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+caret_blink = true
+
+[node name="TranslatorAndEpisodeContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 600.0
+margin_bottom = 220.0
+
+[node name="EpisodeButton" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer"]
+margin_right = 121.0
+margin_bottom = 28.0
+text = "Episode:         "
+
+[node name="EpisodeBox" type="SpinBox" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer"]
+margin_left = 125.0
+margin_right = 201.0
+margin_bottom = 28.0
+min_value = 1.0
+max_value = 6.0
+value = 1.0
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer"]
+margin_left = 205.0
+margin_right = 209.0
+margin_bottom = 28.0
+
+[node name="TranslatorCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer"]
+margin_left = 213.0
+margin_right = 352.0
+margin_bottom = 28.0
+text = "Translator mode"
+
+[node name="EmptyCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer"]
+margin_left = 356.0
+margin_right = 481.0
+margin_bottom = 28.0
+text = "No Equipment"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="ModCheatsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer"]
+margin_left = 485.0
+margin_right = 594.0
+margin_bottom = 28.0
+text = "Cheat mode"
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 224.0
+margin_right = 600.0
+margin_bottom = 252.0
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsContainer"]
+margin_left = 284.0
+margin_right = 316.0
+margin_bottom = 28.0
+text = "OK"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 307.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 800, 400 )
+popup_exclusive = true
+window_title = "Open a File"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.png" )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharContainer/CharNameContainer/CharNameEdit" to="." method="_on_CharNameEdit_text_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/EnemyContainer/EnemyEdit" to="." method="_on_EnemyEdit_text_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/EqContainer/EqEdit" to="." method="_on_EqEdit_text_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/BossContainer/BossNameContainer/BossNameEdit" to="." method="_on_BossNameEdit_text_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/RemixContainer/RemixEdit" to="." method="_on_RemixEdit_text_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AllEnemiesContainer/AllEnemiesEdit" to="." method="_on_AllEnemiesEdit_text_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer/EpisodeButton" to="." method="_on_EpisodeButton_toggled"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer/EpisodeBox" to="." method="_on_EpisodeBox_value_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer/TranslatorCheckBox" to="." method="_on_TranslatorCheckBox_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer/EmptyCheckBox" to="." method="_on_EmptyCheckBox_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/TranslatorAndEpisodeContainer/ModCheatsCheckBox" to="." method="_on_ModCheatsCheckBox_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonsContainer/SaveButton" to="." method="_on_SaveButton_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]

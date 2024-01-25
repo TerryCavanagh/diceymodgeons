@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://mod_selection/ModSettings.gd" type="Script" id=1]
 [ext_resource path="res://mod_selection/WarningPopup.gd" type="Script" id=2]
 [ext_resource path="res://mod_selection/CreateModPopup.tscn" type="PackedScene" id=3]
+[ext_resource path="res://mod_selection/AdvSettingsPopup.tscn" type="PackedScene" id=5]
 
 [node name="ModSettings" type="PanelContainer"]
 anchor_right = 1.0
@@ -28,30 +29,30 @@ custom_constants/separation = 32
 
 [node name="GamePathContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 margin_right = 640.0
-margin_bottom = 22.0
+margin_bottom = 28.0
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer/GamePathContainer"]
-margin_right = 82.0
-margin_bottom = 22.0
+margin_right = 86.0
+margin_bottom = 28.0
 text = "Game path:"
 
 [node name="GamePathEdit" type="LineEdit" parent="CenterContainer/VBoxContainer/GamePathContainer"]
-margin_left = 86.0
-margin_right = 578.0
-margin_bottom = 22.0
+margin_left = 90.0
+margin_right = 572.0
+margin_bottom = 28.0
 focus_mode = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
 editable = false
 
 [node name="ChangeButton" type="Button" parent="CenterContainer/VBoxContainer/GamePathContainer"]
-margin_left = 582.0
+margin_left = 576.0
 margin_right = 640.0
-margin_bottom = 22.0
+margin_bottom = 28.0
 text = "Change"
 
 [node name="ModsContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
-margin_top = 54.0
+margin_top = 60.0
 margin_right = 640.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -59,15 +60,15 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer/ModsContainer"]
 margin_right = 640.0
-margin_bottom = 22.0
+margin_bottom = 28.0
 text = "MODS"
 align = 1
 valign = 1
 
 [node name="ModList" type="Tree" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 26.0
+margin_top = 32.0
 margin_right = 640.0
-margin_bottom = 345.0
+margin_bottom = 306.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.7
@@ -78,53 +79,69 @@ hide_root = true
 select_mode = 1
 
 [node name="ModDescription" type="RichTextLabel" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 349.0
+margin_top = 310.0
 margin_right = 640.0
-margin_bottom = 485.0
+margin_bottom = 428.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 489.0
+margin_top = 432.0
 margin_right = 640.0
-margin_bottom = 511.0
+margin_bottom = 460.0
 
 [node name="EditButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer"]
 margin_right = 318.0
-margin_bottom = 22.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Edit information"
 
 [node name="LoadButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer"]
 margin_left = 322.0
 margin_right = 640.0
-margin_bottom = 22.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Load"
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 515.0
+margin_top = 464.0
 margin_right = 640.0
-margin_bottom = 519.0
+margin_bottom = 468.0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
-margin_top = 523.0
+margin_top = 472.0
 margin_right = 640.0
-margin_bottom = 545.0
+margin_bottom = 500.0
 
 [node name="CreateButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2"]
 margin_right = 318.0
-margin_bottom = 22.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Create a new mod"
 
 [node name="LaunchButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2"]
 margin_left = 322.0
 margin_right = 640.0
-margin_bottom = 22.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Launch current loaded mod"
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_top = 504.0
+margin_right = 640.0
+margin_bottom = 508.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/VBoxContainer/ModsContainer"]
+margin_top = 512.0
+margin_right = 640.0
+margin_bottom = 540.0
+
+[node name="AdvSettingsButton" type="Button" parent="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer3"]
+margin_right = 640.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+text = "Launch Arguments"
 
 [node name="Dialogs" type="Control" parent="."]
 margin_left = 6.0
@@ -203,10 +220,11 @@ window_title = "Select the game directory"
 mode_overrides_title = false
 mode = 2
 access = 2
-current_dir = "/projects/godot_projects/diceymodgeons"
-current_path = "/projects/godot_projects/diceymodgeons/"
 
 [node name="CreateModPopup" parent="Dialogs" instance=ExtResource( 3 )]
+
+[node name="AdvSettingsPopup" parent="Dialogs" instance=ExtResource( 5 )]
+
 [connection signal="pressed" from="CenterContainer/VBoxContainer/GamePathContainer/ChangeButton" to="." method="_on_ChangeButton_pressed"]
 [connection signal="item_activated" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_activated"]
 [connection signal="item_selected" from="CenterContainer/VBoxContainer/ModsContainer/ModList" to="." method="_on_ModList_item_selected"]
@@ -214,6 +232,7 @@ current_path = "/projects/godot_projects/diceymodgeons/"
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer/LoadButton" to="." method="_on_LoadButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2/CreateButton" to="." method="_on_CreateButton_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer2/LaunchButton" to="." method="_on_LaunchButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/ModsContainer/HBoxContainer3/AdvSettingsButton" to="." method="_on_AdvSettingsButton_pressed"]
 [connection signal="toggled" from="Dialogs/WarningPopup/VBoxContainer/DontShowCheck" to="Dialogs/WarningPopup" method="_on_DontShowCheck_toggled"]
 [connection signal="pressed" from="Dialogs/WarningPopup/VBoxContainer/OKButton" to="Dialogs/WarningPopup" method="_on_OKButton_pressed"]
 [connection signal="dir_selected" from="Dialogs/FileDialogPopup" to="." method="_on_FileDialogPopup_dir_selected"]

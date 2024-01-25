@@ -6,10 +6,14 @@ onready var ModDescription = find_node("ModDescription")
 onready var WarningPopup = find_node("WarningPopup")
 onready var FileDialogPopup = find_node("FileDialogPopup")
 onready var CreateModPopup = find_node("CreateModPopup")
+#onready var AdvSettingsPopup = find_node("AdvSettingsPopup")
+onready var AdvSettingsPopup = $Dialogs/AdvSettingsPopup
 onready var CreateButton = find_node("CreateButton")
 onready var EditButton = find_node("EditButton")
 onready var LoadButton = find_node("LoadButton")
 onready var LaunchButton = find_node("LaunchButton")
+onready var AdvSettingsButton = find_node("AdvSettingsButton")
+var translatorpressed = false;
 
 var path = null
 var valid_path:bool = false
@@ -112,6 +116,7 @@ func _fill_mod_list():
 		EditButton.disabled = true
 		LoadButton.disabled = true
 		LaunchButton.disabled = true
+		AdvSettingsButton.disabled = true
 		ModDescription.text = ""
 
 	if not errors.empty():
@@ -135,6 +140,7 @@ func _check_valid_path():
 		EditButton.disabled = true
 		LoadButton.disabled = true
 		LaunchButton.disabled = true
+		AdvSettingsButton.disabled = true
 		ModDescription.text = ""
 	else:
 		CreateButton.focus_mode = Control.FOCUS_ALL
@@ -147,6 +153,11 @@ func _on_ChangeButton_pressed():
 
 func _on_CreateButton_pressed():
 	CreateModPopup.show_popup()
+
+
+func _on_AdvSettingsButton_pressed():
+	AdvSettingsPopup.show_popup()
+
 
 func _on_EditButton_pressed():
 	# TODO send the path too so it can actually save the data
@@ -184,6 +195,7 @@ func _on_LoadButton_pressed():
 			_fill_mod_list()
 			LoadButton.release_focus()
 			LaunchButton.disabled = false
+			AdvSettingsButton.disabled = false
 			GenerateSymbols.generate(current_mod_loaded)
 
 func _on_FileDialogPopup_dir_selected(dir):
@@ -200,6 +212,7 @@ func _on_ModList_item_selected():
 	LoadButton.disabled = false
 
 
+
 func _on_ModList_item_activated():
 	_on_LoadButton_pressed()
 
@@ -207,7 +220,98 @@ func _on_ModList_item_activated():
 func _on_CreateModPopup_popup_hide():
 	_fill_mod_list()
 
+
+
+	
+func _on_Translator_toggled(button_pressed):
+
+	pass # Replace with function body.
+
 func _on_LaunchButton_pressed():
+	var translatormodebool = AdvSettingsPopup.translatormode
+	var episodebool = AdvSettingsPopup.episodebutton
+	var emptybool = AdvSettingsPopup.emptybutton
+	var modcheatsbool = AdvSettingsPopup.modecheatsbutton
+	
+	
+	var charactertext = AdvSettingsPopup.character
+	var episodenum = AdvSettingsPopup.episode
+	var enemytext = AdvSettingsPopup.enemy
+	var bosstext = AdvSettingsPopup.boss
+	var remixtext = AdvSettingsPopup.remix
+	var gadgettext = AdvSettingsPopup.gadget
+	var eqtext = [AdvSettingsPopup.eq]
+	var allenemiestext = AdvSettingsPopup.allenemies
+	
+	
+	var translatorarg = ""
+	var episodearg = ""
+	var remixarg = ""
+	var characterarg = ""
+	var bossarg = ""
+	var enemyarg = ""
+	var gadgetarg = ""
+	var eqarg = ""
+	var allenemiesarg = ""
+	var emptyarg = ""
+	var modcheatsarg = ""
+	
+
+	if (modcheatsbool == true):
+		modcheatsarg = "-modcheats"
+	else:
+		modcheatsarg = ""
+	
+	if (translatormodebool == true):
+		translatorarg = "-translator"
+	else:
+		translatorarg = ""
+	
+	if (!charactertext == ""):
+		characterarg = "-character=%s" % charactertext
+	else:
+		characterarg = ""
+		
+	if (episodebool == true):
+		episodearg = "-episode=%s" % episodenum
+	else:
+		episodearg = ""
+		
+	if (!eqtext == [""]):
+		eqarg = "-equipment=%s" % eqtext
+	else:
+		eqarg = ""
+
+	if (!enemytext == ""):
+		enemyarg = "-enemy=%s" % enemytext
+	else:
+		enemyarg = ""		
+
+	if (!allenemiestext == ""):
+		allenemiesarg = "-allenemies=%s" % allenemiestext
+	else:
+		allenemiesarg = ""		
+
+	if (!bosstext == ""):
+		bossarg = "-boss=%s" % bosstext
+	else:
+		bossarg = ""	
+
+	if (!remixtext == ""):
+		remixarg = "-remix=%s" % remixtext
+	else:
+		remixarg = ""	
+
+	if (!gadgettext == ""):
+		gadgetarg = "-gadget=%s" % gadgettext
+	else:
+		gadgetarg = ""	
+	
+	if (emptybool == true):
+		emptyarg = "-empty"
+	else:
+		emptyarg = ""	
+		
 	if not current_mod_loaded or current_mod_loaded.empty(): return
 
 	if Database.data_needs_save():
@@ -241,9 +345,9 @@ func _on_LaunchButton_pressed():
 		var pid = -1
 		match OS.get_name():
 			"Windows":
-				pid = OS.execute(exec, ["mod=%s" % mod], false)
+				pid = OS.execute(exec, ["mod=%s" % mod, modcheatsarg, translatorarg, characterarg, episodearg, enemyarg, allenemiesarg, bossarg, eqarg, remixarg, gadgetarg, emptyarg], false)
 			"OSX":
-				pid = OS.execute("open", [exec, "--args", "mod=%s" % mod], false)
+				pid = OS.execute("open", [exec, "--args", "mod=%s" % mod, modcheatsarg, translatorarg, characterarg, episodearg, enemyarg, allenemiesarg, bossarg, eqarg, remixarg, gadgetarg, emptyarg], false)
 			"X11":
 				pass
 		if pid == -1:

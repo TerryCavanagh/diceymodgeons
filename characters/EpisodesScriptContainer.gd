@@ -9,6 +9,8 @@ onready var AfterCombat = find_node("After Combat")
 onready var AfterLevelUp = find_node("After Level Up")
 onready var LevelUpRewards = find_node("Level Up Rewards")
 onready var ChangeFloor = find_node("Change Floor")
+onready var IntroCutscene = find_node("Intro Cutscene")
+onready var OutroCutscene = find_node("Outro Cutscene")
 
 var data_id:String = ""
 var data:Dictionary = {}
@@ -26,6 +28,8 @@ func set_data(data):
 	_setup(AfterLevelUp, "After Level Up", "Script: After Level Up", "")
 	_setup(LevelUpRewards, "Level Up Rewards", "Script: Define Level Up Rewards", "")
 	_setup(ChangeFloor, "Change Floor", "Script: Change Floor", "")
+	_setup(IntroCutscene, "Intro Cutscene", "Script: Get Intro Cutscene", "")
+	_setup(OutroCutscene, "Outro Cutscene", "Script: Get Outro Cutscene", "")
 
 func _setup(node:Node, node_name, key, def):
 	node.text = data.get(key, def)
