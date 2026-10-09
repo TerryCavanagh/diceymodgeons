@@ -29,7 +29,7 @@ size_flags_horizontal = 3
 [node name="ExcludeCheck" type="CheckButton" parent="TagFilterHolder"]
 margin_right = 107.0
 margin_bottom = 34.0
-hint_tooltip = "Whether to show all equipment that include or exclude the given tag(s). (Filter multiple tags with |)"
+hint_tooltip = "Whether to include or exclude all equipment that have the given tag(s) in search results. (Filter multiple tags with |)"
 text = "Exclude"
 
 [node name="TagSearch" type="LineEdit" parent="TagFilterHolder"]
