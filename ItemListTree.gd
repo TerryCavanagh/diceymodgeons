@@ -14,15 +14,18 @@ var return_texture:Texture = null
 var root:TreeItem = null
 
 var sort_items:bool = true
+var filter_items:bool = true
 
 var show_field:String = ""
 
 var filter = null
+var tagfilter = null
 var only_modified = false
 
 var table = null
 
 var overwrite_mode:bool = false
+var exclude_tags:bool = false
 
 enum Column {
 	MODIFIED = 0,
@@ -79,6 +82,7 @@ func load_data(filter = null, select_key = null):
 	if filter:
 		filter = filter.to_lower()
 		var new_keys = []
+		var new_fields = []
 
 		var tmp = {}
 		for field in fields:
@@ -90,7 +94,38 @@ func load_data(filter = null, select_key = null):
 		for key in tmp.keys():
 			if tmp.get(key).findn(filter) > -1:
 				new_keys.push_back(key)
+				new_fields.push_back({"key": key, "field": data.get(key).get(show_field, "")})
 
+		keys = new_keys
+		fields = new_fields
+		
+	if tagfilter and len(tagfilter) > 0:
+		tagfilter = tagfilter.to_lower()
+		var new_keys = []
+		
+		var tmp = {}
+
+		var splittags = tagfilter.split("|")
+		if splittags[-1] == "":
+			splittags.remove(len(splittags) - 1)
+		
+		for field in fields:
+			var key = field.get("key")
+			tmp[key] = field.get("field")
+			if change_text_func:
+				tmp[key] = change_text_func.call_func(key)
+		
+		for key in tmp.keys():
+			var include = exclude_tags
+			for splitfilter in splittags:
+				for tag in data[key].get("Tags"):
+					include = (splitfilter in tag) != exclude_tags
+					if include != exclude_tags:
+						break
+				if include == exclude_tags:
+					break
+			if include:
+				new_keys.push_back(key)
 		keys = new_keys
 
 	clear()
@@ -104,6 +139,7 @@ func load_data(filter = null, select_key = null):
 		var metadata = {"key": key, "field": data[key].get(show_field, ""), "origin": origin, "is_in_game_data": db_table.is_in_game_data(key)}
 		if only_modified && origin == Database.Origin.GAME:
 			continue
+		# print(key)
 		var item = create_item(root)
 		_set_item_data(item, metadata)
 		if select_meta.get("key", "") == key or select_key == key:
@@ -221,6 +257,10 @@ func _on_List_button_pressed(item, column, id):
 
 func _on_Search_text_changed(new_text):
 	load_data(new_text)
+	
+func _on_TagSearch_text_changed(new_tag_filter):
+	self.tagfilter = new_tag_filter
+	force_reload()
 
 func _on_List_nothing_selected():
 	emit_signal("element_selected", null)

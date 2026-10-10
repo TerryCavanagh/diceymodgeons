@@ -4,6 +4,8 @@ onready var Title = find_node("Title")
 onready var DescriptionContainer = find_node("DescriptionContainer")
 onready var Description = find_node("Description")
 
+onready var SlotsTexture = find_node("SlotsTexture")
+
 const brackets_regex = "(\\[(.*?)\\])"
 const arrows_regex = "(<(.+)>)"
 const ICON_SIZE = 75
@@ -64,10 +66,6 @@ func set_description(desc:String):
 		if Gamedata.symbols.has(s):
 			var path = Gamedata.symbols.get(s).get("path", "")
 			result += "[img=%s]%s[/img]" % [ICON_SIZE, path]
-		elif s.empty():
-			result += "[img=%s]%s[/img]" % [ICON_SIZE, d6path]
-		elif s == "gray":
-			pass
 	result += desc.substr(last, desc.length() - last)
 
 	result = result.replace("<d6>", "[img=%s]%s[/img]" % [ICON_SIZE, d6path])
@@ -111,6 +109,14 @@ func _update_description_position():
 		Description.rect_position.y += 100
 	Description.rect_pivot_offset = Description.rect_size / 2.0
 	Description.rect_scale = Vector2(0.8, 0.8)
+	if Description.get_line_count() > 2 and card_size == 1 and SlotsTexture.visible:
+		Description.add_constant_override("line_separation", -40)
+		Description.rect_position.y = (Description.get_line_count()) * -24 - 20
+	else:
+		Description.add_constant_override("line_separation", -17)
+	if not SlotsTexture.visible:
+		Description.rect_position.y = (Description.get_line_count() - 1) * -22
+		Description.rect_position.y -= 100 * (1.8 if card_size == 1 else 3)
 
 func _on_VBoxContainer_sort_children():
 	Description.rect_scale = Vector2(0.8, 0.8)

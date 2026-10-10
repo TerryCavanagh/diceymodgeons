@@ -77,7 +77,7 @@ func _check()->bool:
 	var result = true
 	var error = ""
 
-	if slots.size() == 1 and slots[0] == "COUNTDOWN":
+	if "COUNTDOWN" in slots:
 		ExtraContainer.visible = true
 		ExtraSpin.visible = true
 		ExtraSpin.min_value = 1
@@ -110,10 +110,7 @@ func _check()->bool:
 		ExtraContainer.hint_tooltip = ""
 		ExtraSpin.visible = false
 
-	if slots.has("COUNTDOWN") and slots.size() > 1:
-		result = false
-		error = "COUNTDOWN equipment can only have 1 slot."
-	elif slots.has("DOUBLES") and (not slots.size() == 2 or not (slots[0] == "DOUBLES" and slots[1] == "DOUBLES")):
+	if slots.has("DOUBLES") and (not slots.size() == 2 or not (slots[0] == "DOUBLES" and slots[1] == "DOUBLES")):
 		result = false
 		error ="Equipment can only have 2 DOUBLES slots."
 

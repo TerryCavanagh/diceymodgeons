@@ -15,18 +15,41 @@ __meta__ = {
 [node name="Search" type="LineEdit" parent="."]
 margin_right = 300.0
 margin_bottom = 22.0
+rect_pivot_offset = Vector2( -222, -54 )
+context_menu_enabled = false
+clear_button_enabled = true
+caret_blink = true
+
+[node name="TagFilterHolder" type="HBoxContainer" parent="."]
+margin_top = 26.0
+margin_right = 300.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+
+[node name="ExcludeCheck" type="CheckButton" parent="TagFilterHolder"]
+margin_right = 107.0
+margin_bottom = 34.0
+hint_tooltip = "Whether to include or exclude all equipment that have the given tag(s) in search results. (Filter multiple tags with |)"
+text = "Exclude"
+
+[node name="TagSearch" type="LineEdit" parent="TagFilterHolder"]
+margin_left = 111.0
+margin_right = 300.0
+margin_bottom = 34.0
+rect_min_size = Vector2( 189, 0 )
+rect_pivot_offset = Vector2( -222, -54 )
 context_menu_enabled = false
 clear_button_enabled = true
 caret_blink = true
 
 [node name="OnlyModifiedCheck" type="CheckBox" parent="."]
-margin_top = 26.0
+margin_top = 64.0
 margin_right = 300.0
-margin_bottom = 50.0
+margin_bottom = 88.0
 text = "Show only added and modified items"
 
 [node name="List" type="Tree" parent="."]
-margin_top = 54.0
+margin_top = 92.0
 margin_right = 300.0
 margin_bottom = 668.0
 size_flags_horizontal = 3
@@ -55,6 +78,8 @@ margin_bottom = 34.0
 size_flags_horizontal = 3
 text = "Add a new enemy"
 [connection signal="text_changed" from="Search" to="List" method="_on_Search_text_changed"]
+[connection signal="toggled" from="TagFilterHolder/ExcludeCheck" to="." method="_on_ExcludeCheck_toggled"]
+[connection signal="text_changed" from="TagFilterHolder/TagSearch" to="List" method="_on_TagSearch_text_changed"]
 [connection signal="pressed" from="OnlyModifiedCheck" to="." method="_on_OnlyModifiedCheck_pressed"]
 [connection signal="button_pressed" from="List" to="List" method="_on_List_button_pressed"]
 [connection signal="element_selected" from="List" to="." method="_on_List_element_selected"]

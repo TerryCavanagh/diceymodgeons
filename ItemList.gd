@@ -9,14 +9,18 @@ export (Database.Table) var table = Database.Table.FIGHTERS setget _set_table
 export (String) var search_placeholder = "" setget _set_search_placeholder
 export (String) var button_label = "" setget _set_button_label
 export (bool) var sort_items = true setget _set_sort_items
+export (bool) var filter_items = true setget _set_filter_items
 export (String) var show_field = "" setget _set_show_field
 export (bool) var show_overwrite_mode = true setget _set_show_overwrite_mode
+export (bool) var show_tag_filter = false setget _set_show_tag_filter
 
 onready var Search = find_node("Search")
+onready var TagSearch = find_node("TagSearch")
 onready var OnlyModifiedCheck = find_node("OnlyModifiedCheck")
 onready var List = find_node("List")
 onready var AddButton = find_node("AddButton")
 onready var OverwriteCheck = find_node("OverwriteCheck")
+onready var TagFilterHolder = find_node("TagFilterHolder")
 
 var process_data_func:FuncRef = null setget _set_process_data_func
 var modified_func:FuncRef = null setget _set_modified_func
@@ -26,9 +30,11 @@ var overwrite_mode:bool = false setget ,_is_overwrite_mode
 
 func _ready():
 	Search.placeholder_text = search_placeholder
+	TagSearch.placeholder_text = "Filter by tag"
 	List.table = table
 	AddButton.text = button_label
 	List.sort_items = sort_items
+	List.filter_items = filter_items
 	List.show_field = show_field
 
 	List.process_data_func = process_data_func
@@ -36,6 +42,7 @@ func _ready():
 	List.change_text_func = change_text_func
 
 	OverwriteCheck.visible = show_overwrite_mode
+	TagFilterHolder.visible = show_tag_filter
 
 
 func start_load():
@@ -73,6 +80,11 @@ func _set_sort_items(v):
 	if not List: return
 	List.sort_items = v
 
+func _set_filter_items(v):
+	filter_items = v
+	if not List: return
+	List.filter_items = v
+
 func _set_show_field(v):
 	show_field = v
 	if not List: return
@@ -87,6 +99,10 @@ func _on_List_element_selected(key):
 
 func _on_AddButton_pressed():
 	emit_signal("add_button_pressed", List.overwrite_mode)
+
+func _on_ExcludeCheck_toggled(button_pressed):
+	List.exclude_tags = button_pressed
+	List.force_reload()
 
 func _on_OverwriteCheck_toggled(button_pressed):
 	List.overwrite_mode = button_pressed
@@ -117,3 +133,9 @@ func _set_show_overwrite_mode(value):
 	show_overwrite_mode = value
 	if not OverwriteCheck: return
 	OverwriteCheck.visible = value
+
+func _set_show_tag_filter(value):
+	show_tag_filter = value
+	if not TagFilterHolder: return
+	TagFilterHolder.visible = value
+

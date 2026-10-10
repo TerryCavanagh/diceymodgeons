@@ -1,7 +1,9 @@
 extends PanelContainer
 
 signal text_changed(value)
+signal create_pressed(file_name, node)
 signal delete_pressed(file_name, node)
+signal remove_pressed(file_name, node)
 
 onready var ScriptContainer = find_node("ScriptContainer")
 onready var FilePathEdit = find_node("FilePathEdit")
@@ -36,11 +38,13 @@ func set_data(data, filename):
 
 
 func _on_CreateButton_pressed():
-	pass # Replace with function body.
-
+	emit_signal("create_pressed", file_name, self)
 
 func _on_DeleteButton_pressed():
 	emit_signal("delete_pressed", file_name, self)
+	
+func _on_RemoveButton_pressed():
+	emit_signal("remove_pressed", file_name, self)
 
 func _on_ScriptContainer_text_changed(new_text):
 	loaded_file.changed_text = new_text

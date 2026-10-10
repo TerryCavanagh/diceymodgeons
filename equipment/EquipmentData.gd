@@ -18,6 +18,7 @@ onready var SFXCheck = find_node("SFXCheck")
 onready var EquipmentTags = find_node("EquipmentTags")
 
 onready var SlotsContainer = find_node("SlotsContainer")
+onready var SlotsTexture = find_node("SlotsTexture")
 
 onready var GadgetOption = find_node("GadgetOption")
 onready var UpgradeOption = find_node("UpgradeOption")
@@ -90,6 +91,7 @@ func set_data(data):
 	Utils.fill_options(GadgetOption, values, false)
 
 	_setup(GadgetOption, "Gadget", "")
+	EquipmentCard._update_description_position()
 
 func _setup(node, key, def):
 	if node is SpinBox:
@@ -117,6 +119,7 @@ func _setup(node, key, def):
 	elif node == SlotsContainer:
 		var tags = data.get("Tags", [])
 		_update_SlotsContainer_visibility(tags)
+		_update_SlotsTexture_visibility(data.get("Slots", []).size())
 		node.set_data(data)
 		Utils.connect_signal(node, "Slots", "slots_changed", self, "_on_SlotsContainer_slots_changed")
 		Utils.connect_signal(node, "NEED TOTAL?", "total_changed", self, "_on_SlotsContainer_total_changed")
@@ -140,11 +143,18 @@ func _update_SlotsContainer_visibility(tags):
 
 	if hide_it:
 		SlotsContainer.visible = false
-		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Slots", [])
-		Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "NEED TOTAL?", 0)
+		if len(SlotsContainer.current_slots) > 0 or SlotsContainer.ExtraSpin.value != 0:
+			Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "Slots", [])
+			Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, "NEED TOTAL?", 0)
 		SlotsContainer.set_data(data)
 	else:
 		SlotsContainer.visible = true
+
+func _update_SlotsTexture_visibility(slots):
+	if slots < 1:
+		SlotsTexture.visible = false
+	else:
+		SlotsTexture.visible = true
 
 func _on_SpinBox_value_changed(value, node, key):
 	if not data_id: return
@@ -188,6 +198,8 @@ func _on_OptionButton_item_selected(id, node, key):
 func _on_SlotsContainer_slots_changed(slots, node, key):
 	if not data_id: return
 	Database.commit(Database.Table.EQUIPMENT, Database.UPDATE, data_id, key, slots)
+	_update_SlotsTexture_visibility(slots.size())
+	EquipmentCard._update_description_position()
 
 func _on_SlotsContainer_total_changed(new_total, node, key):
 	if not data_id: return

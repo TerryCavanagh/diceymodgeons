@@ -27,6 +27,7 @@ table = 2
 search_placeholder = "Search equipment"
 button_label = "Add a new equipment"
 show_field = "Name"
+show_tag_filter = true
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer"]
 margin_left = 304.0

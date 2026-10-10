@@ -397,7 +397,7 @@ class CSVData:
 	var overwrite_mode:bool = false
 	var last_overwrite_mode_saved:bool = false
 
-	var comments_regex_pattern = "// *(?'comment'.+\\S)"
+	var comments_regex_pattern = "// *(?'comment'([^\\*\\n]|\\*[^/\\n])+)(?!([^/]|/[^\\*])*\\*/)"
 	var comments_regex = RegEx.new()
 
 	func _init(paths:Dictionary, key:String):
@@ -803,7 +803,7 @@ class CSVData:
 			result = comments_regex.sub(result, "/* $comment */", true)
 		result = result.replace("\n", " ")
 		result = result.replace("\t", "") # remove tabs because it breaks the game
-		result = result.replace(",", "[;]")
+		result = result.replace(",", "|") # replace commas with | instead of [;] in scripts, prettier
 		result = result.replace('"', "~")
 		result = result.replace("||", '#')
 		result = result.strip_edges()
@@ -883,11 +883,11 @@ class CSVData:
 				while bracket_end != - 1:
 					if json[bracket_end - 1] == i[0]:
 						bracket_count += 1
-					elif json[bracket_end + 1] == i[1]:
+					elif bracket_end + 1 < len(json) and json[bracket_end + 1] == i[1]:
 						bracket_count -= 1
 
 					# Move through the indentation to see if there is a match.
-					while json[bracket_end + 1] == indentation:
+					while bracket_end + 1 < len(json) and json[bracket_end + 1] == indentation:
 						bracket_end += 1
 
 						if json[bracket_end + 1] == i[1]:

@@ -32,7 +32,7 @@ func _set_window_title(mod = null):
 	if mod:
 		current_mod = "Loaded mod: %s" % mod
 
-	var title = ProjectSettings.get_setting("application/config/name")
+	var title = ProjectSettings.get_setting("application/config/name") + "+"
 	var api = ProjectSettings.get_setting("application/config/mod_api_version")
 	# setup some window information
 	OS.set_window_title("%s - %s - Mod API %s" % [title, current_mod, api])

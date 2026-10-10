@@ -68,7 +68,7 @@ margin_right = 1167.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 follow_focus = true
-scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
 
 [node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer"]
 margin_right = 1123.0
@@ -77,7 +77,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 2 )
 
-[node name="TagsContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/PanelContainer"]
+[node name="TagsContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer/ScrollContainer/PanelContainer"]
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 1122.0

@@ -69,7 +69,7 @@ margin_right = 554.0
 margin_bottom = 286.0
 columns = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CenterContainer/GridContainer"]
+[node name="SlotsTexture" type="TextureRect" parent="VBoxContainer/CenterContainer/GridContainer"]
 margin_right = 283.0
 margin_bottom = 285.0
 texture = ExtResource( 4 )

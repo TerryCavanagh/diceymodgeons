@@ -10,6 +10,10 @@ var data_id:String = ""
 var data:Dictionary = {}
 
 var new_tab_idx = -1
+var curfileaccess = File.READ
+var generatorchanging = false
+var changingnode = null
+var changingfile_name = null
 
 func set_data(data):
 	data_id = Database.get_data_id(data, "ID")
@@ -32,6 +36,8 @@ func add_generator_tab(generator, idx = -1):
 	var filename = "%s.hx" % generator
 	var file_container = GeneratorFileScene.instance()
 	file_container.name = generator
+	file_container.connect("create_pressed", self, "_on_change_pressed")
+	file_container.connect("remove_pressed", self, "_on_remove_pressed")
 	file_container.connect("delete_pressed", self, "_on_delete_pressed")
 	FileTabContainer.add_child(file_container)
 	if idx > -1:
@@ -41,21 +47,30 @@ func add_generator_tab(generator, idx = -1):
 func add_new_tab():
 	var empty = EmptyFileScene.instance()
 	empty.name = "+"
-	empty.connect("create_pressed", self, "open_file_dialog")
+	empty.connect("create_pressed", self, "_create_file_dialog")
+	empty.connect("load_pressed", self, "_load_file_dialog")
 	FileTabContainer.add_child(empty)
 	new_tab_idx = empty.get_index()
+	
+func _create_file_dialog():
+	open_file_dialog(File.WRITE)
+func _load_file_dialog():
+	open_file_dialog(File.READ)
 
-func open_file_dialog():
+func open_file_dialog(access = File.READ):
 	var path = ModFiles.get_mod_path("data/text/generators/")
 	var dir = Directory.new()
 	if not dir.dir_exists(path):
 		dir.make_dir_recursive(path)
+	curfileaccess = access
+	GeneratorFileDialog.mode = 0 if curfileaccess == 1 else 4
 	GeneratorFileDialog.current_path = path
 	GeneratorFileDialog.popup_centered_minsize(GeneratorFileDialog.rect_min_size)
 
 func _on_FileTabContainer_tab_changed(tab):
 	if tab == new_tab_idx:
-		open_file_dialog()
+		# open_file_dialog()
+		pass
 
 func _on_GeneratorFileDialog_file_selected(path:String):
 	var fname = path.get_file().get_basename()
@@ -67,8 +82,14 @@ func _on_GeneratorFileDialog_file_selected(path:String):
 		ConfirmPopup.popup_accept("The extension has to be 'hx'", "Warning")
 		return
 	var file = File.new()
-	if file.open(path, File.WRITE) == OK:
+	if file.open(path, curfileaccess) == OK:
 		file.close()
+		if generatorchanging:
+			FileTabContainer.remove_child(changingnode)
+			changingnode.queue_free()
+			Database.commit(Database.Table.EPISODES, Database.DELETE, data_id, "Generator", changingfile_name.get_basename())
+			new_tab_idx -= 1
+			generatorchanging = false
 		add_generator_tab(fname, new_tab_idx)
 		FileTabContainer.current_tab = new_tab_idx
 		new_tab_idx += 1
@@ -92,3 +113,23 @@ func _on_delete_pressed(file_name, node):
 			pass
 		ConfirmPopup.CANCEL:
 			print("Delete Cancelled")
+
+func _on_remove_pressed(file_name, node):
+	ConfirmPopup.popup_confirm("Are you sure that you want to remove the generator %s?" % file_name, "Are you sure?")
+	var result = yield(ConfirmPopup, "action_chosen")
+	match result:
+		ConfirmPopup.OKAY:
+			FileTabContainer.remove_child(node)
+			node.queue_free()
+			Database.commit(Database.Table.EPISODES, Database.DELETE, data_id, "Generator", file_name.get_basename())
+			new_tab_idx -= 1
+		ConfirmPopup.OTHER:
+			pass
+		ConfirmPopup.CANCEL:
+			print("Remove Cancelled")
+			
+func _on_change_pressed(file_name, node):
+	generatorchanging = true
+	changingfile_name = file_name
+	changingnode = node
+	open_file_dialog()

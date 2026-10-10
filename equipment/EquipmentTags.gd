@@ -6,7 +6,7 @@ signal tag_removed(tag)
 const TagContainerScene = preload("res://equipment/TagContainer.tscn")
 
 export (String) var already_exists_text = "The tag already exists"
-export (String) var invalid_data_text = "This tag is invalid, only alpha-numeric, _ and - are accepted."
+export (String) var invalid_data_text = "This tag is invalid; commas, | and \" aren't allowed."
 
 onready var TagsContainer = find_node("TagsContainer")
 onready var TagsButton = find_node("TagsButton")
@@ -23,7 +23,7 @@ onready var ErrorTimer = find_node("ErrorTimer")
 var data_id:String = ""
 var data:Dictionary = {}
 
-var tag_regex = "^[a-z_\\-0-9]+$"
+var tag_regex = "^[^\",|]+$"
 var tag_regex_obj = RegEx.new()
 
 func _ready():
@@ -158,13 +158,13 @@ func _on_TagsButton_popup_id_pressed(idx, node, key):
 
 
 func _on_CustomTagEdit_text_entered(new_text):
-	add_tag(new_text, true)
-	CustomTagEdit.clear()
+	if not add_tag(new_text, true) == ERR_INVALID_DATA:
+		CustomTagEdit.clear()
 
 
 func _on_CustomTagButton_pressed():
-	add_tag(CustomTagEdit.text, true)
-	CustomTagEdit.clear()
+	if not add_tag(CustomTagEdit.text, true) == ERR_INVALID_DATA:
+		CustomTagEdit.clear()
 
 func _on_ErrorTimer_timeout():
 	ErrorLabel.visible = false
